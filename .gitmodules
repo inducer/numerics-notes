@@ -1,0 +1,3 @@
+[submodule "notes/orgmk"]
+	path = notes/orgmk
+	url = https://github.com/inducer/orgmk

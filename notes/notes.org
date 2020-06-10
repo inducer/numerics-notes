@@ -1,0 +1,5931 @@
+#+TITLE: Numerical Analysis / Scientific Computing
+#+SUBTITLE: CS450
+#+AUTHOR: Andreas Kloeckner
+#+DATE: Spring 2019
+
+
+* LaTeX header setup stuff                                         :noexport:
+
+#+startup: beamer
+#+LATEX_CLASS: beamer
+#+LaTeX_CLASS_OPTIONS: [aspectratio=149]
+
+#+BEAMER_HEADER: \setbeamertemplate{navigation symbols}{}
+
+#+BEAMER_HEADER: \usepackage{environ}
+#+BEAMER_HEADER: \usepackage{tcolorbox}
+#+BEAMER_HEADER: \newif\ifshowhidden
+#+BEAMER_HEADER: \showhiddentrue
+#+BEAMER_HEADER: \def\fillinbox#1{\begin{tcolorbox}[height=#1]\end{tcolorbox}}
+#+BEAMER_HEADER: \NewEnviron{hidden}[1][1.5cm]{\ifshowhidden\begin{tcolorbox}\BODY\end{tcolorbox}\else\fillinbox{#1}\fi}
+
+#+BEAMER_HEADER: \let\plainhref=\href
+#+BEAMER_HEADER: \let\plainurl=\url
+#+BEAMER_HEADER: \def\href#1#2{\plainhref{#1}{{\color{blue}\uline{#2}}}}
+#+BEAMER_HEADER: \def\url#1{\href{#1}{\texttt{#1}}}
+
+#+BEAMER_HEADER: \usepackage{pifont}
+#+BEAMER_HEADER: \usepackage[normalem]{ulem}
+
+#+BEAMER_HEADER: \def\classurl{https://relate.cs.illinois.edu/course/cs450-s19/}
+
+#+BEAMER_HEADER: \def\activity#1{\href{\classurl/flow/#1/start}{Activity: #1}}
+#+BEAMER_HEADER: \def\demonote#1{\ifshowhidden\medskip\par Demo Instructions: {\color{blue} #1}\fi}
+#+BEAMER_HEADER: \newcommand{\inclass}[1]{\tmcolor{purple}{\textbf{In-class activity: }#1}}
+#+BEAMER_HEADER: \newcommand{\demo}[1]{\tmcolor{purple}{\textbf{Demo: }#1}}
+#+BEAMER_HEADER: \newcommand{\demolink}[2]{\plainhref{https://mybinder.org/v2/gh/illinois-scicomp/cs450-s19-binder/master?filepath=#1/#2.ipynb}{\color{purple}\uline{\textbf{Demo: }#2}}}
+#+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
+
+#+BEAMER_HEADER: \let\tmop=\operatorname
+#+BEAMER_HEADER: \let\tmtextbf=\textbf
+#+BEAMER_HEADER: \let\tmtextit=\textit
+
+# \vbar exists only because org gets grumpy if a line starts with a pipe character,
+# getting confused about tables.
+#+BEAMER_HEADER: \def\vbar{|}
+
+#+BEAMER_HEADER: \let\tmem=\emph
+#+BEAMER_HEADER: \let\tmtt=\texttt
+#+BEAMER_HEADER: \let\B=\mathbf
+#+BEAMER_HEADER: \let\op=\operatorname
+#+BEAMER_HEADER: \let\tmop=\operatorname
+#+BEAMER_HEADER: \newcommand{\tmcolor}[2]{{\color{#1}{#2}}}
+#+BEAMER_HEADER: \newcommand{\nocomma}{}
+#+BEAMER_HEADER: \newcommand{\Alpha}{A}
+
+#+BEAMER_HEADER: \newcommand{\abs}[1]{\left| #1 \right|}
+#+BEAMER_HEADER: \newcommand{\norm}[1]{\left\| #1 \right\|}
+#+BEAMER_HEADER: \newcommand{\ip}[2]{\left\langle #1, #2 \right\rangle}
+#+BEAMER_HEADER: \newcommand{\mathd}{\mathrm{d}}
+#+BEAMER_HEADER: \newcommand{\assign}{:=}
+#+BEAMER_HEADER: \newcommand{\fl}{\operatorname{fl}}
+
+#+BEAMER_HEADER: \usepackage{tikz}
+#+BEAMER_HEADER: \usetikzlibrary{calc}
+#+BEAMER_HEADER: \usetikzlibrary{positioning}
+#+BEAMER_HEADER: \usetikzlibrary{shapes.geometric}
+#+BEAMER_HEADER: \usetikzlibrary{shapes.arrows}
+#+BEAMER_HEADER: \usetikzlibrary{shapes.symbols}
+#+BEAMER_HEADER: \usetikzlibrary{shadows}
+#+BEAMER_HEADER: \usetikzlibrary{chains}
+#+BEAMER_HEADER: \usetikzlibrary{fit}
+#+BEAMER_HEADER: \usetikzlibrary{decorations}
+
+#+BEAMER_HEADER: \tikzstyle{every picture}+=[remember picture]
+#+BEAMER_HEADER: \pgfdeclarelayer{background}
+#+BEAMER_HEADER: \pgfdeclarelayer{foreground}
+#+BEAMER_HEADER: \pgfsetlayers{background,main,foreground}
+
+#+BEAMER_HEADER: \newcommand{\cc}{\raisebox{-0.25ex}{\includegraphics[height=2ex]{cc.pdf}}}
+
+#+BEAMER_HEADER: \AtBeginSection[] {
+#+BEAMER_HEADER:   \begin{frame}[shrink]{Outline}
+#+BEAMER_HEADER:     \linespread{0.8}
+#+BEAMER_HEADER:     \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/hide]
+#+BEAMER_HEADER:   \end{frame}
+#+BEAMER_HEADER: }
+# #+BEAMER_HEADER: \AtBeginSubsection[] {
+# #+BEAMER_HEADER:   \begin{frame}[shrink]{Outline}
+# #+BEAMER_HEADER:     \linespread{0.8}
+# #+BEAMER_HEADER:     \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+# #+BEAMER_HEADER:   \end{frame}
+# #+BEAMER_HEADER: }
+
+# https://tex.stackexchange.com/questions/55058/accessing-the-current-overlay-number-in-beamer#55066
+#+BEAMER_HEADER: \makeatletter
+#+BEAMER_HEADER: \newcommand*{\overlaynumber}{\number\beamer@slideinframe}
+#+BEAMER_HEADER: \makeatother
+
+#+LATEX_COMPILER: pdflatex
+#+OPTIONS: H:3 toc:nil ':t tasks:t
+#+BEAMER_THEME: default
+#+COLUMNS: %45ITEM %10BEAMER_ENV(Env) %10BEAMER_ACT(Act) %4BEAMER_COL(Col) %8BEAMER_OPT(Opt)
+
+* Introduction to Scientific Computing
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: error_and_fp
+  :RELATE_TREE_SECTION_OPENED: true
+  :END:
+** Notes
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-book
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-s19/notes.pdf
+  :END:
+
+** Notes (unfilled, with empty boxes)
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-book
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-s19/notes-folded.pdf
+  :END:
+
+*** What's the point of this class?
+
+'/Scientific Computing/' describes a family of approaches to obtain
+approximate solutions to problems /once they've been stated mathematically/.
+
+Name some applications:
+#+LATEX: \begin{hidden}[6cm]
+
+- Engineering simulation
+  - E.g. Drag from flow over airplane wings, behavior of photonic
+    devices, radar scattering, ...
+  - \(\rightarrow\) Differential equations (ordinary and partial)
+- Machine learning
+  - Statistical models, with unknown parameters
+  - \(\rightarrow\) Optimization
+- Image and Audio processing
+  - Enlargement/Filtering
+  - \(\rightarrow\) Interpolation
+- Lots more.
+#+LATEX: \end{hidden}
+
+*** What do we study, and how?
+
+Problems with real numbers (i.e. /continuous/ problems)
+#+LATEX: \begin{hidden}
+- As opposed to /discrete/ problems.
+- Including: How can we put a real number into a computer?
+  (and with what restrictions?)
+#+LATEX: \end{hidden}
+
+What's the general approach?
+#+LATEX: \begin{hidden}
+
+- Pick a /representation/ (e.g.: a polynomial)
+- Existence/uniqueness?
+#+LATEX: \end{hidden}
+
+*** What makes for /good/ numerics?
+How good of an answer can we expect to our problem?
+#+LATEX: \begin{hidden}
+- Can't even represent numbers exactly.
+- Answers will always be /approximate/.
+- So, it's natural to ask /how far off the mark/ we really are.
+#+LATEX: \end{hidden}
+
+/How fast/ can we expect the computation to complete?
+#+LATEX: \begin{hidden}
+- A.k.a. what algorithms do we use?
+- What is the cost of those algorithms?
+- Are they efficient?
+
+  (I.e. do they make good use of available machine time?)
+#+LATEX: \end{hidden}
+
+*** Implementation concerns
+How do numerical methods /get implemented/?
+#+LATEX: \begin{hidden}[4cm]
+- Like anything in computing: A layer cake of /abstractions/
+
+  ("careful lies")
+
+- What tools/languages are available?
+- Are the methods easy to implement?
+- If not, how do we make use of existing tools?
+- How robust is our implementation? (e.g. for error cases)
+#+LATEX: \end{hidden}
+
+*** Class web page
+
+#+BEGIN_CENTER
+[[https://bit.ly/cs450-s19]]
+#+END_CENTER
+
+- Assignments
+
+  - HW0!
+  - Pre-lecture quizzes
+  - In-lecture interactive content (bring computer or phone if possible)
+
+- Textbook
+- Exams
+- Class outline (with links to notes/demos/activities/quizzes)
+- Virtual Machine Image
+- Piazza
+- Policies
+- Video
+- Inclusivity Statement
+
+*** Programming Language: Python/numpy
+
+- Reasonably readable
+- Reasonably beginner-friendly
+- Mainstream (top 5 in `TIOBE Index')
+- Free, open-source
+- Great tools and libraries (not just) for scientific computing
+- Python 2/3? 3!
+- =numpy=: Provides an array datatype
+
+  Will use this and =matplotlib= all the time.
+
+- See class web page for learning materials
+
+\demo{Sum the squares of the integers from 0 to 100. First without numpy, then with numpy.}
+
+*** Supplementary Material
+
+- [[https://scipy-lectures.github.io/intro/numpy/index.html][Numpy (from the SciPy Lectures)]]
+- [[http://www.loria.fr/~rougier/teaching/numpy.100/index.html][100 Numpy Exercises]]
+- [[http://www.diveinto.org/python3/][Dive into Python3]]
+
+** Errors, Conditioning, Accuracy, Stability
+
+*** What problems /can/ we study in the first place?
+
+To be able to compute a solution (through a process that
+introduces errors), the problem...
+#+LATEX: \begin{hidden}[3cm]
+
+- Needs to /have/ a solution
+- That solution should be /unique/
+- And /depend continuously/ on the inputs
+
+#+LATEX: \end{hidden}
+If it satisfies these criteria, the problem is called /well-posed/. Otherwise, /ill-posed/.
+
+*** Dependency on Inputs
+
+We excluded discontinuous problems--because we don't stand much
+chance for those.
+
+...what if the problem's input dependency is just /close to
+discontinuous/?
+#+LATEX: \begin{hidden}[3cm]
+
+- We call those problems /sensitive/ to their input data.
+
+    Such problems are obviously trickier to deal with than non-sensitive ones.
+
+- Ideally, the computational method will not /amplify/ the
+    sensitivity
+#+LATEX: \end{hidden}
+
+*** Approximation
+
+\emph{When} does approximation happen?
+#+LATEX: \begin{hidden}[5cm]
+
+- Before computation
+  - modeling
+  - measurements of input data
+  - computation of input data
+
+- During computation
+  - truncation / discretization
+  - rounding
+
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Truncation vs Rounding}
+
+*** Example: Surface Area of the Earth
+
+Compute the surface area of the earth.
+
+What parts of your computation are approximate?
+#+LATEX: \begin{hidden}[3cm]
+ /All of them./
+\[A = 4 \pi r^2 \]
+
+- Earth isn't really a sphere
+- What does radius mean if the earth isn't a sphere?
+- How do you compute with \(\pi\)? (By rounding/truncating.)
+#+LATEX: \end{hidden}
+
+*** Measuring Error
+
+How do we measure error?
+
+*Idea:* Consider all error as being \emph{added onto} the
+result.
+#+LATEX: \begin{hidden}[4cm]
+\[\text{\tmem{Absolute error}} = \text{approx value } - \text{
+   true value} \]
+\[\text{\tmem{Relative error}} = \;\frac{\text{Absolute error}}{\text{True
+   value}} \]
+*Problem:* True value not known
+
+- Estimate
+
+- `How big at worst?' \(\rightarrow\) Establish /Upper Bounds/
+#+LATEX: \end{hidden}
+
+*** Recap: Norms
+
+What's a norm?
+#+LATEX: \begin{hidden}
+
+- \(f (\B{x}) : \mathbb{R}^n \rightarrow \mathbb{R}^+_0\), returns
+    a `magnitude' of the input vector
+
+- In symbols: Often written \(\norm{\B{x}}\).
+#+LATEX: \end{hidden}
+
+Define /norm/.
+#+LATEX: \begin{hidden}[4cm]
+A function \(\norm{\B{x}} : \mathbb{R}^n \rightarrow \mathbb{R}^+_0\) is called a norm if and only if
+
+1. \(\norm{\B{x}} > 0 \Leftrightarrow \B{x} \neq      \B{0}\).
+
+1. \(\norm{\gamma \B{x}} = \abs{\gamma } \norm{\B{x}}\) for
+    all scalars \(\gamma\).
+
+1. Obeys triangle inequality \(\norm{\B{x} + \B{y}}     \leqslant \norm{\B{x}} + \norm{\B{y}}\)
+#+LATEX: \end{hidden}
+
+*** Norms: Examples
+Examples of norms?
+#+LATEX: \begin{hidden}[4cm]
+The so-called /\(p\)-norms/:
+\[\norm{
+\begin{bmatrix}
+  x_1\\
+  \vdots\\
+  x_n
+\end{bmatrix}}_p = \sqrt[p]{\abs{x_1}^p + \cdots + \abs{x_n}^p} \quad
+   (p \geqslant 1) \]
+\(p = 1, 2, \infty\) particularly important
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Vector Norms}
+
+*** Norms: Which one?
+Does the choice of norm really matter much?
+#+LATEX: \begin{hidden}[4cm]
+In finitely many dimensions, all /norms are equivalent/.
+
+I.e. for fixed \(n\) and two norms \(\norm{\cdot }, \norm{\cdot }^\ast\), there
+exist \(\alpha , \beta > 0\) so that for all vectors \(\B{x} \in  \mathbb{R}^n\)
+\[\alpha \norm{\B{x}} \leqslant \norm{\B{x}}^\ast  \leqslant
+   \beta \norm{\B{x}} . \]
+So: No, doesn't matter \emph{that much}. Will start mattering more for
+so-called /matrix norms/--see later.
+#+LATEX: \end{hidden}
+
+*** Norms and Errors
+
+If we're computing a vector result, the error is a vector.
+
+That's not a very useful answer to `how big is the error'.
+
+What can we do?
+#+LATEX: \begin{hidden}[4cm]
+Apply a norm!\medskip
+
+How? /Attempt 1:/
+\[\tmcolor{red}{\text{Magnitude of error}} \neq \norm{\text{true value}} -
+   \norm{\text{approximate value}} \]
+*WRONG!* (How does it fail?)
+
+/Attempt 2:/
+\[\tmcolor{green}{\text{Magnitude of error}} = \norm{\text{true value} -
+   \text{approximate value}} \]
+#+LATEX: \end{hidden}
+
+
+*** TODO Fix internal contradictions
+
+- [ ] Backward error is based on model perturbation, but in conditioning suddenly it's value perturbation
+
+*** Forward/Backward Error
+
+Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
+
+What are the forward error and the backward error?
+#+LATEX: \begin{hidden}[6cm]
+/Forward
+error:/ \(\Delta y = \hat {y} - y\)\medskip
+
+/Backward error:/ Imagine \emph{all} error came from feeding the
+wrong input into a fully accurate calculation. Backward error is the
+difference between true and `wrong' input. I.e.
+
+- Find an \(\hat {x}\) so that \(f (\hat {x}) = \hat {y}\).
+
+- \(\Delta x = \hat {x} - x\).
+
+\begin{tikzpicture}
+  \node (x) {\strut$x$};
+  \node [below=1cm of x] (xhat) {$\hat x$};
+  \node [right=2cm of xhat] (fxhat) {$\hat y=f(\hat x)$};
+  \node [above=1cm of fxhat] (fx) {$f(x)$};
+
+  \draw [<->, thick] (x) -- (xhat) node [pos=0.5, anchor=east] {bw. err.};
+  \draw [<->, thick] (fx) -- (fxhat) node [pos=0.5, anchor=west] {fw err.};
+  \draw [->, thick] (x) -- (fx) node [pos=0.5, anchor=south] {$f$};
+  \draw [->, thick] (xhat) -- (fxhat) node [pos=0.5, anchor=south] {$f$};
+  \draw [->, thick] (x) -- (fxhat) node [pos=0.5, anchor=south] {$\hat f$};
+\end{tikzpicture}
+
+#+LATEX: \end{hidden}
+
+*** Forward/Backward Error: Example
+
+Suppose you wanted \(y = \sqrt{2}\) and got \(\hat {y} = 1.4\).
+
+What's the (magnitude of) the forward error?
+#+LATEX: \begin{hidden}[3cm]
+
+\[\left | \Delta y \left | = \abs{1.4 - 1.41421 \ldots } \approx 0.0142 \ldots
+   \right . \right . \]
+
+Relative forward error:
+\[\frac{\abs{\Delta y}}{\abs{y}} = \frac{0.0142 \ldots }{1.41421 \ldots }
+   \approx 0.01. \]
+About 1 percent, or /two accurate digits/.
+#+LATEX: \end{hidden}
+
+*** Forward/Backward Error: Example
+Suppose you wanted \(y = \sqrt{2}\) and got \(\hat {y} = 1.4\).
+
+What's the (magnitude of) the backward error?
+#+LATEX: \begin{hidden}[4cm]
+Need \(\hat {x}\) so that \(f (\hat {x}) = 1.4\).
+\[\sqrt{1.96} = 1.4, \quad \Rightarrow \quad \hat {x} = 1.96. \]
+
+Backward error:
+\[| \Delta x | = | 1.96 - 2 | = 0.04.
+    \]
+Relative backward error:
+\[\frac{| \Delta x |   }{\abs{x}} \approx 0.02. \]
+About 2 percent.
+#+LATEX: \end{hidden}
+*** Forward/Backward Error: Observations
+What do you observe about the relative manitude of the relative errors?
+#+LATEX: \begin{hidden}[3cm]
+- In this case: Got smaller, i.e. variation /damped out/.
+- Typically: Not that lucky: Input error /amplified/.
+
+This amplification factor seems worth studying in more detail.
+#+LATEX: \end{hidden}
+
+*** Sensitivity and Conditioning
+
+What can we say about amplification of error?
+#+LATEX: \begin{hidden}[6cm]
+Define
+/condition number/ as smallest number \(\kappa\) so that
+\[\abs{\text{rel. fwd. err.}} \leqslant \kappa \cdot \abs{\text{rel. bwd.
+   err.}} \]
+Or, somewhat sloppily, with \(x / y\) notation as in previous example:
+\[\tmop{cond} = \max _x \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} /
+   \abs{x}} . \]
+(Technically: should use `supremum'.)\medskip
+
+If the condition number is...
+
+- ...small: the problem /well-conditioned/ or
+    insensitive
+
+- ...large: the problem /ill-conditioned/ or sensitive
+
+/Can/ also talk about condition number for a single input \(x\).
+#+LATEX: \end{hidden}
+
+*** Example: Condition Number of Evaluating a Function
+
+\(y = f (x)\). Assume \(f\) differentiable.
+#+LATEX: \begin{hidden}
+\[\kappa = \max_{x} \frac{\abs{\Delta y} /
+   \abs{y}}{\abs{\Delta x} / \abs{x}} \]
+Forward error:
+\[\Delta y = f (x + \Delta x)-f(x) = f' (x) \Delta x \]
+Condition number:
+\[\kappa \geqslant \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} / \abs{x}}
+   = \frac{\abs{f' (x)} \abs{\Delta x} / \abs{f (x)}}{\abs{\Delta x} /
+   \abs{x}} = \frac{\abs{xf' (x)}}{\abs{f (x)}} . \]
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Conditioning of Evaluating tan}
+
+*** Stability and Accuracy
+
+*Previously:* Considered /problems/ or /questions/.
+
+*Next:* Considered /methods/, i.e. computational approaches to find solutions.
+
+When is a method /accurate/?
+#+LATEX: \begin{hidden}
+Closeness of
+method output to true answer for unperturbed input.
+#+LATEX: \end{hidden}
+
+When is a method /stable/?
+#+LATEX: \begin{hidden}[4cm]
+- ``A method is stable if the result it produces is the exact solution
+  to a nearby problem.''
+
+- The above is commonly called /backward stability/ and is a stricter
+  requirement than just the temptingly simple:\medskip
+
+  If the method's sensitivity to variation in the input is no (or not
+  much) greater than that of the problem itself.
+
+*Note:* Necessarily includes insensitivity to variation in
+intermediate results.
+#+LATEX: \end{hidden}
+
+*** Getting into Trouble with Accuracy and Stability
+How can I produce inaccurate results?
+#+LATEX: \begin{hidden}
+
+- Apply an inaccurate method
+- Apply an unstable method to a well-conditioned problem
+- Apply any type of method to an ill-conditioned problem
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: Forward/Backward Error
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-fwd-bwd-error/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{fwd-bwd-error}{Forward/Backward Error}
+
+
+** Floating Point
+
+*** Wanted: Real Numbers... in a computer
+
+Computers can represent \emph{integers}, using bits:
+\[23 = 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 =
+   (10111)_2 \]
+How would we represent fractions?
+#+LATEX: \begin{hidden}[5cm]
+*Idea:* Keep going down
+past zero exponent:
+\begin{align*}
+  23 \tmcolor{blue}{.625}
+  &= 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 \\
+  &\tmcolor{blue}{+ 1 \cdot 2^{- 1} + 0 \cdot 2^{- 2} + 1 \cdot 2^{- 3}}
+\end{align*}
+
+*So:* Could store
+
+- a fixed number of bits with exponents \(\geqslant 0\)
+
+- a fixed number of bits with exponents \(< 0\)
+
+This is called /fixed-point arithmetic/.
+#+LATEX: \end{hidden}
+
+*** Fixed-Point Numbers
+
+Suppose we use units of 64 bits, with 32 bits for exponents
+\(\geqslant 0\) and 32 bits for exponents \(< 0\). What numbers can we
+represent?
+#+LATEX: \begin{hidden}[2.5cm]
+
+#+ATTR_LATEX: :align |c|c|c|c|c|c|
+|----------+----------+-------+----------+----------+-----------|
+| $2^{31}$ | $\cdots$ | $2^0$ | $2^{-1}$ | $\cdots$ | $2^{-32}$ |
+|----------+----------+-------+----------+----------+-----------|
+
+*Smallest:* \(2^{- 32} \approx 10^{- 10}\)
+
+*Largest:* \(2^{31} + \cdots + 2^{- 32} \approx 10^9\)
+#+LATEX: \end{hidden}
+
+How many `digits' of relative accuracy (think relative rounding
+error) are available for the smallest vs. the largest
+number?
+#+LATEX: \begin{hidden}[2.5cm]
+*For large numbers:* about 19
+
+*For small numbers:* few or none\medskip
+
+*Idea:* Instead of \emph{fixing} the location of the 0 exponent,
+let it /float/.
+#+LATEX: \end{hidden}
+
+*** Floating Point Numbers
+
+Convert \(13 = (1101)_2\) into floating point representation.
+#+LATEX: \begin{hidden}
+\[13
+   = 2^3 + 2^2 + 2^0 = (1.101)_2 \cdot 2^3 \]
+#+LATEX: \end{hidden}
+
+What pieces do you need to store an FP number?
+#+LATEX: \begin{hidden}
+/Significand:/ \((1.101)_2\)
+
+/Exponent:/ 3
+#+LATEX: \end{hidden}
+*** Floating Point: Implementation, Normalization
+
+*Previously:* Consider /mathematical/ view of FP.
+
+*Next:* Consider /implementation/ of FP in hardware.
+
+Do you notice a source of inefficiency in our number representation?
+
+#+LATEX: \begin{hidden}[5cm]
+*Idea:* Notice that the leading digit (in binary) of the significand
+is always one.
+
+Only store `101'. Final storage format:
+
+/Significand:/ \(101\) -- a fixed number of bits
+
+/Exponent:/ 3 -- a (\emph{signed!}) integer allowing a certain
+range
+
+Exponent is most often stored as a positive `offset' from a certain negative
+number. E.g.
+\[3 = \underbrace{- 1023}_{\text{implicit offset}} +
+   \underbrace{1026}_{\text{stored}} \]
+Actually stored: 1026, a positive integer.
+#+LATEX: \end{hidden}
+
+*** Unrepresentable numbers?
+
+Can you think of a somewhat central number that we cannot
+represent as
+\[x = \left ( 1. \text{\_\_\_\_\_\_\_\_\_} \right )_2 \cdot 2^{- p} ? \]
+#+LATEX: \begin{hidden}[5cm]
+Zero.
+Which is somewhat embarrassing.\medskip
+
+*Core problem:* The implicit 1. It's a great idea, were it not for
+this issue.\medskip
+
+Have to break the pattern. *Idea:*
+
+- Declare one exponent `special', and turn off the leading one for that
+    one.
+
+    (say, $-1023$, a.k.a. stored exponent 0)
+
+- For all larger exponents, the leading one remains in effect.
+
+*Bonus Q:* With this convention, what is the binary representation of
+a zero?
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Picking apart a floating point number}
+
+*** Subnormal Numbers
+
+What is the smallest representable number in an FP system with 4
+stored bits in the significand and an exponent range of \([- 7, 7]\)?
+#+LATEX: \begin{hidden}[3cm]
+First attempt:
+
+- Significand as small as possible \(\rightarrow\) all zeros after the
+    implicit leading one
+
+- Exponent as small as possible: \(- 7\)
+
+So:
+\[(1.0000)_2 \cdot 2^{- 7} . \]
+Unfortunately: *wrong*.
+#+LATEX: \end{hidden}
+
+*** Subnormal Numbers II
+What is the smallest representable number in an FP system with 4
+stored bits in the significand and an exponent range of \([- 7, 7]\)?
+(Attempt 2)
+#+LATEX: \begin{hidden}[4cm]
+We can go way smaller by using the
+special exponent (which turns off the implicit leading one). We'll assume that
+the special exponent is \(- 8\). So: \((0.0001)_2 \cdot 2^{- 8} \).
+
+Numbers with the special epxonent are called /subnormal/ (or
+/denormal/) FP numbers. Technically, zero is also a
+subnormal.\medskip
+
+*Note:* It is thus quite natural to `park' the special exponent at
+the low end of the exponent range.
+#+LATEX: \end{hidden}
+
+Why learn about subnormals?
+
+#+LATEX: \begin{hidden}
+Because computing with them is often slow, because it is implemented using `FP
+assist', i.e. not in actual hardware. Many C compilers support options to
+`flush subnormals to zero'.
+#+LATEX: \end{hidden}
+
+*** Underflow
+
+- FP systems without subnormals will /underflow/ (return 0) as
+  soon as the exponent range is exhausted.
+
+- This smallest representable /normal/ number is called the
+  /underflow level/, or /UFL/.
+
+- Beyond the underflow level, subnormals provide for /gradual
+  underflow/ by `keeping going' as long as there are bits in the significand,
+  but it is important to note that subnormals don't have as many accurate
+  digits as normal numbers.
+
+- Analogously (but much more simply--no `supernormals'): the overflow
+  level, /OFL/.
+
+*** Rounding Modes
+
+How is rounding performed? (Imagine trying to represent $\pi$.)
+\[\big ( \underbrace{\tmcolor{orange}{1.1101010}}_{\text{representable}} 11
+   \big )_2 \]
+#+LATEX: \begin{hidden}[2.5cm]
+- ``Chop'' a.k.a. /round-to-zero/:
+   $(\tmcolor{orange}{1.1101010})_2$
+- /Round-to-nearest/:
+  $(\tmcolor{orange}{1.110101} 1)_2$
+  (most accurate)
+#+LATEX: \end{hidden}
+
+What is done in case of a tie? \(0.5 = (0.1)_2 \) (``Nearest''?)
+#+LATEX: \begin{hidden}
+Up or down? It turns out that picking the same direction every time introduces
+\emph{bias}. Trick: /round-to-even/.
+\[0.5 \rightarrow 0, \qquad 1.5 \rightarrow 2 \]
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Density of Floating Point Numbers}
+
+\demolink{error_and_fp}{Floating Point vs Program Logic}
+
+*** Smallest Numbers Above...
+
+- What is smallest FP number > 1? Assume 4 bits in the significand.
+#+LATEX: \begin{hidden}
+\[(1.0001)_2 \cdot 2^0 = x \cdot (1 + 0.0001)_2 \]
+#+LATEX: \end{hidden}
+
+What's the smallest FP number > 1024 in that same system?
+#+LATEX: \begin{hidden}
+\[
+   (1.0001)_2 \cdot 2^{10} = x \cdot (1 + 0.0001)_2 \]
+#+LATEX: \end{hidden}
+
+Can we give that number a name?
+*** Unit Roundoff
+
+/Unit roundoff/ or /machine precision/ or /machine epsilon/ or
+\( \varepsilon _{\tmop{mach}}\) is the smallest
+number such that
+\[\tmop{float} (1 + \varepsilon ) > 1. \]
+- Assuming round-to-nearest, in the above system, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
+- Note the extra zero.
+
+- Another, related, quantity is /ULP/, or /unit in the last place/.
+
+  (\( \varepsilon _{\tmop{mach}} = 0.5 \tmop{ULP})\)
+
+*** FP: Relative Rounding Error
+
+What does this say about the relative error incurred in floating
+point calculations?
+#+LATEX: \begin{hidden}[5cm]
+
+- The factor to get from one FP number to the next larger one is
+  (mostly) independent of magnitude: \(1 + \varepsilon _{\tmop{mach}}\).
+
+- Since we can't represent any results between
+  \(x \quad \text{and} \quad x \cdot (1 + \varepsilon _{\tmop{mach}}) \),
+  that's really the minimum error incurred.
+
+- In terms of relative error:
+  \[\abs{\frac{\tilde {x} - x}{x}} = \abs{\frac{x (1 +
+     \varepsilon _{\tmop{mach}}) - x}{x}} = \varepsilon _{\tmop{mach}} . \]
+  At least theoretically, \(\varepsilon _{\tmop{mach}}\) is the maximum relative
+  error in any FP operations. (Practical implementations do fall short of
+  this.)
+#+LATEX: \end{hidden}
+
+*** FP: Machine Epsilon
+
+What's that same number for double-precision floating point? (52
+bits in the significand)
+#+LATEX: \begin{hidden}[3cm]
+\[2^{- 53} \approx 10^{- 16} \]
+*Bonus Q:* What does \(1 + 2^{- 53}\) do on your computer?
+Why?\medskip
+
+We can expect FP math to consistently introduce little relative errors of
+about \(10^{- 16}\).\medskip
+
+Working in double precision gives you about 16 (decimal) accurate digits.
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Floating Point and the Harmonic Series}
+
+*** In-Class Activity: Floating Point
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-floating-point/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{floating-point}{Floating Point}
+
+*** Implementing Arithmetic
+
+How is floating point addition implemented?
+
+Consider adding \(a = (1.101)_2 \cdot 2^1\) and \(b = (1.001)_2 \cdot 2^{- 1}\) in
+a system with three bits in the significand.
+#+LATEX: \begin{hidden}[4cm]
+Rough algorithm:
+
+1. Bring both numbers onto a common exponent
+2. Do grade-school addition from the front, until you run out of digits
+    in your system.
+3. Round result.
+\begin{eqnarray*}
+  a = & 1. & \tmcolor{orange}{101} \cdot 2^1\\
+  b = & 0. & \tmcolor{orange}{010} \tmcolor{red}{01} \cdot 2^1\\
+  a + b \approx & 1. & \tmcolor{orange}{111} \cdot 2^1
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Problems with FP Addition
+
+What happens if you subtract two numbers of very similar
+magnitude?
+
+As an example, consider \(a = (1.1011)_2 \cdot 2^0\) and \(b = (1.1010)_2 \cdot  2^0\).
+#+LATEX: \begin{hidden}[4cm]
+
+\begin{eqnarray*}
+  a = & 1. & 1011 \cdot 2^1\\
+  b = & 1. & 1010 \cdot 2^1\\
+  a - b \approx & \tmcolor{orange}{0.} & \tmcolor{orange}{000} 1 ? ? ? ? \cdot 2^1
+\end{eqnarray*}
+or, once we normalize,
+\[1. ? ? ? ? \cdot 2^{- 3} . \]
+There is no data to indicate what the missing digits should be.
+
+\(\rightarrow\) Machine fills them with its `best guess', which is not often good.\medskip
+
+This phenomenon is called /Catastrophic Cancellation/.
+#+LATEX: \end{hidden}
+
+\demolink{error_and_fp}{Catastrophic Cancellation}
+
+*** Supplementary Material
+
+- Josh Haberman, [[http://blog.reverberate.org/2014/09/what-every-computer-programmer-should.html][Floating Point Demystified, Part 1]]
+
+- David Goldberg, [[http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html][What every computer programmer should know about floating point]]
+
+
+* Systems of Linear Equations
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: linear_systems
+  :END:
+
+** Theory: Conditioning
+
+*** Solving a Linear System
+
+Given:
+
+- \(m \times n\) matrix \(A\)
+
+- \(m\)-vector \(\B{b}\)
+
+What are we looking for here, and when are we allowed to ask the
+question?
+#+LATEX: \begin{hidden}[5cm]
+*Want:* \(n\)-vector \(\B{x}\) so that
+\[A \B{x} = \B{b} . \]
+
+- Linear combination of columns of \(A\) to yield \(\B{b}\).
+
+- *Restrict* to square case (\(m = n\)) for now.
+
+- Even with that: solution may not exist, or may not be unique.
+
+Unique solution exists iff \(A\) is /nonsingular/.\medskip
+
+#+LATEX: \end{hidden}
+
+*Next:* Want to talk about conditioning of this operation. Need to
+ measure distances of matrices.
+
+*** Matrix Norms
+
+What norms would we apply to matrices?
+#+LATEX: \begin{hidden}[6cm]
+
+*Easy answer:* `\emph{Flatten}' matrix as vector, use vector norm.
+
+Not very meaningful.
+
+*Instead:* Choose norms for matrices to interact
+with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
+\[\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}} . \]
+
+This can be achieved by choosing, for a given vector norm
+\(\norm{\cdot }\),
+\[\norm{A} \assign \max _{\norm{\B{x}} = 1} \norm{A \B{x}} .
+\]
+This is called the *matrix norm*.
+
+For each vector norm, we get a different matrix norm,
+e.g. for the vector 2-norm \(\norm{\B{x}}_2\) we get a matrix
+2-norm \(\norm{A}_2\).
+#+LATEX: \end{hidden}
+
+*** Matrix Norm Properties
+
+What is \(\norm{A}_1 \)? \(\norm{A}_\infty \)?
+#+LATEX: \begin{hidden}[3cm]
+\vspace*{-2ex}
+\begin{eqnarray*}
+  \norm{A}_1 & = & \max _{\tmop{col} j} \sum _{\tmop{row} i} \abs{A_{i, j}},\\
+  \norm{A}_\infty  & = & \max _{\tmop{row} i} \sum _{\tmop{col} j} \abs{A_{i, j}} .
+\end{eqnarray*}
+
+The matrix 2-norm? Is actually fairly difficult to evaluate. See later.
+#+LATEX: \end{hidden}
+
+How do matrix and vector norms relate for \(n \times 1\) matrices?
+#+LATEX: \begin{hidden}
+They agree. Why? For \(n\times 1\), the vector \(\B x\) in \(A\B x\) is just a scalar:
+\[\max_{\norm{\B x}=1}\norm{A \B x}
+=\max_{x\in\{-1,1\}}\norm{A x}
+=\norm{A[:,1]}\]
+
+This can help to remember 1- and \(\infty\)-norm.
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Matrix norms}
+
+*** Properties of Matrix Norms
+
+Matrix norms inherit the vector norm properties:
+
+- \(\norm{A} > 0 \Leftrightarrow A \neq \B{0}\).
+
+- \(\norm{\gamma A} = \abs{\gamma } \norm{A}\) for all scalars \(\gamma\).
+
+- Obeys triangle inequality \(\norm{A + B} \leqslant \norm{A} + \norm{B}\)
+
+But also some more properties that stem from our
+definition:
+#+LATEX: \begin{hidden}[2.5cm]
+
+- \(\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}}\)
+
+- \(\norm{AB} \leqslant \norm{A} \norm{B}\) (easy consequence)
+
+Both of these are called /submultiplicativity/ of the matrix norm.
+#+LATEX: \end{hidden}
+
+*** Conditioning
+
+What is the condition number of solving a linear system
+\(A \B{x} = \B{b}\)?
+#+LATEX: \begin{hidden}[5cm]
+*Input:* \(\B{b}\) with
+error \(\Delta \B{b}\),
+
+*Output:* \(\B{x}\) with error \(\Delta \B{x}\).\medskip
+
+Observe \(A (\B{x} + \Delta \B{x}) = (\B{b} + \Delta  \B{b})\), so \(A \Delta \B{x} = \Delta \B{b}\).
+
+\begin{eqnarray*}
+  \frac{\text{rel err. in output}}{\text{rel err. in input}} & = &
+    \frac{\norm{\Delta \B{x}} / \norm{\B{x}}}{\norm{\Delta
+    \B{b}} / \norm{\B{b}}} = \frac{\norm{\Delta \B{x}}
+    \norm{\B{b}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& = & \frac{\norm{A^{- 1} \Delta \B{b}} \norm{A
+    \B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& \leqslant & \norm{A^{- 1}} \norm{A} \frac{\norm{\Delta \B{b}}
+    \norm{\B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& = & \norm{A^{- 1}} \norm{A} .
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Conditioning of Linear Systems: Observations
+
+Showed \(\kappa(\text{Solve $A\B x=\B b$})\le \norm{A^{-1}}\norm{A}\).
+
+I.e. found an /upper bound/ on the condition number. With a
+little bit of fiddling, it's not too hard to find examples that achieve this
+bound, i.e. that it is /sharp/.\medskip
+
+So we've found the /condition number of linear system solving/, also
+called the *condition number of the matrix \(A\)*:
+\[\tmop{cond} (A) = \kappa (A) = \norm{A} \norm{A^{- 1}} . \]
+
+
+*** Conditioning of Linear Systems: More properties
+- \(\tmop{cond}\) is relative to a given norm. So, to be precise, use
+  \[\tmop{cond}_2 \quad \text{or} \quad \tmop{cond}_\infty  . \]
+- If \(A^{- 1}\) does not exist: \(\tmop{cond} (A) = \infty\) by convention.
+
+What is \(\kappa(A^{-1})\)?
+#+LATEX: \begin{hidden}
+\(\kappa(A)\)
+#+LATEX: \end{hidden}
+
+What is the condition number of matrix-vector multiplication?
+#+LATEX: \begin{hidden}
+\(\kappa(A)\) because it is equivalent to solving with \(A^{-1}\).
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Condition number visualized}
+
+\demolink{linear_systems}{Conditioning of 2x2 Matrices}
+
+*** Residual Vector
+
+What is the *residual vector* of solving the linear system
+\[\B{b} = A \B{x} ? \]
+#+LATEX: \begin{hidden}[3cm]
+It's the thing that's `left over'.
+Suppose our approximate solution is \(\widehat{\B{x}}\). Then the
+residual vector is
+\[\B{r} = \B{b} - A \widehat{\B{x}} . \]
+#+LATEX: \end{hidden}
+
+*** Residual and Error: Relationship
+How do the (norms of the) residual vector \(\B{r}\) and the
+error \(\Delta \B{x} = \B{x} - \widehat{\B{x}}\) relate to
+one another?
+#+LATEX: \begin{hidden}[6cm]
+\begin{eqnarray*}
+  \norm{\Delta \B{x}} & = & \norm{\B{x} - \widehat{\B{x}}}\\
+    & = & \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}\\
+    & = & \norm{A^{- 1} \B{r}}
+\end{eqnarray*}
+Divide both sides by \(\norm{\widehat{\B{x}}}\):
+\begin{eqnarray*}
+  \frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}} & = &
+    \frac{\norm{A^{- 1} \B{r}}}{\norm{\widehat{\B{x}}}} \leqslant
+    \frac{\norm{A^{- 1}} \norm{\B{r}}}{\norm{\widehat{\B{x}}}} =
+    \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A}
+    \norm{\widehat{\B{x}}}} .
+\end{eqnarray*}
+
+- \(\tmop{rel} \tmop{err} \leqslant \tmop{cond} \cdot \tmop{rel}     \tmop{resid}\)
+
+- Given small (rel.) residual, (rel.) error is only (guaranteed to be)
+  small if the condition number is also small.
+#+LATEX: \end{hidden}
+
+*** Changing the Matrix
+
+So far, all our discussion was based on changing the right-hand
+side, i.e.
+\[A \B{x} = \B{b} \quad \rightarrow \quad A
+   \widehat{\B{x}} = \widehat{\B{b}} . \]
+The matrix consists of FP numbers, too--it, too, is approximate. I.e.
+\[A \B{x} = \B{b} \quad \rightarrow \quad \hat {A}
+   \widehat{\B{x}} = \B{b} . \]
+What can we say about the error now?
+#+LATEX: \begin{hidden}[3cm]
+Consider
+\(\Delta \B{x} = \widehat{\B{x}} - \B{x} = A^{- 1} (A
+   \widehat{\B{x}} - \B{b}) = - A^{- 1} \Delta A
+   \widehat{\B{x}} \).
+Thus
+\[\norm{\Delta \B{x}} \leqslant \norm{A^{- 1}} \norm{\Delta A}
+   \norm{\widehat{\B{x}}} . \]
+And we get
+\[\frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}} \leqslant
+   \tmop{cond} (A) \frac{\norm{\Delta A}}{\norm{A}} . \]
+#+LATEX: \end{hidden}
+
+*** Changing Condition Numbers
+
+Once we have a matrix \(A\) in a linear system \(A \B{x} = \B{b}\), are we stuck with its condition number? Or could we improve
+it?
+#+LATEX: \begin{hidden}[2.5cm]
+/Diagonal scaling/ is a simple strategy that sometimes
+helps.
+
+- Row-wise:
+    \(DA \B{x} = D \B{b} \)
+- Column-wise:
+    \(AD \widehat{\B{x}} = \B{b} \)
+
+  Different \(\widehat{\B{x}}\): Recover \(\B{x} = D     \widehat{\B{x}}\).
+#+LATEX: \end{hidden}
+
+What is this called as a general concept?
+#+LATEX: \begin{hidden}[2.5cm]
+/Preconditioning/
+
+- *Left' preconditioning:*
+    \(MA \B{x} = M \B{b} \)
+- *Right preconditioning:*
+    \(AM \widehat{\B{x}} = \B{b} \)
+
+  Different \(\widehat{\B{x}}\): Recover \(\B{x} = M     \widehat{\B{x}}\).
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: Matrix Norms and Conditioning
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-conditioning/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{conditioning}{Matrix Norms and Conditioning}
+
+
+** Methods to Solve Systems
+
+*** Solving Systems: Triangular matrices
+
+Solve
+\begin{equation*}
+\begin{bmatrix}
+  a_{11} & a_{12} & a_{13} & a_{14}\\& a_{22} & a_{23} & a_{24}\\&  & a_{33} & a_{34}\\&  &  & a_{44}
+\end{bmatrix}
+\begin{bmatrix}
+  x\\y\\z\\w
+\end{bmatrix} =
+\begin{bmatrix}
+  b_1\\b_2\\b_3\\b_4
+\end{bmatrix} .
+\end{equation*}
+#+LATEX: \begin{hidden}[2.5cm]
+
+- Rewrite as individual equations.
+- This process is called *back-substitution*.
+- The analogous process for lower triangular matrices is called
+  *forward substitution*.
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Coding back-substitution}
+
+What about non-triangular matrices?
+#+LATEX: \begin{hidden}
+Can do
+/Gaussian Elimination/, just like in linear algebra class.
+#+LATEX: \end{hidden}
+
+*** Gaussian Elimination
+
+\demolink{linear_systems}{Vanilla Gaussian Elimination}
+
+What do we get by doing Gaussian Elimination?
+#+LATEX: \begin{hidden}
+/Row Echelon
+Form/.
+#+LATEX: \end{hidden}
+
+How is that different from being upper triangular?
+#+LATEX: \begin{hidden}
+Zeros allowed
+on and above the diagonal.
+#+LATEX: \end{hidden}
+
+What if we do not just eliminate downward but also
+upward?
+#+LATEX: \begin{hidden}
+That's called /Gauss-Jordan elimination/. Turns out to be
+computationally inefficient. We won't look at it.
+#+LATEX: \end{hidden}
+
+*** Elimination Matrices
+
+What does this matrix do?
+\begin{equation*}
+\begin{bmatrix}
+  1 &  &  &  & \\& 1 &  &  & \\- \frac{1}{2} &  & 1 &  & \\&  &  & 1 & \\&  &  &  & 1
+\end{bmatrix}
+\begin{bmatrix}
+  \ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast
+\end{bmatrix}
+\end{equation*}
+#+LATEX: \begin{hidden}[2.5cm]
+
+- Add \((- 1 / 2) \times\) the first row to the third row.
+
+- One elementary step in Gaussian elimination
+
+- Matrices like this are called /Elimination Matrices/
+#+LATEX: \end{hidden}
+
+*** About Elimination Matrices
+
+Are elimination matrices invertible?
+#+LATEX: \begin{hidden}[5cm]
+Sure! Inverse of
+\[
+\begin{bmatrix}
+  1 &  &  &  & \\& 1 &  &  & \\- \frac{1}{2} &  & 1 &  & \\&  &  & 1 & \\&  &  &  & 1
+\end{bmatrix} \]
+should be
+\[
+\begin{bmatrix}
+  1 &  &  &  & \\& 1 &  &  & \\\tmcolor{red}{+} \frac{1}{2} &  & 1 &  & \\&  &  & 1 & \\&  &  &  & 1
+\end{bmatrix} . \]
+#+LATEX: \end{hidden}
+
+*** More on Elimination Matrices
+
+\demolink{linear_systems}{Elimination matrices I}
+
+*Idea:* With enough elimination matrices, we should be
+able to get a matrix into row echelon form.
+#+LATEX: \begin{hidden}
+\[M_\ell  M_{\ell - 1} \cdots
+   M_2 M_1 A = \langle \text{Row Echelon Form \(U\) of \(A\)} \rangle . \]
+#+LATEX: \end{hidden}
+
+So what do we get from many combined elimination matrices like
+that?
+#+LATEX: \begin{hidden}
+(a lower triangular matrix)
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Elimination Matrices II}
+
+*** Summary on Elimination Matrices
+
+- El.matrices with off-diagonal entries in a single column just
+    ``merge''
+
+    when multiplied by one another.
+
+- El.matrices with off-diagonal entries in different columns merge when
+    we multiply (left-column) * (right-column) but not the other way around.
+
+- Inverse: Flip sign below diagonal
+
+*** LU Factorization
+
+Can build a /factorization/ from elimination matrices.
+How?
+#+LATEX: \begin{hidden}
+\[A = \underbrace{M_1^{- 1} M_2^{- 1} \cdots M_{\ell - 1}^{- 1}
+   M_\ell ^{- 1}}_{\text{lower \(\triangle\) mat \(L\)}}^{- 1} U = LU. \]
+This is called *LU factorization* (or *LU decomposition*).
+#+LATEX: \end{hidden}
+
+*** Solving $A\B x=\B b$
+
+Does LU help solve \(A \B{x} = \B{b} ?\)
+#+LATEX: \begin{hidden}[4cm]
+\vspace{-2ex}
+\begin{eqnarray*}
+  A \B{x} & = & \B{b}\\
+  L \underbrace{U \B{x}}_{\B{y}} & = & \B{b}\\
+  L \B{y} & = & \B{b} \quad \leftarrow \quad \text{solvable by fwd. subst.}\\
+  U \B{x} & = & \B{y} \quad \leftarrow \quad \text{solvable by bwd. subst.}
+\end{eqnarray*}
+Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{LU factorization}
+
+
+*** LU: Failure Cases?
+
+Is LU/Gaussian Elimination bulletproof?
+#+LATEX: \begin{hidden}[5cm]
+No, very much not:
+\[A = \begin{bmatrix} 0 & 1\\2 & 1 \end{bmatrix} . \]
+*Q:* Is this a problem with the process or with the entire /idea/ of LU?
+
+\begin{eqnarray*}
+  \begin{bmatrix}
+    u_{11} & u_{12}\\& u_{22}
+  \end{bmatrix} &  & \\
+  \begin{bmatrix}
+    1 & \\
+   \ell _{21} & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    \tmcolor{green}{0} & 1\\
+    \tmcolor{red}{2} & 1
+  \end{bmatrix}
+  & \rightarrow & \tmcolor{green}{u_{11} = 0}\\
+  & & \tmcolor{red}{\underbrace{u_{11} \cdot \ell _{21}}_0 + 1 \cdot 0 = 2}
+\end{eqnarray*}
+It turns out to be that \(A\) doesn't /have/ an LU factorization.
+#+LATEX: \end{hidden}
+
+*** Saving the LU Factorization
+What can be done to get something \emph{like} an LU
+factorization?
+#+LATEX: \begin{hidden}[4cm]
+*Idea:* In Gaussian elimination: simply
+swap rows, equivalent linear system.\medskip
+
+*Approach:*
+
+- Good Idea: Swap rows if there's a zero in the way
+
+- Even better Idea: Find the largest entry (by absolute value), swap it
+    to the top row.
+
+The entry we divide by is called the /pivot/.
+
+Swapping rows to get a bigger pivot is called /(partial) pivoting/.
+#+LATEX: \end{hidden}
+
+*** Recap: Permuation Matrices
+How do we capture `row switches' in a factorization?
+
+\[
+\underbrace{
+\begin{bmatrix}
+  1 &  &  & \\&  & 1 & \\& 1 &  & \\&  &  & 1
+\end{bmatrix}}_P
+\begin{bmatrix}
+  A & A & A & A\\B & B & B & B\\C & C & C & C\\D & D & D & D
+\end{bmatrix} =
+\begin{bmatrix}
+  A & A & A & A\\\tmcolor{red}{C} & \tmcolor{red}{C} & \tmcolor{red}{C} &
+       \tmcolor{red}{C}\\\tmcolor{red}{\tmcolor{red}{B}} & \tmcolor{red}{B} & \tmcolor{red}{B} &
+       \tmcolor{red}{B}\\D & D & D & D
+\end{bmatrix}. \]
+\(P\) is called a /permutation matrix/.
+
+*Q:* What's \(P^{- 1}\)?
+
+*** Fixing nonexistence of LU
+
+What does LU with permutations process look like?
+#+LATEX: \begin{hidden}[6cm]
+
+\begin{tabular}{rl}
+  \(P_1 A\) & Pivot first column\\\(M_1 P_1 A\) & Eliminate first column\\\(P_2 M_1 P_1 A\) & Pivot second column\\\(M_2 P_2 M_1 P_1 A\) & Eliminate second column\\\(P_3 M_2 P_2 M_1 P_1 A\) & Pivot third column\\\(M_3 P_3 M_2 P_2 M_1 P_1 A\) & Eliminate third column
+\end{tabular}
+
+Or
+\[A = P_1 M_1^{- 1} P_2 M_2^{- 1} P_3 M_3^{- 1} U. \]
+Unfortunately, \(P\)'s and \(M\)'s don't commute, so it's not obvious how to get a
+lower-triangular \(L\).
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{LU with Partial Pivoting} (Part I)
+
+*** What about the $L$  in LU?
+
+Sort out what LU with pivoting looks like. Have: \(M_3 P_3 M_2 P_2 M_1 P_1 A = U\).
+#+LATEX: \begin{hidden}[6cm]
+
+Define: \(L_3 := M_3\)\\
+Define \(L_2 := P_3 M_2 P_3^{- 1}\)\\
+Define \(L_1 := P_3 P_2 M_1 P_2^{- 1} P_3^{- 1}\)\medskip
+\vspace{-2ex}
+\begin{align*}
+   & (L_3 L_2 L_1) (P_3 P_2 P_1)\\
+  = & M_3 (P_3 M_2 P_3^{- 1}) (P_3 P_2 M_1 P_2^{- 1} P_3^{- 1}) P_3 P_2 P_1\\
+  = & M_3 P_3 M_2 P_2 M_1 P_1 \quad (!)
+\end{align*}
+\vspace{-2ex}
+\[
+  \underbrace{P_3 P_2 P_1}_P A = \underbrace{L_1^{- 1} L_2^{- 1} L_3^{- 1}}_L U.\\
+\]
+\(L_1, \ldots , L_3\) are still lower triangular!\medskip
+
+*Q:* Outline the solve process with pivoted LU.
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{LU with Partial Pivoting} (Part II)
+
+*** Computational Cost
+
+What is the computational cost of multiplying two \(n \times n\)
+matrices?
+#+LATEX: \begin{hidden}
+\(O (n^3)\)
+#+LATEX: \end{hidden}
+
+What is the computational cost of carrying out LU factorization
+on an \(n \times n\) matrix?
+#+LATEX: \begin{hidden}
+Recall
+\[M_3 P_3 M_2 P_2 M_1 P_1 A = U \ldots \]
+so \(O (n^4)\)?!!!\medskip
+
+Fortunately not: Multiplications with permuation matrices and elimination
+matrices only cost \(O (n^2)\).\medskip
+
+So overall cost of LU is just \(O (n^3)\).
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Complexity of Mat-Mat multiplication and LU}
+
+*** More cost concerns
+
+What's the cost of solving \(A \B{x} = \B{b} ?\)
+#+LATEX: \begin{hidden}
+LU:
+\(O (n^3)\)
+
+FW/BW Subst: \(2 \times O (n^2) = O (n^2)\)
+#+LATEX: \end{hidden}
+
+What's the cost of solving \(A \B{x} = \B{b}_1, \B{b}_2, \ldots , \B{b}_n ?\)
+#+LATEX: \begin{hidden}
+LU: \(O (n^3)\)
+
+FW/BW Subst: \(2 n \times O (n^2) = O (n^3)\)
+#+LATEX: \end{hidden}
+
+What's the cost of finding \(A^{- 1}\)?
+#+LATEX: \begin{hidden}
+Same as solving
+\[AX = I, \]
+so still \(O (n^3)\).
+#+LATEX: \end{hidden}
+
+*** Cost: Worrying about the Constant, BLAS
+
+\(O (n^3)\) really means
+\[\alpha \cdot n^3 + \beta \cdot n^2 + \gamma \cdot n + \delta . \]
+All the non-leading and constants terms swept under the rug. But: at least the
+leading constant ultimately matters.\medskip
+
+Shrinking the constant: surprisingly hard (even for 'just' matmul)\medskip
+
+*Idea:* Rely on library implementation: /BLAS/ (Fortran)
+
+\begin{tabular}{llp{12.0cm}}
+  Level 1 & \(\B{z} = \alpha \B{x} + \B{y}\) &
+    vector-vector operations
+
+    \(O (n)\)
+
+    \tmtt{?axpy}\\Level 2 & \(\B{z} = A \B{x} + \B{y}\) & matrix-vector
+    operations
+
+    \(O (n^2)\)
+
+    \tmtt{?gemv}\\Level 3 & \(C = AB + \beta C\) & matrix-matrix operations
+
+    \(O (n^3)\)
+
+    \tmtt{?gemm}, \tmtt{?trsm}
+\end{tabular}
+
+*Show (using perf):* =numpy= matmul calls BLAS =dgemm=
+
+*** LAPACK
+
+LAPACK: Implements `higher-end' things (such as LU) using BLAS
+
+Special matrix formats can also help save const significantly, e.g.
+
+- banded
+- sparse
+- symmetric
+- triangular
+
+\medskip Sample routine names:
+
+- =dgesvd=, =zgesdd=
+- =dgetrf=, =dgetrs=
+
+*** LU on Blocks: The Schur Complement
+
+Given a matrix
+\[\begin{bmatrix} A & B \\ C & D \end{bmatrix},\]
+can we do `block LU' to get a /block triangular matrix/?
+#+LATEX: \begin{hidden}
+Multiply the top row by $-C A^{-1}$, add to second row, gives:
+
+\[\begin{bmatrix} A & B \\ 0 & D-CA^{-1}B \end{bmatrix}.\]
+
+\(D-CA^{-1}B\) is called the *Schur complement*.
+Block pivoting is also possible if needed.
+#+LATEX: \end{hidden}
+
+*** LU: Special cases
+
+What happens if we feed a non-invertible matrix to
+LU?
+#+LATEX: \begin{hidden}
+\[\tmcolor{blue}{P} \tmcolor{red}{A} = \tmcolor{blue}{L}
+   \tmcolor{red}{U} \]
+(\tmcolor{blue}{invertible}, \tmcolor{red}{not invertible}) (Why?)
+#+LATEX: \end{hidden}
+
+What happens if we feed LU an \(m \times n\) non-square
+matrices?
+#+LATEX: \begin{hidden}
+Think carefully about sizes of factors and columns/rows
+that do/don't matter. Two cases:
+
+- \(m > n\) (tall&skinny): \(L : m \times n\), \(U : n \times n\)
+
+- \(m < n\) (short&fat): \(L : m \times m\), \(U : m \times n\)
+
+This is called *reduced LU factorization*.
+#+LATEX: \end{hidden}
+
+
+*** Round-off Error in LU
+
+Consider factorization of \(\begin{bmatrix}\epsilon & 1 \\1 & 1
+\end{bmatrix}\) where \(\epsilon <\epsilon _\text {mach}\):
+
+- Without pivoting:
+  \(L = \begin{bmatrix}1  & 0 \\1/\epsilon & 1 \end{bmatrix}\),
+  \(U = \begin{bmatrix}\epsilon & 1 \\0 & 1-1/\epsilon \end{bmatrix}\)
+- Rounding: \(\fl(U)) = \begin{bmatrix}\epsilon & 1 \\0 & -1/\epsilon \end{bmatrix}\)
+- This leads to \(L\fl(U)) = \begin{bmatrix}\epsilon & 1 \\1 & 0 \end{bmatrix}\), a backward error of \(\begin{bmatrix}0 & 0 \\0 & 1 \end{bmatrix}\)
+
+Permuting the rows of \(A\) in partial pivoting gives \(P A = \begin{bmatrix}1 & 1 \\\epsilon & 1 \end{bmatrix}\)
+
+- We now compute
+  \(L = \begin{bmatrix}1  & 0 \\\epsilon & 1 \end{bmatrix}\),
+  \(U = \begin{bmatrix}1 & 1 \\0 & 1-\epsilon \end{bmatrix}\), so
+  \(\fl(U)=\begin{bmatrix}1 & 1 \\0 & 1 \end{bmatrix}\)
+- This leads to \(L\fl(U) = \begin{bmatrix}1 & 1 \\\epsilon & 1+\epsilon \end{bmatrix}\),
+  a backward error of \(\begin{bmatrix}0 & 0 \\0 & \epsilon \end{bmatrix}\).
+
+*** TODO Error Analysis of LU
+
+# TODO: Smooth presentation
+
+The main source of round-off error in LU is in the computation of the Schur complement:
+
+- Recall that division is well-conditioned, while addition can be ill-conditioned
+- After \(k\) steps of LU, we are working on Schur complement \(\B{A}_{22}-\B{L}_{21}\B{U}_{12}\) where \(\B{A}_{22}\) is \((n-k)\times (n-k)\), \(\B{L}_{21}\) and \(\B{U}_{12}^T\) are \((n-k)\times k\)
+- Partial pivoting and complete pivoting improve stability by making sure \(\B{L}_{21}\B{U}_{12}\) is small in norm
+
+When computed in floating point, absolute backward error \(\B{\delta
+A}\) in LU (so \(\B{\hat L}\B{\hat U}=\B{A}+\B{\delta A}\)) is*
+\(|\delta a_{ij}| \leq \epsilon _\text {mach} (|\B{\hat
+L}|\cdot |\B{\hat {U}}|)_{ij}\)
+
+-  For any \(a_{ij}\) with \(j\geq i\) (lower-triangle is similar), we compute
+  \[a_{ij}-\sum _{k=1}^i\hat {l}_{ik}\hat {u}_{kj} = a_{ij} - \langle \B{\hat {l}}_i,\B{\hat {u}}_j\rangle ,\]
+  which in floating point incurs round-off error at most \(\epsilon_\text {mach} \langle |\B{\hat {l}}_i|,|\B{\hat {u}}_j|\rangle \).
+  Using this, for complete pivoting, we can show \(|\delta a_{ij}| \leq \epsilon_\text {mach} n^2||\B{A}||_\infty .\)
+
+*** Changing matrices
+
+Seen: LU cheap to re-solve if RHS changes. (Able to keep the
+expensive bit, the LU factorization) What if the \emph{matrix}
+changes?
+#+LATEX: \begin{hidden}
+Special cases allow something to be done
+(a so-called /rank-one update/):\medskip
+\[\hat {A} = A + \B{u} \B{v}^T \]
+
+The *Sherman-Morrison formula* gives us
+\[(A + \B{u} \B{v}^T)^{- 1} = A^{- 1} - \frac{A^{- 1}
+   \B{u} \B{v}^T A^{- 1}}{1 + \B{v}^T A^{- 1}
+   \B{u}} . \]
+Proof: Multiply the above by $\hat A$ get the identity.
+
+FYI: There is a rank-\(k\) analog called the *Sherman-Morrison-Woodbury formula*.
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Sherman-Morrison}
+
+*** In-Class Activity: LU
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-lu/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{lu}{LU and Cost}
+
+* Linear Least Squares
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: linear_least_squares
+  :END:
+
+** Introduction
+
+*** What about non-square systems?
+
+Specifically, what about linear systems with `tall and skinny' matrices? (A:
+\(m \times n\) with \(m > n\)) (aka /overdetermined/ linear
+systems)\medskip
+
+Specifically, any hope that we will solve those
+exactly?
+#+LATEX: \begin{hidden}
+Not really: more equations than unknowns.
+#+LATEX: \end{hidden}
+
+*** Example: Data Fitting
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/curve-fit-1-crop.pdf]]
+#+END_CENTER
+
+Have data: \((x_i, y_i)\) and model:
+\[y (x) = \alpha + \beta x + \gamma x^2 \]
+Find data that (best) fit model!
+*** Data Fitting Continued
+
+#+LATEX: \begin{hidden}[7cm]
+\begin{eqnarray*}
+  \alpha + \beta x_1 + \gamma x_1^2 & = & y_1\\
+  \vdots &  & \\\alpha + \beta x_n + \gamma x_n^2 & = & y_n
+\end{eqnarray*}
+Not going to happen for \(n > 3\). Instead:
+\begin{eqnarray*}
+  \abs{\alpha + \beta x_1 + \gamma x_1^2 - y_1}^2 &  & \\+ \cdots + &  & \\\abs{\alpha + \beta x_n + \gamma x_n^2 - y_n}^2 & \rightarrow & \min !
+\end{eqnarray*}
+\(\rightarrow\) /Least Squares/
+
+This is called /linear least squares/ specifically because the
+coefficients \(\B{x}\) enter linearly into the residual.
+#+LATEX: \end{hidden}
+
+*** Rewriting Data Fitting
+
+Rewrite in matrix form.
+#+LATEX: \begin{hidden}
+\[\norm{A \B{x} - \B{b}}_2^2 \rightarrow \min ! \]
+with
+\[A =
+\begin{bmatrix}
+  1 & x_1 & x_1^2\\\vdots & \vdots & \vdots \\1 & x_n & x_n^2
+\end{bmatrix}, \quad \B{x} =
+\begin{bmatrix}
+  \alpha \\\beta \\\gamma
+\end{bmatrix}, \quad \B{b} =
+\begin{bmatrix}
+  y_1\\\vdots \\y_n
+\end{bmatrix} \]
+
+- Matrices like \(A\) are called *Vandermonde matrices*.
+- Easy to generalize to higher polynomial degrees.
+#+LATEX: \end{hidden}
+
+*** Least Squares: The Problem In Matrix Form
+
+\[\norm{A \B{x} - \B{b}}_2^2 \rightarrow \min !\]
+is cumbersome to write.
+
+Invent new notation, defined to be equivalent:
+\[A \B{x} \cong \B{b} \]
+
+*NOTE:*
+
+- Data Fitting is /one example/ where LSQ problems arise.
+- Many other application lead to \(A \B{x} \cong \B{b} \), with different matrices.
+
+*** Data Fitting: Nonlinearity
+
+Give an example of a nonlinear data fitting problem.
+
+\begin{eqnarray*}
+  \abs{\exp (\alpha ) + \beta x_1 + \gamma x_1^2 - y_1}^2 &  & \\+ \cdots + &  & \\\abs{\exp (\alpha ) + \beta x_n + \gamma x_n^2 - y_n}^2 & \rightarrow & \min
+    !
+\end{eqnarray*}
+But that would be easy to remedy: Do linear least squares with \(\exp (\alpha )\)
+as the unknown. More difficult:
+
+\begin{eqnarray*}
+  \abs{\alpha + \exp (\beta x_1 + \gamma x_1^2) - y_1}^2 &  & \\+ \cdots + &  & \\\abs{\alpha + \exp (\beta x_n + \gamma x_n^2) - y_n}^2 & \rightarrow & \min
+    !
+\end{eqnarray*}
+
+\demolink{linear_least_squares}{Interactive Polynomial Fit}
+
+*** Properties of Least-Squares
+
+Consider LSQ problem \(A \B{x} \cong \B{b}\) and its
+associated /objective function/
+\(\varphi (x) = \norm{\B{b} - A \B{x}}^2_2 \).
+Does this always have a solution?
+#+LATEX: \begin{hidden}
+Yes. \(\varphi \geqslant 0\), \(\varphi \rightarrow \infty\) as
+\(\B{\norm{x} \rightarrow \infty }\), \(\varphi\) continuous \(\Rightarrow\)
+has a minimum.
+#+LATEX: \end{hidden}
+
+Is it always unique?
+#+LATEX: \begin{hidden}
+No, for example if \(A\) has a nullspace.
+#+LATEX: \end{hidden}
+
+Examine the objective function, find its minimum.
+#+LATEX: \begin{hidden}[3cm]
+\vspace{-2ex}
+\begin{eqnarray*}
+  \varphi (\B{x}) & = & (\B{b} - A \B{x})^T (\B{b}
+    - A \B{x})\\&  & \B{b}^T \B{b} - 2 \B{x}^T A^T \B{b} +
+    \B{x}^T A^T A \B{x}\\\nabla \varphi (\B{x}) & = & - 2 A^T \B{b} + 2 A^T A
+    \B{x}
+\end{eqnarray*}
+\(\nabla \varphi (\B{x}) = \B{0}\) yields
+\(A^T A \B{x} = A^T \B{b} \).
+Called the /normal equations/.
+#+LATEX: \end{hidden}
+
+*** Least squares: Demos
+
+\demolink{linear_least_squares}{Polynomial fitting with the normal equations}
+
+\medskip
+What's the shape of \(A^T A\)?
+#+LATEX: \begin{hidden}
+Always square.
+#+LATEX: \end{hidden}
+
+\demolink{linear_least_squares}{Issues with the normal equations}
+
+*** Least Squares, Viewed Geometrically
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 2.5cm
+[[./images/least-squares-geo-crop.pdf]]
+#+END_CENTER
+
+Why is \(\B{r} \perp \tmop{span} (A)\) a good thing to
+require?
+#+LATEX: \begin{hidden}
+Because then the distance between \(\B{y} = A \B{x}\) and \(\B{b}\) is minimal.
+
+*Q:* Why?
+
+Because of Pythagoras's theorem--another \(\B{y}\) would mean additional
+distance traveled in \(\tmop{span} (A)\).
+#+LATEX: \end{hidden}
+
+*** Least Squares, Viewed Geometrically (II)
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 2.5cm
+[[./images/least-squares-geo-crop.pdf]]
+#+END_CENTER
+
+Phrase the Pythagoras observation as an equation.
+#+LATEX: \begin{hidden}
+\vspace{-2ex}
+\begin{eqnarray*}
+  \tmop{span} (A) & \perp & \B{b} - A \B{x}\\A^T \B{b} - A^T A \B{x} & = & \B{0}
+\end{eqnarray*}
+Congratulations: Just rediscovered the normal equations.
+#+LATEX: \end{hidden}
+
+Write that with an orthogonal projection matrix \(P\).
+#+LATEX: \begin{hidden}
+\(A \B{x} = P \B{b}\).
+#+LATEX: \end{hidden}
+
+*** About Orthogonal Projectors
+
+What is a /projector/?
+#+LATEX: \begin{hidden}
+A matrix satisfying
+\[P^2 = P. \]
+#+LATEX: \end{hidden}
+
+What is an /orthogonal projector/?
+#+LATEX: \begin{hidden}
+A symmetric
+projector.
+#+LATEX: \end{hidden}
+
+How do I make one projecting onto \(\tmop{span} \{\B{q}_1, \B{q}_2, \ldots ,
+\B{q}_\ell  \}\) for orthogonal \(\B q_i\)?
+#+LATEX: \begin{hidden}
+First define
+\[Q =
+\begin{bmatrix}
+  \B{q}_1 & \B{q}_2 & \cdots & \B{q}_\ell
+\end{bmatrix}. \]
+Then
+\[QQ^T \]
+will project and is obviously symmetric.
+#+LATEX: \end{hidden}
+
+*** Least Squares and Orthogonal Projection
+
+Check that \(P = A (A^T A)^{- 1} A^T\) is an orthogonal projector
+onto \(\tmop{colspan} (A)\).
+#+LATEX: \begin{hidden}
+\[P^2 = A (A^T A)^{- 1}
+   \tmcolor{red}{A^T A (A^T A)^{- 1}} A^T = A (A^T A)^{- 1} A^T = P. \]
+Symmetry: also yes.\medskip
+
+Onto \(\tmop{colspan} (A)\): Last matrix is \(A\) \(\rightarrow\) result of \(P \B{x}\) must be in \(\tmop{colspan} (A)\).\medskip
+
+*Conclusion:* \(P\) is the projector from the previous slide!
+#+LATEX: \end{hidden}
+
+What assumptions do we need to define the \(P\) from the last
+question?
+#+LATEX: \begin{hidden}
+\(A^T A\) has full rank (i.e. is invertible).
+#+LATEX: \end{hidden}
+
+*** Pseudoinverse
+
+What is the *pseudoinverse* of \(A\)?
+#+LATEX: \begin{hidden}
+Nonsquare \(m \times n\) matrix \(A\) has no inverse in usual sense.
+
+If \(\tmop{rank} (A) = n\), *pseudoinverse* is \(A^+ = (A^T A)^{- 1} A^T \).
+(colspan-projector with final \(A\) missing)
+#+LATEX: \end{hidden}
+
+What can we say about the condition number in the case of a
+tall-and-skinny, full-rank matrix?
+#+LATEX: \begin{hidden}
+\[\tmop{cond}_2 (A) =
+   \norm{A}_2 \norm{A^+}_2 \]
+If not full rank, \(\tmop{cond} (A) = \infty\) by convention.
+#+LATEX: \end{hidden}
+
+What does all this have to do with solving least squares
+problems?
+#+LATEX: \begin{hidden}
+\(\B{x} = A^+ \B{b}\) solves \(A \B{x} \cong \B{b}\).
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: Least Squares
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-least-squares/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+\inclasslink{least-squares}{Least Squares}
+
+** Sensitivity and Conditioning
+
+*** Sensitivity and Conditioning of Least Squares
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 2.5cm
+[[./images/least-squares-geo-crop.pdf]]
+#+END_CENTER
+
+#+LATEX: \begin{hidden}
+Define
+\[\cos (\theta ) = \frac{\norm{A \B{x}}_2}{\norm{\B{b}}_2}, \]
+then
+\[\frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \leqslant
+   \tmop{cond} (A) \frac{1}{\cos (\theta )} \cdot \frac{\norm{\Delta
+   \B{b}}_2}{\norm{\B{b}}_2} . \]
+#+LATEX: \end{hidden}
+
+What values of \(\theta\) are bad?
+#+LATEX: \begin{hidden}
+\(\B{b} \perp  \tmop{colspan} (A)\), i.e. \(\theta \approx \pi / 2\).
+#+LATEX: \end{hidden}
+
+*** Sensitivity and Conditioning of Least Squares (II)
+Any comments regarding dependencies?
+#+LATEX: \begin{hidden}
+Unlike for \(A \B{x} = \B{b}\), the sensitivity of least squares solution
+depends on both \(A\) and \(\B{b}\).
+#+LATEX: \end{hidden}
+
+What about changes in the matrix?
+#+LATEX: \begin{hidden}
+\[
+   \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \leqslant
+   [\tmop{cond} (A)^2 \tan (\theta ) + \tmop{cond} (A)] \cdot
+   \frac{\norm{\Delta A}_2}{\norm{A}_2} . \]
+Two behaviors:
+
+- If \(\tan (\theta ) \approx 0\), condition number is \(\tmop{cond} (A)\).
+
+- Otherwise, \(\tmop{cond} (A)^2\).
+#+LATEX: \end{hidden}
+
+** Solving Least Squares
+
+*** Ideas for Solving Least Squares :noexport:
+
+Tell me about the /augmented system method/.
+#+LATEX: \begin{hidden}
+*Idea:* Solve for residual \emph{and}
+solution.
+
+\begin{eqnarray*}
+  \B{r} - A \B{x} & = & \B{b}\\A^T \B{r} & = & \B{0}
+\end{eqnarray*}
+Bad:
+
+- Not spd
+
+- Still poorly conditioned
+
+- \(4 \times\) the storage, including two copies of \(A\).
+#+LATEX: \end{hidden}
+
+
+*** Recap: Orthogonal Matrices
+
+What's an /orthogonal (=orthonormal)
+matrix/?
+#+LATEX: \begin{tcolorbox}
+One that satisfies \(Q^T Q = I\) and \(QQ^T = I\).
+#+LATEX: \end{tcolorbox}
+
+# Are orthogonal projectors orthogonal?
+# #+LATEX: \begin{tcolorbox}
+# Nope, not in general.
+# #+LATEX: \end{tcolorbox}
+
+How do orthogonal matrices interact with the 2-norm?
+#+LATEX: \begin{tcolorbox}
+\[\norm{Q
+   \B{v}}_2^2 = (Q \B{v})^T (Q \B{v}) = \B{v}^T
+   Q^T Q \B{v} = \B{v}^T \B{v} = \norm{\B{v}}_2^2
+   . \]
+#+LATEX: \end{tcolorbox}
+
+*** Transforming Least Squares to Upper Triangular
+
+Suppose we have \(A=QR\), with \(Q\) square and orthogonal, and $R$ upper triangular.
+This is called a *QR factorization*.
+
+How do we transform the least squares problem \(A\B x\cong \B b\) to
+one with an upper triangular matrix?
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
+\begin{align*}
+&\norm{A \B{x} - \B{b}}_2 \\
+=& \norm{Q^T(QR \B{x} - \B{b})}_2 \\
+=& \norm{R \B{x} - Q^T \B{b}}_2
+\end{align*}
+#+LATEX: \end{hidden}
+
+*** Simpler Problems: Triangular
+
+What do we win from transforming a least-squares system to upper triangular form?
+#+LATEX: \begin{hidden}
+\[
+\begin{bmatrix}
+  R_{\text{top}} \\
+\end{bmatrix} \B{x} \cong
+\begin{bmatrix}
+  (Q^T\B{b})_{\text{top}}\\
+  (Q^T\B{b})_{\text{bottom}}
+\end{bmatrix} \]
+#+LATEX: \end{hidden}
+
+How would we minimize the residual norm?
+#+LATEX: \begin{hidden}
+For the residual vector \(\B r\), we find
+\[
+   \norm{\B{r}}_2^2
+  = \norm{(Q^T\B{b})_{\text{top}} - R_{\text{top}} \B{x}}_2^2 +
+   \norm{(Q^T\B{b})_{\text{bottom}}}_2^2 . \]
+\(R\) is invertible, so we can find \(\B{x}\) to zero out the first term, leaving
+\[\norm{\B{r}}_2^2 = \norm{(Q^T\B{b})_{\text{bottom}}}_2^2. \]
+#+LATEX: \end{hidden}
+
+*** Computing QR
+
+- Gram-Schmidt
+- Householder Reflectors
+- Givens Rotations
+
+\demolink{linear_least_squares}{Gram-Schmidt--The Movie}
+
+\demolink{linear_least_squares}{Gram-Schmidt and Modified Gram-Schmidt}
+
+\demolink{linear_least_squares}{Keeping track of coefficients in Gram-Schmidt}
+
+Seen: Even modified Gram-Schmidt still unsatisfactory in finite
+precision arithmetic because of roundoff.
+
+\medskip
+*NOTE:* Textbook makes further modification to `modified' Gram-Schmidt:
+
+- Orthogonalize /subsequent/ rather than /preceding/ vectors.
+- Numerically: no difference, but sometimes algorithmically helpful.
+
+*** Economical/Reduced QR
+
+Is QR with square \(Q\) for \(A\in\mathbb R^{m\times n}\) with \(m>n\) efficient?
+#+LATEX: \begin{hidden}
+No. Can obtain *economical* or *reduced QR* with \(Q\in\mathbb R^{m\times n}\) and \(R\in\mathbb R^{n\times n}\).
+Least squares solution process works unmodified with the economical form, though the equivalence
+proof relies on the 'full' form.
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: QR
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-qr/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{qr}{QR}
+
+*** Householder Transformations
+
+Find an \emph{orthogonal} matrix \(Q\) to zero out the lower
+part of a vector \(\B{a}\).
+#+LATEX: \begin{hidden}[6cm]
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/householder-crop.pdf]]
+#+END_CENTER
+
+\vspace{-2ex}
+Orthogonality in figure:
+\(\left ( \B{a} - \norm{\B{a}}_2 \B{e}_1 \right ) \cdot
+   \left ( \B{a} + \norm{\B{a}}_2 \B{e}_1 \right ) =
+   \norm{\B{a}}_2^2 - \norm{\B{a}}_2^2 \).\medskip
+
+Let's call \(\B{v} = \B{a} - \norm{\B{a}}_2 \B{e}_1\). How do we reflect about the plane orthogonal to
+\(\B{v}\)? Project-and-keep-going:
+\[H \assign I - 2 \frac{\B{v} \B{v}^T}{\B{v}^T \B{v}} . \]
+This is called a *Householder reflector*.
+#+LATEX: \end{hidden}
+
+*** Householder Reflectors: Properties
+
+Seen from picture (and easy to see with algebra):
+\[H \B{a} = \pm \norm{\B{a}}_2 \B{e}_1 . \]
+Remarks:
+
+- *Q:* What if we want to zero out only the \(i + 1\)th through
+  \(n\)th entry?
+
+    *A:* Use \(\B{e}_i\) above.
+
+- A product \(H_n \cdots H_1 A = R\) of Householders makes it easy (and
+  quite efficient!) to build a QR factorization.
+
+- It turns out \(\B{v}' = \B{a} + \norm{\B{a}}_2     \B{e}_1\) works out, too--just pick whichever one causes less
+  cancellation.
+
+- \(H\) is symmetric
+
+- \(H\) is orthogonal
+
+\demolink{linear_least_squares}{3x3 Householder demo}
+
+*** Givens Rotations
+
+If reflections work, can we make rotations work, too?
+#+LATEX: \begin{hidden}[5cm]
+\begin{equation*}
+    \begin{bmatrix}
+    c & s\\- s & c
+    \end{bmatrix}
+    \begin{bmatrix}
+    a_1\\a_2
+    \end{bmatrix} =
+    \begin{bmatrix}
+    \sqrt{a_1^2 + a_2^2}\\0
+    \end{bmatrix}.
+\end{equation*}
+Not hard to sovle for \(c\) and \(s\).\medskip
+
+*Downside?* Produces only one zero at a time.
+#+LATEX: \end{hidden}
+
+\demolink{linear_least_squares}{3x3 Givens demo}
+
+*** Rank-Deficient Matrices and QR
+
+What happens with QR for rank-deficient matrices?
+#+LATEX: \begin{hidden}[6cm]
+\[A
+   = Q
+\begin{bmatrix}
+  \ast & \ast & \ast \\& (\tmop{small}) & \ast \\&  & \ast
+\end{bmatrix} \]
+(where \(\ast\) represents a generic non-zero)\medskip
+
+Practically, it makes sense to ask for all these `small' columns to be
+gathered near the `right' of \(R\) \(\rightarrow\) Column pivoting.\medskip
+
+*Q:* What does the resulting factorization look like?
+\[AP = QR \]
+Also used as the basis for /rank-revealing QR/.
+#+LATEX: \end{hidden}
+
+*** Rank-Deficient Matrices and Least-Squares
+
+What happens with Least Squares for rank-deficient matrices?
+\[A \B{x} \cong \B{b} \]
+
+- QR still finds a solution with minimal residual
+
+- By QR it's easy to see that least squares with a short-and-fat matrix
+    is equivalent to a rank-deficient one.
+
+- *But:* No longer unique. \(\B{x} + \B{n}\) for
+    \(\B{n} \in N (A)\) has the same residual.
+
+- *In other words:* Have more freedom
+
+    *Or:* Can demand another condition, for example:
+
+  - Minimize \(\norm{\B{b} - A \B{x}}_2^2\), \emph{and}
+
+  - minimize \(\norm{\B{x}}_2^2\), simultaneously.
+
+    Unfortunately, QR does not help much with that \(\rightarrow\) Need better
+    tool.
+
+*** Singular Value Decomposition (SVD)
+
+What is the /Singular Value Decomposition/ of an \(m \times  n\) matrix?
+#+LATEX: \begin{hidden}[6cm]
+\[A = U \Sigma V^T, \]
+with
+
+- \(U\) is \(m \times m\) and orthogonal
+
+    Columns called the /left singular vectors/.
+
+- \(\Sigma = \tmop{diag} (\sigma _i)\) is \(m \times n\) and non-negative
+
+    Typically \(\sigma _1 \geqslant \sigma _2 \geqslant \cdots \geqslant \sigma _n     \geqslant 0.\)
+
+    Called the /singular values/.
+
+- \(V\) is \(n \times n\) and orthogonal
+
+    Columns called the /right singular vectors/.
+
+*Existence:* Not yet, later.
+#+LATEX: \end{hidden}
+
+*** SVD: What's this thing good for? (I)
+
+#+LATEX: \begin{hidden}[5cm]
+- \(\norm{A}_2 = \sigma _1\)
+- \(\tmop{cond}_2 (A) = \sigma _1 / \sigma _n\)
+- Nullspace \(N (A) = \tmop{span} (\{\B{v}_i : \sigma _i = 0 \})\).
+- \(\tmop{rank} (A) =\#\{i : \sigma _i \neq 0 \}\)\medskip
+
+    Computing rank in the presence of round-off error is not laughably
+    non-robust. More robust:
+
+- /Numerical rank/:
+  \[\tmop{rank}_\varepsilon  =\#\{i : \sigma _i > \varepsilon \}\]
+#+LATEX: \end{hidden}
+
+*** SVD: What's this thing good for? (II)
+
+- /Low-rank Approximation/
+
+#+LATEX: \begin{tcolorbox}
+  \begin{theorem}[Eckart-Young-Mirsky] If \(k < r = \tmop{rank} (A)\) and
+        \[A_k = \sum _{i = 1}^k \sigma _i u_i v_i^T, \]
+        then
+        \[\min _{\tmop{rank} (B) = k} \norm{A - B}_2 = \norm{A - A_k}_2 =
+           \sigma _{k + 1} . \]
+  \end{theorem}
+#+LATEX: \end{tcolorbox}
+
+\demolink{linear_least_squares}{Image compression}
+
+*** SVD: What's this thing good for? (III)
+
+- The minimum norm solution to \(A \B{x} \cong \B{b}\):
+
+#+LATEX: \begin{hidden}[5cm]
+  \begin{eqnarray*}
+    U \Sigma V^T \B{x} & \cong & \B{b}\\
+    \Leftrightarrow \Sigma \underbrace{V^T \B{x}}_{\B{y}} & \cong & U^T \B{b}\\
+    \Leftrightarrow \Sigma \B{y} & \cong & U^T \B{b}
+  \end{eqnarray*}
+  Then define
+  \[\Sigma ^+ = \tmop{diag}(\sigma_1^+, \dots, \sigma _n^+),\]
+  where \(\Sigma ^+\) is \(n \times m\) if \(\Alpha\) is \(m \times n\), and
+  \[\sigma _i^+ =
+    \begin{cases}
+      1 / \sigma _i & \sigma _i \neq 0,\\
+      0 & \sigma _i = 0.
+    \end{cases} \]
+#+LATEX: \end{hidden}
+
+*** SVD: Minimum-Norm, Pseudoinverse
+
+\(\B{y} = \Sigma ^+ U^T \B{b}\) is the *minimum norm-solution* to
+\(\Sigma \B{y} \cong U^T \B{b}\).
+
+Observe \(\norm{\B{x}}_2 = \norm{\B{y}}_2\).
+\[\B{x} = V \Sigma ^+ U^T \B{b} \]
+solves the minimum-norm least-squares problem.\medskip
+
+Define \(A^+ = V \Sigma ^+ U^T\) and call it the *pseudoinverse* of \(A\).
+
+Coincides with prior definition in case of full rank.
+
+*** In-Class Activity: Householder, Givens, SVD
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-hh-givens-svd/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{svd}{Householder, Givens, SVD}
+
+*** Comparing the Methods
+
+Methods to solve least squares with \(A\) an \(m \times n\) matrix:
+
+- Form: \(A^T A\): \(n^2 m / 2\)
+
+  Solve with \(A^T A\): \(n^3 / 6\)
+
+- Solve with Householder: \(mn^2 - n^3 / 3\)
+
+- If \(m \approx n\), about the same
+
+- If \(m \gg n\): Householder QR requires about twice as much work as
+    normal equations
+
+- SVD: \(mn^2 + n^3\) (with a large constant)
+
+\demolink{linear_least_squares}{Relative cost of matrix factorizations}
+
+* Eigenvalue Problems
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: eigenvalue
+  :END:
+
+*** Eigenvalue Problems: Setup/Math Recap
+
+\(A\) is an \(n \times n\) matrix.
+
+- \(\B{x} \neq \B{0}\) is called an /eigenvector/ of
+    \(A\) if there exists a \(\lambda\) so that
+    \[A \B{x} = \lambda \B{x} . \]
+- In that case, \(\lambda\) is called an /eigenvalue/.
+
+- The set of all eigenvalues \(\lambda (A)\) is called the
+    /spectrum/.
+
+- The /spectral radius/ is the magnitude of the biggest
+    eigenvalue:
+    \[\rho (A) = \max \left \{\abs{\lambda } : \lambda (A) \right \}\]
+
+*** Finding Eigenvalues
+
+How do you find eigenvalues?
+#+LATEX: \begin{tcolorbox}
+\vspace{-3ex}
+\begin{align*}
+  &A \B{x} = \lambda \B{x}
+  \Leftrightarrow (A - \lambda I) \B{x} = 0\\
+  \Leftrightarrow &A - \lambda I \text{ singular}
+  \Leftrightarrow \det (A - \lambda I) = 0
+\end{align*}
+\(\det (A - \lambda I)\) is called the /characteristic polynomial/, which
+has degree \(n\), and therefore \(n\) (potentially complex) roots.\medskip
+
+*Does that help algorithmically?* Abel-Ruffini theorem: for \(n \geqslant 5\) is no general formula
+for roots of polynomial. IOW: no.\medskip
+
+- For LU and QR, we obtain /exact/ answers (except rounding).
+- For eigenvalue problems: not possible---must /approximate/.
+#+LATEX: \end{tcolorbox}
+
+\demolink{eigenvalue}{Rounding in characteristic polynomial using SymPy}
+
+*** Multiplicity
+
+What is the /multiplicity/ of an
+eigenvalue?
+#+LATEX: \begin{tcolorbox}
+Actually, there are two notions called multiplicity:
+
+- /Algebraic Multiplicity/: multiplicity of the root of the
+    characteristic polynomial
+
+- /Geometric Multiplicity/: #of lin. indep. eigenvectors
+
+In general: \(\tmop{AM} \geqslant \tmop{GM}\).
+
+If \(\tmop{AM} > \tmop{GM}\), the matrix is called /defective/.
+#+LATEX: \end{tcolorbox}
+
+*** An Example
+
+Give characteristic polynomial, eigenvalues, eigenvectors of
+\[\begin{bmatrix} 1 & 1\\& 1 \end{bmatrix} . \]
+
+#+LATEX: \begin{hidden}[5cm]
+CP: \((\lambda - 1)^2\)
+
+Eigenvalues: 1 (with multiplicity 2)
+
+Eigenvectors:
+#+BEGIN_EXPORT latex
+\begin{equation*}
+    \begin{bmatrix}
+    1 & 1\\& 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    x\\y
+    \end{bmatrix} =
+    \begin{bmatrix}
+    x\\y
+    \end{bmatrix}
+\end{equation*}
+#+END_EXPORT
+\(\Rightarrow x + y = x \Rightarrow y = 0\). So only a 1D space of
+eigenvectors.
+#+LATEX: \end{hidden}
+
+*** Diagonalizability
+
+When is a matrix called /diagonalizable/?
+#+LATEX: \begin{hidden}[5cm]
+If it is not defective, i.e. if it has a \(n\) linear independent eigenvectors (i.e. a
+full basis of them). Call those \((\B{x}_n)_{i = 1}^n\).\medskip
+
+In that case, let
+\[X =
+\begin{bmatrix}
+  \vbar &  & | \\
+  \B{x}_1 & \cdots & \B{x}_n\\
+  \vbar &  & |
+\end{bmatrix}, \]
+and observe \(AX=XD\) or
+\[A = XDX^{- 1}, \]
+where \(D\) is a diagonal matrix with the eigenvalues.
+#+LATEX: \end{hidden}
+
+*** Similar Matrices
+
+Related *definition*: Two matrices \(A\) and \(B\) are called similar if
+there exists an invertible matrix \(X\) so that \(A = XBX^{- 1}\).\medskip
+
+In that sense: ``Diagonalizable'' = ``Similar to a diagonal
+matrix''.\medskip
+
+Observe: Similar \(A\) and \(B\) have same eigenvalues. (Why?)
+
+#+LATEX: \begin{hidden}[4cm]
+Suppose \(A\B x= \lambda \B x\). We have \(B=X^{-1}AX\). Let \(\B w=X^{-1}\B v\). Then
+\[
+  B\B w = X^{-1} A \B v =\lambda \B w.
+\]
+#+LATEX: \end{hidden}
+
+** Properties and Transformations
+*** Eigenvalue Transformations (I)
+
+What do the following transformations of the eigenvalue problem \(A \B{x} = \lambda \B{x}\) do?
+
+/Shift/. \(A \rightarrow A - \sigma I\)
+#+LATEX: \begin{hidden}
+\[(A - \sigma I)
+   \B{x} = (\lambda - \sigma ) \B{x} \]
+#+LATEX: \end{hidden}
+
+/Inversion/. \(A \rightarrow A^{- 1}\)
+#+LATEX: \begin{hidden}
+\[A^{- 1}
+   \B{x} = \lambda ^{- 1} \B{x} \]
+#+LATEX: \end{hidden}
+
+/Power/. \(A \rightarrow A^k\)
+#+LATEX: \begin{hidden}
+\[A^k \B{x} =
+   \lambda ^k \B{x} \]
+#+LATEX: \end{hidden}
+
+*** Eigenvalue Transformations (II)
+/Polynomial/ \(A \rightarrow aA^2 + bA + cI\)
+
+#+LATEX: \begin{hidden}
+\[(aA^2 + bA + cI) \B{x} = (a \lambda ^2 + b \lambda + c) \B{x}
+\]
+#+LATEX: \end{hidden}
+
+/Similarity/ \(T^{- 1} AT\) with \(T\) invertible
+#+LATEX: \begin{hidden}
+Let
+\(\B{y} \assign T^{- 1} \B{x}\). Then
+\[T^{- 1} AT \B{y} = \lambda \B{y} \]
+#+LATEX: \end{hidden}
+
+** Sensitivity
+
+*** Sensitivity (I)
+
+Assume \(A\) not defective. Suppose \(X^{- 1} AX = D\). Perturb
+\(A \rightarrow A + E \).
+
+What happens to the eigenvalues?
+#+LATEX: \begin{hidden}[5cm]
+\[X^{- 1} (A + E) X = D + F \]
+\vspace{-4ex}
+- \(A + E\) and \(D + F\) have same eigenvalues
+- \(D + F\) is not necessarily diagonal
+
+Suppose \(\B{v}\) is a perturbed eigenvector.
+\begin{eqnarray*}
+  &  & (D + F) \B{v} = \mu \B{v}\\
+  & \Leftrightarrow & F \B{v} = (\mu I - D) \B{v}\\
+  & \Leftrightarrow & (\mu I - D)^{- 1} F \B{v} = \B{v} \qquad
+    \text{(when is that invertible?)}\\
+  & \Rightarrow & \norm{\B{v}} \leqslant \norm{(\mu I - D)^{- 1}}
+    \norm{F} \norm{\B{v}}\\
+  & \Rightarrow & \norm{(\mu I - D)^{- 1}}^{- 1} \leqslant \norm{F}
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+*** Sensitivity (II)
+
+\(X^{- 1} (A + E) X = D + F \).
+Have \(\norm{(\mu I - D)^{- 1}}^{- 1} \leqslant \norm{F}\).
+#+LATEX: \begin{hidden}[6cm]
+\[\norm{(\mu I - D)^{- 1}}^{- 1} = | \mu - \lambda _k | \]
+where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\).
+\[\left | \mu - \lambda _k \left | = \norm{(\mu I - D)^{- 1}}^{- 1} \leqslant
+   \norm{F} = \norm{X^{- 1} EX} \leqslant \tmop{cond} (X) \norm{E} . \right .
+   \right . \]
+
+- This is `bad' if \(X\) is ill-conditioned, i.e. if the eigenvectors are
+  nearly linearly dependent.
+
+- If \(X\) is orthogonal (e.g. for symmetric \(A\)), then eigenvalues are
+  always well-conditioned.
+
+- This bound is in terms of /all/ eigenvalues, so may overestimate for each individual eigenvalue.
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Bauer-Fike Eigenvalue Sensitivity Bound}
+
+** Computing Eigenvalues
+
+*** Power Iteration
+
+What are the eigenvalues of \(A^{1000}\)?\medskip
+
+Assume \(\abs{\lambda _1} > \abs{\lambda _2} > \cdots > \abs{\lambda _n}\) with
+eigenvectors \(\B{x}_1, \ldots , \B{x}_n\).
+
+Further assume \(\norm{\B{x}_i} = 1\).
+#+LATEX: \begin{hidden}[5cm]
+Use \(\B{x} = \alpha \B{x}_1 + \beta \B{x}_2\).
+\[\B{y} = \B{} A^{1000} (\alpha \B{x}_1 + \beta
+   \B{x}_2) = \alpha \lambda _1^{1000} \B{x}_1 + \beta
+   \lambda _2^{1000} \B{x}_2 \]
+Or
+\[\frac{\B{y}}{\lambda _1^{1000}} = \alpha \B{x}_1 + \beta
+   \underbrace{\left ( \underbrace{\frac{\lambda _2}{\lambda _1}}_{< 1}
+   \right )^{1000}}_{\ll 1} \B{x}_2 . \]
+*Idea:* Use this as a computational procedure to find
+\(\B{x}_1\).
+
+Called *Power Iteration*.
+#+LATEX: \end{hidden}
+
+*** Power Iteration: Issues?
+
+What could go wrong with Power
+Iteration?
+#+LATEX: \begin{hidden}[5cm]
+
+- Starting vector has no component along \(\B{x}_1\)
+
+    Not a problem in practice: Rounding will introduce one.
+
+- Overflow in computing \(\lambda _1^{1000}\)
+
+  \(\rightarrow\) /Normalized Power Iteration/
+
+- \(|\lambda _1| = |\lambda _2|\)
+
+  Real problem.
+#+LATEX: \end{hidden}
+
+*** What about Eigenvalues?
+
+Power Iteration generates eigenvectors. What if we would like to
+know eigenvalues?
+#+LATEX: \begin{hidden}[5cm]
+Estimate them:
+\[\frac{\B{x}^T A \B{x}}{\B{x}^T \B{x}} \]
+
+- \(= \lambda\) if \(\B{x}\) is an eigenvector w/ eigenvalue
+  \(\lambda\)
+
+- Otherwise, an estimate of a `nearby' eigenvalue
+
+This is called the /Rayleigh quotient/.
+#+LATEX: \end{hidden}
+
+*** Convergence of Power Iteration
+
+What can you say about the convergence of the power method?
+
+Say \(\B{v}_1^{(k)}\) is the \(k\)th estimate of the eigenvector
+\(\B{x}_1\), and
+\[e_k = \norm{\B{x}_1 - \B{v}_1^{(k)}} . \]
+#+LATEX: \begin{hidden}[4cm]
+Easy to see:
+\[e_{k + 1} \approx \frac{\abs{\lambda _2}}{\abs{\lambda _1}} e_k . \]
+We will later learn that this is /linear convergence/. It's quite
+slow.
+
+What does a shift do to this situation?
+\[e_{k + 1} \approx \frac{\abs{\lambda _2 - \sigma }}{\abs{\lambda _1 - \sigma }}
+   e_k . \]
+Picking \(\sigma \approx \lambda _1\) does not help...
+
+*Idea:* Invert \emph{and} shift to bring \(\abs{\lambda _1 - \sigma }\) into numerator.
+#+LATEX: \end{hidden}
+
+*** Rayleigh Quotient Iteration
+
+Describe /inverse iteration/.
+#+LATEX: \begin{hidden}[3cm]
+\[\B{x}_{k + 1} \assign (A - \sigma )^{- 1} \B{x}_k \]
+
+- Implemented by storing/solving with LU factorization
+
+- Converges to eigenvector for eigenvalue closest to \(\sigma\), with
+    \[e_{k + 1} \approx \frac{\abs{\lambda _{\tmop{closest}} -
+       \sigma }}{\abs{\lambda _{\text{second-closest}} - \sigma }} e_k . \]
+#+LATEX: \end{hidden}
+
+Describe /Rayleigh Quotient Iteration/.
+#+LATEX: \begin{hidden}[3cm]
+Compute
+\(\sigma _k = \B{x}_k^T A \B{x}_k / \B{x}_k^T \B{x}_k\) to be the Rayleigh quotient for \(\B{x}_k\).
+\[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Power Iteration and its Variants}
+
+*** In-Class Activity: Eigenvalues
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-eigenvalues/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{eigenvalues}{Eigenvalues}
+
+*** Schur form
+
+Show: Every matrix is orthonormally similar to an upper triangular
+matrix, i.e.
+\(A = QUQ^T . \)
+This is called the *Schur form* or *Schur factorization*.
+
+#+LATEX: \begin{hidden}[5cm]
+Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
+\(V = \tmop{span} \{\B{v} \}\). Then
+\begin{eqnarray*}
+  A : \qquad V & \rightarrow & V\\V^\perp  & \rightarrow & V \oplus V^\perp
+\end{eqnarray*}
+\vspace{-3ex}
+\begin{equation*}
+  A = \underbrace{
+  \begin{bmatrix}
+    z & \\
+    \B{v} & \text{Basis of \(V^\perp\)}\\
+    z &
+  \end{bmatrix}}_{Q_1}
+  \begin{bmatrix}
+    \lambda & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast \\\vdots & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast
+  \end{bmatrix} Q_1^T .
+\end{equation*}
+Repeat \(n\) times $to$ triangular: \(Q_n \cdots Q_1 UQ_1^T \cdots Q_n^T \).
+#+LATEX: \end{hidden}
+
+*** Schur Form: Comments, Eigenvalues, Eigenvectors
+
+\(A = QUQ^T . \) For complex \(\lambda\):
+- Either complex matrices, or
+- \(2 \times 2\) blocks on diag.
+
+If we had a Schur form of \(A\), how can we find the eigenvalues?
+#+LATEX: \begin{hidden}
+The eigenvalues (of \(U\) and \(A\)!) are on the diagonal of \(U\).
+#+LATEX: \end{hidden}
+
+And the eigenvectors?
+#+LATEX: \begin{hidden}[3cm]
+It suffices to find eigenvectors of \(U\): can convert to eigenvectors
+of \(A\) by similarity transform. Suppose \(\lambda\) is an eigenvalue.
+
+\begin{equation*}
+  U-\lambda I=\begin{bmatrix}
+    U_{11} & \B u & U_{13} \\
+    0 & 0 & \B v^T \\
+    0 & 0 & U_{31} \\
+  \end{bmatrix}
+\end{equation*}
+Then \([U_{11}^{-1} \B u ; -1; \B 0]^T\) is an eigenvector.
+#+LATEX: \end{hidden}
+
+*** Computing Multiple Eigenvalues
+
+All Power Iteration Methods compute one eigenvalue at a time.
+
+What if I want /all/ eigenvalues?
+#+LATEX: \begin{hidden}[4cm]
+Two ideas:
+
+1. /Deflation/: similarity transform to
+  \[
+  \begin{bmatrix}
+    \lambda _1 & \ast \\& B
+  \end{bmatrix},
+  \]
+  i.e. one step in Schur form. Now find eigenvalues of \(B\).
+
+1. Iterate with multiple vectors simultaneously.
+#+LATEX: \end{hidden}
+
+*** Simultaneous Iteration
+
+What happens if we carry out power iteration on multiple vectors
+simultaneously?
+#+LATEX: \begin{hidden}[5cm]
+/Simultaneous Iteration/:
+
+1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
+    (arbitrary) iteration vectors in columns
+
+1. \(X_{k + 1} = AX_k\)
+
+Problems:
+
+- Needs rescaling
+
+- \(X\) increasingly ill-conditioned: all columns go towards
+    \(\B{x}_1\)
+
+Fix: orthogonalize!
+#+LATEX: \end{hidden}
+
+*** Orthogonal Iteration
+
+#+LATEX: \begin{hidden}[5cm]
+/Orthogonal Iteration/:
+
+1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
+    (arbitrary) iteration vectors in columns
+
+1. \(Q_k R_k = X_k\) (reduced)
+
+1. \(X_{k + 1} = AQ_k\)
+
+*Good:* \(X_k\) converge to \(X\) with eigenvectors in columns
+
+*Bad:*
+
+- Slow/linear convergence
+
+- Expensive iteration
+#+LATEX: \end{hidden}
+
+*** Toward the QR Algorithm
+
+#+LATEX: \begin{hidden}[6cm]
+\vspace{-3ex}
+\begin{eqnarray*}
+    Q_0 R_0 = X_0 &  & \\
+    X_1 = AQ_0 &  & \\
+    Q_1 R_1 = X_1 & = & AQ_0 \quad \Rightarrow \quad Q_1 R_1 Q_0^T = A\\
+    X_2 = AQ_1 &  & \\Q_2 R_2 = X_2 & = & AQ_1 \quad \Rightarrow \quad Q_2 R_2 Q_1^T = A
+\end{eqnarray*}
+Once the \(Q_k\) converge (\(Q_{n + 1} \approx Q_n\)), we have a Schur
+factorization!\medskip
+
+*Problem:* \(Q_{n + 1} \approx Q_n\) works poorly as a convergence
+test.\medskip
+
+*Observation 1:* Once \(Q_{n + 1} \approx Q_n\), we also have \(Q_2 R_2 Q_{\tmcolor{red}{2}}^T \approx A\).
+
+*Observation 2:* \(\hat {X}_2 \assign Q_2^T AQ_2 \approx  R_2\).\medskip
+
+*Idea:* Use magnitude of below-diag part of \(\hat {X}_2\) for
+convergence check.
+
+*Q:* Can we compute \(\hat {X}_k\) directly?
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Orthogonal Iteration}
+
+*** QR Iteration/QR Algorithm
+
+#+LATEX: \begin{hidden}[6cm]
+\begin{tabular}{ll}
+  Orthogonal iteration: & \tmcolor{blue}{QR iteration}:\\\(X_0 = \tmcolor{red}{A}\) & \(\bar {X}_0 = \tmcolor{red}{A}\)\\\(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\\(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
+\end{tabular}
+
+Tracing through reveals:
+
+- \(\hat {X}_k = \bar {X}_{k + 1}\)
+
+- \(Q_0 = \bar {Q}_0\)
+
+    \(Q_1 = \bar {Q}_0 \bar {Q}_1\)
+
+    \(Q_k = \bar {Q}_0 \bar {Q}_1 \cdots \bar {Q}_k\)
+
+Orthogonal iteration showed: \(\hat {X}_k = \bar {X}_{k + 1}\) converge. Also:
+\[\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k = \bar {Q}_k^T \bar {X}_k \bar {Q}_k, \]
+so the \(\bar {X}_k\) are all similar \(\rightarrow\) all have the same
+eigenvalues.
+
+\(\rightarrow\) QR iteration produces Schur form.
+#+LATEX: \end{hidden}
+
+*** QR Iteration: Incorporating a Shift
+
+How can we accelerate convergence of QR iteration using shifts?
+#+LATEX: \begin{hidden}[6cm]
+\vspace{-3ex}
+\begin{eqnarray*}
+    &  & \bar {X}_0 = A\\
+    &  & \bar {Q}_k \bar {R}_k = \bar {X}_k \tmcolor{magenta}{- \sigma _k I}\\
+    &  & \bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k \tmcolor{magenta}{+ \sigma _k I}
+\end{eqnarray*}
+Still a similarity transform:
+\[ \bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k + \sigma _k I =
+   \overline{[Q  }_k^T \bar {X}_k - \bar {Q}_k^T \sigma _k] \bar {Q}_k +
+   \sigma _k I \]
+*Q:* How should the shifts be chosen?
+
+- Ideally: Close to existing eigenvalue
+- Heuristics:
+
+  - Lower right entry of \(\bar {X}_k\)
+  - Eigenvalues of lower right \(2 \times 2\) of \(\bar {X}_k\)
+
+#+LATEX: \end{hidden}
+
+*** QR Iteration: Computational Expense
+
+A full QR factorization at each iteration costs \(O (n^3)\)--can we make that cheaper?
+#+LATEX: \begin{hidden}[5cm]
+*Idea:* /Hessenberg form/
+\[A = Q
+\begin{bmatrix}
+  \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast \\& \ast & \ast & \ast \\&  & \ast & \ast
+\end{bmatrix} Q^T \]
+
+- Attainable by \emph{similarity transforms} (!) \(HAH^T\)
+
+    with Householders that start 1 entry lower than `usual'
+
+- QR factorization of Hessenberg matrices can be achieved in \(O (n^2)\)
+    time using Givens rotations.
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Householder Similarity Transforms}
+
+*** QR/Hessenberg: Overall procedure
+Overall procedure:
+
+1. Reduce matrix to Hessenberg form
+
+1. Apply QR iteration using Givens QR to obtain Schur form
+
+For symmetric matrices:
+
+- Use Householders to attain tridiagonal form
+
+- Use QR iteration with Givens to attain diagonal form
+
+** Krylov Space Methods
+
+*** Krylov space methods: Intro
+
+What subspaces can we use to look for eigenvectors?
+#+LATEX: \begin{hidden}[6cm]
+QR: \[\tmop{span} \{A^\ell  \B{y}_1, A^\ell  \B{y}_2, \ldots ,
+   A^\ell  \B{y}_k \}\]
+
+*Krylov space:* \[\tmop{span} \{\underbrace{\B{x}}_{\B{x_0}}, A \B{x},
+   \ldots , \underbrace{A^{k - 1} \B{x}}_{\B{x}_{k - 1}} \}\]
+
+Define:
+\[
+    K_k \assign
+    \begin{bmatrix}
+    \vbar &  & | \\
+    \B{x}_0 & \cdots & \B{x}_{k - 1}\\
+    \vbar &  & |
+    \end{bmatrix}. \qquad (n \times k)
+\]
+#+LATEX: \end{hidden}
+
+*** Krylov for Matrix Factorization
+
+What matrix factorization is obtained through Krylov space methods?
+#+LATEX: \begin{hidden}[6cm]
+#+BEGIN_EXPORT latex
+\[
+  AK_n =
+  \begin{bmatrix}
+    \vbar &  & | \\
+    \B{x}_1 & \cdots & \B{x}_n\\
+    \vbar &  & |
+  \end{bmatrix}
+  = K_n \underbrace{
+  \begin{bmatrix}
+    \vbar &  & | & | \\
+    \B{e}_2 & \cdots & \B{e}_n & K_n^{- 1} \B{x}_n\\
+    \vbar &  & | & |
+  \end{bmatrix}}_{C_n} .
+\]
+#+END_EXPORT
+- \(K_n^{- 1} AK_n = C_n\)
+- \(C_n\) is upper Hessenberg
+- So Krylov is `just' another way to get a matrix into upper Hessenberg
+  form. But: built incrementally!
+#+LATEX: \end{hidden}
+
+*** Conditioning in Krylov Space Methods/Arnoldi Iteration (I)
+
+What is a problem with Krylov space methods? How can we fix it?
+#+LATEX: \begin{hidden}[6cm]
+\((\B{x}_i)\) converge rapidly to eigenvector for largest
+eigenvalue
+
+\(\rightarrow\) \(K_k\) become ill-conditioned\medskip
+
+*Idea:* Orthogonalize! (at end... for now)
+\[Q_n R_n = K_n \quad \Rightarrow \quad Q_n = K_n R_n^{- 1} \]
+Then
+\[Q_n^T AQ_n = R_n \underbrace{K_n^{- 1} AK_n}_{C_n} R_n^{- 1}.\]
+#+LATEX: \end{hidden}
+
+*** Conditioning in Krylov Space Methods/Arnoldi Iteration (II)
+#+LATEX: \begin{hidden}[6cm]
+- \(C_n\) is upper Hessenberg
+- (Left/right) mul. by triangulars preserves upper Hessenberg
+
+We find that \(Q_n^T AQ_n\) is also upper Hessenberg: \(Q_n^T A_n Q_n = H. \)
+
+Also readable as \(AQ_n = Q_n H\), which, read column-by-column, is:
+\[A \B{q}_k = h_{1 k} \B{q}_1 + \ldots h_{k + 1, k}
+   \B{q}_{k + 1} \]
+We find: \(h_{j k} = \B{q}_j^T A \B{q}_k\).\medskip
+
+/Important consequence:/ Can compute
+
+- \(\B{q}_{k + 1}\) from \(\B{q}_1, \ldots , \B{q}_k\)
+
+- \((k + 1)\)st column of \(H\)
+
+analogously to Gram-Schmidt QR!\medskip
+
+This is called *Arnoldi iteration*. For symmetric: *Lanczos iteration*.
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Arnoldi Iteration} (Part 1)
+
+*** Krylov: What about eigenvalues?
+
+How can we use Arnoldi/Lanczos to compute eigenvalues?
+#+LATEX: \begin{hidden}[6cm]
+\[Q =
+\begin{bmatrix}
+  \tmcolor{green}{Q_k} & \tmcolor{red}{U_k}
+\end{bmatrix} \]
+\tmcolor{green}{Green:} known (i.e. already computed), \tmcolor{red}{red:} not
+yet computed.
+\[H = Q^T AQ =
+\begin{bmatrix}
+  \tmcolor{green}{Q_k}\\\tmcolor{red}{U_k}
+\end{bmatrix} A
+\begin{bmatrix}
+  \tmcolor{green}{Q_k} & \tmcolor{red}{U_k}
+\end{bmatrix} =
+\begin{bmatrix}
+  \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  &  & \tmcolor{red}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  &  &  & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }
+\end{bmatrix} \]
+Use eigenvalues of top-left matrix as approximate eigenvalues.
+
+(still need to be computed, using QR it.)\medskip
+
+Those are called *Ritz values*.
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Arnoldi Iteration} (Part 2)
+
+*** Computing the SVD (Kiddy Version)
+How can I compute an SVD of a matrix $A$?
+#+LATEX: \begin{hidden}[6cm]
+1. Compute the eigenvalues and eigenvectors of $A^T A$.
+   \[ A^T A \B{v}_1 = \lambda_1 \B{v}_1 \quad \cdots \qquad A^T A
+     \B{v}_n = \lambda_n \B{v}_n \]
+2. Matrix $V$ from the vectors $\B{v}_i$. ($A^T A$ symm.: $V$ orth.)
+
+3. Make a diagonal matrix $\Sigma$ from the square roots of the eigenvalues:
+   \(\Sigma = \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_n}) \)
+
+4. Find \(U\) from \( A = U \Sigma V^T \quad \Leftrightarrow \quad U \Sigma = AV. \)
+
+   For square matrices: \( U = AV \Sigma^{- 1} . \)
+
+  Observe $U$ is orthogonal: (Use: $V^T A^T AV = \Sigma^2$)
+  \[ U^T U = \Sigma^{- 1} \underbrace{V^T A^T AV}_{\Sigma^2} \Sigma^{- 1} =
+     \Sigma^{- 1} \Sigma^2 \Sigma^{- 1} = I. \]
+#+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{Computing the SVD}
+
+* Nonlinear Equations
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: nonlinear
+  :END:
+
+** Introduction
+*** Solving Nonlinear Equations
+
+What is the goal here?
+#+LATEX: \begin{hidden}[4cm]
+Solve \(\B{f} (\B{x}) = \B{0}\) for \(f : \mathbb{R}^n \rightarrow  \mathbb{R}^n\).\medskip
+
+If looking for solution to \(\widetilde{\B{f}} (\B{x}) = \B{y}\), simply consider \(\B{f} (\B{x}) = \tilde {f} (\B{x}) - \B{y}\).\medskip
+
+\emph{Intuition:} Each of the \(n\) equations describes a surface. Looking
+for intersections.
+
+\demolink{nonlinear}{Three quadratic functions}
+#+LATEX: \end{hidden}
+
+*** Showing Existence
+
+How can we show existence of a root?
+#+LATEX: \begin{hidden}[6cm]
+
+- Intermediate value theorem (uses continuity, 1D only)
+
+- Inverse function theorem (relies on invertible Jacobian \(J_{\B{f}}\))
+
+  Get /local/ invertibility, i.e. \(f(\B x)=\B y\) solvable
+
+- *Contraction mapping theorem*
+
+  A function \(\B{g} : \mathbb{R}^n \rightarrow \mathbb{R}^n\) is called
+  /contractive/ if there exists a \(0 < \gamma < 1\) so that
+  \(\norm{\B{g} (\B{x}) - \B{g} (\B{y})}
+     \leqslant \gamma \norm{\B{x} - \B{y}} . \)
+  A fixed point of \(\B{g}\) is a point where \(\B{g}     (\B{x}) = \B{x}\).\medskip
+
+  /Then:/ On a closed set \(S \subseteq \mathbb{R}^n\) with
+  \(\B{g} (S) \subseteq S\) there exists a unique fixed point.
+
+  /Example:/ (real-world) map
+
+In general, /no uniquness/ results available.
+#+LATEX: \end{hidden}
+
+*** Sensitivity and Multiplicity
+
+What is the sensitivity/conditioning of root
+finding?
+#+LATEX: \begin{hidden}
+\(\tmop{cond} \left ( \text{root finding} \right ) = \tmop{cond} \left ( \text{evaluation of the inverse function} \right )\)
+#+LATEX: \end{hidden}
+
+What are multiple roots?
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
+\begin{eqnarray*}
+  f (x) & = & 0\\f' (x) & = & 0\\& \vdots & \\f^{(m - 1)} (x) & = & 0
+\end{eqnarray*}
+This would be a root of multiplicity \(m\).
+#+LATEX: \end{hidden}
+
+How do multiple roots interact with conditioning?
+#+LATEX: \begin{hidden}
+The inverse function is steep near one, so conditioning is poor.
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: Krylov and Nonlinear Equations
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-krylov-nonlinear/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{krylov-nonlinear}{Krylov and Nonlinear Equations}
+
+** Iterative Procedures
+*** Rates of Convergence
+What is /linear convergence/? /quadratic convergence/?
+#+LATEX: \begin{hidden}[6cm]
+Let \(\B{e}_k = \widehat{\B{u}}_k - \B{u}\) be the error in the \(k\)th iterate
+\(\widehat{\B{u}}_k\). Assume \(\B e_k\to 0\) as \(k\to\infty\).\medskip
+
+An iterative method /converges with rate \(r\)/ if
+\[\lim _{k \rightarrow \infty } \frac{\norm{\B{e}_{k +
+   1}}}{\norm{\B{e}_k}^r} = C
+\begin{cases}
+  > 0,\\
+  < \infty .
+\end{cases} \]
+- \(r = 1\) is called /linear convergence/.
+- \(r > 1\) is called /superlinear convergence/.
+- \(r = 2\) is called /quadratic convergence/.
+
+Examples:
+
+- Power iteration is linearly convergent.
+- Rayleigh quotient iteration is quadratically convergent.
+#+LATEX: \end{hidden}
+
+*** About Convergence Rates
+
+\demolink{nonlinear}{Rates of Convergence}
+
+Characterize linear, quadratic convergence in terms of the
+`number of accurate digits'.
+#+LATEX: \begin{hidden}[4cm]
+- Linear convergence gains a constant number of digits each step:
+  \[\norm{\B{e}_{k + 1}} \leqslant C \norm{\B{e}_k} \]
+  (and \(C < 1\) matters!)
+
+- Quadratic convergence
+  \[\norm{\B{e}_{k + 1}} \leqslant C \norm{\B{e}_k}^2 \]
+  (Only starts making sense once \(\norm{\B{e}_k}\) is small. \(C\) doesn't
+  matter much.)
+#+LATEX: \end{hidden}
+
+*** Convergence Rates: Understanding the Definition :noexport:
+
+Contrast the following `alternate' definitions of convergence rate:
+\begin{eqnarray*}
+  (1) \quad \frac{\norm{\B{e}_{k + 1}}}{\norm{\B{e}_k}^r} &
+    \leqslant & C
+  \begin{cases}
+    > 0,\\< \infty .
+  \end{cases}\\
+  (2) \quad 0 < C_{\tmop{low}} \leqslant \frac{\norm{\B{e}_{k +
+    1}}}{\norm{\B{e}_k}^r} & \leqslant & C_{\tmop{high}}\\(3) \quad \lim _{k \rightarrow \infty } \frac{\norm{\B{e}_{k +
+    1}}}{\norm{\B{e}_k}^r} & = & C
+  \begin{cases}
+    > 0,\\< \infty .
+  \end{cases}
+\end{eqnarray*}
+#+LATEX: \begin{hidden}[3cm]
+
+- (1) Is true for \(r = 1\) even if the process converges faster
+
+- (2) Makes strong promises about /pre-asymptotic behavior/
+  (and only weak promises about asymptotic behavior)
+
+- (3) is actually the most informative about what happens `eventually'
+  (i.e. asymptotically), and it does not restrict pre-asymptotic beahvior.
+#+LATEX: \end{hidden}
+
+*** Stopping Criteria
+
+Comment on the `foolproof-ness' of these stopping criteria:
+
+1. \(\abs{f (x)} < \varepsilon\)\quad (`residual is small')
+2. \(\norm{\B{x}_{k + 1} - \B{x}_k} < \varepsilon\)
+3. \(\norm{\B{x}_{k + 1} - \B{x}_k} / \norm{\B{x}_k}     < \varepsilon\)
+
+#+LATEX: \begin{hidden}[4cm]
+1. Can trigger far away from a root in the case of multiple roots (or a
+    `flat' \(f\))
+
+2. Allows different `relative accuracy' in the root depending on its
+    magnitude.
+
+3. Enforces a relative accuracy in the root, but \emph{does not}
+  actually check that the function value is small.
+
+  So if convergence `stalls' away from a root, this may trigger without being
+  anywhere near the desired solution.
+
+*Lesson:* No stopping criterion is bulletproof. The `right' one
+almost always depends on the application.
+#+LATEX: \end{hidden}
+
+
+** Methods in One Dimension
+
+*** Bisection Method
+
+\demolink{nonlinear}{Bisection Method}\medskip
+
+What's the rate of convergence? What's the constant?
+#+LATEX: \begin{hidden}
+Linear with constant \(1 / 2\).
+#+LATEX: \end{hidden}
+
+*** Fixed Point Iteration
+
+\begin{eqnarray*}
+  x_0 & = & \langle \text{starting guess} \rangle \\x_{k + 1} & = & g (x_k)
+\end{eqnarray*}
+\demolink{nonlinear}{Fixed point iteration}\medskip
+
+When does fixed point iteration converge? Assume \(g\) is
+smooth.
+#+LATEX: \begin{hidden}[3cm]
+Let \(x^\ast\) be the fixed point with \(x^\ast  = g (x^\ast )\).
+
+If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges.\medskip
+
+Error:
+\[e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \]
+[cont'd.]
+#+LATEX: \end{hidden}
+
+*** Fixed Point Iteration: Convergence cont'd.
+
+Error in FPI: \(e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \)
+#+LATEX: \begin{hidden}[6cm]
+Mean value theorem says: There is a \(\B{\theta }_k\) between
+\(\B{x}_k\) and \(\B{x}^\ast\)
+ so that
+\[g (x_k) - g (x^\ast ) = g' (\theta _k) (x_k - x^\ast ) = g' (\theta _k) e_k
+   . \]
+So:
+\(e_{k + 1} = g' (\theta _k) e_k \)
+and if \(\norm{g'} \leqslant C < 1\) near \(\B{x}^\ast\), then we have
+linear convergence with constant \(C\).\medskip
+
+*Q:* What if \(g' (x^\ast ) = 0\)?\medskip
+
+By Taylor:
+\[g (x_k) - g (x^\ast ) = g'' (\xi _k) (x_k - x^\ast )^2 / 2 \]
+So we have \emph{quadratic convergence} in this case!\medskip
+
+We would obviously like a systematic way of finding \(g\) that produces
+quadratic convergence.
+#+LATEX: \end{hidden}
+
+*** Newton's Method
+
+Derive Newton's method.
+#+LATEX: \begin{hidden}[5cm]
+*Idea:* Approximate
+\(f\) at \(x_k\) using Taylor:
+\(f (x_k + h) \approx f (x_k) + f' (x_k) h \)
+Now find root of this linear approximation in terms of \(h\):
+\[f (x_k) + f' (x_k) h = 0 \quad \Leftrightarrow \quad h = - \frac{f
+   (x_k)}{f' (x_k)} . \]
+\vspace{-3ex}
+\begin{eqnarray*}
+  x_0 & = & \langle \text{starting guess} \rangle \\x_{k + 1} & = & x_k - \frac{f (x_k)}{f' (x_k)} = g (x_k)
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Convergence and Properties of Newton
+
+What's the rate of convergence of Newton's method?
+#+LATEX: \begin{hidden}
+
+\[g' (x) = \frac{f (x) f'' (x)}{f' (x)^2} \]
+So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 0\), i.e. quadratic convergence toward single roots.\medskip
+#+LATEX: \end{hidden}
+
+/Drawbacks/ of Newton?
+#+LATEX: \begin{hidden}
+- Convergence argument only good \emph{locally}
+
+  Will see: convergence only local (near root)
+- Have to have derivative!
+#+LATEX: \end{hidden}
+
+\demolink{nonlinear}{Newton's method}
+
+\demolink{nonlinear}{Convergence of Newton's Method}
+
+*** Secant Method
+
+What would Newton without the use of the derivative look like?
+#+LATEX: \begin{hidden}[5cm]
+Approximate
+\[f' (x_k) \approx \frac{f (x_k) - f (x_{k - 1})}{x_k - x_{k - 1}} . \]
+So
+
+\begin{eqnarray*}
+  x_0 & = & \langle \text{starting guess} \rangle \\x_{k + 1} & = & x_k - \frac{f (x_k)}{\frac{f (x_k) - f (x_{k - 1})}{x_k -
+    x_{k - 1}}} .
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Convergence of Properties of Secant
+
+Rate of convergence (not shown) is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  1.618\).\medskip
+
+/Drawbacks/ of Secant?
+
+#+LATEX: \begin{hidden}[3cm]
+- Convergence argument only good \emph{locally}
+
+  Will see: convergence only local (near root)
+
+- Slower convergence
+- Need two starting guesses
+#+LATEX: \end{hidden}
+
+\demolink{nonlinear}{Secant Method}
+
+\demolink{nonlinear}{Convergence of the Secant Method}
+
+\medskip
+Secant (and similar methods) are called *Quasi-Newton Methods*.
+
+*** Root Finding with Interpolants
+
+Secant method uses a linear interpolant based on points \(f(x_k)\),
+\(f(x_{k-1})\), could use more points and higher-order interpolant:
+#+LATEX: \begin{hidden}[3cm]
+
+- Can fit polynomial to (subset of) \((x_0,f(x_0)),\ldots ,(x_k,f(x_k))\)
+- Look for a root of that
+- Fit a quadratic to the last three: *Muller's method*
+  - Also finds complex roots
+  - Convergence rate \(r\approx 1.84\)
+#+LATEX: \end{hidden}
+
+What about existence of roots in that case?
+#+LATEX: \begin{hidden}[3cm]
+- *Inverse quadratic interpolation*
+
+  - Interpolate quadratic polynomial \(q\) so that \(q(f(x_i))=x_i\) for \(i\in \{k,k-1,k-2\}\).
+  - Approximate root by evaluating \(x_{k+1}=q(0)\).
+#+LATEX: \end{hidden}
+
+*** Achieving Global Convergence
+
+The linear approximations in Newton and Secant are only good
+locally. How could we use that?
+#+LATEX: \begin{hidden}[3cm]
+- Hybrid methods: bisection + Newton
+  - Stop if Newton leaves bracket
+- Fix a region where they're `trustworthy' (*trust region methods*)
+- Limit step size
+#+LATEX: \end{hidden}
+
+
+*** In-Class Activity: Nonlinear Equations
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-nonlinear/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+\inclasslink{nonlinear}{Nonlinear Equations}
+** Methods in $n$  Dimensions (``Systems of Equations'')
+
+*** Fixed Point Iteration
+
+\begin{eqnarray*}
+  \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{g} (\B{x}_k)
+\end{eqnarray*}
+When does this converge?
+#+LATEX: \begin{hidden}[5cm]
+Converges (locally) if \(\|J_{\B{g}} (\B{x}^\ast )\| < 1\) in some norm, where the /Jacobian matrix/
+\[J_{\B{g}} (\B{x}^\ast ) =
+\begin{bmatrix}
+  \partial _{x_1} g_1 & \cdots & \partial _{x_n} g_1\\
+  \vdots &  & \\
+  \partial _{x_1} g_n & \cdots & \partial _{x_n} g_n
+\end{bmatrix} . \]
+Similarly: If \(J_{\B{g}} (\B{x}^\ast ) = 0\), we have at least
+quadratic convergence.
+
+\medskip
+*Better:* There exists a norm \(\|\cdot\|_A\) such that \(\rho(A)\le\|A\|_A<\rho(A)+\epsilon\), so
+\(\rho(A)<1\) suffices.
+#+LATEX: \end{hidden}
+
+*** Newton's Method
+
+What does Newton's method look like in \(n\) dimensions?
+#+LATEX: \begin{hidden}[4cm]
+Approximate by linear:
+\(\B{f} (\B{x} + \B{s}) = \B{f} (\B{x}) +
+   J_{\B{f}} (\B{x}) \B{s}\).\medskip
+
+Set to 0:
+\[J_{\B{f}} (\B{x}) \B{s} = - \B{f}
+   (\B{x}) \quad \Rightarrow \quad \B{s} = - (J_{\B{f}}
+   (\B{x}))^{- 1} \B{f} (\B{x}). \]
+\begin{eqnarray*}
+  \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{x}_k - (J_{\B{f}}
+    (\B{x}_k))^{- 1} \B{f} (\B{x}_k)
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+Downsides of \(n\)-dim. Newton?
+#+LATEX: \begin{hidden}
+- Still only locally convergent
+
+- Computing and inverting \(J_{\B{f}}\) is expensive.
+#+LATEX: \end{hidden}
+
+\demolink{nonlinear}{Newton's method in n dimensions}
+
+
+*** Secant in $n$  dimensions?
+
+What would the secant method look like in \(n\) dimensions?
+#+LATEX: \begin{hidden}[5cm]
+Need an `approximate Jacobian' satisfying
+\[\tilde {J} (\B{x}_{k + 1} - \B{x}_k) = \B{f}
+   (\B{x}_{k + 1}) - \B{f} (\B{x}_k) . \]
+Suppose we have \emph{already taken} a step to \(\B{x}_{k + 1}\).
+Could we `reverse engineer' \(\tilde {J}\) from that equation?
+
+- No: \(n^2\) unknowns in \(\tilde {J}\), but only \(n\) equations
+
+- Can only hope to `update' \(\tilde {J}\) with information from current
+  guess.
+
+One choice: /Broyden's method/ (minimizes change to \(\tilde {J}\))
+#+LATEX: \end{hidden}
+
+* Optimization
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: optimization
+  :END:
+
+** Introduction
+*** Optimization: Problem Statement
+
+/Have:/ *Objective function* \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
+
+/Want:/ *Minimizer* \(\B{x}^\ast  \in \mathbb{R}^n\) so that
+\[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
+   \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
+   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0} . \]
+
+- \(\B{g} (\B{x}) = \B{0}\) and \(\B{h}     (\B{x}) \leqslant \B{0}\)
+  are called *constraints*.
+
+  They define the set of *feasible points* \(\B{x} \in S     \subseteq \mathbb{R}^n\).
+
+- If \(\B{g}\) or \(\B{h}\) are present, this is
+    *constrained optimization*.
+
+    Otherwise *unconstrained optimization*.
+
+- If \(\B{f}\), \(\B{g}\), \(\B{h}\) are
+    \emph{linear}, this is called *linear programming*.
+
+    Otherwise *nonlinear programming*.
+
+*** Optimization: Observations
+*Q:* What if we are looking for a /maximizer/ not a minimizer?
+
+Give some examples:
+#+LATEX: \begin{hidden}
+- What is the fastest/cheapest/shortest... way to do...?
+- Solve a system of equations `as well as you can' (if no exact
+  solution exists)--similar to what least squares does for linear systems:
+  \[\min \norm{F (\B{x})} \]
+#+LATEX: \end{hidden}
+
+What about multiple objectives?
+
+#+LATEX: \begin{hidden}
+- In general: Look up *Pareto optimality*.
+- *For 450:* Make up your mind--decide on one (or build a combined
+  objective). Then we'll talk.
+#+LATEX: \end{hidden}
+
+*** Existence/Uniqueness
+Terminology: *global minimum* / *local minimum*\medskip
+
+Under what conditions on \(f\) can we say something about
+existence/uniqueness?
+
+If \(f : S \rightarrow \mathbb{R}\) is continuous on a closed and bounded set \(S \subseteq \mathbb{R}^n\), then
+#+LATEX: \begin{hidden}
+a minimum exists.
+#+LATEX: \end{hidden}
+
+\(f : S \rightarrow \mathbb{R}\) is called /coercive/ on \(S \subseteq
+\mathbb{R}^n\) (which must be unbounded) if
+#+LATEX: \begin{hidden}
+\[\lim _{\norm{\B{x}} \rightarrow \infty } f (x) = + \infty \]
+#+LATEX: \end{hidden}
+If \(f\) is coercive, \dots...
+#+LATEX: \begin{hidden}
+a global minimum exists (but is possibly non-unique).
+#+LATEX: \end{hidden}
+
+*** Convexity
+
+\(S \subseteq \mathbb{R}^n\) is called *convex* if for all \(\B{x}, \B{y} \in S\) and all \(0 \leqslant \alpha \leqslant 1\)
+#+LATEX: \begin{hidden}
+\(\alpha \B{x} + (1 - \alpha ) \B{y} \in S. \)
+#+LATEX: \end{hidden}
+
+\(f : S \rightarrow \mathbb{R}\) is called *convex on* \(S \subseteq
+\mathbb{R}^n\) if for \ \(\B{x}, \B{y} \in S\) and
+all \(0 \leqslant \alpha \leqslant 1\)
+#+LATEX: \begin{hidden}
+\[f (\alpha \B{x} + (1 - \alpha ) \B{y} \in S) \leqslant
+    \alpha f (\B{x}) + (1 - \alpha ) f (\B{y}) . \]
+    With `\(<\)': /strictly convex/.
+#+LATEX: \end{hidden}
+
+*Q:* Give an example of a convex, but not strictly convex function.
+
+*** Convexity: Consequences
+
+If \(f\) is convex, \dots
+#+LATEX: \begin{hidden}
+- then \(f\) is continuous at interior points.
+
+  (Why? What would happen if it had a jump?)
+- a local minimum is a /global/ minimum.
+#+LATEX: \end{hidden}
+
+If \(f\) is strictly convex, \dots
+#+LATEX: \begin{hidden}
+- a local minimum is a /unique global/ minimum.
+#+LATEX: \end{hidden}
+
+*** Optimality Conditions
+
+If we have found a candidate \(\B{x}^\ast\) for a minimum,
+how do we know it actually is one?
+Assume \(f\) is smooth, i.e. has all needed derivatives.
+
+#+LATEX: \begin{hidden}[5cm]
+- In one dimension:
+
+  - Necessary: \(f' (x^\ast ) = 0\) (i.e. \(x^\ast\) is an extremal point)
+
+  - Sufficient: \(f' (x^\ast ) = 0\) and \(f'' (x^\ast ) > 0\)
+
+    (implies \(x^\ast\) is a local minimum)
+
+- In \(n\) dimensions:
+
+  - Necessary: \(\nabla f (\B{x}^\ast ) = 0\) (i.e.
+    \(\B{x}^\ast\) is an extremal point)
+
+  - Sufficient: \(\nabla f (\B{x}^\ast ) = 0\) and \(H_f         (\B{x}^\ast )\) positive definite
+
+    (implies \(x^\ast\) is a local minimum)
+
+where the *Hessian*
+\[\footnotesize H_f (\B{x}^\ast ) =
+\begin{bmatrix}
+  \frac{\partial ^2}{\partial x_1^2} & \cdots & \frac{\partial ^2}{\partial
+       x_1 \partial x_n}\\\vdots &  & \vdots \\\frac{\partial ^2}{\partial x_n \partial x_1} & \cdots &
+       \frac{\partial ^2}{\partial x_n^2}
+\end{bmatrix} f (\B{x}^\ast ) . \]
+#+LATEX: \end{hidden}
+
+*** Optimization: Observations
+
+*Q:* Come up with a hypothetical approach for finding minima.
+
+#+LATEX: \begin{hidden}
+*A:* Solve \(\nabla f = 0\).\medskip
+#+LATEX: \end{hidden}
+
+*Q:* Is the Hessian symmetric?
+
+#+LATEX: \begin{hidden}
+*A:* Yes. (Schwarz's theorem)\medskip
+#+LATEX: \end{hidden}
+
+*Q:* How can we practically test for positive definiteness?
+
+#+LATEX: \begin{hidden}
+*A:* Attempt a Cholesky factorization. If it succeeds, the matrix is
+PD.
+#+LATEX: \end{hidden}
+
+*** In-Class Activity: Optimization Theory
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-theory/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{optimization-theory}{Optimization Theory}
+*** Sensitivity and Conditioning (1D)
+
+How does optimization react to a slight perturbation of the minimum?
+#+LATEX: \begin{hidden}[6cm]
+Suppose we still have
+\(\abs{f (\tilde {x}) - f (x^\ast )} < \tmop{tol} \)
+(where \(x^\ast\) is true min.).
+
+Apply Taylor's theorem:
+\[f (x^\ast  + h) = f (x^\ast ) + \underbrace{f' (x^\ast )}_0 h + f''
+    (x^\ast ) \frac{h^2}{2} + O (h^3) \]
+Solve for \(h\):
+\(\abs{\tilde {x} - x^\ast } \leqslant \sqrt{2 \tmop{tol} / f'' (x^\ast )}
+\).
+
+*In other words:* Can expect \emph{half as many digits} in
+\(\tilde {x}\) as in \(f (\tilde {x})\).
+
+This is important to keep in mind when setting tolerances.\medskip
+
+It's only possible to do better when derivatives are explicitly known and
+convergence is not based on function values alone. (then: can solve \(\nabla      f = 0\))
+#+LATEX: \end{hidden}
+
+*** Sensitivity and Conditioning (nD)
+
+How does optimization react to a slight perturbation of the minimum?
+#+LATEX: \begin{hidden}[5cm]
+Assume \(\norm{\B{s}} = 1\).
+\[f (\B{x}^\ast  + h \B{s}) = f (\B{x}^\ast ) + h
+    \underbrace{\nabla f (\B{x}^\ast )^T}_{\B{0}}
+    \B{s} + \frac{h^2}{2} \B{s}^T H_f (\B{x}^\ast ) \B{s} + O
+    (h^3) \]
+Yields:
+\[\abs{h}^2 \leqslant \frac{2 \tmop{tol}}{\lambda _{\min}  (H_f
+    (\B{x}^\ast ))} . \]
+*In other words:* Conditioning of \(H_f\) determines sensitivity of
+\(\B{x^\ast }\).
+#+LATEX: \end{hidden}
+
+** Methods for unconstrained opt. in one dimension
+
+*** Unimodality
+
+Would like a method like bisection, but for optimization.
+
+In general: No invariant that can be preserved.
+
+Need /extra assumption./
+#+LATEX: \begin{hidden}[1.5cm]
+\(f\) is called *unimodal* if for all \(x_1 < x_2\)
+
+- \(x_2 < x^\ast  \Rightarrow f (x_1) > f (x_2)\)
+
+- \(x^\ast  < x_1 \Rightarrow f (x_1) < f (x_2)\)
+#+LATEX: \end{hidden}
+
+*** Golden Section Search
+
+Suppose we have an interval with \(f\) unimodal:
+
+#+ATTR_LATEX: :height 4cm
+[[./images/golden-section-search-crop.pdf]]
+
+Would like to maintain unimodality.
+
+#+LATEX: \begin{hidden}[3cm]
+1. Pick \(x_1, x_2\)
+2. If \(f (x_1) > f (x_2)\), reduce to \((x_1, b)\)
+3. If \(f (x_1) \leqslant f (x_2)\), reduce to \((a, x_2)\)
+#+LATEX: \end{hidden}
+
+*** Golden Section Search: Efficiency
+
+Where to put \(x_1\), \(x_2\)?
+
+#+LATEX: \begin{hidden}[4cm]
+- Want symmetry:
+
+  \(x_1 = a + (1 - \tau ) (b - a)\)
+
+  \(x_2 = a + \tau (b - a)\)
+
+- Want to reuse function evaluations: \(\tau ^2 = 1 - \tau\)
+
+  Find: \(\tau = \left ( \sqrt{5} - 1 \right ) / 2\).
+  Also known as the /golden section/.
+
+- Hence *golden section search*.
+#+LATEX: \end{hidden}
+
+Convergence rate?
+#+LATEX: \begin{hidden}
+Linearly convergent. Can we do better?
+#+LATEX: \end{hidden}
+
+\demolink{nonlinear}{Golden Section Proportions}
+
+*** Newton's Method
+
+Reuse the Taylor approximation idea, but for
+optimization.
+#+LATEX: \begin{hidden}
+\[f (x + h) \approx f (x) + f' (x) h + f'' (x)
+   \frac{h^2}{2} = : \hat {f} (h) \]
+Solve
+\[0 = \hat {f}' (h) = f' (x) + f'' (x) h:\]
+\(h = - {f' (x)}/{f'' (x)} \).
+1. \(x_0 = \langle \text{some starting guess} \rangle\)
+2. \(x_{k + 1} = x_k - \frac{f' (x_k)}{f'' (x_k)}\)
+
+*Q:* Notice something? Identical to Newton for solving \(f' (x) = 0\).
+
+Because of that: locally quadratically convergent.\medskip
+
+*Good idea:* Combine slow-and-safe (bracketing) strategy with
+fast-and-risky (Newton).
+#+LATEX: \end{hidden}
+
+\demolink{optimization}{Newton's Method in 1D}
+
+
+*** In-Class Activity: Optimization Methods
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-methods/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{optimization-methods}{Optimization Methods}
+** Methods for unconstrained opt. in $n$  dimensions
+*** Steepest Descent
+
+Given a scalar function \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
+at a point \(\B{x}\), which way is down?
+#+LATEX: \begin{hidden}[6cm]
+Direction of steepest
+descent: \(- \nabla f\)\medskip
+
+*Q:* How far along the gradient should we go?\medskip
+
+Unclear--do a line search. For example using Golden Section Search.
+
+1. \(\B{x}_0 = \langle \text{some starting guess} \rangle\)
+
+1. \(\B{s}_k = - \nabla f (\B{x}_k)\)
+
+1. Use line search to choose \(\alpha _k\) to minimize \(f (\B{x}_k +     \alpha _k \B{s}_k)\)
+
+1. \(\B{x}_{k + 1} = \B{x}_k + \alpha _k \B{s}_k\)
+
+1. Go to 2.
+
+*Observation:* (from demo)
+
+- Linear convergence
+#+LATEX: \end{hidden}
+
+\demolink{optimization}{Steepest Descent}
+
+*** Steepest Descent: Convergence
+Consider quadratic model problem:
+\[f(\B{x})= \frac{1}{2}\B{x}^T A \B{x} + \B{c}^T \B{x}\]
+where \(A\) is SPD. (A good model of \(f\) near a minimum.)
+
+\medskip
+Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then
+\[||\B{e}_{k+1}||_{A} = \sqrt{\B{e}_{k+1}^T A \B{e}_{k+1}} = \frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}||\B{e}_k||_{A}\]
+\(\to\) confirms linear convergence.
+
+\medskip
+Convergence constant related to conditioning:
+\[\frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}=\frac{\kappa (A)-1}{\kappa (A)+1}.\]
+*** Hacking Steepest Descent for Better Convergence
+
+*Extrapolation methods:* Look back a step, maintain '/momentum/'.
+
+\[\B{x}_{k+1} = \B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\]
+
+*Heavy ball method:* constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
+
+\[||\B{e}_{k+1}||_{A} = \frac{\sqrt{\kappa (A)} -1}{\sqrt{\kappa (A) }+1}||\B{e}_k||_{A}\]
+
+*Conjugate gradient method:*
+
+\[(\alpha _k,\beta _k)=\operatorname{argmin}_{\alpha _k,\beta _k}\bigg [f\Big (\B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\Big )\bigg ]\]
+
+- Will see in more detail later (for solving linear systems)
+- Provably optimal first-order method for the quadratic model problem
+- Turns out to be closely related to Lanczos (\(A\)-orthogonal search directions)
+
+*** Nelder-Mead Method
+
+Idea:
+#+LATEX: \begin{hidden}[3cm]
+Form a \(n\)-point polytope in \(n\)-dimensional space and adjust
+worst point (highest function value) by moving it along a line passing
+through the centroid of the remaining points.
+#+LATEX: \end{hidden}
+\demolink{optimization}{Nelder-Mead Method}
+
+*** Newton's method ($n$ D)
+
+What does Newton's method look like in \(n\) dimensions?
+#+LATEX: \begin{hidden}[6cm]
+Build a Taylor approximation:
+\[f (\B{x} + \B{s}) \approx f (\B{x}) + \nabla f
+   (\B{x})^T \B{s} + \frac{1}{2} \B{s}^T H_f
+   (\B{x}) \B{s} = : \hat {f} (\B{s}) \]
+Then solve \(\nabla \hat {f} (\B{s}) = \B{0}\) for \(\B{s}\)
+to find
+\[H_f (\B{x}) \B{s} = - \nabla f (\B{x}) . \]
+
+1. \(x_0 = \langle \text{some starting guess} \rangle\)
+
+2. Solve \(H_f (\B{x}_k) \B{s}_k = - \nabla f     (\B{x}_k)\) for \(\B{s}_k\)
+
+3. \(\B{x}_{k + 1} = \B{x}_k + \B{s}_k\)
+#+LATEX: \end{hidden}
+
+*** Newton's method  ($n$ D): Observations
+
+Drawbacks?
+
+#+LATEX: \begin{hidden}[4cm]
+- Need second (!) derivatives
+
+  (addressed by Conjugate Gradients, later in the class)
+
+- local convergence
+
+- Works poorly when \(H_f\) is nearly indefinite
+#+LATEX: \end{hidden}
+
+\demolink{optimization}{Newton's method in n dimensions}
+
+*** Quasi-Newton Methods
+
+Secant/Broyden-type ideas carry over to optimization. How?
+
+#+LATEX: \begin{hidden}[3cm]
+Come up with a way to update to update the approximate Hessian.
+
+\[\B{x}_{k+1}  = \B{x}_k -\alpha _k B_k^{-1}\nabla f(\B{x}_k)\]
+
+- \(\alpha _k\): a line search/damping parameter.
+#+LATEX: \end{hidden}
+
+*BFGS*: Secant-type method, similar to Broyden:
+
+\[\B{B}_{k+1} = \B{B}_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} - \frac{\B{B}_k\B{s}_k \B{s}_k^T\B{B}_k}{\B{s}_k^T\B{B}_k \B{s}_k}\]
+
+where
+- \(\B{s}_k = \B{x}_{k+1}-\B{x}_k\)
+- \(\B{y_k} =\nabla f(\B{x}_{k+1})-\nabla f(\B{x}_k)\)
+
+** Nonlinear Least Squares
+
+*** Nonlinear Least Squares: Setup
+
+What if the \(f\) to be minimized is actually a 2-norm?
+\[f (\B{x}) = \norm{\B{r} (\B{x})}_2, \qquad
+   \B{r} (\B{x}) = \B{y} - \B{a} (\B{x})
+\]
+#+LATEX: \begin{hidden}[5cm]
+Define `helper function'
+\[\varphi (\B{x}) = \frac{1}{2} \B{r} (\B{x})^T
+   \B{r} (\B{x}) = \frac{1}{2} f^2 (\B{x}) \]
+and minimize that instead.
+\[\frac{\partial }{\partial x_i} \varphi = \frac{1}{2} \sum _{j = 1}^n
+   \frac{\partial }{\partial x_i} [r_j (\B{x})^2] = \sum _j \left (
+   \frac{\partial }{\partial x_i} r_j \right ) r_j, \]
+or, in matrix form:
+\[\nabla \varphi = J_{\B{r}} (\B{x})^T \B{r}
+   (\B{x}) . \]
+#+LATEX: \end{hidden}
+
+*** Gauss-Newton
+For brevity: \(J \assign J_{\B{r}} (\B{x})\).
+
+#+LATEX: \begin{hidden}[5cm]
+Can show similarly:
+\[H_\varphi  (\B{x}) = J^T J + \sum _i r_i H_{r_i} (\B{x}) . \]
+Newton step \(\B{s}\) can be found by solving
+\(H_\varphi  (\B{x}) \B{s} = - \nabla \varphi \).\medskip
+
+*Observation:* \(\sum _i r_i H_{r_i} (\B{x})\) is inconvenient to
+compute \emph{and} unlikely to be large (since it's multiplied by
+components of the residual, which is supposed to be small) \(\rightarrow\)
+forget about it.\medskip
+
+*Gauss-Newton method:* Find step \(\B{s}\) by
+\(J^T J \B{s} = - \nabla \varphi = - J^T \B{r} (\B{x})
+\).
+Does that remind you of the \emph{normal equations}?
+\(J \B{s} \cong - \B{r} (\B{x}) \).
+Solve that using our existing methods for least-squares problems.\medskip
+#+LATEX: \end{hidden}
+
+*** Gauss-Newton: Observations?
+
+\demolink{optimization}{Gauss-Newton}
+
+\medskip
+Observations?
+
+#+LATEX: \begin{hidden}[3cm]
+- Newton on its own is still only locally convergent
+- Gauss-Newton is clearly similar
+- It's worse because the step is only approximate
+
+  \(\rightarrow\) Much depends on the starting guess.
+#+LATEX: \end{hidden}
+
+*** Levenberg-Marquardt
+If Gauss-Newton on its own is poorly, conditioned, can try
+*Levenberg-Marquardt*:
+#+LATEX: \begin{hidden}[5cm]
+\[(J_{\B{r}} (\B{x}_k)^T J_{\B{r}} (\B{x}_k)
+   \tmcolor{red}{+ \mu _k I}) \B{s}_k = - J_{\B{r}}
+   (\B{x}_k)^T \B{r} (\B{x}_k) \]
+for a `carefully chosen' \(\mu _k\). This makes the system matrix `more
+invertible' but also less accurate/faithful to the problem. Can also be
+translated into a least squares problem (see book).\medskip
+
+What Levenberg-Marquardt does is generically called *regularization*: Make \(H\)
+more positive definite.
+
+Easy to rewrite to least-squares problem:
+\begin{equation*}
+  \begin{bmatrix}
+    J_{\B r} (\B x_k) \\ \sqrt{\mu_k}
+  \end{bmatrix}
+  \B s_k
+  \cong
+  \begin{bmatrix}
+    -\B r(\B x_k)\\ \B 0
+  \end{bmatrix}.
+\end{equation*}
+#+LATEX: \end{hidden}
+
+** Constrained Optimization
+
+*** Constrained Optimization: Problem Setup
+
+Want \(\B{x}^\ast\) so that
+\[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
+   \text{subject to} \quad \B{g} (\B{x}) = \B{0} \]
+No inequality constraints just yet. This is /equality-constrained
+optimization/. Develop a necessary condition for a
+minimum.
+#+LATEX: \begin{hidden}[3cm]
+Unconstrained necessary condition:
+\[\nabla f (\B{x}) = \B{0} \]
+*Problem:* That alone is not helpful. `Downhill' direction has to be
+\emph{feasible}. So just this doesn't help.\medskip
+
+\(\B{s}\) is a *feasible direction* at $\B x$ if
+\[\B{x} + \alpha \B{s} \quad \text{feasible for } \alpha
+   \nocomma \in [0, r] \quad\text{(for some \(r\))} \]
+#+LATEX: \end{hidden}
+
+*** Constrained Optimization: Necessary Condition
+
+#+LATEX: \begin{hidden}[6cm]
+- \(\nabla f (\B{x}) \cdot \B{s} \geqslant 0\) (``uphill
+  that way'') for any feasible direction \(\B{s}\).\medskip
+
+  If not at boundary of feasible set:
+
+  \(s\) and \(- s\) are feasible directions
+
+  \(\Rightarrow\) \(\nabla f (\B{x}) = 0\)
+
+  \(\Rightarrow\) Only the boundary of the feasible set is different from the
+  unconstrained case (i.e. interesting)
+
+- At boundary: \(g (x) = 0\). Need:
+  \[- \nabla f (\B{x}) \in \tmop{rowspan} (J_{\B{g}}) \]
+  a.k.a. ``all descent directions would cause a change
+  (\(\rightarrow\)violation) of the constraints.''
+
+  *Q:* Why `rowspan'? Think about shape of \(J_{\B{g}}\).
+  \[\Leftrightarrow - \nabla f (\B{x}) = J_{\B{g}}^T
+     \B{\lambda } \quad \text{for some \(\B{\lambda }\).} \]
+#+LATEX: \end{hidden}
+
+*** Lagrange Multipliers
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/lagrange-multiplier-crop.pdf]]
+#+END_CENTER
+
+Seen: Need
+\(- \nabla f (\B{x}) = J_{\B{g}}^T \B{\lambda } \)
+at the (constrained) optimum.\medskip
+
+/Idea:/ Turn constrained optimization problem for \(\B{x}\) into
+an \emph{unconstrained} optimization problem for \((\B{x}, \B{\lambda })\). How?
+#+LATEX: \begin{hidden}
+Need a new function \(\mathcal{L} (\B{x}, \B{\lambda })\) to minimize:
+\[\mathcal{L} (\B{x}, \B{\lambda }) \assign f (\B{x}) +
+   \B{\lambda }^T \B{g} (\B{x}) . \]
+#+LATEX: \end{hidden}
+
+*** Lagrange Multipliers: Development
+
+\[\mathcal{L} (\B{x}, \B{\lambda }) \assign f (\B{x}) +
+   \B{\lambda }^T \B{g} (\B{x}) . \]
+#+LATEX: \begin{hidden}[5cm]
+Then: \(\nabla \mathcal{L}= \B{0}\) at unconstrained minimum, i.e.
+\[\B{0} = \nabla \mathcal{L}=
+\begin{bmatrix}
+  \nabla _{\B{x}} \mathcal{L}\\\nabla _{\B{\lambda }} \mathcal{L}
+\end{bmatrix} =
+\begin{bmatrix}
+  \nabla f + J_{\B{g}} (\B{x})^T \B{\lambda }\\\B{g} (\B{x})
+\end{bmatrix} . \]
+Convenient: This matches our necessary condition!\medskip
+
+So we could use any unconstrained method to minimized \(\mathcal{L}\).
+
+*For example:* Using Newton to minimize \(\mathcal{L}\) is called
+/Sequential Quadratic Programming/. (`SQP')
+#+LATEX: \end{hidden}
+
+\demolink{optimization}{Sequential Quadratic Programming}
+
+*** Inequality-Constrained Optimization
+
+Want \(\B{x}^\ast\) so that
+\[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
+   \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
+   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0} \]
+This is /inequality-constrained optimization/. Develop a necessary
+condition for a minimum.
+
+#+LATEX: \begin{hidden}[5cm]
+Define Lagrangian:
+\[\mathcal{L} (\B{x}, \B{\lambda }_1, \B{\lambda }_2)
+   \assign f (\B{x}) + \B{\lambda }_1^T \B{g}
+   (\B{x}) + \B{\lambda }_2^T \B{h} (\B{x}) \]
+
+- Some inequality constrains may not be ``active''
+
+  (\(\text{active } \Leftrightarrow h_i (\B{x}^\ast ) = 0     \Leftrightarrow\)at `boundary' of ineq. constraint)
+
+  (Equality constrains are always `active')
+
+- If \(h_i\) inactive (\(h_i (\B{x}^\ast ) < 0\)), must force
+  \(\lambda _{2, i} = 0\).
+
+  Otherwise: Behavior of \(h\) could change location of minimum of
+  \(\mathcal{L}\). Use *complementarity condition*
+  \(h_i (\B{x}^\ast ) \lambda _{2, i} = 0\).
+#+LATEX: \end{hidden}
+
+*** Inequality-Constrained Optimization (cont'd)
+
+Develop a set of necessary conditions for a minimum.
+
+#+LATEX: \begin{hidden}[5cm]
+Assuming \(J_{\B{g}}\) and \(J_{\B{h}, \tmop{active}}\) have full
+rank, this set of conditions is /necessary/:
+\begin{eqnarray*}
+  (\ast ) \quad \nabla _{\B{x}} \mathcal{L} (\B{x}^\ast ,
+    \B{\lambda }^\ast _1, \B{\lambda }^\ast _2) & = &
+    \B{0}\\(\ast ) \quad \B{g} (\B{x}^\ast ) & = & \B{0}\\\B{h} (\B{x}^\ast ) & \leqslant & \B{0}\\\B{\lambda }_2 & \geqslant & \B{0}\\(\ast ) \quad \B{h} (\B{x}^\ast ) \cdot \B{\lambda }_2 &
+    = & 0
+\end{eqnarray*}
+These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
+
+*Computational approach:* Solve \((\ast )\) equations by Newton.
+#+LATEX: \end{hidden}
+
+* Interpolation
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: interpolation
+  :END:
+** Introduction
+*** Interpolation: Setup
+
+*Given:* \((x_i)_{i = 1}^N\), \((y_i)_{i = 1}^N\)
+
+*Wanted:* Function \(f\) so that \(f (x_i) = y_i\)
+
+\medskip
+How is this not the same as function fitting? (from least squares)
+#+LATEX: \begin{hidden}[4cm]
+It's very similar--but the key difference is that we are asking for
+\emph{exact equality}, not just minimization of a residual
+norm.
+
+\(\rightarrow\) Better error control, error not dominated by
+residual\medskip
+
+*Idea:* There is an /underlying function/ that we are
+approximating from the known point values.\medskip
+
+*Error here:* Distance from that underlying function
+#+LATEX: \end{hidden}
+
+*** Interpolation: Setup (II)
+
+*Given:* \((x_i)_{i = 1}^N\), \((y_i)_{i = 1}^N\)
+
+*Wanted:* Function \(f\) so that \(f (x_i) = y_i\)
+
+\medskip
+Does this problem have a unique answer?
+#+LATEX: \begin{hidden}[4cm]
+No--there are infinitely
+many functions that satisfy the problem as stated:
+
+#+ATTR_LATEX: :height 3cm
+[[./images/interpolation-non-unique-crop.pdf]]
+#+LATEX: \end{hidden}
+
+*** Interpolation: Importance
+Why is interpolation important?
+#+LATEX: \begin{hidden}[5cm]
+It brings all of calculus
+within range of numerical operations.
+
+- Why?
+
+  Because calculus works on functions.
+
+- How?
+
+  1. Interpolate (go from discrete to continuous)
+  2. Apply calculus
+  3. Re-discretize (evaluate at points)
+
+#+LATEX: \end{hidden}
+
+*** Making the Interpolation Problem Unique
+
+#+LATEX: \begin{hidden}[6cm]
+Limit the set of functions to a linear
+combination from an /interpolation basis/ \(\varphi _i\).\medskip
+\[f (x) = \sum _{j = 0}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
+Interpolation becomes solving the linear system:
+\[y_i = f (x_i) = \sum _{j = 0}^{N_{\tmop{func}}} \alpha _j
+   \underbrace{\varphi _j (x_i)}_{V_{i j}} \qquad \leftrightarrow \qquad V
+   \B{\alpha } = \B{y} . \]
+Want unique answer: Pick \(N_{\tmop{func}} = N\) \(\rightarrow\) \(V\)
+square.
+
+\(V\) is called the /(generalized) Vandermonde matrix/.\medskip
+
+\[V \left ( \text{coefficients} \right ) = \left ( \text{values at nodes}
+   \right ) . \]
+#+LATEX: \end{hidden}
+
+*** Existence/Sensitivity
+Solution to the interpolation problem: Existence? Uniqueness?
+#+LATEX: \begin{hidden}[1cm]
+Equivalent to existence/uniqueness of the linear system
+#+LATEX: \end{hidden}
+Sensitivity?
+#+LATEX: \begin{hidden}[5cm]
+- Shallow answer: Simply consider the condition number of the linear system
+- \(\|\text{coefficients} \|\) does not suffice as measure of stability.
+
+  $f(x)$ can be evaluated in many places. (\(f\) is interpolant.)
+
+- Want: \(\max_{x \in[a,b]}|f(x)| \le \Lambda \|\B y\|_\infty \)
+
+- \(\Lambda\): *Lebesgue constant*
+- \(\Lambda\) depends on \(n\) and \(\{x_i\}_i\)
+
+  - Technically also depends on \(\{\phi_i\}_i\)
+  - But: same for all polynomial bases
+#+LATEX: \end{hidden}
+
+** Methods
+*** Modes and Nodes (aka Functions and Points)
+
+Both function basis and point set are under our control. What do we
+pick?\medskip
+
+**** Ideas for basis functions                                    :B_columns:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+
+Ideas for basis functions:
+
+- Monomials \(1, x, x^2, x^3, x^4, \ldots\)
+- Functions that make \(V = I\) \(\rightarrow\) `Lagrange basis'
+- Functions that make \(V\) triangular \(\rightarrow\) `Newton basis'
+- /Splines/ (piecewise polynomials)
+- /Orthogonal polynomials/
+- Sines and cosines
+- `Bumps' (/`Radial Basis Functions'/)
+
+**** Ideas for points:                                            :B_columns:
+     :PROPERTIES:
+     :BEAMER_col: 0.5
+     :END:
+Ideas for points:
+
+- Equispaced
+- /`Edge-Clustered'/ (so-called Chebyshev/Gauss/... nodes)
+
+\medskip
+Specific issues:
+
+- Why /not/ monomials on equispaced points?
+
+  \demolink{interpolation}{Monomial interpolation}
+
+- Why not equispaced?
+
+  \demolink{interpolation}{Choice of Nodes for Polynomial Interpolation}
+
+*** Lagrange Interpolation
+
+Find a basis so that \(V = I\), i.e.
+\[\varphi _j (x_i) =
+\begin{cases}
+  1 & i = j,\\0 & \text{otherwise} .
+\end{cases} \]
+#+LATEX: \begin{hidden}[4cm]
+Start with simple example. Three nodes: \(x_1, x_2, x_3\)
+\begin{eqnarray*}
+  \varphi _1 (x) & = & \frac{\qquad (x - x_2) (x - x_3)}{\qquad (x_1 - x_2)
+    (x_1 - x_3)}\\\varphi _2 (x) & = & \frac{(x - x_1) \qquad (x - x_3)}{(x_2 - x_1) \qquad
+    (x_2 - x_3)}\\\varphi _3 (x) & = & \frac{(x - x_1) (x - x_2) \qquad }{(x_3 - x_1) (x_3 -
+    x_2) \qquad }
+\end{eqnarray*}
+Numerator: Ensures \(\varphi _i\) zero at other nodes.
+
+Denominator: Ensures \(\varphi _i (x_i) = 1\).
+#+LATEX: \end{hidden}
+
+*** Lagrange Polynomials: General Form
+
+\[\varphi _j (x) = \frac{\prod _{k = 1, k \neq j}^m (x - x_k)}{\prod _{k = 1, k
+   \neq j}^m (x_j - x_k)} \]
+
+*** Newton Interpolation
+
+Find a basis so that \(V\) is triangular.
+#+LATEX: \begin{hidden}[3cm]
+Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
+\[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \]
+(At least) two possibilities for coefficent finding:
+
+1. Set up \(V\), run forward substitution.
+
+1. ``Divided Differences'' (see, e.g. Wikipedia)
+#+LATEX: \end{hidden}
+
+Why not Lagrange/Newton?
+#+LATEX: \begin{hidden}
+Cheap to form, expensive to evaluate,
+expensive to do calculus on.
+#+LATEX: \end{hidden}
+
+*** Better conditioning: Orthogonal polynomials
+
+What caused monomials to have a terribly conditioned Vandermonde?
+#+LATEX: \begin{hidden}
+Being close to linearly dependent.
+#+LATEX: \end{hidden}
+
+What's a way to make sure two vectors are /not/ like that?
+#+LATEX: \begin{hidden}
+Orthogonality
+#+LATEX: \end{hidden}
+
+But polynomials are functions!
+#+LATEX: \begin{hidden}[3cm]
+\vspace{-3ex}
+\begin{eqnarray*}
+  \B{f} \cdot \B{g} & = & \sum _{i = 1}^n f_i g_i \quad =
+    \ip{\B{f}}{\B{g}}\\\ip{f}{g} & = & \int _{- 1}^1 f (x) g (x) \mathd x
+\end{eqnarray*}
+Need an *inner product*. Orthogonal then just means \(\ip{f}{g} = 0\).
+#+LATEX: \end{hidden}
+
+*** Constructing Orthogonal Polynomials
+
+How can we find an orthogonal basis?
+
+#+LATEX: \begin{hidden}
+Apply Gram-Schmidt to the monomials.
+#+LATEX: \end{hidden}
+
+\demolink{interpolation}{Orthogonal Polynomials}
+---
+Obtained: *Legendre polynomials*.
+
+But how can I practically compute the Legendre polynomials?
+#+LATEX: \begin{hidden}[3cm]
+\(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
+
+- There exist three-term recurrences, e.g.: \(T_{n+1}=2xT_n -T_{n+1}\)
+- There is a whole zoo of polynomials there, depending on the weight
+  function \(w\) in the (generalized) inner product:
+  \[\ip{f}{g} = \int w (x) f (x) g (x) \mathd x. \]
+  Some sets of orth. polys. live on intervals \(\ne(- 1, 1)\).
+#+LATEX: \end{hidden}
+
+*** Chebyshev Polynomials: Definitions
+
+Three equivalent definitions:
+
+- Result of Gram-Schmidt with weight \(1 / \sqrt{1 - x^2}\). What is that weight?
+  #+LATEX: \begin{hidden}
+  \(1 / \left ( \text{Half circle} \right )\),
+    i.e. \(x^2 + y^2 = 1\), with \(y = \sqrt{1 - x^2}\)
+  #+LATEX: \end{hidden}
+
+  (Like for Legendre, you won't exactly get the standard normalization
+  if you do this.)
+
+- \(T_k (x) = \cos (k \cos ^{- 1} (x))\)
+
+- \(T_k (x) = 2 xT_{k-1} (x) - T_{k - 2} (x)\) plus \(T_0=1\), \(T_0=x\)
+
+\medskip
+\demolink{interpolation}{Chebyshev Interpolation } (Part 1)
+
+*** Chebyshev Interpolation
+
+What is the Vandermonde matrix for Chebyshev polynomials?
+#+LATEX: \begin{hidden}
+
+- Need to know the nodes to answer that
+- The answer would be very simple if the nodes were \(\cos      (\ast )\).
+- So why not \(\cos \left ( \text{equispaced)} \right .\)?
+
+Might get
+\[x_i = \cos \left ( \frac{i}{k} \pi \right ) \qquad (i = 0, 1, \ldots , k) \]
+These are just the /extrema/ (minima/maxima) of \(T_k\).
+
+\[V_{i j} = \cos \left ( j \cos ^{- 1} \left ( \cos \left ( \frac{i}{k} \pi
+   \right ) \right ) \right ) = \cos \left ( j \frac{i}{k} \pi \right ) . \]
+This is called the /Discrete Cosine Transform/ and a matvec with this
+matrix (and its inverse!) can be implemented in \(O (N \log N)\) time (similar
+to the /Fast Fourier Transform/\(\rightarrow\)Chapter 12).
+#+LATEX: \end{hidden}
+
+*** Chebyshev Nodes
+
+Might also consider roots (instead of extrema) of \(T_{k}\):
+\[x_i = \cos \left ( \frac{2 i - 1}{2 k} \pi \right ) \quad (i = 1 \ldots , k) . \]
+Vandermonde for these (with \(T_k\)) can be applied in \(O (N \log N)\) time, too.
+
+It turns out that we were still looking for a good set of interpolation
+nodes.
+
+We came up with the criterion that the nodes should bunch towards
+the ends. Do these do that?
+#+LATEX: \begin{hidden}
+Yes.
+#+LATEX: \end{hidden}
+
+\demolink{interpolation}{Chebyshev Interpolation } (Part 2)\medskip
+
+*** Chebyshev Interpolation: Summary
+
+- Chebyshev interpolation is fast and works extremely well
+- [[http://www.chebfun.org/]] and: [[http://www.chebfun.org/ATAP/][ATAP]]
+- In 1D, they're a very good answer to the interpolation question
+- But sometimes a piecewise approximation (with a specifiable level of
+  smoothness) is more suited to the application
+
+*** In-Class Activity: Interpolation
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-interpolation/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{interpolation}{Interpolation}
+
+** Error Estimation
+*** Interpolation Error
+
+If \(f\) is \(n\) times continuously differentiable on a closed
+interval \(I\) and \(p_{n-1} (x)\)  is a
+polynomial of degree at most $n$ that interpolates $f$ at $n$ distinct
+points \(\{x_i\}\) ($i=1,...,n$) in that interval, then for each $x$ in the
+interval there exists $\xi$ in that interval such that
+
+\[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi )}{n!} (x - x_1) (x - x_2) \cdots
+   (x - x_n). \]
+
+#+LATEX: \begin{hidden}[3cm]
+Set the error term to be \(R(x) := f(x) - p_{n-1}(x) \)
+and set up an auxiliary function:
+\[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i).\]
+Note also the introduction of $t$ as an additional variable, independent
+of the point $x$ where we hope to prove the identity.
+#+LATEX: \end{hidden}
+
+*** Interpolation Error: Proof cont'd
+
+\[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i)\]
+#+LATEX: \begin{hidden}[6cm]
+- Since \(x_i\) are roots of $R(t)$ and $W(t)$, we have
+  \(Y(x)=Y(x_i)=0\), which means $Y$ has at least $n+1$ roots.
+- From Rolle's theorem, $Y'(t)$ has at least $n$ roots, then $Y^{(n)}$ has at
+  least one root $\xi$, where $\xi\in I$.
+- Since \(p_{n-1}(x)\) is a polynomial of degree at most $n-1$, \(R^{(n)}(t) = f^{(n)}(t)\).
+  Thus
+  \[ Y^{(n)}(t) = f^{(n)}(t) - \frac{R(x)}{W(x)} n!. \]
+- Plugging $Y^{(n)}(\xi)=0$ into the above yields the result.
+#+LATEX: \end{hidden}
+
+*** Error Result: Connection to Chebyshev
+
+What is the connection between the error result and Chebyshev interpolation?
+#+LATEX: \begin{hidden}[4cm]
+- The error bound suggests choosing the interpolation nodes such that the product
+  \(\abs{\prod_{i=1}^n (x-x_i)}\), is as small as possible. The Chebyshev nodes achieve this.
+
+- Error is zero at the nodes
+
+- If nodes scoot closer together near the interval ends, then
+  \[(x - x_1) (x - x_2) \cdots (x - x_n) \]
+  clamps down the (otherwise quickly-growing) error there.
+#+LATEX: \end{hidden}
+
+*** Error Result: Simplified From
+
+Boil the error result down to a simpler form.
+#+LATEX: \begin{hidden}[5cm]
+Assume
+\(x_1 < \cdots < x_n\).
+
+- \(\abs{f^{(n)} (x)} \leqslant M\) for \(x \in [x_{1,} x_n]\),
+
+- Set the interval length \(h = x_n - x_1\).
+
+    Then \(| x - x_i | \leqslant h \).
+
+Altogether--there is a constant \(C\) independent of \(h\) so that:
+\[\max _x \abs{f (x) - p_{n - 1} (x)} \leqslant CMh^n . \]
+For the grid spacing \(h \rightarrow 0\), we have
+\[E (h) = O (h^n) . \]
+This is called /convergence of order \(n\)/.
+#+LATEX: \end{hidden}
+
+\demolink{interpolation}{Interpolation Error}
+
+** Piecewise interpolation, Splines
+*** Going piecewise: Simplest Case
+
+Construct a piecweise linear interpolant at four points.
+
+#+BEGIN_CENTER
+#+BEGIN_EXPORT latex
+{\footnotesize
+\begin{tabular}{ccccccc}
+    \(x_0, y_0\) &  & \(x_1, y_1\) &  & \(x_2, y_2\) &  & \(x_3, y_3\)\\
+    \textbar & \(f_1 = a_1 x + b_1\) & \textbar & \(f_2 = a_2 x + b_2\) & \textbar & \(f_3 = a_3 x + b_3\) & \textbar \\
+    \textbar & 2 unk. & \textbar & 2 unk. & \textbar & 2 unk. & \textbar \\
+    \textbar & \(f_1 (x_0) = y_0\) & \textbar & \(f_2 (x_1) = y_1\) & \textbar & \(f_3 (x_2) = y_2\) & \textbar \\
+    \textbar & \(f_1 (x_1) = y_1\) & \textbar & \(f_2 (x_2) = y_2\) & \textbar & \(f_3 (x_3) = y_3\) & \textbar \\
+    \textbar & 2 eqn. & \textbar & 2 eqn. & \textbar & 2 eqn. & \textbar
+\end{tabular}
+}
+#+END_EXPORT
+#+END_CENTER
+
+Why three intervals?
+#+LATEX: \begin{hidden}
+General situation \(\rightarrow\) two end
+intervals and one middle interval. Can just add more middle intervals if
+needed.
+#+LATEX: \end{hidden}
+
+*** Piecewise Cubic (`Splines')
+
+#+BEGIN_EXPORT latex
+{\footnotesize {
+\begin{tabular}{ccccccc}
+  \(x_0, y_0\) &  & \(x_1, y_1\) &  & \(x_2, y_2\) &  & \(x_3, y_3\)\\
+  \textbar & {\tiny {\(f_1 \)}} & \textbar & {\tiny {\(f_2 \)}} & \textbar & {\tiny {\(f_3 \)}} & \textbar\\
+  \textbar & {\tiny {\( a_1 x^3 + b_1 x^2 + c_1 x + d_1\)}} & \textbar & {\tiny {\( a_2 x^3 + b_2 x^2 + c_2 x + d_2\)}} & \textbar & {\tiny {\( a_3 x^3 + b_3 x^2 + c_3 x + d_3\)}} & \textbar
+\end{tabular}}}
+#+END_EXPORT
+
+#+LATEX: \begin{hidden}[5cm]
+\begin{tabular}{ccc}
+  4 unknowns & 4 unknowns & 4 unknowns\\\(f_1 (x_0) = y_0\) & \(f_2 (x_1) = y_1\) & \(f_3 (x_2) = y_2\)\\\(f_1 (x_1) = y_1\) & \(f_2 (x_2) = y_2\) & \(f_3 (x_3) = y_3\)
+\end{tabular}
+
+Not enough: need more conditions. Ask for more smoothness.
+
+
+\begin{tabular}{cccc}
+  & \(f_1' (x_1) = f'_2 (x_1)\) & \(f_2' (x_2) = f'_3 (x_2)\) & \\& \(f''_1 (x_1) = f''_2 (x_1)\) & \(f''_2 (x_2) = f''_3 (x_2)\) &
+\end{tabular}
+
+Not enough: need yet more conditions.
+
+
+\begin{tabular}{lr}
+  \(f''_1 (x_0) = 0\) & \(f''_3 (x_3) = 0\)
+\end{tabular}
+
+Now: have a square system.
+#+LATEX: \end{hidden}
+
+*** Piecewise Cubic (`Splines'): Accounting
+
+#+BEGIN_EXPORT latex
+{\footnotesize {
+\begin{tabular}{ccccccc}
+  \(x_0, y_0\) &  & \(x_1, y_1\) &  & \(x_2, y_2\) &  & \(x_3, y_3\)\\
+  \textbar & {\tiny {\(f_1 \)}} & \textbar & {\tiny {\(f_2 \)}} & \textbar & {\tiny {\(f_3 \)}} & \textbar\\
+  \textbar & {\tiny {\( a_1 x^3 + b_1 x^2 + c_1 x + d_1\)}} & \textbar & {\tiny {\( a_2 x^3 + b_2 x^2 + c_2 x + d_2\)}} & \textbar & {\tiny {\( a_3 x^3 + b_3 x^2 + c_3 x + d_3\)}} & \textbar
+\end{tabular}}}
+#+END_EXPORT
+
+#+LATEX: \begin{hidden}[5cm]
+Number of conditions: \(2 N_{\tmop{intervals}} + 2 N_{\text{middle nodes}} + 2 \)
+where \[N_{\tmop{intervals}} - 1 = N_{\text{middle nodes}} \]
+so \[2 N_{\tmop{intervals}} + 2 (N_{\tmop{intervals}} - 1) + 2 = 4 N_{\tmop{intervals}}, \]
+which is exactly the number of unknown coefficients.
+
+\medskip
+These conditions are fairly arbitrary: Can choose different ones basically at
+will. The above choice: /`natural spline'/.
+
+\medskip
+Can also come up with a basis of spline functions (with the chosen smoothness
+conditions). These are called *B-Splines*.
+#+LATEX: \end{hidden}
+
+* Numerical Integration and Differentiation
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: quadrature_and_diff
+  :END:
+
+** Numerical Integration
+
+*** Numerical Integration: About the Problem
+
+What is numerical integration? (Or *quadrature*?)
+#+LATEX: \begin{hidden}
+Given \(a\), \(b\), \(f\), compute
+\[\int _a^b f (x) \mathd x. \]
+#+LATEX: \end{hidden}
+
+What about existence and uniqueness?
+#+LATEX: \begin{hidden}[3cm]
+- Answer exists e.g. if \(f\) is /integrable/ in the Riemann or
+  Lebesgue senses.
+
+- Answer is unique if \(f\) is e.g. piecewise continuous and bounded.
+
+  (this also implies existence)
+#+LATEX: \end{hidden}
+
+*** Conditioning
+
+Derive the (absolute) condition number for numerical
+integration.
+#+LATEX: \begin{hidden}
+Let \(\hat {f} (x) \assign f (x) + e (x)\), where \(e (x)\)
+is a perturbation.
+
+\begin{eqnarray*}
+  &  & \abs{\int _a^b f (x) \mathd x - \int _a^b \hat {f} (x) \mathd x}\\& = & \abs{\int _a^b e (x) \mathd x} \leqslant \int _a^b \abs{e (x)} \mathd x
+    \leqslant (b - a) \max _{x \in [a, b]} \abs{e (x)} .
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+** Quadrature Methods
+
+*** Interpolatory Quadrature
+
+Design a quadrature method based on
+interpolation.
+#+LATEX: \begin{hidden}[4cm]
+*Idea:* The result ought to be a linear (Q:
+why linear?) combination of a few function values.
+\[\int _a^b f (x) \mathd x \approx \sum _{i = 1}^n \omega _i f (x_i) \]
+Then: /nodes/ \((x_i)\) and /weights/ \((\omega _i)\) together make a
+quadrature rule.\medskip
+
+*Idea:* Any interpolation method (nodes+basis) gives rise to an
+/interpolatory quadrature method/.
+#+LATEX: \end{hidden}
+
+*** Interpolatory Quadrature: Examples
+
+#+LATEX: \begin{hidden}[6cm]
+*Example:* Fix \((x_i)\). Then
+\[f (x) \approx \sum _i f (x_i) \ell _i (x), \]
+where \(\ell _i (x)\) is the Lagrange polynomial for the node \(x_i\). Then
+\[\int _a^b f (x) \mathd x \approx \sum _i f (x_i) \underbrace{\int _a^b \ell _i
+(x) \mathd x}_{\omega _i} . \]
+
+- With polynomials and (often) equispaced nodes, this is called
+  *Newton-Cotes quadrature*.
+
+- With Chebyshev nodes and Chebyshev weights, this is called
+  *Clenshaw-Curtis quadrature*.
+#+LATEX: \end{hidden}
+
+*** Interpolatory Quadrature: Computing Weights
+
+How do the weights in interpolatory quadrature get computed?
+
+#+LATEX: \begin{hidden}[6cm]
+Done by solving linear system.
+
+*Know:* This quadrature should at least integrate monomials
+exactly.
+
+\begin{eqnarray*}
+  b - a & = & \int _a^b 1 \mathd x = \omega _1 \cdot 1 + \cdots + \omega _n
+      \cdot 1\\& \vdots & \\\frac{1}{k + 1} (b^{k + 1} - a^{k + 1}) & = & \int _a^b x^k \mathd x =
+      \omega _1 \cdot x_1^k + \cdots + \omega _n \cdot x_n^k
+\end{eqnarray*}
+  Write down \(n\) equations for \(n\) unknowns, solve linear system,
+  done.\medskip
+
+  This is called the /method of undetermined coefficients/.
+#+LATEX: \end{hidden}
+
+\demolink{quadrature_and_diff}{Newton-Cotes weight finder}
+
+*** Examples and Exactness
+
+To what polynomial degree are the following rules exact?
+
+
+\begin{tabular}{lll}
+    \tmem{Midpoint rule} & \((b - a) f \left ( \frac{a + b}{2} \right )\) &
+    \includegraphics[height=1cm]{images/midpoint-rule-crop.pdf}\\
+    \tmem{Trapezoidal rule} & \(\frac{b - a}{2} (f (a) + f (b))\) &
+    \includegraphics[height=1cm]{images/trapezoidal-rule-crop.pdf}\\
+    \tmem{Simpson's rule} & \(\frac{b - a}{6} \left ( f (a) + 4 f \left ( \frac{a + b}{2} \right ) + f (b)     \right )\)
+    & \includegraphics[height=1cm]{images/simpsons-rule-crop.pdf}
+\end{tabular}
+#+LATEX: \begin{hidden}
+Answers:
+
+- Midpoint: technically 0 (constants), actually 1 (linears)
+
+- Trapezoidal: 1 (linears)
+
+- Simpson's: technically 2 (parabolas), actually 3 (cubics)
+
+*Idea:* Could use difference between trapezoidal and midpoint rule as
+an error estimate.
+#+LATEX: \end{hidden}
+
+** Accuracy and Stability
+
+*** Interpolatory Quadrature: Accuracy
+
+Let \(p_{n - 1}\) be an interpolant of \(f\) at nodes \(x_1, \ldots , x_n\) (of degree \(n - 1\))
+
+Recall
+\[\sum _i \omega _i f (x_i) = \int _a^b p_{n - 1} (x) \mathd x. \]
+
+What can you say about the accuracy of the method?
+#+LATEX: \begin{hidden}
+# Notation: \(\norm{f}_\infty  = \max _{x \in [a, b]} \abs{f (x)}\)
+\vspace{-3ex}
+\begin{eqnarray*}
+    &  & \abs{\int _a^b f (x) \mathd x - \int _a^b p_{n - 1} (x) \mathd x}\\
+    & \leqslant & \int _a^b \abs{f (x) - p_{n - 1} (x)} \mathd x\\
+    & \leqslant & (b - a) \norm{f - p_{n - 1}}_\infty \\
+    \text{(using interpolation error)} \quad & \leqslant & C (b - a) h^n \norm{f^{(n)}}_\infty \\
+    & \leqslant & Ch^{n + 1} \norm{f^{(n)}}_\infty
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Quadrature: Overview of Rules
+#+BEGIN_EXPORT latex
+\begin{tabular}{|l|l|l|p{2cm}|l|p{1.7cm}|p{2cm}|}
+  \ & \(n\) & Deg. & Ex.Int.Deg.
+
+    (w/odd) & Intp.Ord. & Quad.Ord.
+
+    (regular) & Quad.Ord.
+
+    (w/odd)\\\hline
+    \ & \ & \(n - 1\) & \((n - 1) \tiny {+ 1_{\tmop{odd}}}\) & \(n\) & \(n + 1\) & \((n     + 1) \tiny {+ 1_{\tmop{odd}}}\)\\\hline
+    Midp. & 1 & 0 & 1 & 1 & 2 & 3\\
+    Trapz. & 2 & 1 & 1 & 2 & 3 & 3\\
+    Simps. & 3 & 2 & 3 & 3 & 4 & 5\\\
+    --- & 4 & 3 & 3 & 4 & 5 & 5
+\end{tabular}\medskip
+#+END_EXPORT
+
+\footnotesize
+
+- \(n\): number of points
+
+- ``Deg.'': Degree of polynomial used in interpolation \((= n - 1)\)
+
+- ``Ex.Int.Deg.'': Polynomials of up to (and including) this degree
+  /actually/ get integrated exactly. (including the odd-order bump)
+
+  # \(\left ( =  \begin{cases}    n - 1 & \text{even}\\n & \text{odd}   \end{cases} \right )\)
+
+- ``Intp.Ord.'': Order of Accuracy of Interpolation: \(O (h^n)\)
+
+- ``Quad.Ord. (regular)'': Order of accuracy for quadrature predicted by
+    the error result above: \(O (h^{n + 1})\)
+
+- ``Quad.Ord. (w/odd):'' Actual order of accuracy for quadrature given
+  `bonus' degrees for rules with odd point count
+
+  # \(\left ( \begin{cases} O (h^{n + 1}) & \text{even}\\O (h^{n + 2}) & \text{odd} \end{cases} \right )\)
+
+*Observation:* Quadrature gets (at least) `one order higher' than
+interpolation--even more for odd-order rules. (i.e. more accurate)
+
+\demolink{quadrature_and_diff}{Accuracy of Newton-Cotes}
+
+*** Interpolatory Quadrature: Stability
+
+Let \(p_n\) be an interpolant of \(f\) at nodes \(x_1, \ldots , x_n\) (of
+degree \(n - 1\))
+
+Recall
+\[\sum _i \omega _i f (x_i) = \int _a^b p_n (x) \mathd x \]
+What can you say about the stability of this method?
+#+LATEX: \begin{hidden}
+Again consider \(\hat {f} (x) = f (x) + e (x)\).
+\begin{eqnarray*}
+  &  & \abs{\sum _i \omega _i f (x_i) - \sum _i \omega _i \hat {f} (x_i)}
+   = \abs{\sum _i \omega _i e (x_i)} \leqslant \sum _i \abs{\omega _i e (x_i)}\\
+    & \leqslant & \left ( \sum _i \abs{\omega _i} \right ) \norm{e}_\infty
+\end{eqnarray*}
+*Q:* So, what quadrature weights make for bad stability bounds?
+
+*A:* Quadratures with large negative weights. (Recall: \(\sum _i \omega _i\) is fixed.)
+#+LATEX: \end{hidden}
+
+*** About Newton-Cotes
+
+What's not to like about Newton-Cotes
+quadrature?
+#+LATEX: \begin{hidden}
+\demolink{quadrature_and_diff}{Newton-Cotes weight finder} (again, with many nodes)
+
+In fact, Newton-Cotes must have at least one negative weight as soon as \(n \geqslant 11\).\medskip
+
+More drawbacks:
+
+- All the fun of high-order interpolation with monomials and equispaced
+    nodes (i.e. convergence not guaranteed)
+
+- Weights possibly non-negative (\(\rightarrow\)stability issues)
+
+- Coefficients determined by (possibly ill-conditioned) Vandermonde
+    matrix
+
+- Thus hard to extend to arbitrary number of points.
+#+LATEX: \end{hidden}
+
+** Gaussian Quadrature
+*** Gaussian Quadrature
+So far: nodes chosen from outside.
+
+Can we gain something if we let the quadrature rule choose the nodes, too?
+*Hope:* More design freedom \(\rightarrow\) Exact to higher
+degree.
+#+LATEX: \begin{hidden}
+*Idea:* method of undetermined coefficients
+
+*But:* Resulting system would be nonlinear.\medskip
+
+Can use orthogonal polynomials to get a leg up. (\(\rightarrow\) hw)
+
+*Gaussian quadrature* with \(n\) points: Exactly integrates
+polynomials up to degree \(2 n - 1\).
+#+LATEX: \end{hidden}
+
+\demolink{quadrature_and_diff}{Gaussian quadrature weight finder}
+
+** Composite Quadrature
+*** Composite Quadrature
+High-order polynomial interpolation requires a high degree of
+smoothness of the function.
+
+*Idea:* Stitch together multiple lower-order quadrature rules to
+alleviate smoothness requirement.
+
+[[./images/composite-quad-interval-crop.pdf]]
+
+*** Error in Composite Quadrature
+
+What can we say about the error in the case of composite quadrature?
+#+LATEX: \begin{hidden}[6cm]
+Error for one panel of length \(h\): \(\abs{\int f - p_{n - 1}} \leqslant C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
+\begin{eqnarray*}
+    &  & \abs{\int _a^b f (x) \mathd x - \sum _{j = 1}^m \sum _{i = 1}^n
+    \omega _{j, i} f (x_{j, i})}\\
+    & \leqslant & C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m (a_{j + 1} - a_j)^{n
+    + 1}\\
+    & = & C \norm{f^{(n)}}_\infty  (a_{j + 1} - a_j)^n \sum _{j = 1}^m (a_{j +
+    1} - a_j)\\& = & C \norm{f^{(n)}}_\infty  h^n (b - a),
+\end{eqnarray*}
+where \(h\) is now the length of a single panel.
+#+LATEX: \end{hidden}
+
+*** Composite Quadrature: Notes
+
+*Observation:* Composite quadrature loses an order compared to
+non-composite.\medskip
+
+*Idea:* If we can estimate errors on each subinterval, we can shrink
+(e.g. by splitting in half) only those contributing the most to the error.
+
+(*adaptivity*, \(\rightarrow\) hw)
+
+** Numerical Differentiation
+
+*** Taking Derivatives Numerically
+
+Why /shouldn't/ you take derivatives numerically?
+#+LATEX: \begin{hidden}
+- `Unbounded'
+
+    A function with small \(\norm{f}_\infty\) can have arbitrarily large
+    \(\norm{f'}_\infty\)
+
+- Amplifies noise
+
+    Imagine a smooth function perturbed by small, high-frequency wiggles
+
+- Subject to cancellation error
+
+- Inherently less accurate than integration
+
+  - Interpolation: \(h^n\)
+
+  - Quadrature: \(h^{n + 1}\)
+
+  - Differentiation: \(h^{n - 1}\)
+
+    (where \(n\) is the number of points)
+#+LATEX: \end{hidden}
+
+\demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
+
+*** Finite Differences
+
+#+LATEX: \begin{hidden}
+Idea: Start from definition of derivative.
+Called a *forward difference*.
+\[f' (x) \approx \frac{f (x + h) - f (x)}{h} \]
+
+*Q:* What accuracy does this achieve?
+
+Using Taylor:
+\[f (x + h) = f (x) + f' (x) h + f'' (x) \frac{h^2}{2} + \cdots \]
+Plug in:
+\[\frac{f (x) + f' (x) h + f'' (x) \frac{h^2}{2} + \cdots - f (x)}{h} = f'
+   (x) + O (h) \]
+\(\rightarrow\) first order accurate.\medskip
+#+LATEX: \end{hidden}
+
+*** More Finite Difference Rules
+
+Similarly:
+\[f' (x) = \frac{f (x + h) - f (x - h)}{2 h} + O (h^2) \]
+(*Centered differences*)\medskip
+
+Can also take higher order derivatives:
+\[f'' (x) = \frac{f (x + h) - 2 f (x) + f (x - h)}{h^2} + O (h^2) \]
+Can find these by trying to match Taylor terms.
+
+Alternative: Use linear algebra with interpolate-then-differentiate to find FD
+formulas.
+
+\demolink{quadrature_and_diff}{Finite Differences vs Noise}
+
+\demolink{quadrature_and_diff}{Floating point vs Finite Differences}
+
+** Richardson Extrapolation
+*** Richardson Extrapolation
+
+If we have two estimates of something, can we get a third that's
+more accurate? Suppose we have an approximation
+\(F = \tilde {F} (h) + O (h^p) \)
+and we know \(\tilde {F} (h_1)\) \emph{and} \(\tilde {F} (h_2)\).
+#+LATEX: \begin{hidden}[5cm]
+Grab one more term of the Taylor series: \(F = \tilde {F} (h) + ah^p + O (h^q) \)
+
+Typically: \(q = p + 1\) (but not necessarily).\medskip
+
+*Idea:* Construct new approximation with the goal of \(O (h^q)\)
+accuracy:
+\[F = \alpha \tilde {F} (h_1) + \beta \tilde {F} (h_2) + O (h^q) \]
+To get this, must have
+\(\alpha ah_1^p + \beta ah_2^p = 0. \)
+Also require \(\alpha + \beta = 1\).
+\begin{eqnarray*}
+  \alpha (h_1^p - h_2^p) + 1 h_2^p & = & 0\\\alpha & = & \frac{- h_2^p}{h_1^p - h_2^p}
+\end{eqnarray*}
+#+LATEX: \end{hidden}
+
+*** Richardson Extrapolation: Observations, Romberg Integration
+
+Important observation: Never needed to know \(a\).\medskip
+
+*Idea:* Can repeat this for even higher accuracy.
+
+#+ATTR_LATEX: :height 4cm
+[[./images/repeated-richardson-crop.pdf]]
+
+Carrying out this process for quadrature is called *Romberg integration*.
+
+\demolink{quadrature_and_diff}{Richardson with Finite Differences}
+
+*** In-Class Activity: Differentiation and Quadrature
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-quadrature/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{quadrature}{Differentiation and Quadrature}
+
+* Initial Value Problems for ODEs
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: ivp_odes
+  :END:
+
+*** What can we solve already?
+
+- Linear Systems: \tmcolor{green}{yes}
+- Nonlinear systems: \tmcolor{green}{yes}
+- Systems with derivatives: \tmcolor{red}{no}
+
+*** Some Applications
+
+
+\begin{tabular}{|p{5cm}|p{5cm}|}
+  \hline
+    IVPs & BVPs\\\hline
+
+  \begin{itemize}
+    \item Population dynamics
+
+        \(y_1' = y_1 (\alpha _1 - \beta _1 y_2)\) (prey)
+
+        \(y_2' = y_2 (- \alpha _2 + \beta _2 y_1)\) (predator)
+
+        \item chemical reactions
+
+        \item equations of motion
+  \end{itemize} &
+  \begin{itemize}
+    \item bridge load
+
+        \item pollutant concentration
+
+        (steady state)
+
+        \item temperature
+
+        (steady state)
+  \end{itemize}\\\hline
+\end{tabular}
+
+*** Initial Value Problems: Problem Statement
+
+Want: Function \(\B{y} : [0, T] \rightarrow \mathbb{R}^n\) so
+that
+
+- \(\B{y}^{(k)} (t) = \B{f} (t, \B{y},     \B{y}', \B{y}'', \ldots , \B{y}^{(k - 1)})\)\quad
+    (/explicit/)
+
+    or
+
+- \(\B{f} (t, \B{y}, \B{y}', \B{y}'', \ldots ,     \B{y}^{(k)}) = \B{0}\)\quad (/implicit/)
+
+are called explicit/implicit /\(k\)th-order ordinary differential
+equations/ (/ODEs/). Give a simple example.
+#+LATEX: \begin{hidden}
+\(y' (t) = \alpha y\)
+#+LATEX: \end{hidden}
+
+Not uniquely solvable on its own. What else is
+needed?
+#+LATEX: \begin{hidden}
+Initial conditions. (*Q:* How many?)
+\[\B{y} (0) = g_0, \quad \B{y}' (0) = g_1, \ldots \quad
+   \B{y^{}}^{(k - 1)} (0) = g_{k - 1} . \quad \]
+Boundary Value Problems (BVPs) trade some derivatives for conditions at the
+`other end'.
+#+LATEX: \end{hidden}
+
+*** Reducing ODEs to First-Order Form
+
+A \(k\)th order ODE can always be reduced to first order. Do this in
+this example:
+\[y'' (t) = f (y) \]
+#+LATEX: \begin{hidden}
+In first-order form:
+\[
+\begin{bmatrix}
+  y_1\\y_2
+\end{bmatrix}' (t) =
+\begin{bmatrix}
+  y_2 (t)\\f (y_1 (t))
+\end{bmatrix} \]
+Because:
+\[y_1'' (t) = (y_1' (t))' = y_2' (t) = f (y_1 (t)) . \]
+#+LATEX: \end{hidden}
+
+*** Properties of ODEs
+
+What is a *linear* ODE?
+#+LATEX: \begin{hidden}
+\(\B{f} (t, \B{x}) = A (t) \B{x} + \B{b}\)
+#+LATEX: \end{hidden}
+
+What is a *linear and homogeneous* ODE?
+#+LATEX: \begin{hidden}
+\(\B{f} (t, \B{x}) = A (t) \B{x}\)
+#+LATEX: \end{hidden}
+
+What is a *constant-coefficient* ODE?
+#+LATEX: \begin{hidden}
+\(\B{f} (t, \B{x}) = A \B{x}\)
+#+LATEX: \end{hidden}
+
+*** Properties of ODEs (II)
+
+What is an *autonomous* ODE?
+#+LATEX: \begin{hidden}
+One in which the function \(f\)
+does not depend on time \(t\).
+
+An ODE can made autonomous by introducing an extra variable:
+\[y'_0 (t) = 1, \qquad y_0 (0) = 0. \]
+\(\rightarrow\) Without loss of generality: Get rid of explicit \(t\) dependency.
+#+LATEX: \end{hidden}
+
+** Existence, Uniqueness, Conditioning
+
+*** Existence and Uniqueness
+
+Consider the perturbed problem
+\[\left \{
+\begin{array}{l}
+  \B{y}' (t) = \B{f} (\B{y})\\\B{y} (t_0) = \B{y}_0
+\end{array}\right . \quad \left \{
+\begin{array}{l}
+  \widehat{\B{y}}' (t) = \B{f} (\widehat{\B{y}})\\\widehat{\B{y}} (t_0) = \widehat{\B{y}}_0
+\end{array}\right . \]
+Then if \(\B{f}\) is /Lipschitz continuous/ (has `bounded slope'),
+i.e.
+\[\norm{\B{f} (\B{y}) - \B{f} (\widehat{\B{y}})}
+   \leqslant L \norm{\B{y} - \widehat{\B{y}}} \]
+(where \(L\) is called the /Lipschitz constant/), then...
+
+#+LATEX: \begin{hidden}
+
+- there exists a solution \(\B{y}\) in a neighborhood of \(t_0\),
+    and...
+
+- \(\norm{\B{y} (t) - \widehat{\B{y}} (t)} \leqslant e^{L     (t - t_0)} \norm{\B{y}_0 - \widehat{\B{y}}_0}\)
+#+LATEX: \end{hidden}
+
+What does this mean for uniqueness?
+#+LATEX: \begin{hidden}
+It
+\emph{implies} uniqueness. If there were two separate solutions with
+identical initial values, they are not allowed to be different.
+#+LATEX: \end{hidden}
+
+*** Conditioning
+
+Unfortunate terminology accident: ``Stability'' in ODE-speak
+
+To adapt to conventional terminology, we will use `Stability' for
+
+- the conditioning of the IVP, /and/
+
+- the stability of the methods we cook up.
+
+Some terminology:\medskip
+
+An ODE is *stable* if and only if...
+#+LATEX: \begin{hidden}
+The
+solution is continously dependent on the initial condition, i.e.
+
+For all \(\varepsilon > 0\) there exists a \(\delta > 0\) so that
+\[\norm{\widehat{\B{y}}_0 - \B{y}_0} < \delta \quad \Rightarrow
+   \quad \norm{\widehat{\B{y}} (t) - \B{y} (t)} < \varepsilon
+   \quad \text{for all \(t \geqslant t_0\)} . \]
+#+LATEX: \end{hidden}
+
+An ODE is *asymptotically stable* if and only if
+#+LATEX: \begin{hidden}
+\[
+   \norm{\widehat{\B{y}} (t) - \B{y} (t)} \rightarrow 0 \quad (t
+   \rightarrow \infty ) . \]
+#+LATEX: \end{hidden}
+
+*** Example I: Scalar, Constant-Coefficient
+
+\[\left \{
+\begin{array}{l}
+  y' (t) = \lambda y\\y (0) = y_0
+\end{array}\right . \quad \text{where} \quad \lambda = a + ib \]
+Solution?
+#+LATEX: \begin{hidden}
+\[y (t) = y_0 e^{\lambda t} = y_0 (e^{at} \cdot
+   e^{ibt}) \]
+#+LATEX: \end{hidden}
+
+When is this stable?
+#+LATEX: \begin{hidden}
+
+\begin{tabular}{cc}
+  When \(a = \tmop{Re} \lambda > 0\): & When \(a = \tmop{Re} \lambda \leqslant      0\):\\
+    \includegraphics[height=2cm]{images/ivp-unstable-crop.pdf} &
+    \includegraphics[height=2cm]{images/ivp-stable-crop.pdf}
+\end{tabular}
+#+LATEX: \end{hidden}
+
+*** Example II: Constant-Coefficient System
+
+\[\left \{
+\begin{array}{l}
+  \B{y}' (t) = A \B{y} (t)\\\B{y} (t_0) = \B{y}_0
+\end{array}\right . \]
+Assume \(V^{- 1} \tmop{AV} = D = \tmop{diag} (\lambda _1, \ldots , \lambda _n)\)
+diagonal.\medskip
+
+How do we find a solution?
+#+LATEX: \begin{hidden}
+Define \(\B{w} (t) \assign V^{- 1} \B{y} (t)\). Then
+\[\B{w}' (t) = V^{- 1} \B{y'} (t) = V^{- 1} A \B{y} (t)
+   = V^{- 1} \tmop{AV} \B{w} (t) = D \B{w} (t) . \]
+Now: \(n\) \emph{decoupled} IVPs (with \(\B{w}_0 = V^{- 1} \B{y}_0\)) \(\rightarrow\) Solve as in scalar case.
+
+Find \(\B{y} (t) = V \B{w} (t)\).
+#+LATEX: \end{hidden}
+
+When is this stable?
+#+LATEX: \begin{hidden}
+When \(\tmop{Re} \lambda _i \leqslant 0\) for
+all eigenvalues \(\lambda _i\).
+#+LATEX: \end{hidden}
+
+** Numerical Methods (I)
+
+*** Euler's Method
+
+Discretize the IVP
+\[\left \{
+\begin{array}{l}
+  \B{y}' (t) = \B{f} (\B{y})\\\B{y} (t_0) = \B{y}_0
+\end{array}\right . \]
+
+- Discrete times: \(t_1, t_2, \ldots\), with \(t_{i + 1} = t_i + h\)
+
+- Discrete function values: \(\B{y}_k \approx \B{y} (t_k)\).
+#+LATEX: \begin{hidden}
+*Idea:* Rewrite the IVP in integral form:
+\[\B{y} (t) = \B{y}_0 + \int _{t_0}^t \B{f} (\B{y}
+   (\tau )) \mathd \tau , \]
+then throw a simple quadrature rule at that. With the rectangle rule, we
+obtain *Euler's method*.
+#+LATEX: \end{hidden}
+
+*** Euler's method: Forward and Backward
+
+\[\B{y} (t) = \B{y}_0 + \int _{t_0}^t \B{f} (\B{y} (\tau )) \mathd \tau , \]
+
+Use `left rectangle rule' on integral:
+#+LATEX: \begin{hidden}
+\vspace{-1ex}
+\[\B{y}_{k + 1} = \B{y}_k + h \B{f} (\B{y}_k) \]
+Time advancement requires /evaluating the RHS/. A method like that is called *explicit*. This
+method is called *Forward Euler*.
+#+LATEX: \end{hidden}
+
+Use `right rectangle rule' on integral:
+#+LATEX: \begin{hidden}
+\vspace{-1ex}
+\[\B{y}_{k + 1} = \B{y}_k + h \B{f} (\B{y}_{k + 1}) \]
+Time advancement requires /solving a system of
+equations/. A method like that is called *implicit*. This
+method is called *Backward Euler*.
+#+LATEX: \end{hidden}
+
+\demolink{ivp_odes}{Forward Euler stability}
+
+** Accuracy and Stability
+
+*** Global and Local Error
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/ivp-global-local-error-crop.pdf]]
+#+END_CENTER
+
+Let \(u_k (t)\) be the function that solves the ODE with the initial condition
+\(u_k (t_k) = y_k\).\medskip
+
+Define the *local error* at step \(k\) as...
+#+LATEX: \begin{hidden}
+\(\ell _k = y_k - u_{k - 1} (t_k)\)
+#+LATEX: \end{hidden}
+
+Define the *global error* at step \(k\) as...
+#+LATEX: \begin{hidden}
+\(g_k = y (t_k) - y_k\)
+#+LATEX: \end{hidden}
+
+*** About Local and Global Error
+
+Is global error \(=\) \(\sum\)local errors?
+#+LATEX: \begin{hidden}[4cm]
+No.
+
+Consider an analogy with interest rates--at any given moment, you receive 5%
+interest (\(\sim\) incur 5%error) on your current balance.
+
+But your current balance \emph{includes} prior interest (error from prior
+steps), which yields more interest (in turn contributes to the
+error).\medskip
+
+This contribution to the error is called /propagated error/.
+
+The local error is much easier to estimate \(\rightarrow\) will focus on that.
+#+LATEX: \end{hidden}
+
+A time integrator is said to be /accurate of order \(p\)/
+if...
+#+LATEX: \begin{hidden}
+\(\ell _k = O (h^{p + 1})\)\medskip
+#+LATEX: \end{hidden}
+
+*** ODE IVP Solvers: Order of Accuracy
+A time integrator is said to be /accurate of order \(p\)/ if \(\ell _k = O (h^{p + 1})\)\medskip
+
+This requirement is one order higher than one might expect--why?
+#+LATEX: \begin{hidden}[4cm]
+
+*A:* To get to time 1, at least \(1 / h\) steps need to be taken, so
+that the global error is roughly
+\[\underbrace{\frac{1}{h}}_{\text{\#steps}} \cdot O (h^{p + 1}) = O (h^p) .
+\]
+(Note that this ignores `accrual' of propagated error.)
+#+LATEX: \end{hidden}
+
+*** Stability of a Method
+
+Find out when forward Euler is stable when applied to
+\(y' (t) = \lambda y (t) . \)
+#+LATEX: \begin{hidden}
+\vspace*{-3ex}
+\begin{eqnarray*}
+  y_k & = & y_{k - 1} + h \lambda y_{k - 1}\\& = & (1 + h \lambda ) y_{k - 1}\\& = & (1 + h \lambda )^k y_0
+\end{eqnarray*}
+So: stable \(\Leftrightarrow\) \(\abs{1 + h \lambda } \leqslant 1\).
+
+\(\abs{1 + h \lambda }\) is also called the *amplification factor*.
+
+Gives rise to the *stability region* in the complex plane:
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/fw-euler-stab-reg-crop.pdf]]
+#+END_CENTER
+#+LATEX: \end{hidden}
+
+*** Stability: Systems
+
+What about stability for systems, i.e.
+\[\B{y}' (t) = A \B{y} (t) ? \]
+#+LATEX: \begin{hidden}[4cm]
+
+1. Diagonalize system as before
+
+1. Notice that same \(V\) also diagonalizes the time stepper
+
+1. apply scalar analysis to components.
+
+\(\rightarrow\) Stable if \(\abs{1 + h \lambda _i} \leqslant 1\) for all
+eigenvalues \(\lambda _i\).
+#+LATEX: \end{hidden}
+
+*** Stability: Nonlinear ODEs
+What about stability for nonlinear systems, i.e.
+\[\B{y}' (t) = \B{f} (\B{y} (t)) ? \]
+#+LATEX: \begin{hidden}[5cm]
+Consider
+perturbation \(\B{} \B{e} (t) = \B{y} (t) - \widehat{\B{y}} (t)\). Linearize:
+\[\B{e}' (t) = \B{f} (\B{y} (t)) - \B{f}
+   (\widehat{\B{y}} (t)) \approx J_{\B{f}} (\B{y} (t))
+   \B{e} (t) \]
+I.e. can (at least locally) apply analysis for linear systems to the nonlinear
+case.
+#+LATEX: \end{hidden}
+
+*** Stability for Backward Euler
+
+Find out when backward Euler is stable when applied to \(y' (t) = \lambda y (t) \).
+#+LATEX: \begin{hidden}[4cm]
+\vspace*{-3ex}
+\begin{eqnarray*}
+  y_k & = & y_{k - 1} + h \lambda y_k\\
+  y_k (1 - h \lambda ) & = & y_{k - 1}\\
+  y_k & = & \frac{1}{1 - h \lambda } y_{k - 1}
+   =  \left ( \frac{1}{1 - h \lambda } \right )^k y_0 .
+\end{eqnarray*}
+So: stable \(\Leftrightarrow\) \(\abs{1 - h \lambda } \geqslant 1\).\medskip
+
+In particular: stable for any \(h\) if \(\Re \lambda\le 0\) ("*unconditionally stable*").
+\medskip
+
+BE can be stable even when ODE is /unstable/. (\(\tmop{Re} \lambda > 0\)). Accuracy?
+
+- /Explicit/ methods: main concern in choosing $h$ is /stability/ (but /also/ accuracy).
+- /Implicit/ methods: main concern in chosing $h$ is /accuracy/.
+#+LATEX: \end{hidden}
+
+\demolink{ivp_odes}{Backward Euler stability}
+
+** Stiffness
+
+*** Stiff ODEs: Demo
+\demolink{ivp_odes}{Stiffness}
+
+*** `Stiff' ODEs
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/stiff-ivp-crop.pdf]]
+#+END_CENTER
+
+- Stiff problems have /multiple time scales/.
+
+  (In the example above: Fast decay, slow evolution.)
+
+- In the case of a stable ODE system
+  \[\B{y}' (t) = \B{f} (\B{y} (t)), \]
+  stiffness can arise if \(J_{\B{f}}\) has eigenvalues of very different
+  magnitude.
+
+*** Stiffness: Observations
+
+Why not just `small' or `large' magnitude?
+#+LATEX: \begin{hidden}
+Because the
+discrepancy between time scales is the root of the problem. If all time scales
+are similar, then time integration must simply `deal with' that one time
+scale.
+
+If there are two, then some (usually the fast ones) may be considered
+uninteresting.
+#+LATEX: \end{hidden}
+
+What is the problem with applying explicit methods to stiff
+problems?
+#+LATEX: \begin{hidden}
+Fastest time scale governs time step \(\rightarrow\) tiny time step
+\(\rightarrow\) inefficient.
+#+LATEX: \end{hidden}
+
+*** Stiffness vs. Methods
+Phrase this as a conflict between accuracy and
+stability.
+#+LATEX: \begin{hidden}
+
+- Accuracy (here: capturing the slow time scale) \emph{could} be
+  achieved with large time steps.
+
+- Stability (in explicit methods) demands a small time step.
+#+LATEX: \end{hidden}
+
+Can an implicit method take arbitrarily large time steps?
+#+LATEX: \begin{hidden}
+In terms of stability: sure.
+
+In terms of accuracy: no.
+#+LATEX: \end{hidden}
+
+** Numerical Methods (II)
+
+*** Predictor-Corrector Methods
+
+*Idea:* Obtain intermediate result, improve it (with same or
+different method).\medskip
+
+For example:
+
+1. /Predict/ with forward Euler: \(\tilde {y}_{k + 1} = y_k + hf     (y_k)\)
+
+1. /Correct/ with the trapezoidal rule: \(y_{k + 1} = y_k +     \frac{h}{2} (f (y_k) + f (\tilde {y}_{k + 1})) .\)
+
+This is called *Heun's method*.
+
+*** Runge-Kutta/`Single-step'/`Multi-Stage' Methods
+
+*Idea:* Compute intermediate `stage values':
+
+\begin{eqnarray*}
+  r_1 & = & f (t_k + {\color[HTML]{008000}c_1} h, y_k +
+    (\tmcolor{blue}{a_{11}} \cdot r_1 + \cdots + \tmcolor{blue}{a_{1 s}} \cdot
+    r_s) h)\\\vdots &  & \vdots \\r_s & = & f (t_k + {\color[HTML]{008000}c_s} h, y_k + (\tmcolor{blue}{a_{s
+    1}} \cdot r_1 + \cdots + \tmcolor{blue}{a_{s s}} \cdot r_s) h)
+\end{eqnarray*}
+Then compute the new state from those:
+\[y_{k + 1} = y_k + (\tmcolor{red}{b_1} \cdot r_1 + \cdots +
+   \tmcolor{red}{b_s} \cdot r_s) h \]
+Can summarize in a /Butcher tableau/: \medskip
+
+#+BEGIN_CENTER
+\begin{tabular}{l|lll}
+  \({\color[HTML]{008000}c_1}\) & \(\tmcolor{blue}{a_{11}}\) & \(\cdots\) &
+      \(\tmcolor{blue}{a_{1 s}}\)\\\({\color[HTML]{008000}\vdots }\) & \(\vdots\) &  & \(\vdots\)\\\({\color[HTML]{008000}c_s}\) & \(\tmcolor{blue}{a_{s 1}}\) & \(\cdots\) &
+      \(\tmcolor{blue}{a_{s s}}\)\\\hline
+      & \(\tmcolor{red}{b_1}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s}\)
+\end{tabular}
+#+END_CENTER
+
+*** Runge-Kutta: Properties
+When is an RK method explicit?
+#+LATEX: \begin{hidden}
+If the diagonal entries in the Butcher tableau and everything above it
+are zero.
+#+LATEX: \end{hidden}
+
+When is it implicit?
+#+LATEX: \begin{hidden}
+(Otherwise)
+#+LATEX: \end{hidden}
+
+When is it /diagonally implicit/? (And what does that mean?)
+#+LATEX: \begin{hidden}
+If the everything above the diagonal entries in the Butcher tableau is
+zero.
+
+This means that one can solve for one stage value at a time (and not
+multiple).
+#+LATEX: \end{hidden}
+
+*** Heun and Butcher
+Stuff Heun's method into a Butcher tableau:
+
+1. \(\tilde {y}_{k + 1} = y_k + hf (y_k)\)
+
+1. \(y_{k + 1} = y_k + \frac{h}{2} (f (y_k) + f (\tilde {y}_{k + 1})) .\)
+#+LATEX: \begin{hidden}
+
+\begin{tabular}{l|ll}
+  0 &  & \\1 & 1 & \\\hline
+    & \(\frac{1}{2}\) & \(\frac{1}{2}\)
+\end{tabular}
+#+LATEX: \end{hidden}
+
+What is RK4?
+#+LATEX: \begin{hidden}
+(See Wikipedia page, note similarity to Simpson's rule.)
+#+LATEX: \end{hidden}
+
+\demolink{ivp_odes}{Dissipation in Runge-Kutta Methods}
+
+*** Multi-step/Single-stage/Adams Methods/Backward Differencing Formulas (BDFs)
+
+*Idea:* Instead of computing stage values, use \emph{history} (of
+either values of \(f\) or \(y\)--or both):
+\[y_{k + 1} = \sum _{i = 1}^M \alpha _i y_{k + 1 - i} + h \sum _{i = 1}^N
+   \beta _i f (y_{k + 1 - i}) \]
+Extensions to implicit possible.
+
+Method relies on existence of history. What if there isn't any?
+(Such as at the start of time integration?)
+#+LATEX: \begin{hidden}
+These methods are /not self-starting/.
+
+Need another method to produce enough history.
+#+LATEX: \end{hidden}
+*** Stability Regions
+    
+Why does the idea of stability regions still apply to more complex
+time integrators (e.g. RK?)
+#+LATEX: \begin{hidden}
+As long as the method doesn't "treat individual vector entries specially",
+a matrix that diagonalizes the ODE also diagonalizes the time integrator.
+
+\(\Rightarrow\) Can consider stability one eigenvalue at a time.
+#+LATEX: \end{hidden}
+    
+\demolink{ivp_odes}{Stability regions}
+
+*** More Advanced Methods
+**** Discussion Points
+     :PROPERTIES:
+     :BEAMER_col: 0.4
+     :END:
+Discuss:
+
+- What is a good cost metric for time integrators?
+- AB3 vs RK4
+- Runge-Kutta-Chebyshev
+- [[https://doi.org/10.1016/S0168-9274(99)00141-5][LSERK]] and [[https://arxiv.org/abs/1805.06607][AB34]]
+- IMEX and multi-rate
+- Parallel-in-time ("[[https://doi.org/10.1007/978-3-642-56118-4_12][Parareal]]")
+
+**** Stability Plot
+     :PROPERTIES:
+     :BEAMER_col: 0.6
+     :END:
+     
+#+ATTR_LATEX: :width \textwidth
+[[./images/stab-regions-crop.pdf]]
+     
+*** In-Class Activity: Initial Value Problems
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-ivp/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{ivp}{Initial Value Problems}
+
+* Boundary Value Problems for ODEs
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: bvp_odes
+  :END:
+
+*** BVP Problem Setup: Second Order
+
+Example: Second-order linear ODE
+\[u'' (x) + p (x) u' (x) + q (x) u (x) = r (x) \]
+with /boundary conditions (`BCs')/ at \(a\):
+
+- /Dirichlet/ \(u (a) = u_a\)
+
+- or /Neumann/ \(u' (a) = v_a\)
+
+- or /Robin/ \(\alpha u (a) + \beta u' (a) = w_a\)
+
+and the same choices for the BC at \(b\).\medskip
+
+\emph{Note:} BVPs in time are rare in applications, hence \(x\) (not \(t\)) is
+typically used for the independent variable.
+
+*** BVP Problem Setup: General Case
+
+ODE:
+\[\B{y}' (x) = \B{f} (\B{y} (x)) \quad \B{f} :
+   \mathbb{R}^n \rightarrow \mathbb{R}^n \]
+BCs:
+\[\B{g} (\B{y} (a), \B{y} (b)) = \B{0} \quad
+   \B{g} : \mathbb{R}^{2 n} \rightarrow \mathbb{R}^n \]
+(Recall the rewriting procedure to first-order for any-order ODEs.)\medskip
+
+Does a first-order, scalar BVP make sense?
+#+LATEX: \begin{hidden}
+No--need second order
+(or \(n \geqslant 2\)) to allow two boundary conditions.
+#+LATEX: \end{hidden}
+
+*Example:* Linear BCs
+\[B_a \B{y} (a) + B_b \B{y} (b) = \B{c} \]
+Is this Dirichlet/Neumann/...?
+#+LATEX: \begin{hidden}
+Could be any--we're in the system
+case, and \(B_a\) and \(B_b\) are matrices--so conditions could be ony
+\emph{any} component.
+#+LATEX: \end{hidden}
+
+** Existence, Uniqueness, Conditioning
+
+*** Does a solution even exist? How sensitive are they?
+
+General case is harder than root finding, and we couldn't say much there.
+
+\(\rightarrow\) Only consider linear BVP.
+\[(\ast) \left \{
+\begin{array}{l}
+  \B{y}' (x) = A (x) \B{y} (x) + \B{b} (x)\\B_a \B{y} (a) + B_b \B{y} (b) = \B{c}
+\end{array}\right . \]
+To solve that, consider /homogeneous IVP/
+\[\B{y}_i' (x) = A (x) \B{y}_i (x) \]
+with initial condition
+\[\B{y}_i (a) = \B{e_{}}_i . \]
+Note: \(\B{y} \neq \B{y_i}\). \(\B{e}_i\) is the \(i\)th unit
+vector. With that, build the *fundamental solution matrix*
+#+BEGIN_EXPORT latex
+\[Y (x) =
+\begin{bmatrix}
+  \vbar  &  & |  \\
+  \B{y}_1 & \cdots & \B{y}_n\\
+  \vbar &  & |
+\end{bmatrix}
+\]
+#+END_EXPORT
+*** ODE Systems: Existence
+Let
+\[Q \assign B_a Y (a) + B_b Y (b) \]
+Then \((\ast )\) has a unique solution if and only if \(Q\) is invertible. Solve to
+find coefficients:
+\[Q \B{\alpha } = \B{c} \]
+Then \(Y (x) \B{\alpha }\) solves \((\ast )\) with \(\B{b} (x) = \B{0}\).\medskip
+
+Define \(\Phi (x) \assign Y (x) Q^{- 1}\). So \(\Phi (x) \B{c}\) solves
+$(\ast)$ with \(\B{b} (x) = \B{0}\).
+
+Define /Green's function/
+\begin{equation*}
+    G (x, y) \assign
+    \begin{cases}
+    \phantom{-} \Phi (x) B_a \Phi (a) \Phi ^{- 1} (y) & y \leqslant x,\\
+    - \Phi (x) B_b \Phi (b) \Phi ^{- 1} (y) & y > x.
+    \end{cases}
+\end{equation*}
+Then
+\[\B{y} (x) = \Phi (x) \B{c} + \int _a^b G (x, y) \B{b}
+   (y) \mathd y. \]
+Can verify that this solves $(\ast)$ by plug'n'chug.
+*** ODE Systems: Conditioning
+
+For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta \B{c}\):
+\[\norm{\Delta \B{y}}_\infty  \leqslant \max \left (
+   \norm{\Phi }_\infty , \norm{G}_\infty  \right ) \left ( \norm{\Delta
+   \B{c}}_1 + \int \norm{\Delta \B{b} (y)}_1 \mathd y \right ) .
+\]
+
+- Did not prove uniqueness. (But true.)
+- Also get continuous dependence on data.
+
+
+** Numerical Methods
+
+*** Shooting Method
+
+*Idea:* Want to make use of the fact that we can already solve IVPs.
+
+*Problem:* Don't know \emph{all} left BCs.\medskip
+
+\demolink{bvp_odes}{Shooting method}\medskip
+
+What about systems?
+#+LATEX: \begin{hidden}
+No problem--cannons are aimed in 2D as well.
+:)
+#+LATEX: \end{hidden}
+
+What are some downsides of this method?
+#+LATEX: \begin{hidden}
+
+- Can fail
+
+- Can be unstable even if ODE is stable
+#+LATEX: \end{hidden}
+
+What's an alternative approach?
+#+LATEX: \begin{hidden}
+Set up a big linear system.
+#+LATEX: \end{hidden}
+
+*** Finite Difference Method
+
+*Idea:* Replace \(u'\) and \(u''\) with finite differences.
+
+*For example:* second-order centered
+
+\begin{eqnarray*}
+  u' (x) & = & \frac{u (x + h) - u (x - h)}{2 h} + O (h^2)\\u'' (x) & = & \frac{u (x + h) - 2 u (x) + u (x - h)}{h^2} + O (h^2)
+\end{eqnarray*}
+\demolink{bvp_odes}{Finite differences}\medskip
+
+What happens for a nonlinear ODE?
+#+LATEX: \begin{hidden}
+Get a nonlinear
+system\(\rightarrow\)Use Newton.
+#+LATEX: \end{hidden}
+
+\demolink{bvp_odes}{Sparse matrices}\medskip
+
+*** Collocation Method
+
+\[(\ast ) \left \{
+\begin{array}{l}
+  y' (x) = f (y (x),  \\g (y (a), y (b)) = 0.
+\end{array}\right . \]
+# (Scalar for simplicity--vector generalization is straightforward.)
+#+LATEX: \begin{tcolorbox}
+
+1. Pick a basis (for example: Chebyshev polynomials)
+    \[\hat {y} (x) = \sum _{i = 1}^n \alpha _i T_i (x) \]
+    Want \(\hat {y}\) to be close to solution \(y\). So: plug into
+    \((\ast )\).\medskip
+
+    *Problem:* \(\hat {y}\) won't satisfy the ODE at all points at least.
+
+    We do not have enough unknowns for that.
+
+1. *Idea:* Pick \(n\) points where we would like \((\ast )\) to be
+    satisfied.
+
+    \(\rightarrow\) Get a big (non-)linear system
+
+1. Solve that (LU/Newton)\(\rightarrow\) done.
+#+LATEX: \end{tcolorbox}
+
+*** Galerkin/Finite Element Method
+
+\[u'' (x) = f (x), \qquad u (a) = u (b) = 0. \]
+*Problem* with collocation: Big dense matrix.
+
+*Idea:* Use piecewise basis. Maybe it'll be sparse.
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/fem-hat-functions-crop.pdf]]
+#+END_CENTER
+
+What's the problem with that?
+#+LATEX: \begin{hidden}
+\(u'\) does not exist. (at least at a
+few points where it's discontinuous)
+
+\(u''\) really does not exist.
+#+LATEX: \end{hidden}
+
+*** Weak solutions/Weighted Residual Method
+
+*Idea:* Enforce a `weaker' version of the ODE.
+
+#+LATEX: \begin{hidden}[6cm]
+Compute `moments':
+\[\int _a^b u'' (x) \psi (x) \mathd x = \int _a^b f (x) \psi (x) \mathd x \]
+Require that this holds for some /test functions/ \(\psi\) from some set
+\(W\). Now possible to get rid of (undefined) second derivative using
+integration by parts:
+\[\int _a^b u'' (x) \psi (x) \mathd x = [u' (x) \psi (x)]_a^b - \int _a^b u'
+   (x) \psi ' (x) \mathd x. \]
+   
+- Also called *weighted residual* methods.
+- Can view collocation as a type of WR method with \(\psi_j(x)=\delta(x-x_j)\)
+#+LATEX: \end{hidden}
+
+*** Galerkin: Choices in Weak Solutions
+Make some choices:
+
+- Solve for \(u \in \tmop{span} \left \{\text{hat functions } \varphi _i     \right \}\)
+
+- Choose \(\psi \in W = \tmop{span} \left \{\text{hat functions }     \varphi _i \right \}\) with \(\psi (a) = \psi (b) = 0\).
+
+  \(\rightarrow\) Kills boundary term \([u' (x) \psi (x)]_a^b\).
+
+These choices are called the *Galerkin method*. Also works with other bases.
+
+*** Discrete Galerkin
+
+Assemble a matrix for the Galerkin method.
+
+#+LATEX: \begin{hidden}[6cm]
+\begin{eqnarray*}
+  - \int _a^b u' (x) \psi ' (x) \mathd x & = & \int _a^b f (x) \psi (x) \mathd
+    x\\- \int _a^b \left [ \sum _{j = 1}^n \alpha _j \varphi '_j (x) \right ] \psi ' (x)
+    \mathd x & = & \int _a^b f (x) \psi (x) \mathd x\\- \sum _{j = 1}^n \alpha _j \underbrace{\int _a^b \varphi '_j (x) \varphi _i' (x)
+    \mathd x}_{S_{i j}} & = & \underbrace{\int _a^b f (x) \varphi _i (x) \mathd
+    x}_{r_i}\\S \B{\alpha } & = & \B{r} .
+\end{eqnarray*}
+*Now:* Compute \(S\), solve sparse (!) linear system.
+#+LATEX: \end{hidden}
+
+* Partial Differential Equations and Sparse Linear Algebra
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: pdes
+  :END:
+
+*** Advertisement
+
+*Remark:* Both PDEs and Large Scale Linear Algebra are big topics. Will
+only scratch the surface here. Want to know more?
+
+- CS555 \(\rightarrow\) Numerical Methods for PDEs
+
+- CS556 \(\rightarrow\) Iterative and Multigrid Methods
+
+- CS554 \(\rightarrow\) Parallel Numerical Algorithms
+
+We would love to see you there! :)
+
+** Sparse Linear Algebra
+
+*** Solving Sparse Linear Systems
+
+Solving \(A \B{x} = \B{b}\) has been our bread and
+butter.\medskip
+
+Typical approach: Use factorization (like LU or Cholesky)
+
+Why is this problematic?\medskip
+
+*Idea:* Don't factorize, iterate.
+
+\demolink{pdes}{Sparse Matrix Factorizations and ``Fill-In''}\medskip
+
+*** `Stationary' Iterative Methods
+
+*Idea:* Invert only part of the matrix in each iteration. Split
+\[A = M - N, \]
+where \(M\) is the part that we are actually inverting. Convergence?
+#+LATEX: \begin{tcolorbox}
+\vspace{-3ex}
+\begin{eqnarray*}
+  A \B{x} & = & \B{b}\\M \B{x} & = & N \B{x} + \B{b}\\M \B{x}_{k + 1} & = & N \B{x}_k + \B{b}\\\B{x}_{k + 1} & = & M^{- 1} (N \B{x}_k + \B{b})
+\end{eqnarray*}
+
+- These methods are called /stationary/ because they do the same
+    thing in every iteration.
+
+- They carry out fixed point iteration.
+
+    \(\rightarrow\) Converge if contractive, i.e. \(\rho (M^{- 1} N) < 1\).
+
+- Choose \(M\) so that it's easy to invert.
+#+LATEX: \end{tcolorbox}
+
+*** Choices in Stationary Iterative Methods
+
+What could we choose for \(M\) (so that it's easy to invert)?
+#+LATEX: \begin{tcolorbox}
+
+\begin{tabular}{l|ll}
+  Name & \(M\) & \(N\)\\\hline
+  Jacobi & \(D\) & \(- (L + U)\)\\
+  Gauss-Seidel & \(D + L\) & \(- U\)\\
+  SOR & \(\frac{1}{\omega } D + L\) & \(\left ( \frac{1}{\omega } - 1 \right ) D - U\)
+\end{tabular}
+
+where \(L\) is the below-diagonal part of \(A\), and \(U\) the above-diagonal.
+#+LATEX: \end{tcolorbox}
+
+\demolink{pdes}{Stationary Methods}
+
+*** Conjugate Gradient Method
+
+Assume \(A\) is symmetric positive definite.
+\smallskip
+
+*Idea:* View solving \(A \B{x} = \B{b}\) as an
+optimization problem.
+\[\text{Minimize} \quad \varphi (\B{x}) = \frac{1}{2} \B{x}^T
+   A \B{x} - \B{x}^T \B{b} \quad \Leftrightarrow \quad
+   \text{Solve} \quad A \B{x} = \B{b} . \]
+Observe \(- \nabla \varphi (\B{x}) = \B{b} - A \B{x} = \B{r}\) (residual).\medskip
+
+Use an iterative procedure (\(\B{s}_k\) is the search direction):
+
+\begin{eqnarray*}
+  \B{x}_0 & = & \langle \text{starting vector} \rangle \\\B{x}_{k + 1} & = & \B{x}_k + \alpha _k \B{s}_k,
+\end{eqnarray*}
+
+*** CG: Choosing the Step Size
+What should we choose for \(\alpha _k\) (assuming we know \(\B{s}_k\))?
+#+LATEX: \begin{hidden}[6cm]
+\vspace{-3ex}
+\begin{eqnarray*}
+  0 & \overset{!}{=} & \frac{\partial }{\partial \alpha } \varphi
+    (\B{x}_k + \alpha _k \B{s}_k)\\& = & \nabla \varphi (\B{x}_{k + 1}) \cdot \B{s}_k =
+    \B{r}_{k + 1} \cdot \B{s}_k .
+\end{eqnarray*}
+*Learned:* Choose \(\alpha\) so that next residual is \(\perp\) to
+current search direction.
+\begin{eqnarray*}
+  \B{r}_{k + 1} & = & \B{r}_k + \alpha _k A \B{s}_k\\0 \overset{!}{=} \tmcolor{blue}{\B{s}_k^T} \B{r}_{k + 1} & = &
+    \tmcolor{blue}{\B{s}_k^T} \B{r}_k + \alpha _k
+    \tmcolor{blue}{\B{s}_k^T} A \B{s}_k
+\end{eqnarray*}
+Solve:
+\[\alpha _k = \frac{\B{s}_k^T \B{r}_k}{\B{s}_k^T A
+   \B{s}_k} = - \frac{\B{s}^T_k A
+   \B{e}_k}{\B{s}_k^T A \B{s}_k}, \quad (\ast ) \]
+where \(\B{e}_k = \B{x}_k - \B{x}^\ast\) and
+\(\B{r}_k = - A \B{e}_k\).
+#+LATEX: \end{hidden}
+
+*** CG: Choosing the Search Direction
+
+What should we choose for \(\B{s}_k\)?
+#+LATEX: \begin{hidden}[6cm]
+*Idea:*
+\(\B{s}_k = \B{r}_k = - \nabla \varphi \B{} (\B{x}_k)\), i.e. steepest descent. No--still a bad idea.\medskip
+
+\(\B{x}\), \(\B{y}\) are called /\(A\)-orthogonal/ or
+/conjugate/ if and only if \(\B{x}^T A \B{y} = 0\).\medskip
+
+*Better Idea:* Require \(\B{s}_i^T A \B{s}_j = 0\) if \(i \neq j\).\medskip
+
+View error as linear combination of search directions, with some (thus far unknown) coefficients:
+\[\B{e}_0 = \B{x}_0 - \B{x}^\ast  = \sum _i \delta _i \B{s}_i . \]
+
+- We run out of \(A\)-orthogonal directions after \(n\) iterations.
+- Is the error going to be zero then? If \(\delta _k = - \alpha _k\), then yes.
+#+LATEX: \end{hidden}
+
+*** CG: Further Development
+
+#+LATEX: \begin{hidden}[6cm]
+\[\B{s}_k^T A \B{e}_0 = \sum _i \delta _i \B{s}_k^T A
+   \B{s}_i = \delta _k \B{s}_k^T A \B{s}_k . \]
+Then
+\begin{eqnarray*}
+  \delta _k & = & \frac{\B{s}_k^T A \B{e}_0}{\B{s}_k^T A
+    \B{s}_k} = \frac{\B{s}_k A \left ( \B{e}_0 + \sum _{i =
+    1}^{k - 1} \alpha _i \B{s}_i \right )}{\B{s}_k^T A
+    \B{s}_k} = \frac{\B{s}_k^T A \B{e}_k}{\B{s}_k^T
+    A \B{s}_k} = - \alpha _k .
+\end{eqnarray*}
+How do we generate the \(\B{s}_k\)?
+
+- Pick a random one to start with. Perhaps \(\B{r}_0\)?
+
+- Generate next one by orthogonalizing from Krylov space procedure
+  \(\B{z}, A \B{z}, A^2 \B{z} \)
+
+  Insight: Use three-term Lanczos iteration to generate. \(\rightarrow\) cheap!
+#+LATEX: \end{hidden}
+
+\demolink{pdes}{Conjugate Gradient Method}
+
+** PDEs
+
+*** Introduction
+
+*Notation:*
+\[\frac{\partial }{\partial x} u \quad = \quad \partial _x u \quad = \quad u_x
+   . \]
+A /PDE/ (/partial differential equation/) is an equation with
+multiple partial derivatives:
+\[u_{x x} + u_{y y} = 0 \]
+Here: solution is a function \(u (x, y)\) of two variables.\medskip
+
+*Examples:* Wave propagation, fluid flow, heat diffusion
+
+- Typical: Solve on domain with complicated geometry.
+
+  #+ATTR_LATEX: :height 3cm
+  [[./images/pde-domains-crop.pdf]]
+
+*** Initial and Boundary Conditions
+
+- Sometimes one variable is time-like.
+
+  What makes a variable time-like?
+
+  - Causality
+  - No geometry
+
+Have:
+
+- PDE
+- Boundary conditions
+- Initial conditions (in \(t\))
+
+#+BEGIN_CENTER
+#+ATTR_LATEX: :height 3cm
+[[./images/pde-ic-bc-crop.pdf]]
+#+END_CENTER
+
+*** Time-Dependent PDEs
+
+Time-dependent PDEs give rise to a /steady-state/ PDE:
+\[u_t = f (u_x, u_y, u_{\tmop{xx}}, u_{\tmop{yy}}) \quad \rightarrow \quad
+   \tmcolor{blue}{0} = f (u_x, u_y, u_{\tmop{xx}}, u_{\tmop{yy}}) \]
+Idea for time-dep problems (*Method of Lines*):
+
+- Discretize spatial derivatives first
+
+- Obtain large (*semidiscrete*) system of ODEs
+
+- Use ODE solver from Chapter 9
+
+\demolink{pdes}{Time-dependent PDEs}\medskip
+
+*** Notation: Laplacian
+
+*Laplacian* (dimension-independent)
+\[\Delta u = \tmop{div} \tmop{grad} u = \nabla \cdot (\nabla u) = u_{x x} +
+   u_{y y} \]
+
+*** Classifying PDEs
+
+Three main types of PDEs:
+
+- *hyperbolic* (wave-like, conserve energy)
+  - first-order *conservation laws*: \(u_t + f (u)_x = 0\)
+  - second-order *wave equation*: \(u_{t t} = \Delta u\)
+
+- *parabolic* (heat-like, dissipate energy)
+
+  - *heat equation*: \(u_t = \Delta u\)
+
+- *elliptic* (steady-state, of heat and wave eq. for example)
+
+  - *Laplace equation* \(\Delta u = 0\)
+  - *Poisson equation* \(\Delta u = f\)
+
+    (Pure BVP, similar to 1D BVPs, same methods apply--FD, Galerkin, etc.)
+
+* Fast Fourier Transform
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: fft
+  :END:
+
+# Do not TODO wholesale because there's a demo that otherwise won't show up
+** TODO Develop this
+* TODO Random Numbers and Simulation
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: random
+  :END:
+* Additional Topics
+  :PROPERTIES:
+  :RELATE_TREE_SECTION_NAME: misc
+  :END:
