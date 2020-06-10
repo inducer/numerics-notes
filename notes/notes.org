@@ -33,7 +33,7 @@
 #+BEAMER_HEADER: \def\demonote#1{\ifshowhidden\medskip\par Demo Instructions: {\color{blue} #1}\fi}
 #+BEAMER_HEADER: \newcommand{\inclass}[1]{\tmcolor{purple}{\textbf{In-class activity: }#1}}
 #+BEAMER_HEADER: \newcommand{\demo}[1]{\tmcolor{purple}{\textbf{Demo: }#1}}
-#+BEAMER_HEADER: \newcommand{\demolink}[2]{\plainhref{https://mybinder.org/v2/gh/illinois-scicomp/cs450-s19-binder/master?filepath=#1/#2.ipynb}{\color{purple}\uline{\textbf{Demo: }#2}}}
+#+BEAMER_HEADER: \newcommand{\demolink}[2]{\plainhref{https://mybinder.org/v2/gh/inducer/numerics-notes/master?filepath=#1/#2.ipynb}{\color{purple}\uline{\textbf{Demo: }#2}}}
 #+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
 
 #+BEAMER_HEADER: \let\tmop=\operatorname
@@ -909,7 +909,6 @@ This phenomenon is called /Catastrophic Cancellation/.
 - Josh Haberman, [[http://blog.reverberate.org/2014/09/what-every-computer-programmer-should.html][Floating Point Demystified, Part 1]]
 
 - David Goldberg, [[http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html][What every computer programmer should know about floating point]]
-
 
 * Systems of Linear Equations
   :PROPERTIES:
