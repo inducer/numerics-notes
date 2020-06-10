@@ -12,7 +12,7 @@ were based on material initially developed by Luke Olson.
 -   [PDF](https://andreask.cs.illinois.edu/cs450-s19/notes.pdf) of these slides/notes (see `notes`
     for source)
 
--   [Demos](https://mybinder.org/v2/gh/inducer/numpde-notes/master?filepath=demos)
+-   [Demos](https://mybinder.org/v2/gh/inducer/numerics-notes/master?filepath=demos)
     in [Binder](https://mybinder.org/)
 
 -   The demos use annotations for [`ipython-demo-tools`](https://github.com/inducer/ipython-demo-tools).
