@@ -117,7 +117,7 @@
   :RELATE_TREE_ICON: fa fa-book
   :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-s19/notes-folded.pdf
   :END:
-
+** About the Class
 *** What's the point of this class?
 
 '/Scientific Computing/' describes a family of approaches to obtain
@@ -227,6 +227,45 @@ How do numerical methods /get implemented/?
 - [[https://scipy-lectures.github.io/intro/numpy/index.html][Numpy (from the SciPy Lectures)]]
 - [[http://www.loria.fr/~rougier/teaching/numpy.100/index.html][100 Numpy Exercises]]
 - [[http://www.diveinto.org/python3/][Dive into Python3]]
+
+*** Sources for these Notes
+
+- M.T. Heath, Scientific Computing: An Introductory Survey, Revised Second Edition.
+  Society for Industrial and Applied Mathematics, Philadelphia, PA. 2018.
+- [[https://relate.cs.illinois.edu/course/cs450-f18/][CS 450 Notes by Edgar Solomonik]]
+- Various bits of prior material by Luke Olson
+
+*** Open Source <3
+    
+These notes (and the accompanying demos) are open-source!
+
+\bigskip
+Bug reports and pull requests welcome: [[https://github.com/inducer/numerics-notes]]
+
+\bigskip
+Copyright (C) 2020 Andreas Kloeckner
+
+\bigskip
+\scriptsize
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+\medskip
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+\medskip
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
 
 ** Errors, Conditioning, Accuracy, Stability
 
@@ -542,7 +581,6 @@ How can I produce inaccurate results?
   :END:
 
 \inclasslink{fwd-bwd-error}{Forward/Backward Error}
-
 
 ** Floating Point
 
