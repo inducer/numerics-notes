@@ -1,7 +1,8 @@
 # Numerical Analysis/Scientific Computing
 
 Slides/notes and Jupyter notebook demos for an introductory course of numerical
-analysis, following the textbook [Scientific Computing](http://heath.cs.illinois.edu/scicomp/)
+analysis, following the textbook
+[Scientific Computing: An Introductory Survey](http://heath.cs.illinois.edu/scicomp/)
 by Michael T. Heath.
 
 Developed over the years while teaching [CS450](https://relate.cs.illinois.edu/course/cs450-s19/)
