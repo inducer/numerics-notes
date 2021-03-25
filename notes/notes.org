@@ -33,7 +33,7 @@
 #+BEAMER_HEADER: \def\demonote#1{\ifshowhidden\medskip\par Demo Instructions: {\color{blue} #1}\fi}
 #+BEAMER_HEADER: \newcommand{\inclass}[1]{\tmcolor{purple}{\textbf{In-class activity: }#1}}
 #+BEAMER_HEADER: \newcommand{\demo}[1]{\tmcolor{purple}{\textbf{Demo: }#1}}
-#+BEAMER_HEADER: \newcommand{\demolink}[2]{\plainhref{https://mybinder.org/v2/gh/inducer/numerics-notes/main?filepath=#1/#2.ipynb}{\color{purple}\uline{\textbf{Demo: }#2}}}
+#+BEAMER_HEADER: \newcommand{\demolink}[2]{\plainhref{https://mybinder.org/v2/gh/inducer/numerics-notes/main?filepath=demos/#1/#2.ipynb}{\color{purple}\uline{\textbf{Demo: }#2}}}
 #+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
 
 #+BEAMER_HEADER: \let\tmop=\operatorname
