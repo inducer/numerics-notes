@@ -13,13 +13,13 @@ were based on material initially developed by Luke Olson.
 -   [PDF](https://andreask.cs.illinois.edu/cs450-s19/notes.pdf) of these slides/notes (see `notes`
     for source)
 
--   [Demos](https://mybinder.org/v2/gh/inducer/numerics-notes/master?filepath=demos)
+-   [Demos](https://mybinder.org/v2/gh/inducer/numerics-notes/main?filepath=demos)
     in [Binder](https://mybinder.org/)
 
 -   The demos use annotations for [`ipython-demo-tools`](https://github.com/inducer/ipython-demo-tools).
     A `#clear` annotation at the beginning of a code cell allows the
     `clear-marked-inputs` subcommand of
-    [`prepare-ipynb`](https://github.com/inducer/ipython-demo-tools/blob/master/prepare-ipynb) 
+    [`prepare-ipynb`](https://github.com/inducer/ipython-demo-tools/blob/main/prepare-ipynb) 
     to remove the content of those input cells, maybe to use them for live coding in class.
     The `#clear` marks themselves can be removed by that `remove-marks` subcommand.
 
