@@ -52,11 +52,13 @@ were based on material initially developed by Luke Olson.
     during class using [Xournal++](https://github.com/xournalpp/xournalpp/)
     (but equivalent notetaking applications should work just as well).
 
--   If you can demonstrate that you are teaching a related course
-    at a college or university anywhere in the world, I have
-    homework assignments and projects (some of which are autograded
-    using the [RELATE](https://github.com/inducer/relate/) system)
-    that I would be happy to share with you.
+## Problems and Assignments
+
+If you can demonstrate that you are teaching a related course
+at a college or university anywhere in the world, I have
+homework assignments and projects (some of which are autograded
+using the [RELATE](https://github.com/inducer/relate/) system)
+that I would be happy to share with you.
 
 ## MIT License
 
