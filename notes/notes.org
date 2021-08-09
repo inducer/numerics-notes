@@ -1,7 +1,7 @@
 #+TITLE: Numerical Analysis / Scientific Computing
 #+SUBTITLE: CS450
 #+AUTHOR: Andreas Kloeckner
-#+DATE: Spring 2019
+#+DATE: Fall 2021
 
 
 * LaTeX header setup stuff                                         :noexport:
