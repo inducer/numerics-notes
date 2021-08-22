@@ -193,7 +193,7 @@ How do numerical methods /get implemented/?
 
 - Assignments
 
-  - HW0!
+  - HW1!
   - Pre-lecture quizzes
   - In-lecture interactive content (bring computer or phone if possible)
 
