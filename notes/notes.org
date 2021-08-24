@@ -437,7 +437,7 @@ error:/ \(\Delta y = \hat {y} - y\)\medskip
 wrong input into a fully accurate calculation. Backward error is the
 difference between true and `wrong' input. I.e.
 
-- Find an \(\hat {x}\) so that \(f (\hat {x}) = \hat {y}\).
+- Find the \(\hat {x}\) closest to \(x\) so that \(f (\hat {x}) = \hat {y}\).
 
 - \(\Delta x = \hat {x} - x\).
 
@@ -492,6 +492,9 @@ What do you observe about the relative manitude of the relative errors?
 #+LATEX: \begin{hidden}[3cm]
 - In this case: Got smaller, i.e. variation /damped out/.
 - Typically: Not that lucky: Input error /amplified/.
+- If backward error is smaller than the input error:
+
+  result "as good as possible".
 
 This amplification factor seems worth studying in more detail.
 #+LATEX: \end{hidden}
