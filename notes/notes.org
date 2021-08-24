@@ -200,11 +200,9 @@ How do numerical methods /get implemented/?
 - Textbook
 - Exams
 - Class outline (with links to notes/demos/activities/quizzes)
-- Virtual Machine Image
-- Piazza
+- Discussion forum
 - Policies
 - Video
-- Inclusivity Statement
 
 *** Programming Language: Python/numpy
 
