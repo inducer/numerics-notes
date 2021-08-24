@@ -226,7 +226,7 @@ How do numerical methods /get implemented/?
 
 - [[https://scipy-lectures.github.io/intro/numpy/index.html][Numpy (from the SciPy Lectures)]]
 - [[http://www.loria.fr/~rougier/teaching/numpy.100/index.html][100 Numpy Exercises]]
-- [[http://www.diveinto.org/python3/][Dive into Python3]]
+- [[https://diveintopython3.net/][Dive into Python3]]
 
 *** Sources for these Notes
 
