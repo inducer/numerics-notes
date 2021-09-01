@@ -17,7 +17,7 @@
 #+BEAMER_HEADER: \newif\ifshowhidden
 #+BEAMER_HEADER: \showhiddentrue
 #+BEAMER_HEADER: \def\fillinbox#1{\begin{tcolorbox}[height=#1]\end{tcolorbox}}
-#+BEAMER_HEADER: \NewEnviron{hidden}[1][1.5cm]{\ifshowhidden\begin{tcolorbox}\BODY\end{tcolorbox}\else\fillinbox{#1}\fi}
+#+BEAMER_HEADER: \NewEnviron{hidden}[0]{\begin{tcolorbox}\ifshowhidden\BODY\else\phantom{\vbox{\BODY}}\fi\end{tcolorbox}}
 
 #+BEAMER_HEADER: \let\plainhref=\href
 #+BEAMER_HEADER: \let\plainurl=\url
@@ -127,7 +127,7 @@
 approximate solutions to problems /once they've been stated mathematically/.
 
 Name some applications:
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 
 - Engineering simulation
   - E.g. Drag from flow over airplane wings, behavior of photonic
@@ -177,7 +177,7 @@ How good of an answer can we expect to our problem?
 
 *** Implementation concerns
 How do numerical methods /get implemented/?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - Like anything in computing: A layer cake of /abstractions/
 
   ("careful lies")
@@ -274,7 +274,7 @@ THE SOFTWARE.
 
 To be able to compute a solution (through a process that
 introduces errors), the problem...
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 
 - Needs to /have/ a solution
 - That solution should be /unique/
@@ -290,7 +290,7 @@ chance for those.
 
 ...what if the problem's input dependency is just /close to
 discontinuous/?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 
 - We call those problems /sensitive/ to their input data.
 
@@ -303,7 +303,7 @@ discontinuous/?
 *** Approximation
 
 \emph{When} does approximation happen?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 
 - Before computation
   - modeling
@@ -323,7 +323,7 @@ discontinuous/?
 Compute the surface area of the earth.
 
 What parts of your computation are approximate?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
  /All of them./
 \[A = 4 \pi r^2 \]
 
@@ -338,7 +338,7 @@ How do we measure error?
 
 *Idea:* Consider all error as being \emph{added onto} the
 result.
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 \[\text{\tmem{Absolute error}} = \text{approx value } - \text{
    true value} \]
 \[\text{\tmem{Relative error}} = \;\frac{\text{Absolute error}}{\text{True
@@ -362,7 +362,7 @@ What's a norm?
 #+LATEX: \end{hidden}
 
 Define /norm/.
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 A function \(\norm{\B{x}} : \mathbb{R}^n \rightarrow \mathbb{R}^+_0\) is called a norm if and only if
 
 1. \(\norm{\B{x}} > 0 \Leftrightarrow \B{x} \neq      \B{0}\).
@@ -375,7 +375,7 @@ A function \(\norm{\B{x}} : \mathbb{R}^n \rightarrow \mathbb{R}^+_0\) is called 
 
 *** Norms: Examples
 Examples of norms?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 The so-called /\(p\)-norms/:
 \[\norm{
 \begin{bmatrix}
@@ -391,7 +391,7 @@ The so-called /\(p\)-norms/:
 
 *** Norms: Which one?
 Does the choice of norm really matter much?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 In finitely many dimensions, all /norms are equivalent/.
 
 I.e. for fixed \(n\) and two norms \(\norm{\cdot }, \norm{\cdot }^\ast\), there
@@ -409,7 +409,7 @@ If we're computing a vector result, the error is a vector.
 That's not a very useful answer to `how big is the error'.
 
 What can we do?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Apply a norm!\medskip
 
 How? /Attempt 1:/
@@ -432,7 +432,7 @@ How? /Attempt 1:/
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
 
 What are the forward error and the backward error?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 /Forward
 error:/ \(\Delta y = \hat {y} - y\)\medskip
 
@@ -464,7 +464,7 @@ difference between true and `wrong' input. I.e.
 Suppose you wanted \(y = \sqrt{2}\) and got \(\hat {y} = 1.4\).
 
 What's the (magnitude of) the forward error?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 
 \[\left | \Delta y \left | = \abs{1.4 - 1.41421 \ldots } \approx 0.0142 \ldots
    \right . \right . \]
@@ -479,7 +479,7 @@ About 1 percent, or /two accurate digits/.
 Suppose you wanted \(y = \sqrt{2}\) and got \(\hat {y} = 1.4\).
 
 What's the (magnitude of) the backward error?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Need \(\hat {x}\) so that \(f (\hat {x}) = 1.4\).
 \[\sqrt{1.96} = 1.4, \quad \Rightarrow \quad \hat {x} = 1.96. \]
 
@@ -492,7 +492,7 @@ About 2 percent.
 #+LATEX: \end{hidden}
 *** Forward/Backward Error: Observations
 What do you observe about the relative manitude of the relative errors?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - In this case: Got smaller, i.e. variation /damped out/.
 - Typically: Not that lucky: Input error /amplified/.
 - If backward error is smaller than the input error:
@@ -505,7 +505,7 @@ This amplification factor seems worth studying in more detail.
 *** Sensitivity and Conditioning
 
 What can we say about amplification of error?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Define
 /condition number/ as smallest number \(\kappa\) so that
 \[\abs{\text{rel. fwd. err.}} \leqslant \kappa \cdot \abs{\text{rel. bwd.
@@ -554,7 +554,7 @@ method output to true answer for unperturbed input.
 #+LATEX: \end{hidden}
 
 When is a method /stable/?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - ``A method is stable if the result it produces is the exact solution
   to a nearby problem.''
 
@@ -594,7 +594,7 @@ Computers can represent \emph{integers}, using bits:
 \[23 = 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 =
    (10111)_2 \]
 How would we represent fractions?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Idea:* Keep going down
 past zero exponent:
 \begin{align*}
@@ -617,7 +617,7 @@ This is called /fixed-point arithmetic/.
 Suppose we use units of 64 bits, with 32 bits for exponents
 \(\geqslant 0\) and 32 bits for exponents \(< 0\). What numbers can we
 represent?
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 
 #+ATTR_LATEX: :align |c|c|c|c|c|c|
 |----------+----------+-------+----------+----------+-----------|
@@ -632,7 +632,7 @@ represent?
 How many `digits' of relative accuracy (think relative rounding
 error) are available for the smallest vs. the largest
 number?
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 *For large numbers:* about 19
 
 *For small numbers:* few or none\medskip
@@ -663,7 +663,7 @@ What pieces do you need to store an FP number?
 
 Do you notice a source of inefficiency in our number representation?
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Idea:* Notice that the leading digit (in binary) of the significand
 is always one.
 
@@ -686,7 +686,7 @@ Actually stored: 1026, a positive integer.
 Can you think of a somewhat central number that we cannot
 represent as
 \[x = \left ( 1. \text{\_\_\_\_\_\_\_\_\_} \right )_2 \cdot 2^{- p} ? \]
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Zero.
 Which is somewhat embarrassing.\medskip
 
@@ -712,7 +712,7 @@ a zero?
 
 What is the smallest representable number in an FP system with 4
 stored bits in the significand and an exponent range of \([- 7, 7]\)?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 First attempt:
 
 - Significand as small as possible \(\rightarrow\) all zeros after the
@@ -729,7 +729,7 @@ Unfortunately: *wrong*.
 What is the smallest representable number in an FP system with 4
 stored bits in the significand and an exponent range of \([- 7, 7]\)?
 (Attempt 2)
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 We can go way smaller by using the
 special exponent (which turns off the implicit leading one). We'll assume that
 the special exponent is \(- 8\). So: \((0.0001)_2 \cdot 2^{- 8} \).
@@ -771,7 +771,7 @@ assist', i.e. not in actual hardware. Many C compilers support options to
 How is rounding performed? (Imagine trying to represent $\pi$.)
 \[\big ( \underbrace{\tmcolor{orange}{1.1101010}}_{\text{representable}} 11
    \big )_2 \]
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 - ``Chop'' a.k.a. /round-to-zero/:
    $(\tmcolor{orange}{1.1101010})_2$
 - /Round-to-nearest/:
@@ -821,7 +821,7 @@ number such that
 
 What does this say about the relative error incurred in floating
 point calculations?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 
 - The factor to get from one FP number to the next larger one is
   (mostly) independent of magnitude: \(1 + \varepsilon _{\tmop{mach}}\).
@@ -842,7 +842,7 @@ point calculations?
 
 What's that same number for double-precision floating point? (52
 bits in the significand)
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \[2^{- 53} \approx 10^{- 16} \]
 *Bonus Q:* What does \(1 + 2^{- 53}\) do on your computer?
 Why?\medskip
@@ -870,7 +870,7 @@ How is floating point addition implemented?
 
 Consider adding \(a = (1.101)_2 \cdot 2^1\) and \(b = (1.001)_2 \cdot 2^{- 1}\) in
 a system with three bits in the significand.
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Rough algorithm:
 
 1. Bring both numbers onto a common exponent
@@ -890,7 +890,7 @@ What happens if you subtract two numbers of very similar
 magnitude?
 
 As an example, consider \(a = (1.1011)_2 \cdot 2^0\) and \(b = (1.1010)_2 \cdot  2^0\).
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 
 \begin{eqnarray*}
   a = & 1. & 1011 \cdot 2^1\\
@@ -931,7 +931,7 @@ Given:
 
 What are we looking for here, and when are we allowed to ask the
 question?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Want:* \(n\)-vector \(\B{x}\) so that
 \[A \B{x} = \B{b} . \]
 
@@ -951,7 +951,7 @@ Unique solution exists iff \(A\) is /nonsingular/.\medskip
 *** Matrix Norms
 
 What norms would we apply to matrices?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 
 *Could use:* `\emph{Flatten}' matrix as vector, use vector norm.
 
@@ -979,7 +979,7 @@ e.g. for the vector 2-norm \(\norm{\B{x}}_2\) we get a matrix
 *** Matrix Norm Properties
 
 What is \(\norm{A}_1 \)? \(\norm{A}_\infty \)?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \vspace*{-2ex}
 \begin{eqnarray*}
   \norm{A}_1 & = & \max _{\tmop{col} j} \sum _{\tmop{row} i} \abs{A_{i, j}},\\
@@ -1013,7 +1013,7 @@ Matrix norms inherit the vector norm properties:
 
 But also some more properties that stem from our
 definition:
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 
 - \(\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}}\)
 
@@ -1026,7 +1026,7 @@ Both of these are called /submultiplicativity/ of the matrix norm.
 
 What is the condition number of solving a linear system
 \(A \B{x} = \B{b}\)?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Input:* \(\B{b}\) with
 error \(\Delta \B{b}\),
 
@@ -1080,7 +1080,7 @@ What is the condition number of matrix-vector multiplication?
 
 What is the *residual vector* of solving the linear system
 \[\B{b} = A \B{x} ? \]
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 It's the thing that's `left over'.
 Suppose our approximate solution is \(\widehat{\B{x}}\). Then the
 residual vector is
@@ -1091,7 +1091,7 @@ residual vector is
 How do the (norms of the) residual vector \(\B{r}\) and the
 error \(\Delta \B{x} = \B{x} - \widehat{\B{x}}\) relate to
 one another?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \begin{eqnarray*}
   \norm{\Delta \B{x}} & = & \norm{\B{x} - \widehat{\B{x}}}\\
     & = & \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}\\
@@ -1122,7 +1122,7 @@ The matrix consists of FP numbers, too--it, too, is approximate. I.e.
 \[A \B{x} = \B{b} \quad \rightarrow \quad \hat {A}
    \widehat{\B{x}} = \B{b} . \]
 What can we say about the error now?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Consider
 \(\Delta \B{x} = \widehat{\B{x}} - \B{x} = A^{- 1} (A
    \widehat{\B{x}} - \B{b}) = - A^{- 1} \Delta A
@@ -1139,7 +1139,7 @@ And we get
 
 Once we have a matrix \(A\) in a linear system \(A \B{x} = \B{b}\), are we stuck with its condition number? Or could we improve
 it?
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 /Diagonal scaling/ is a simple strategy that sometimes
 helps.
 
@@ -1152,7 +1152,7 @@ helps.
 #+LATEX: \end{hidden}
 
 What is this called as a general concept?
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 /Preconditioning/
 
 - *Left' preconditioning:*
@@ -1175,7 +1175,7 @@ What is this called as a general concept?
 *** Singular Value Decomposition (SVD)
 
 What is the /Singular Value Decomposition/ of an \(m \times  n\) matrix?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \[A = U \Sigma V^T, \]
 with
 
@@ -1199,7 +1199,7 @@ with
 *** Computing the 2-Norm
 
 Using the SVD of $A$, identify the 2-norm.
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 $A=U\Sigma V^T$ with $U$, $V$ orthogonal.
 
 - 2-norm satisfies $\norm{Q B}_2=\norm{B}_2=\norm{BQ}_2$ for any matrix $B$ and orthogonal $Q$.
@@ -1207,7 +1207,7 @@ $A=U\Sigma V^T$ with $U$, $V$ orthogonal.
 #+LATEX: \end{hidden}
 
 Express the matrix condition number $\tmop{cond}_2(A)$ in terms of the SVD:
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 - $A^{-1}$ has singular values $1/\sigma_i$.
 - \(\tmop{cond}_2 (A) = \norm A_2 \norm{A^{-1}}_2 =\sigma_{\text{max}}/\sigma_{\text{min}}\)
 #+LATEX: \end{hidden}
@@ -1228,7 +1228,7 @@ Solve
   b_1\\b_2\\b_3\\b_4
 \end{bmatrix} .
 \end{equation*}
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 
 - Rewrite as individual equations.
 - This process is called *back-substitution*.
@@ -1278,7 +1278,7 @@ What does this matrix do?
   \ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast & \ast
 \end{bmatrix}
 \end{equation*}
-#+LATEX: \begin{hidden}[2.5cm]
+#+LATEX: \begin{hidden}
 
 - Add \((- 1 / 2) \times\) the first row to the third row.
 
@@ -1290,7 +1290,7 @@ What does this matrix do?
 *** About Elimination Matrices
 
 Are elimination matrices invertible?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Sure! Inverse of
 \[
 \begin{bmatrix}
@@ -1347,7 +1347,7 @@ This is called *LU factorization* (or *LU decomposition*).
 *** Solving $A\B x=\B b$
 
 Does LU help solve \(A \B{x} = \B{b} ?\)
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 \vspace{-2ex}
 \begin{eqnarray*}
   A \B{x} & = & \B{b}\\
@@ -1363,7 +1363,7 @@ Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
 *** LU: Failure Cases?
 
 Is LU/Gaussian Elimination bulletproof?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 No, very much not:
 \[A = \begin{bmatrix} 0 & 1\\2 & 1 \end{bmatrix} . \]
 *Q:* Is this a problem with the process or with the entire /idea/ of LU?
@@ -1389,7 +1389,7 @@ It turns out to be that \(A\) doesn't /have/ an LU factorization.
 *** Saving the LU Factorization
 What can be done to get something \emph{like} an LU
 factorization?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 *Idea:* In Gaussian elimination: simply
 swap rows, equivalent linear system.\medskip
 
@@ -1428,7 +1428,7 @@ How do we capture `row switches' in a factorization?
 *** Fixing nonexistence of LU
 
 What does LU with permutations process look like?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 
 \begin{tabular}{rl}
   \(P_1 A\) & Pivot first column\\\(M_1 P_1 A\) & Eliminate first column\\\(P_2 M_1 P_1 A\) & Pivot second column\\\(M_2 P_2 M_1 P_1 A\) & Eliminate second column\\\(P_3 M_2 P_2 M_1 P_1 A\) & Pivot third column\\\(M_3 P_3 M_2 P_2 M_1 P_1 A\) & Eliminate third column
@@ -1445,7 +1445,7 @@ lower-triangular \(L\).
 *** What about the $L$  in LU?
 
 Sort out what LU with pivoting looks like. Have: \(M_3 P_3 M_2 P_2 M_1 P_1 A = U\).
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 
 Define: \(L_3 := M_3\)\\
 Define \(L_2 := P_3 M_2 P_3^{- 1}\)\\
@@ -1700,7 +1700,7 @@ Have data: \((x_i, y_i)\) and model:
 Find data that (best) fit model!
 *** Data Fitting Continued
 
-#+LATEX: \begin{hidden}[7cm]
+#+LATEX: \begin{hidden}
 \begin{eqnarray*}
   \alpha + \beta x_1 + \gamma x_1^2 & = & y_1\\
   \vdots &  & \\\alpha + \beta x_n + \gamma x_n^2 & = & y_n
@@ -1785,7 +1785,7 @@ No, for example if \(A\) has a nullspace.
 #+LATEX: \end{hidden}
 
 Examine the objective function, find its minimum.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \vspace{-2ex}
 \begin{eqnarray*}
   \varphi (\B{x}) & = & (\B{b} - A \B{x})^T (\B{b}
@@ -2097,7 +2097,7 @@ proof relies on the 'full' form.
 
 Find an \emph{orthogonal} matrix \(Q\) to zero out the lower
 part of a vector \(\B{a}\).
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 #+BEGIN_CENTER
 #+ATTR_LATEX: :height 3cm
 [[./images/householder-crop.pdf]]
@@ -2141,7 +2141,7 @@ Remarks:
 *** Givens Rotations
 
 If reflections work, can we make rotations work, too?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 \begin{equation*}
     \begin{bmatrix}
     c & s\\- s & c
@@ -2163,7 +2163,7 @@ Not hard to sovle for \(c\) and \(s\).\medskip
 *** Rank-Deficient Matrices and QR
 
 What happens with QR for rank-deficient matrices?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \[A
    = Q
 \begin{bmatrix}
@@ -2205,7 +2205,7 @@ What happens with Least Squares for rank-deficient matrices?
 
 *** SVD: What's this thing good for? (I)
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 - Recall: \(\norm{A}_2 = \sigma _1\)
 - Recall: \(\tmop{cond}_2 (A) = \sigma _1 / \sigma _n\)
 - Nullspace \(N (A) = \tmop{span} (\{\B{v}_i : \sigma _i = 0 \})\).
@@ -2237,7 +2237,7 @@ What happens with Least Squares for rank-deficient matrices?
 
 - The minimum norm solution to \(A \B{x} \cong \B{b}\):
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
   \begin{eqnarray*}
     U \Sigma V^T \B{x} & \cong & \B{b}\\
     \Leftrightarrow \Sigma \underbrace{V^T \B{x}}_{\B{y}} & \cong & U^T \B{b}\\
@@ -2360,7 +2360,7 @@ If \(\tmop{AM} > \tmop{GM}\), the matrix is called /defective/.
 Give characteristic polynomial, eigenvalues, eigenvectors of
 \[\begin{bmatrix} 1 & 1\\& 1 \end{bmatrix} . \]
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 CP: \((\lambda - 1)^2\)
 
 Eigenvalues: 1 (with multiplicity 2)
@@ -2386,7 +2386,7 @@ eigenvectors.
 *** Diagonalizability
 
 When is a matrix called /diagonalizable/?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 If it is not defective, i.e. if it has a \(n\) linear independent eigenvectors (i.e. a
 full basis of them). Call those \((\B{x}_n)_{i = 1}^n\).\medskip
 
@@ -2412,7 +2412,7 @@ matrix''.\medskip
 
 Observe: Similar \(A\) and \(B\) have same eigenvalues. (Why?)
 
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Suppose \(A\B x= \lambda \B x\). We have \(B=X^{-1}AX\). Let \(\B w=X^{-1}\B v\). Then
 \[
   B\B w = X^{-1} A \B v =\lambda \B w.
@@ -2465,7 +2465,7 @@ Assume \(A\) not defective. Suppose \(X^{- 1} AX = D\). Perturb
 \(A \rightarrow A + E \).
 
 What happens to the eigenvalues?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 \[X^{- 1} (A + E) X = D + F \]
 \vspace{-4ex}
 - \(A + E\) and \(D + F\) have same eigenvalues
@@ -2486,7 +2486,7 @@ Suppose \(\B{v}\) is a perturbed eigenvector.
 
 \(X^{- 1} (A + E) X = D + F \).
 Have \(\norm{(\mu I - D)^{- 1}}^{- 1} \leqslant \norm{F}\).
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \[\norm{(\mu I - D)^{- 1}}^{- 1} = | \mu - \lambda _k | \]
 where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\).
 \[\left | \mu - \lambda _k \left | = \norm{(\mu I - D)^{- 1}}^{- 1} \leqslant
@@ -2514,7 +2514,7 @@ Assume \(\abs{\lambda _1} > \abs{\lambda _2} > \cdots > \abs{\lambda _n}\) with
 eigenvectors \(\B{x}_1, \ldots , \B{x}_n\).
 
 Further assume \(\norm{\B{x}_i} = 1\).
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Use \(\B{x} = \alpha \B{x}_1 + \beta \B{x}_2\).
 \[\B{y} = \B{} A^{1000} (\alpha \B{x}_1 + \beta
    \B{x}_2) = \alpha \lambda _1^{1000} \B{x}_1 + \beta
@@ -2533,7 +2533,7 @@ Called *Power Iteration*.
 
 What could go wrong with Power
 Iteration?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 
 - Starting vector has no component along \(\B{x}_1\)
 
@@ -2552,7 +2552,7 @@ Iteration?
 
 Power Iteration generates eigenvectors. What if we would like to
 know eigenvalues?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Estimate them:
 \[\frac{\B{x}^T A \B{x}}{\B{x}^T \B{x}} \]
 
@@ -2571,7 +2571,7 @@ What can you say about the convergence of the power method?
 Say \(\B{v}_1^{(k)}\) is the \(k\)th estimate of the eigenvector
 \(\B{x}_1\), and
 \[e_k = \norm{\B{x}_1 - \B{v}_1^{(k)}} . \]
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Easy to see:
 \[e_{k + 1} \approx \frac{\abs{\lambda _2}}{\abs{\lambda _1}} e_k . \]
 We will later learn that this is /linear convergence/. It's quite
@@ -2588,7 +2588,7 @@ Picking \(\sigma \approx \lambda _1\) does not help...
 *** Rayleigh Quotient Iteration
 
 Describe /inverse iteration/.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \[\B{x}_{k + 1} \assign (A - \sigma )^{- 1} \B{x}_k \]
 
 - Implemented by storing/solving with LU factorization
@@ -2599,7 +2599,7 @@ Describe /inverse iteration/.
 #+LATEX: \end{hidden}
 
 Describe /Rayleigh Quotient Iteration/.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Compute
 \(\sigma _k = \B{x}_k^T A \B{x}_k / \B{x}_k^T \B{x}_k\) to be the Rayleigh quotient for \(\B{x}_k\).
 \[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
@@ -2623,7 +2623,7 @@ matrix, i.e.
 \(A = QUQ^T . \)
 This is called the *Schur form* or *Schur factorization*.
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 \(V = \tmop{span} \{\B{v} \}\). Then
 \begin{eqnarray*}
@@ -2656,7 +2656,7 @@ The eigenvalues (of \(U\) and \(A\)!) are on the diagonal of \(U\).
 #+LATEX: \end{hidden}
 
 And the eigenvectors?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 It suffices to find eigenvectors of \(U\): can convert to eigenvectors
 of \(A\) by similarity transform. Suppose \(\lambda\) is an eigenvalue.
 
@@ -2675,7 +2675,7 @@ Then \([U_{11}^{-1} \B u ; -1; \B 0]^T\) is an eigenvector.
 All Power Iteration Methods compute one eigenvalue at a time.
 
 What if I want /all/ eigenvalues?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Two ideas:
 
 1. /Deflation/: similarity transform to
@@ -2693,7 +2693,7 @@ Two ideas:
 
 What happens if we carry out power iteration on multiple vectors
 simultaneously?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 /Simultaneous Iteration/:
 
 1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
@@ -2713,7 +2713,7 @@ Fix: orthogonalize!
 
 *** Orthogonal Iteration
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 /Orthogonal Iteration/:
 
 1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
@@ -2734,7 +2734,7 @@ Fix: orthogonalize!
 
 *** Toward the QR Algorithm
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \vspace{-3ex}
 \begin{eqnarray*}
     Q_0 R_0 = X_0 &  & \\
@@ -2762,7 +2762,7 @@ convergence check.
 
 *** QR Iteration/QR Algorithm
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \begin{tabular}{ll}
   Orthogonal iteration: & \tmcolor{blue}{QR iteration}:\\\(X_0 = \tmcolor{red}{A}\) & \(\bar {X}_0 = \tmcolor{red}{A}\)\\\(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\\(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
 \end{tabular}
@@ -2788,7 +2788,7 @@ eigenvalues.
 *** QR Iteration: Incorporating a Shift
 
 How can we accelerate convergence of QR iteration using shifts?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \vspace{-3ex}
 \begin{eqnarray*}
     &  & \bar {X}_0 = A\\
@@ -2812,7 +2812,7 @@ Still a similarity transform:
 *** QR Iteration: Computational Expense
 
 A full QR factorization at each iteration costs \(O (n^3)\)--can we make that cheaper?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Idea:* /Hessenberg form/
 \[A = Q
 \begin{bmatrix}
@@ -2847,7 +2847,7 @@ For symmetric matrices:
 *** Krylov space methods: Intro
 
 What subspaces can we use to look for eigenvectors?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 QR: \[\tmop{span} \{A^\ell  \B{y}_1, A^\ell  \B{y}_2, \ldots ,
    A^\ell  \B{y}_k \}\]
 
@@ -2868,7 +2868,7 @@ Define:
 *** Krylov for Matrix Factorization
 
 What matrix factorization is obtained through Krylov space methods?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 #+BEGIN_EXPORT latex
 \[
   AK_n =
@@ -2894,7 +2894,7 @@ What matrix factorization is obtained through Krylov space methods?
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (I)
 
 What is a problem with Krylov space methods? How can we fix it?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \((\B{x}_i)\) converge rapidly to eigenvector for largest
 eigenvalue
 
@@ -2907,7 +2907,7 @@ Then
 #+LATEX: \end{hidden}
 
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (II)
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 - \(C_n\) is upper Hessenberg
 - (Left/right) mul. by triangulars preserves upper Hessenberg
 
@@ -2934,7 +2934,7 @@ This is called *Arnoldi iteration*. For symmetric: *Lanczos iteration*.
 *** Krylov: What about eigenvalues?
 
 How can we use Arnoldi/Lanczos to compute eigenvalues?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \[Q =
 \begin{bmatrix}
   \tmcolor{green}{Q_k} & \tmcolor{red}{U_k}
@@ -2966,7 +2966,7 @@ Those are called *Ritz values*.
 
 *** Computing the SVD (Kiddy Version)
 How can I compute an SVD of a matrix $A$?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 1. Compute the eigenvalues and eigenvectors of $A^T A$.
    \[ A^T A \B{v}_1 = \lambda_1 \B{v}_1 \quad \cdots \qquad A^T A
      \B{v}_n = \lambda_n \B{v}_n \]
@@ -2995,7 +2995,7 @@ How can I compute an SVD of a matrix $A$?
 *** Solving Nonlinear Equations
 
 What is the goal here?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Solve \(\B{f} (\B{x}) = \B{0}\) for \(f : \mathbb{R}^n \rightarrow  \mathbb{R}^n\).\medskip
 
 If looking for solution to \(\widetilde{\B{f}} (\B{x}) = \B{y}\), simply consider \(\B{f} (\B{x}) = \tilde {f} (\B{x}) - \B{y}\).\medskip
@@ -3009,7 +3009,7 @@ for intersections.
 *** Showing Existence
 
 How can we show existence of a root?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 
 - Intermediate value theorem (uses continuity, 1D only)
 
@@ -3067,7 +3067,7 @@ The inverse function is steep near one, so conditioning is poor.
 ** Iterative Procedures
 *** Rates of Convergence
 What is /linear convergence/? /quadratic convergence/?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Let \(\B{e}_k = \widehat{\B{u}}_k - \B{u}\) be the error in the \(k\)th iterate
 \(\widehat{\B{u}}_k\). Assume \(\B e_k\to 0\) as \(k\to\infty\).\medskip
 
@@ -3094,7 +3094,7 @@ Examples:
 
 Characterize linear, quadratic convergence in terms of the
 `number of accurate digits'.
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - Linear convergence gains a constant number of digits each step:
   \[\norm{\B{e}_{k + 1}} \leqslant C \norm{\B{e}_k} \]
   (and \(C < 1\) matters!)
@@ -3121,7 +3121,7 @@ Contrast the following `alternate' definitions of convergence rate:
     > 0,\\< \infty .
   \end{cases}
 \end{eqnarray*}
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 
 - (1) Is true for \(r = 1\) even if the process converges faster
 
@@ -3140,7 +3140,7 @@ Comment on the `foolproof-ness' of these stopping criteria:
 2. \(\norm{\B{x}_{k + 1} - \B{x}_k} < \varepsilon\)
 3. \(\norm{\B{x}_{k + 1} - \B{x}_k} / \norm{\B{x}_k}     < \varepsilon\)
 
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 1. Can trigger far away from a root in the case of multiple roots (or a
     `flat' \(f\))
 
@@ -3178,7 +3178,7 @@ Linear with constant \(1 / 2\).
 
 When does fixed point iteration converge? Assume \(g\) is
 smooth.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Let \(x^\ast\) be the fixed point with \(x^\ast  = g (x^\ast )\).
 
 If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges.\medskip
@@ -3191,7 +3191,7 @@ Error:
 *** Fixed Point Iteration: Convergence cont'd.
 
 Error in FPI: \(e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \)
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Mean value theorem says: There is a \(\B{\theta }_k\) between
 \(\B{x}_k\) and \(\B{x}^\ast\)
  so that
@@ -3215,7 +3215,7 @@ quadratic convergence.
 *** Newton's Method
 
 Derive Newton's method.
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 *Idea:* Approximate
 \(f\) at \(x_k\) using Taylor:
 \(f (x_k + h) \approx f (x_k) + f' (x_k) h \)
@@ -3252,7 +3252,7 @@ So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 
 *** Secant Method
 
 What would Newton without the use of the derivative look like?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Approximate
 \[f' (x_k) \approx \frac{f (x_k) - f (x_{k - 1})}{x_k - x_{k - 1}} . \]
 So
@@ -3269,7 +3269,7 @@ Rate of convergence (not shown) is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  
 
 /Drawbacks/ of Secant?
 
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - Convergence argument only good \emph{locally}
 
   Will see: convergence only local (near root)
@@ -3289,7 +3289,7 @@ Secant (and similar methods) are called *Quasi-Newton Methods*.
 
 Secant method uses a linear interpolant based on points \(f(x_k)\),
 \(f(x_{k-1})\), could use more points and higher-order interpolant:
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 
 - Can fit polynomial to (subset of) \((x_0,f(x_0)),\ldots ,(x_k,f(x_k))\)
 - Look for a root of that
@@ -3299,7 +3299,7 @@ Secant method uses a linear interpolant based on points \(f(x_k)\),
 #+LATEX: \end{hidden}
 
 What about existence of roots in that case?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - *Inverse quadratic interpolation*
 
   - Interpolate quadratic polynomial \(q\) so that \(q(f(x_i))=x_i\) for \(i\in \{k,k-1,k-2\}\).
@@ -3310,7 +3310,7 @@ What about existence of roots in that case?
 
 The linear approximations in Newton and Secant are only good
 locally. How could we use that?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - Hybrid methods: bisection + Newton
   - Stop if Newton leaves bracket
 - Fix a region where they're `trustworthy' (*trust region methods*)
@@ -3333,7 +3333,7 @@ locally. How could we use that?
   \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{g} (\B{x}_k)
 \end{eqnarray*}
 When does this converge?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Converges (locally) if \(\|J_{\B{g}} (\B{x}^\ast )\| < 1\) in some norm, where the /Jacobian matrix/
 \[J_{\B{g}} (\B{x}^\ast ) =
 \begin{bmatrix}
@@ -3352,7 +3352,7 @@ quadratic convergence.
 *** Newton's Method
 
 What does Newton's method look like in \(n\) dimensions?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Approximate by linear:
 \(\B{f} (\B{x} + \B{s}) = \B{f} (\B{x}) +
    J_{\B{f}} (\B{x}) \B{s}\).\medskip
@@ -3379,7 +3379,7 @@ Downsides of \(n\)-dim. Newton?
 *** Secant in $n$  dimensions?
 
 What would the secant method look like in \(n\) dimensions?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Need an `approximate Jacobian' satisfying
 \[\tilde {J} (\B{x}_{k + 1} - \B{x}_k) = \B{f}
    (\B{x}_{k + 1}) - \B{f} (\B{x}_k) . \]
@@ -3503,7 +3503,7 @@ If we have found a candidate \(\B{x}^\ast\) for a minimum,
 how do we know it actually is one?
 Assume \(f\) is smooth, i.e. has all needed derivatives.
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 - In one dimension:
 
   - Necessary: \(f' (x^\ast ) = 0\) (i.e. \(x^\ast\) is an extremal point)
@@ -3562,7 +3562,7 @@ PD.
 *** Sensitivity and Conditioning (1D)
 
 How does optimization react to a slight perturbation of the minimum?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Suppose we still have
 \(\abs{f (\tilde {x}) - f (x^\ast )} < \tmop{tol} \)
 (where \(x^\ast\) is true min.).
@@ -3586,7 +3586,7 @@ convergence is not based on function values alone. (then: can solve \(\nabla    
 *** Sensitivity and Conditioning (nD)
 
 How does optimization react to a slight perturbation of the minimum?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Assume \(\norm{\B{s}} = 1\).
 \[f (\B{x}^\ast  + h \B{s}) = f (\B{x}^\ast ) + h
     \underbrace{\nabla f (\B{x}^\ast )^T}_{\B{0}}
@@ -3608,7 +3608,7 @@ Would like a method like bisection, but for optimization.
 In general: No invariant that can be preserved.
 
 Need /extra assumption./
-#+LATEX: \begin{hidden}[1.5cm]
+#+LATEX: \begin{hidden}
 \(f\) is called *unimodal* if for all \(x_1 < x_2\)
 
 - \(x_2 < x^\ast  \Rightarrow f (x_1) > f (x_2)\)
@@ -3625,7 +3625,7 @@ Suppose we have an interval with \(f\) unimodal:
 
 Would like to maintain unimodality.
 
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 1. Pick \(x_1, x_2\)
 2. If \(f (x_1) > f (x_2)\), reduce to \((x_1, b)\)
 3. If \(f (x_1) \leqslant f (x_2)\), reduce to \((a, x_2)\)
@@ -3635,7 +3635,7 @@ Would like to maintain unimodality.
 
 Where to put \(x_1\), \(x_2\)?
 
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - Want symmetry:
 
   \(x_1 = a + (1 - \tau ) (b - a)\)
@@ -3694,7 +3694,7 @@ fast-and-risky (Newton).
 
 Given a scalar function \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
 at a point \(\B{x}\), which way is down?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Direction of steepest
 descent: \(- \nabla f\)\medskip
 
@@ -3753,7 +3753,7 @@ Convergence constant related to conditioning:
 *** Nelder-Mead Method
 
 Idea:
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Form a \(n\)-point polytope in \(n\)-dimensional space and adjust
 worst point (highest function value) by moving it along a line passing
 through the centroid of the remaining points.
@@ -3763,7 +3763,7 @@ through the centroid of the remaining points.
 *** Newton's method ($n$ D)
 
 What does Newton's method look like in \(n\) dimensions?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Build a Taylor approximation:
 \[f (\B{x} + \B{s}) \approx f (\B{x}) + \nabla f
    (\B{x})^T \B{s} + \frac{1}{2} \B{s}^T H_f
@@ -3783,7 +3783,7 @@ to find
 
 Drawbacks?
 
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - Need second (!) derivatives
 
   (addressed by Conjugate Gradients, later in the class)
@@ -3799,7 +3799,7 @@ Drawbacks?
 
 Secant/Broyden-type ideas carry over to optimization. How?
 
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Come up with a way to update to update the approximate Hessian.
 
 \[\B{x}_{k+1}  = \B{x}_k -\alpha _k B_k^{-1}\nabla f(\B{x}_k)\]
@@ -3823,7 +3823,7 @@ What if the \(f\) to be minimized is actually a 2-norm?
 \[f (\B{x}) = \norm{\B{r} (\B{x})}_2, \qquad
    \B{r} (\B{x}) = \B{y} - \B{a} (\B{x})
 \]
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Define `helper function'
 \[\varphi (\B{x}) = \frac{1}{2} \B{r} (\B{x})^T
    \B{r} (\B{x}) = \frac{1}{2} f^2 (\B{x}) \]
@@ -3839,7 +3839,7 @@ or, in matrix form:
 *** Gauss-Newton
 For brevity: \(J \assign J_{\B{r}} (\B{x})\).
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Can show similarly:
 \[H_\varphi  (\B{x}) = J^T J + \sum _i r_i H_{r_i} (\B{x}) . \]
 Newton step \(\B{s}\) can be found by solving
@@ -3865,7 +3865,7 @@ Solve that using our existing methods for least-squares problems.\medskip
 \medskip
 Observations?
 
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - Newton on its own is still only locally convergent
 - Gauss-Newton is clearly similar
 - It's worse because the step is only approximate
@@ -3876,7 +3876,7 @@ Observations?
 *** Levenberg-Marquardt
 If Gauss-Newton on its own is poorly, conditioned, can try
 *Levenberg-Marquardt*:
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 \[(J_{\B{r}} (\B{x}_k)^T J_{\B{r}} (\B{x}_k)
    \tmcolor{red}{+ \mu _k I}) \B{s}_k = - J_{\B{r}}
    (\B{x}_k)^T \B{r} (\B{x}_k) \]
@@ -3910,7 +3910,7 @@ Want \(\B{x}^\ast\) so that
 No inequality constraints just yet. This is /equality-constrained
 optimization/. Develop a necessary condition for a
 minimum.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Unconstrained necessary condition:
 \[\nabla f (\B{x}) = \B{0} \]
 *Problem:* That alone is not helpful. `Downhill' direction has to be
@@ -3923,7 +3923,7 @@ Unconstrained necessary condition:
 
 *** Constrained Optimization: Necessary Condition
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 - \(\nabla f (\B{x}) \cdot \B{s} \geqslant 0\) (``uphill
   that way'') for any feasible direction \(\B{s}\).\medskip
 
@@ -3969,7 +3969,7 @@ Need a new function \(\mathcal{L} (\B{x}, \B{\lambda })\) to minimize:
 
 \[\mathcal{L} (\B{x}, \B{\lambda }) \assign f (\B{x}) +
    \B{\lambda }^T \B{g} (\B{x}) . \]
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Then: \(\nabla \mathcal{L}= \B{0}\) at unconstrained minimum, i.e.
 \[\B{0} = \nabla \mathcal{L}=
 \begin{bmatrix}
@@ -3997,7 +3997,7 @@ Want \(\B{x}^\ast\) so that
 This is /inequality-constrained optimization/. Develop a necessary
 condition for a minimum.
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Define Lagrangian:
 \[\mathcal{L} (\B{x}, \B{\lambda }_1, \B{\lambda }_2)
    \assign f (\B{x}) + \B{\lambda }_1^T \B{g}
@@ -4021,7 +4021,7 @@ Define Lagrangian:
 
 Develop a set of necessary conditions for a minimum.
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Assuming \(J_{\B{g}}\) and \(J_{\B{h}, \tmop{active}}\) have full
 rank, this set of conditions is /necessary/:
 \begin{eqnarray*}
@@ -4048,7 +4048,7 @@ These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
 
 \medskip
 How is this not the same as function fitting? (from least squares)
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 It's very similar--but the key difference is that we are asking for
 \emph{exact equality}, not just minimization of a residual
 norm.
@@ -4070,7 +4070,7 @@ approximating from the known point values.\medskip
 
 \medskip
 Does this problem have a unique answer?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 No--there are infinitely
 many functions that satisfy the problem as stated:
 
@@ -4080,7 +4080,7 @@ many functions that satisfy the problem as stated:
 
 *** Interpolation: Importance
 Why is interpolation important?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 It brings all of calculus
 within range of numerical operations.
 
@@ -4098,7 +4098,7 @@ within range of numerical operations.
 
 *** Making the Interpolation Problem Unique
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Limit the set of functions to a linear
 combination from an /interpolation basis/ \(\varphi _i\).\medskip
 \[f (x) = \sum _{j = 0}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
@@ -4117,11 +4117,11 @@ square.
 
 *** Existence/Sensitivity
 Solution to the interpolation problem: Existence? Uniqueness?
-#+LATEX: \begin{hidden}[1cm]
+#+LATEX: \begin{hidden}
 Equivalent to existence/uniqueness of the linear system
 #+LATEX: \end{hidden}
 Sensitivity?
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 - Shallow answer: Simply consider the condition number of the linear system
 - \(\|\text{coefficients} \|\) does not suffice as measure of stability.
 
@@ -4184,7 +4184,7 @@ Find a basis so that \(V = I\), i.e.
 \begin{cases}
   1 & i = j,\\0 & \text{otherwise} .
 \end{cases} \]
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 Start with simple example. Three nodes: \(x_1, x_2, x_3\)
 \begin{eqnarray*}
   \varphi _1 (x) & = & \frac{\qquad (x - x_2) (x - x_3)}{\qquad (x_1 - x_2)
@@ -4205,7 +4205,7 @@ Denominator: Ensures \(\varphi _i (x_i) = 1\).
 *** Newton Interpolation
 
 Find a basis so that \(V\) is triangular.
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
 \[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \]
 (At least) two possibilities for coefficent finding:
@@ -4234,7 +4234,7 @@ Orthogonality
 #+LATEX: \end{hidden}
 
 But polynomials are functions!
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \vspace{-3ex}
 \begin{eqnarray*}
   \B{f} \cdot \B{g} & = & \sum _{i = 1}^n f_i g_i \quad =
@@ -4256,7 +4256,7 @@ Apply Gram-Schmidt to the monomials.
 Obtained: *Legendre polynomials*.
 
 But how can I practically compute the Legendre polynomials?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 \(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
 
 - There exist three-term recurrences, e.g.: \(T_{n+1}=2xT_n -T_{n+1}\)
@@ -4352,7 +4352,7 @@ interval there exists $\xi$ in that interval such that
 \[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi )}{n!} (x - x_1) (x - x_2) \cdots
    (x - x_n). \]
 
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 Set the error term to be \(R(x) := f(x) - p_{n-1}(x) \)
 and set up an auxiliary function:
 \[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i).\]
@@ -4363,7 +4363,7 @@ of the point $x$ where we hope to prove the identity.
 *** Interpolation Error: Proof cont'd
 
 \[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i)\]
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 - Since \(x_i\) are roots of $R(t)$ and $W(t)$, we have
   \(Y(x)=Y(x_i)=0\), which means $Y$ has at least $n+1$ roots.
 - From Rolle's theorem, $Y'(t)$ has at least $n$ roots, then $Y^{(n)}$ has at
@@ -4377,7 +4377,7 @@ of the point $x$ where we hope to prove the identity.
 *** Error Result: Connection to Chebyshev
 
 What is the connection between the error result and Chebyshev interpolation?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 - The error bound suggests choosing the interpolation nodes such that the product
   \(\abs{\prod_{i=1}^n (x-x_i)}\), is as small as possible. The Chebyshev nodes achieve this.
 
@@ -4391,7 +4391,7 @@ What is the connection between the error result and Chebyshev interpolation?
 *** Error Result: Simplified From
 
 Boil the error result down to a simpler form.
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Assume
 \(x_1 < \cdots < x_n\).
 
@@ -4448,7 +4448,7 @@ needed.
 \end{tabular}}}
 #+END_EXPORT
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 \begin{tabular}{ccc}
   4 unknowns & 4 unknowns & 4 unknowns\\\(f_1 (x_0) = y_0\) & \(f_2 (x_1) = y_1\) & \(f_3 (x_2) = y_2\)\\\(f_1 (x_1) = y_1\) & \(f_2 (x_2) = y_2\) & \(f_3 (x_3) = y_3\)
 \end{tabular}
@@ -4481,7 +4481,7 @@ Now: have a square system.
 \end{tabular}}}
 #+END_EXPORT
 
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Number of conditions: \(2 N_{\tmop{intervals}} + 2 N_{\text{middle nodes}} + 2 \)
 where \[N_{\tmop{intervals}} - 1 = N_{\text{middle nodes}} \]
 so \[2 N_{\tmop{intervals}} + 2 (N_{\tmop{intervals}} - 1) + 2 = 4 N_{\tmop{intervals}}, \]
@@ -4512,7 +4512,7 @@ Given \(a\), \(b\), \(f\), compute
 #+LATEX: \end{hidden}
 
 What about existence and uniqueness?
-#+LATEX: \begin{hidden}[3cm]
+#+LATEX: \begin{hidden}
 - Answer exists e.g. if \(f\) is /integrable/ in the Riemann or
   Lebesgue senses.
 
@@ -4541,7 +4541,7 @@ is a perturbation.
 
 Design a quadrature method based on
 interpolation.
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 *Idea:* The result ought to be a linear (Q:
 why linear?) combination of a few function values.
 \[\int _a^b f (x) \mathd x \approx \sum _{i = 1}^n \omega _i f (x_i) \]
@@ -4554,7 +4554,7 @@ quadrature rule.\medskip
 
 *** Interpolatory Quadrature: Examples
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 *Example:* Fix \((x_i)\). Then
 \[f (x) \approx \sum _i f (x_i) \ell _i (x), \]
 where \(\ell _i (x)\) is the Lagrange polynomial for the node \(x_i\). Then
@@ -4572,7 +4572,7 @@ where \(\ell _i (x)\) is the Lagrange polynomial for the node \(x_i\). Then
 
 How do the weights in interpolatory quadrature get computed?
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Done by solving linear system.
 
 *Know:* This quadrature should at least integrate monomials
@@ -4758,7 +4758,7 @@ alleviate smoothness requirement.
 *** Error in Composite Quadrature
 
 What can we say about the error in the case of composite quadrature?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Error for one panel of length \(h\): \(\abs{\int f - p_{n - 1}} \leqslant C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
 \begin{eqnarray*}
     &  & \abs{\int _a^b f (x) \mathd x - \sum _{j = 1}^m \sum _{i = 1}^n
@@ -4852,7 +4852,7 @@ If we have two estimates of something, can we get a third that's
 more accurate? Suppose we have an approximation
 \(F = \tilde {F} (h) + O (h^p) \)
 and we know \(\tilde {F} (h_1)\) \emph{and} \(\tilde {F} (h_2)\).
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Grab one more term of the Taylor series: \(F = \tilde {F} (h) + ah^p + O (h^q) \)
 
 Typically: \(q = p + 1\) (but not necessarily).\medskip
@@ -5186,7 +5186,7 @@ Define the *global error* at step \(k\) as...
 *** About Local and Global Error
 
 Is global error \(=\) \(\sum\)local errors?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 No.
 
 Consider an analogy with interest rates--at any given moment, you receive 5%
@@ -5211,7 +5211,7 @@ if...
 A time integrator is said to be /accurate of order \(p\)/ if \(\ell _k = O (h^{p + 1})\)\medskip
 
 This requirement is one order higher than one might expect--why?
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 
 *A:* To get to time 1, at least \(1 / h\) steps need to be taken, so
 that the global error is roughly
@@ -5244,7 +5244,7 @@ Gives rise to the *stability region* in the complex plane:
 
 What about stability for systems, i.e.
 \[\B{y}' (t) = A \B{y} (t) ? \]
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 
 1. Diagonalize system as before
 
@@ -5259,7 +5259,7 @@ eigenvalues \(\lambda _i\).
 *** Stability: Nonlinear ODEs
 What about stability for nonlinear systems, i.e.
 \[\B{y}' (t) = \B{f} (\B{y} (t)) ? \]
-#+LATEX: \begin{hidden}[5cm]
+#+LATEX: \begin{hidden}
 Consider
 perturbation \(\B{} \B{e} (t) = \B{y} (t) - \widehat{\B{y}} (t)\). Linearize:
 \[\B{e}' (t) = \B{f} (\B{y} (t)) - \B{f}
@@ -5272,7 +5272,7 @@ case.
 *** Stability for Backward Euler
 
 Find out when backward Euler is stable when applied to \(y' (t) = \lambda y (t) \).
-#+LATEX: \begin{hidden}[4cm]
+#+LATEX: \begin{hidden}
 \vspace*{-3ex}
 \begin{eqnarray*}
   y_k & = & y_{k - 1} + h \lambda y_k\\
@@ -5698,7 +5698,7 @@ few points where it's discontinuous)
 
 *Idea:* Enforce a `weaker' version of the ODE.
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 Compute `moments':
 \[\int _a^b u'' (x) \psi (x) \mathd x = \int _a^b f (x) \psi (x) \mathd x \]
 Require that this holds for some /test functions/ \(\psi\) from some set
@@ -5726,7 +5726,7 @@ These choices are called the *Galerkin method*. Also works with other bases.
 
 Assemble a matrix for the Galerkin method.
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \begin{eqnarray*}
   - \int _a^b u' (x) \psi ' (x) \mathd x & = & \int _a^b f (x) \psi (x) \mathd
     x\\- \int _a^b \left [ \sum _{j = 1}^n \alpha _j \varphi '_j (x) \right ] \psi ' (x)
@@ -5828,7 +5828,7 @@ Use an iterative procedure (\(\B{s}_k\) is the search direction):
 
 *** CG: Choosing the Step Size
 What should we choose for \(\alpha _k\) (assuming we know \(\B{s}_k\))?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \vspace{-3ex}
 \begin{eqnarray*}
   0 & \overset{!}{=} & \frac{\partial }{\partial \alpha } \varphi
@@ -5853,7 +5853,7 @@ where \(\B{e}_k = \B{x}_k - \B{x}^\ast\) and
 *** CG: Choosing the Search Direction
 
 What should we choose for \(\B{s}_k\)?
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 *Idea:*
 \(\B{s}_k = \B{r}_k = - \nabla \varphi \B{} (\B{x}_k)\), i.e. steepest descent. No--still a bad idea.\medskip
 
@@ -5871,7 +5871,7 @@ View error as linear combination of search directions, with some (thus far unkno
 
 *** CG: Further Development
 
-#+LATEX: \begin{hidden}[6cm]
+#+LATEX: \begin{hidden}
 \[\B{s}_k^T A \B{e}_0 = \sum _i \delta _i \B{s}_k^T A
    \B{s}_i = \delta _k \B{s}_k^T A \B{s}_k . \]
 Then
