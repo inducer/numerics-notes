@@ -953,20 +953,24 @@ Unique solution exists iff \(A\) is /nonsingular/.\medskip
 What norms would we apply to matrices?
 #+LATEX: \begin{hidden}[6cm]
 
-*Easy answer:* `\emph{Flatten}' matrix as vector, use vector norm.
+*Could use:* `\emph{Flatten}' matrix as vector, use vector norm.
 
-Not very meaningful.
+*But we won't:* Not very meaningful.
 
 *Instead:* Choose norms for matrices to interact
 with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
 \[\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}} . \]
 
+\medskip
 This can be achieved by choosing, for a given vector norm
 \(\norm{\cdot }\),
 \[\norm{A} \assign \max _{\norm{\B{x}} = 1} \norm{A \B{x}} .
 \]
 This is called the *matrix norm*.
 
+Intuition: *maximum norm growth* when multiplying by \(A\)
+
+\medskip
 For each vector norm, we get a different matrix norm,
 e.g. for the vector 2-norm \(\norm{\B{x}}_2\) we get a matrix
 2-norm \(\norm{A}_2\).
