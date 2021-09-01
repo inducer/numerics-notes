@@ -1172,6 +1172,45 @@ What is this called as a general concept?
 
 \inclasslink{conditioning}{Matrix Norms and Conditioning}
 
+*** Singular Value Decomposition (SVD)
+
+What is the /Singular Value Decomposition/ of an \(m \times  n\) matrix?
+#+LATEX: \begin{hidden}[6cm]
+\[A = U \Sigma V^T, \]
+with
+
+- \(U\) is \(m \times m\) and orthogonal
+
+    Columns called the *left singular vectors*.
+
+- \(\Sigma = \tmop{diag} (\sigma _i)\) is \(m \times n\) and non-negative
+
+    Typically \(\sigma _1 \ge \sigma _2 \ge \cdots \ge \sigma _{\min(m,n)}  \ge 0.\)
+
+    Called the *singular values*.
+
+- \(V\) is \(n \times n\) and orthogonal
+
+  Columns called the *right singular vectors*.
+
+*Existence:* Not yet, later.
+#+LATEX: \end{hidden}
+
+*** Computing the 2-Norm
+
+Using the SVD of $A$, identify the 2-norm.
+#+LATEX: \begin{hidden}[5cm]
+$A=U\Sigma V^T$ with $U$, $V$ orthogonal.
+
+- 2-norm satisfies $\norm{Q B}_2=\norm{B}_2=\norm{BQ}_2$ for any matrix $B$ and orthogonal $Q$.
+- So $\norm{A}_2=\norm{\Sigma}_2=\sigma_{\text{max}}$
+#+LATEX: \end{hidden}
+
+Express the matrix condition number $\tmop{cond}_2(A)$ in terms of the SVD:
+#+LATEX: \begin{hidden}[5cm]
+- $A^{-1}$ has singular values $1/\sigma_i$.
+- \(\tmop{cond}_2 (A) = \norm A_2 \norm{A^{-1}}_2 =\sigma_{\text{max}}/\sigma_{\text{min}}\)
+#+LATEX: \end{hidden}
 
 ** Methods to Solve Systems
 
@@ -1320,7 +1359,6 @@ Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
 #+LATEX: \end{hidden}
 
 \demolink{linear_systems}{LU factorization}
-
 
 *** LU: Failure Cases?
 
@@ -2163,37 +2201,13 @@ What happens with Least Squares for rank-deficient matrices?
   - minimize \(\norm{\B{x}}_2^2\), simultaneously.
 
     Unfortunately, QR does not help much with that \(\rightarrow\) Need better
-    tool.
-
-*** Singular Value Decomposition (SVD)
-
-What is the /Singular Value Decomposition/ of an \(m \times  n\) matrix?
-#+LATEX: \begin{hidden}[6cm]
-\[A = U \Sigma V^T, \]
-with
-
-- \(U\) is \(m \times m\) and orthogonal
-
-    Columns called the /left singular vectors/.
-
-- \(\Sigma = \tmop{diag} (\sigma _i)\) is \(m \times n\) and non-negative
-
-    Typically \(\sigma _1 \geqslant \sigma _2 \geqslant \cdots \geqslant \sigma _n     \geqslant 0.\)
-
-    Called the /singular values/.
-
-- \(V\) is \(n \times n\) and orthogonal
-
-    Columns called the /right singular vectors/.
-
-*Existence:* Not yet, later.
-#+LATEX: \end{hidden}
+    tool, the SVD \(A = U \Sigma V^T, \). Let's learn more about it.
 
 *** SVD: What's this thing good for? (I)
 
 #+LATEX: \begin{hidden}[5cm]
-- \(\norm{A}_2 = \sigma _1\)
-- \(\tmop{cond}_2 (A) = \sigma _1 / \sigma _n\)
+- Recall: \(\norm{A}_2 = \sigma _1\)
+- Recall: \(\tmop{cond}_2 (A) = \sigma _1 / \sigma _n\)
 - Nullspace \(N (A) = \tmop{span} (\{\B{v}_i : \sigma _i = 0 \})\).
 - \(\tmop{rank} (A) =\#\{i : \sigma _i \neq 0 \}\)\medskip
 
