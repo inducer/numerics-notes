@@ -953,27 +953,40 @@ Unique solution exists iff \(A\) is /nonsingular/.\medskip
 What norms would we apply to matrices?
 #+LATEX: \begin{hidden}
 
-*Could use:* `\emph{Flatten}' matrix as vector, use vector norm.
+*Could use:* "/Flatten/" matrix as vector, use vector norm.
 
 *But we won't:* Not very meaningful.
 
+\medskip
 *Instead:* Choose norms for matrices to interact
 with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
 \[\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}} . \]
 
 \medskip
-This can be achieved by choosing, for a given vector norm
+For a given vector norm, define *associated matrix norm*
 \(\norm{\cdot }\),
 \[\norm{A} \assign \max _{\norm{\B{x}} = 1} \norm{A \B{x}} .
 \]
-This is called the *matrix norm*.
-
-Intuition: *maximum norm growth* when multiplying by \(A\)
 
 \medskip
 For each vector norm, we get a different matrix norm,
 e.g. for the vector 2-norm \(\norm{\B{x}}_2\) we get a matrix
 2-norm \(\norm{A}_2\).
+#+LATEX: \end{hidden}
+
+*** Intuition for Matrix Norms
+
+Provide some intuition for the matrix norm.
+
+#+LATEX: \begin{hidden}
+\[
+  \max_{x\ne 0} \frac{\norm{Ax}}{\norm{x}}
+  = \max_{x\ne 0} \norm{Ax\cdot \frac{1}{\norm{x}}}
+  = \max_{\norm y=1} \norm{Ay}.
+  =\norm{A}
+\]
+
+I.e. the matrix norm gives the maximum (relative) growth of the vector norm after multiplying a vector by $A$.
 #+LATEX: \end{hidden}
 
 *** Matrix Norm Properties
