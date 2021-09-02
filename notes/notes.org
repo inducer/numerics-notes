@@ -1321,18 +1321,15 @@ Can do
 
 What do we get by doing Gaussian Elimination?
 #+LATEX: \begin{hidden}
-/Row Echelon
-Form/.
+/Row Echelon Form/.
 #+LATEX: \end{hidden}
 
 How is that different from being upper triangular?
 #+LATEX: \begin{hidden}
-Zeros allowed
-on and above the diagonal.
+Zeros allowed on and above the diagonal.
 #+LATEX: \end{hidden}
 
-What if we do not just eliminate downward but also
-upward?
+What if we do not just eliminate downward but also upward?
 #+LATEX: \begin{hidden}
 That's called /Gauss-Jordan elimination/. Turns out to be
 computationally inefficient. We won't look at it.
