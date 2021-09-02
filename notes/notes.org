@@ -1335,7 +1335,152 @@ That's called /Gauss-Jordan elimination/. Turns out to be
 computationally inefficient. We won't look at it.
 #+LATEX: \end{hidden}
 
-*** Elimination Matrices
+*** LU Factorization
+What is the *LU factorization*?
+
+#+LATEX: \begin{hidden}
+A factorization $A=LU$ with:
+- $L$ lower triangular, unit diagonal
+- $U$ upper triangular
+#+LATEX: \end{hidden}
+
+*** Solving $A\B x=\B b$
+
+Does LU help solve \(A \B{x} = \B{b} ?\)
+#+LATEX: \begin{hidden}
+\vspace{-2ex}
+\begin{eqnarray*}
+  A \B{x} & = & \B{b}\\
+  L \underbrace{U \B{x}}_{\B{y}} & = & \B{b}\\
+  L \B{y} & = & \B{b} \quad \leftarrow \quad \text{solvable by fwd. subst.}\\
+  U \B{x} & = & \B{y} \quad \leftarrow \quad \text{solvable by bwd. subst.}
+\end{eqnarray*}
+Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
+#+LATEX: \end{hidden}
+
+*** Determining an LU factorization
+Find the  LU factorization of a matrix $A$.
+#+LATEX: \begin{hidden}
+#+BEGIN_EXPORT latex
+\[ \left[\begin{array}{cc}
+    a_{11} & \B{a}_{12}^T\\
+    \B{a}_{21} & A_{22}
+\end{array}\right]
+% = \left[\begin{array}{cc}
+%     1 & \\
+%     \B{l}_{21} & L_{22}
+% \end{array}\right] \left[\begin{array}{cc}
+%     u_{11} & \B{u}_{12}^T\\
+%     & U_{22}
+% \end{array}\right]
+= \left[\begin{array}{cc}
+    L_{11} & \\
+    L_{21} & L_{22}
+\end{array}\right] \left[\begin{array}{cc}
+    U_{11} & U_{12}\\
+    & U_{22}
+\end{array}\right] . \]
+#+END_EXPORT
+
+Or, written differently:
+#+BEGIN_EXPORT latex
+\[ \begin{array}{cc}
+     & \left[\begin{array}{cc}
+       u_{11} & \B{u}_{12}^T\\
+       & U_{22}
+     \end{array}\right]\\
+     \left[\begin{array}{cc}
+       1 & \\
+       \B{l}_{21} & L_{22}
+     \end{array}\right] & \left[\begin{array}{cc}
+       a_{11} & \B{a}_{12}\\
+       \B{a}_{21} & A_{22}
+     \end{array}\right]
+   \end{array} \]
+#+END_EXPORT
+- Clear: $u_{11} = a_{11}$, $\B{u}_{12}^T =\B{a}_{12}^T$.
+
+- $\B{a}_{21} = u_{11} \B{l}_{21}$, or $\B{l}_{21} =\B{a}_{21} / u_{11}$.
+
+- $A_{22} =\B{l}_{21} \B{u}_{12}^T + L_{22} U_{22}$, or $L_{22} U_{22} = A_{22} -\B{l}_{21} \B{u}_{12}^T$.
+#+LATEX: \end{hidden}
+
+
+*** TODO LU demo
+# \demolink{linear_systems}{LU factorization}
+
+*** Computational Cost
+
+What is the computational cost of multiplying two \(n \times n\) matrices?
+#+LATEX: \begin{hidden}
+\(O (n^3)\)
+#+LATEX: \end{hidden}
+
+- $u_{11} = a_{11}$, $\B{u}_{12}^T =\B{a}_{12}^T$.
+- $\B{l}_{21} =\B{a}_{21} / u_{11}$.
+- $L_{22} U_{22} = A_{22} -\B{l}_{21} \B{u}_{12}^T$.
+
+\medskip
+What is the computational cost of carrying out LU factorization
+on an \(n \times n\) matrix?
+#+LATEX: \begin{hidden}
+\(O (n^2)\) for each step, $n-1$ of those steps: $O(n^3)$.
+#+LATEX: \end{hidden}
+
+\demolink{linear_systems}{Complexity of Mat-Mat multiplication and LU}
+
+*** LU: Failure Cases?
+
+Is LU/Gaussian Elimination bulletproof?
+#+LATEX: \begin{hidden}
+Not bulletproof:
+\[A = \begin{bmatrix} 0 & 1\\2 & 1 \end{bmatrix} . \]
+*Q:* Is this a problem with the process or with the entire /idea/ of LU?
+\vspace{-1.5ex}
+\begin{eqnarray*}
+  \begin{bmatrix}
+    u_{11} & u_{12}\\& u_{22}
+  \end{bmatrix} &  & \\
+  \begin{bmatrix}
+    1 & \\
+   \ell _{21} & 1
+  \end{bmatrix}
+  \begin{bmatrix}
+    \tmcolor{green}{0} & 1\\
+    \tmcolor{red}{2} & 1
+  \end{bmatrix}
+  & \rightarrow & \tmcolor{green}{u_{11} = 0}\\
+  & & \tmcolor{red}{\underbrace{u_{11} \cdot \ell _{21}}_0 + 1 \cdot 0 = 2}
+\end{eqnarray*}
+\vspace{-1.5ex}
+
+It turns out to be that \(A\) doesn't /have/ an LU factorization.
+
+LU has exactly one failure mode: the division when $u_{11}=0$.
+#+LATEX: \end{hidden}
+
+*** Saving the LU Factorization
+What can be done to get something \emph{like} an LU
+factorization?
+#+LATEX: \begin{hidden}
+*Idea from linear algebra class:* In Gaussian elimination, simply swap
+rows, equivalent linear system.
+
+\medskip
+- Good idea: Swap rows if there's a zero in the way
+
+- Even better idea: Find the largest entry (by absolute value), swap it
+  to the top row.
+
+The entry we divide by is called the /pivot/.
+
+- Swapping rows to get a bigger pivot is called *partial pivoting*.
+- Swapping rows /and columns/ to get an even bigger pivot is called *complete pivoting*.
+  (downside: additional $O(n^2)$ cost to find the pivot!)
+#+LATEX: \end{hidden}
+*** TODO Pivoting in More Detail
+** Approach to  LU via elimination matrices                        :noexport:
+*** Elimination Matrices                                           
 
 What does this matrix do?
 \begin{equation*}
@@ -1355,7 +1500,7 @@ What does this matrix do?
 - Matrices like this are called /Elimination Matrices/
 #+LATEX: \end{hidden}
 
-*** About Elimination Matrices
+*** About Elimination Matrices                                    
 
 Are elimination matrices invertible?
 #+LATEX: \begin{hidden}
@@ -1371,7 +1516,7 @@ should be
 \end{bmatrix} . \]
 #+LATEX: \end{hidden}
 
-*** More on Elimination Matrices
+*** More on Elimination Matrices                                 
 
 \demolink{linear_systems}{Elimination matrices I}
 
@@ -1410,67 +1555,6 @@ How?
 \[A = \underbrace{M_1^{- 1} M_2^{- 1} \cdots M_{\ell - 1}^{- 1}
    M_\ell ^{- 1}}_{\text{lower \(\triangle\) mat \(L\)}}^{- 1} U = LU. \]
 This is called *LU factorization* (or *LU decomposition*).
-#+LATEX: \end{hidden}
-
-*** Solving $A\B x=\B b$
-
-Does LU help solve \(A \B{x} = \B{b} ?\)
-#+LATEX: \begin{hidden}
-\vspace{-2ex}
-\begin{eqnarray*}
-  A \B{x} & = & \B{b}\\
-  L \underbrace{U \B{x}}_{\B{y}} & = & \B{b}\\
-  L \B{y} & = & \B{b} \quad \leftarrow \quad \text{solvable by fwd. subst.}\\
-  U \B{x} & = & \B{y} \quad \leftarrow \quad \text{solvable by bwd. subst.}
-\end{eqnarray*}
-Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
-#+LATEX: \end{hidden}
-
-\demolink{linear_systems}{LU factorization}
-
-*** LU: Failure Cases?
-
-Is LU/Gaussian Elimination bulletproof?
-#+LATEX: \begin{hidden}
-No, very much not:
-\[A = \begin{bmatrix} 0 & 1\\2 & 1 \end{bmatrix} . \]
-*Q:* Is this a problem with the process or with the entire /idea/ of LU?
-
-\begin{eqnarray*}
-  \begin{bmatrix}
-    u_{11} & u_{12}\\& u_{22}
-  \end{bmatrix} &  & \\
-  \begin{bmatrix}
-    1 & \\
-   \ell _{21} & 1
-  \end{bmatrix}
-  \begin{bmatrix}
-    \tmcolor{green}{0} & 1\\
-    \tmcolor{red}{2} & 1
-  \end{bmatrix}
-  & \rightarrow & \tmcolor{green}{u_{11} = 0}\\
-  & & \tmcolor{red}{\underbrace{u_{11} \cdot \ell _{21}}_0 + 1 \cdot 0 = 2}
-\end{eqnarray*}
-It turns out to be that \(A\) doesn't /have/ an LU factorization.
-#+LATEX: \end{hidden}
-
-*** Saving the LU Factorization
-What can be done to get something \emph{like} an LU
-factorization?
-#+LATEX: \begin{hidden}
-*Idea:* In Gaussian elimination: simply
-swap rows, equivalent linear system.\medskip
-
-*Approach:*
-
-- Good Idea: Swap rows if there's a zero in the way
-
-- Even better Idea: Find the largest entry (by absolute value), swap it
-    to the top row.
-
-The entry we divide by is called the /pivot/.
-
-Swapping rows to get a bigger pivot is called /(partial) pivoting/.
 #+LATEX: \end{hidden}
 
 *** Recap: Permuation Matrices
@@ -1535,29 +1619,7 @@ Define \(L_1 := P_3 P_2 M_1 P_2^{- 1} P_3^{- 1}\)\medskip
 
 \demolink{linear_systems}{LU with Partial Pivoting} (Part II)
 
-*** Computational Cost
-
-What is the computational cost of multiplying two \(n \times n\)
-matrices?
-#+LATEX: \begin{hidden}
-\(O (n^3)\)
-#+LATEX: \end{hidden}
-
-What is the computational cost of carrying out LU factorization
-on an \(n \times n\) matrix?
-#+LATEX: \begin{hidden}
-Recall
-\[M_3 P_3 M_2 P_2 M_1 P_1 A = U \ldots \]
-so \(O (n^4)\)?!!!\medskip
-
-Fortunately not: Multiplications with permuation matrices and elimination
-matrices only cost \(O (n^2)\).\medskip
-
-So overall cost of LU is just \(O (n^3)\).
-#+LATEX: \end{hidden}
-
-\demolink{linear_systems}{Complexity of Mat-Mat multiplication and LU}
-
+** LU: Application and Implementation
 *** More cost concerns
 
 What's the cost of solving \(A \B{x} = \B{b} ?\)
@@ -1666,26 +1728,31 @@ that do/don't matter. Two cases:
 This is called *reduced LU factorization*.
 #+LATEX: \end{hidden}
 
-
-*** Round-off Error in LU
+*** Round-off Error in LU without Pivoting
 
 Consider factorization of \(\begin{bmatrix}\epsilon & 1 \\1 & 1
 \end{bmatrix}\) where \(\epsilon <\epsilon _\text {mach}\):
 
+#+LATEX: \begin{hidden}
 - Without pivoting:
   \(L = \begin{bmatrix}1  & 0 \\1/\epsilon & 1 \end{bmatrix}\),
   \(U = \begin{bmatrix}\epsilon & 1 \\0 & 1-1/\epsilon \end{bmatrix}\)
 - Rounding: \(\fl(U)) = \begin{bmatrix}\epsilon & 1 \\0 & -1/\epsilon \end{bmatrix}\)
 - This leads to \(L\fl(U)) = \begin{bmatrix}\epsilon & 1 \\1 & 0 \end{bmatrix}\), a backward error of \(\begin{bmatrix}0 & 0 \\0 & 1 \end{bmatrix}\)
+#+LATEX: \end{hidden}
 
+*** Round-off Error in LU with Pivoting
+    
 Permuting the rows of \(A\) in partial pivoting gives \(P A = \begin{bmatrix}1 & 1 \\\epsilon & 1 \end{bmatrix}\)
 
+#+LATEX: \begin{hidden}
 - We now compute
   \(L = \begin{bmatrix}1  & 0 \\\epsilon & 1 \end{bmatrix}\),
   \(U = \begin{bmatrix}1 & 1 \\0 & 1-\epsilon \end{bmatrix}\), so
   \(\fl(U)=\begin{bmatrix}1 & 1 \\0 & 1 \end{bmatrix}\)
 - This leads to \(L\fl(U) = \begin{bmatrix}1 & 1 \\\epsilon & 1+\epsilon \end{bmatrix}\),
   a backward error of \(\begin{bmatrix}0 & 0 \\0 & \epsilon \end{bmatrix}\).
+#+LATEX: \end{hidden}
 
 *** TODO Error Analysis of LU
 
