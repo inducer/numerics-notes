@@ -1268,19 +1268,19 @@ How does it relate to the SVD?
 
 *** Solving Systems: Simple cases
 
-Solve $Dx=b$ if $D$ is diagonal. (Computational cost?)
+Solve $D\B x=\B b$ if $D$ is diagonal. (Computational cost?)
 #+LATEX: \begin{hidden}
-$x-i=b_i/D_{ii}$ with cost $O(n$)
+$x_i=b_i/D_{ii}$ with cost $O(n$)
 #+LATEX: \end{hidden}
-Solve $Qx=b$ if $Q$ is orthogonal. (Computational cost?)
+Solve $Q\B x=\B b$ if $Q$ is orthogonal. (Computational cost?)
 #+LATEX: \begin{hidden}
-$x=Q^T b$ with cost $O(n^2)$.
+$\B x=Q^T \B b$ with cost $O(n^2)$.
 #+LATEX: \end{hidden}
-Given SVD $A=U\Sigma V^T$, solve $Ax=b$. (Computational cost?)
+Given SVD $A=U\Sigma V^T$, solve $A\B x=\B b$. (Computational cost?)
 #+LATEX: \begin{hidden}
-- Compute $z=U^Tb$
-- Solve $\Sigma y=z$
-- Compute $x=Vx$
+- Compute $\B z=U^T\B b$
+- Solve $\Sigma \B y=\B z$
+- Compute $\B x=V\B x$
 
 Cost: $O(n^3)$.
 #+LATEX: \end{hidden}
