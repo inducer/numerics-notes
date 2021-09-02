@@ -1227,6 +1227,25 @@ Express the matrix condition number $\tmop{cond}_2(A)$ in terms of the SVD:
 
 ** Methods to Solve Systems
 
+*** Solving Systems: Simple cases
+
+Solve $Dx=b$ if $D$ is diagonal. (Computational cost?)
+#+LATEX: \begin{hidden}
+$x-i=b_i/D_{ii}$ with cost $O(n$)
+#+LATEX: \end{hidden}
+Solve $Qx=b$ if $Q$ is orthogonal. (Computational cost?)
+#+LATEX: \begin{hidden}
+$x=Q^T b$ with cost $O(n^2)$.
+#+LATEX: \end{hidden}
+Given SVD $A=U\Sigma V^T$, solve $Ax=b$. (Computational cost?)
+#+LATEX: \begin{hidden}
+- Compute $z=U^Tb$
+- Solve $\Sigma y=z$
+- Compute $x=Vx$
+
+Cost: $O(n^3)$.
+#+LATEX: \end{hidden}
+
 *** Solving Systems: Triangular matrices
 
 Solve
