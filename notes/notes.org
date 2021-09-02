@@ -52,7 +52,7 @@
 
 #+BEAMER_HEADER: \let\tmem=\emph
 #+BEAMER_HEADER: \let\tmtt=\texttt
-#+BEAMER_HEADER: \let\B=\mathbf
+#+BEAMER_HEADER: \let\B=\boldsymbol
 #+BEAMER_HEADER: \let\op=\operatorname
 #+BEAMER_HEADER: \let\tmop=\operatorname
 #+BEAMER_HEADER: \newcommand{\tmcolor}[2]{{\color{#1}{#2}}}
