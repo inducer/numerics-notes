@@ -11,6 +11,9 @@
 #+LaTeX_CLASS_OPTIONS: [aspectratio=149]
 
 #+BEAMER_HEADER: \setbeamertemplate{navigation symbols}{}
+#+BEAMER_HEADER: \setbeamertemplate{footline}{%
+#+BEAMER_HEADER:     \raisebox{5pt}{\makebox[\paperwidth]{\hfill\makebox[20pt]{\color{gray}
+#+BEAMER_HEADER:           \scriptsize\insertframenumber}}}\hspace*{5pt}}
 
 #+BEAMER_HEADER: \usepackage{environ}
 #+BEAMER_HEADER: \usepackage{tcolorbox}
