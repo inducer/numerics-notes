@@ -813,7 +813,11 @@ Can we give that number a name?
 \( \varepsilon _{\tmop{mach}}\) is the smallest
 number such that
 \[\tmop{float} (1 + \varepsilon ) > 1. \]
-- Assuming round-to-nearest, in the above system, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
+
+- *Technically* that makes \( \varepsilon _{\tmop{mach}}\) depend on the rounding rule.
+  
+  \medskip
+  Assuming round-towards-infinity, in the above system, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
 - Note the extra zero.
 
 - Another, related, quantity is /ULP/, or /unit in the last place/.
