@@ -970,7 +970,7 @@ with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
 \[\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}} . \]
 
 \medskip
-For a given vector norm, define *associated matrix norm*
+For a given vector norm, define *induced matrix norm*
 \(\norm{\cdot }\),
 \[\norm{A} \assign \max _{\norm{\B{x}} = 1} \norm{A \B{x}} .
 \]
@@ -1001,12 +1001,13 @@ I.e. the matrix norm gives the maximum (relative) growth of the vector norm afte
 What is \(\norm{A}_1 \)? \(\norm{A}_\infty \)?
 #+LATEX: \begin{hidden}
 \vspace*{-2ex}
-\begin{eqnarray*}
-  \norm{A}_1 & = & \max _{\tmop{col} j} \sum _{\tmop{row} i} \abs{A_{i, j}},\\
-  \norm{A}_\infty  & = & \max _{\tmop{row} i} \sum _{\tmop{col} j} \abs{A_{i, j}} .
-\end{eqnarray*}
+\[
+  \norm{A}_1 = \max _{\tmop{col} j} \sum _{\tmop{row} i} \abs{A_{i, j}},
+  \quad
+  \norm{A}_\infty  = \max _{\tmop{row} i} \sum _{\tmop{col} j} \abs{A_{i, j}} .
+\]
 
-The matrix 2-norm? Is actually fairly difficult to evaluate. See later.
+2-norm? Actually fairly difficult to evaluate. See in a bit.
 #+LATEX: \end{hidden}
 
 How do matrix and vector norms relate for \(n \times 1\) matrices?
@@ -1076,7 +1077,6 @@ So we've found the /condition number of linear system solving/, also
 called the *condition number of the matrix \(A\)*:
 \[\tmop{cond} (A) = \kappa (A) = \norm{A} \norm{A^{- 1}} . \]
 
-
 *** Conditioning of Linear Systems: More properties
 - \(\tmop{cond}\) is relative to a given norm. So, to be precise, use
   \[\tmop{cond}_2 \quad \text{or} \quad \tmop{cond}_\infty  . \]
@@ -1112,6 +1112,7 @@ How do the (norms of the) residual vector \(\B{r}\) and the
 error \(\Delta \B{x} = \B{x} - \widehat{\B{x}}\) relate to
 one another?
 #+LATEX: \begin{hidden}
+\vspace*{-2ex}
 \begin{eqnarray*}
   \norm{\Delta \B{x}} & = & \norm{\B{x} - \widehat{\B{x}}}\\
     & = & \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}\\
@@ -1232,6 +1233,36 @@ Express the matrix condition number $\tmop{cond}_2(A)$ in terms of the SVD:
 - \(\tmop{cond}_2 (A) = \norm A_2 \norm{A^{-1}}_2 =\sigma_{\text{max}}/\sigma_{\text{min}}\)
 #+LATEX: \end{hidden}
 
+*** Not a matrix norm: Frobenius
+
+The 2-norm is very costly to compute. Can we make something simpler?
+#+LATEX: \begin{hidden}
+\[\norm{A}_F=\sqrt{\sum_{i=1}^m \sum_{j=1}^n |a_{ij}|^2}\]
+is called the *Frobenius norm*.
+#+LATEX: \end{hidden}
+What about its properties?
+#+LATEX: \begin{hidden}
+Satisfies the mat. norm properties. (proofs via Cauchy-Schwarz)
+
+- definiteness
+- scaling
+- triangle inequality
+- submultiplicativity
+#+LATEX: \end{hidden}
+
+*** Frobenius Norm: Properties
+
+Is the Frobenius norm induced by any vector norm?
+#+LATEX: \begin{hidden}
+Can't be! What's $\norm{I}_F$? What's $\norm{I}$ for an induced norm?
+#+LATEX: \end{hidden}
+
+How does it relate to the SVD?
+#+LATEX: \begin{hidden}
+\[\norm{A}_F =\sqrt{\sum_{i=1}^n \sigma_i^2}\]
+
+(Proof?)
+#+LATEX: \end{hidden}
 ** Methods to Solve Systems
 
 *** Solving Systems: Simple cases
@@ -2262,12 +2293,17 @@ What happens with Least Squares for rank-deficient matrices?
 - /Low-rank Approximation/
 
 #+LATEX: \begin{tcolorbox}
-  \begin{theorem}[Eckart-Young-Mirsky] If \(k < r = \tmop{rank} (A)\) and
-        \[A_k = \sum _{i = 1}^k \sigma _i u_i v_i^T, \]
-        then
-        \[\min _{\tmop{rank} (B) = k} \norm{A - B}_2 = \norm{A - A_k}_2 =
-           \sigma _{k + 1} . \]
-  \end{theorem}
+\vspace*{-1ex}
+\begin{theorem}[Eckart-Young-Mirsky] If \(k < r = \tmop{rank} (A)\) and
+  \[A_k = \sum _{i = 1}^k \sigma _i u_i v_i^T, \quad\text{then}\]
+  \begin{align*}
+    \min _{\tmop{rank} (B) = k} \norm{A - B}_2 &= \norm{A - A_k}_2 =
+      \sigma _{k + 1},\\
+    \min _{\tmop{rank} (B) = k} \norm{A - B}_F &= \norm{A - A_k}_F =
+      \sqrt{\sum_{j=k}^n \sigma_j^2} .
+  \end{align*}
+\end{theorem}
+\vspace*{-2ex}
 #+LATEX: \end{tcolorbox}
 
 \demolink{linear_least_squares}{Image compression}
