@@ -940,7 +940,7 @@ What are we looking for here, and when are we allowed to ask the
 question?
 #+LATEX: \begin{hidden}
 *Want:* \(n\)-vector \(\B{x}\) so that
-\[A \B{x} = \B{b} . \]
+\(A \B{x} = \B{b} . \)
 
 - Linear combination of columns of \(A\) to yield \(\B{b}\).
 
@@ -948,7 +948,7 @@ question?
 
 - Even with that: solution may not exist, or may not be unique.
 
-Unique solution exists iff \(A\) is /nonsingular/.\medskip
+Unique solution exists iff \(A\) is /nonsingular/.
 
 #+LATEX: \end{hidden}
 
