@@ -988,15 +988,15 @@ Provide some intuition for the matrix norm.
 #+LATEX: \begin{hidden}
 \[
   \max_{x\ne 0} \frac{\norm{Ax}}{\norm{x}}
-  = \max_{x\ne 0} \norm{Ax\cdot \frac{1}{\norm{x}}}
-  = \max_{\norm y=1} \norm{Ay}.
-  =\norm{A}
+  =\max_{x\ne 0} \norm{Ax\cdot \frac{1}{\norm{x}}}
+  =\max_{\norm y=1} \norm{Ay}
+  =\norm{A}.
 \]
 
 I.e. the matrix norm gives the maximum (relative) growth of the vector norm after multiplying a vector by $A$.
 #+LATEX: \end{hidden}
 
-*** Matrix Norm Properties
+*** Identifying Matrix Norms
 
 What is \(\norm{A}_1 \)? \(\norm{A}_\infty \)?
 #+LATEX: \begin{hidden}
@@ -1112,20 +1112,19 @@ How do the (norms of the) residual vector \(\B{r}\) and the
 error \(\Delta \B{x} = \B{x} - \widehat{\B{x}}\) relate to
 one another?
 #+LATEX: \begin{hidden}
-\vspace*{-2ex}
-\begin{eqnarray*}
-  \norm{\Delta \B{x}} & = & \norm{\B{x} - \widehat{\B{x}}}\\
-    & = & \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}\\
-    & = & \norm{A^{- 1} \B{r}}
-\end{eqnarray*}
+\[
+  \norm{\Delta \B{x}}  = \norm{\B{x} - \widehat{\B{x}}}
+     =  \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}
+     =  \norm{A^{- 1} \B{r}}
+\]
 Divide both sides by \(\norm{\widehat{\B{x}}}\):
-\begin{eqnarray*}
-  \frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}} & = &
-    \frac{\norm{A^{- 1} \B{r}}}{\norm{\widehat{\B{x}}}} \leqslant
-    \frac{\norm{A^{- 1}} \norm{\B{r}}}{\norm{\widehat{\B{x}}}} =
-    \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A}
-    \norm{\widehat{\B{x}}}} .
-\end{eqnarray*}
+\[
+  \frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}}
+  = \frac{\norm{A^{- 1} \B{r}}}{\norm{\widehat{\B{x}}}}
+  \le \frac{\norm{A^{- 1}} \norm{\B{r}}}{\norm{\widehat{\B{x}}}}
+  = \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A} \norm{\widehat{\B{x}}}} 
+  \le \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A\widehat{\B{x}}}} 
+\]
 
 - \(\tmop{rel} \tmop{err} \leqslant \tmop{cond} \cdot \tmop{rel}     \tmop{resid}\)
 
@@ -1135,19 +1134,21 @@ Divide both sides by \(\norm{\widehat{\B{x}}}\):
 
 *** Changing the Matrix
 
-So far, all our discussion was based on changing the right-hand
-side, i.e.
-\[A \B{x} = \B{b} \quad \rightarrow \quad A
-   \widehat{\B{x}} = \widehat{\B{b}} . \]
-The matrix consists of FP numbers, too--it, too, is approximate. I.e.
-\[A \B{x} = \B{b} \quad \rightarrow \quad \hat {A}
+So far, only discussed changing the RHS, i.e.
+\(A \B{x} = \B{b} \quad \rightarrow \quad A \widehat{\B{x}} = \widehat{\B{b}} \).
+   
+The matrix consists of FP numbers, too---it, too, is approximate. I.e.
+\[A \B{x} = \B{b} \quad \rightarrow \quad \widehat {A}
    \widehat{\B{x}} = \B{b} . \]
-What can we say about the error now?
+What can we say about the error due to an approximate matrix?
 #+LATEX: \begin{hidden}
 Consider
-\(\Delta \B{x} = \widehat{\B{x}} - \B{x} = A^{- 1} (A
-   \widehat{\B{x}} - \B{b}) = - A^{- 1} \Delta A
-   \widehat{\B{x}} \).
+\[\Delta \B{x}
+  = \widehat{\B{x}} - \B{x}
+  = A^{- 1} (A \widehat{\B{x}} - \B{b})
+  = A^{- 1} (A \widehat{\B{x}} - \widehat A \widehat{\B x})
+  = - A^{- 1} \Delta A \widehat{\B{x}}.
+\]
 Thus
 \[\norm{\Delta \B{x}} \leqslant \norm{A^{- 1}} \norm{\Delta A}
    \norm{\widehat{\B{x}}} . \]
@@ -1214,7 +1215,7 @@ with
 
   Columns called the *right singular vectors*.
 
-*Existence:* Not yet, later.
+*Existence, Computation:* Not yet, later.
 #+LATEX: \end{hidden}
 
 *** Computing the 2-Norm
