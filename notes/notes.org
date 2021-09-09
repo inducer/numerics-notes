@@ -1359,7 +1359,6 @@ Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
 #+LATEX: \end{hidden}
 
 *** Determining an LU factorization
-Find the  LU factorization of a matrix $A$.
 #+LATEX: \begin{hidden}
 #+BEGIN_EXPORT latex
 \[ \left[\begin{array}{cc}
@@ -1405,9 +1404,7 @@ Or, written differently:
 - $A_{22} =\B{l}_{21} \B{u}_{12}^T + L_{22} U_{22}$, or $L_{22} U_{22} = A_{22} -\B{l}_{21} \B{u}_{12}^T$.
 #+LATEX: \end{hidden}
 
-
-*** TODO LU demo
-# \demolink{linear_systems}{LU factorization}
+\demolink{linear_systems}{LU Factorization}
 
 *** Computational Cost
 
@@ -1478,7 +1475,9 @@ The entry we divide by is called the /pivot/.
 - Swapping rows /and columns/ to get an even bigger pivot is called *complete pivoting*.
   (downside: additional $O(n^2)$ cost to find the pivot!)
 #+LATEX: \end{hidden}
-*** TODO Pivoting in More Detail
+
+\demolink{linear_systems}{LU Factorization with Partial Pivoting}
+
 ** Approach to  LU via elimination matrices                        :noexport:
 *** Elimination Matrices                                           
 
