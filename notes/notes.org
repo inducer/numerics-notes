@@ -1282,7 +1282,7 @@ Given SVD $A=U\Sigma V^T$, solve $A\B x=\B b$. (Computational cost?)
 - Solve $\Sigma \B y=\B z$
 - Compute $\B x=V\B x$
 
-Cost: $O(n^3)$.
+Cost: $O(n^2)$ to solve, and $O(n^3)$ to compute SVD.
 #+LATEX: \end{hidden}
 
 *** Solving Systems: Triangular matrices
@@ -1326,7 +1326,8 @@ What do we get by doing Gaussian Elimination?
 
 How is that different from being upper triangular?
 #+LATEX: \begin{hidden}
-Zeros allowed on and above the diagonal.
+- REF reveals the rank of the matrix.
+- REF can take "multiple column-steps" to the right per row.
 #+LATEX: \end{hidden}
 
 What if we do not just eliminate downward but also upward?
