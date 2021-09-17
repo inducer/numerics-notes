@@ -1907,7 +1907,7 @@ as the unknown. More difficult:
 Consider LSQ problem \(A \B{x} \cong \B{b}\) and its
 associated /objective function/
 \(\varphi (x) = \norm{\B{b} - A \B{x}}^2_2 \).
-Does this always have a solution?
+Assume $A$ has full rank. Does this always have a solution?
 #+LATEX: \begin{hidden}
 Yes. \(\varphi \geqslant 0\), \(\varphi \rightarrow \infty\) as
 \(\B{\norm{x} \rightarrow \infty }\), \(\varphi\) continuous \(\Rightarrow\)
@@ -1918,6 +1918,8 @@ Is it always unique?
 #+LATEX: \begin{hidden}
 No, for example if \(A\) has a nullspace.
 #+LATEX: \end{hidden}
+
+*** Least-Squares: Finding a Solution by Minimization
 
 Examine the objective function, find its minimum.
 #+LATEX: \begin{hidden}
