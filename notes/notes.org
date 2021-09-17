@@ -1973,7 +1973,7 @@ distance traveled in \(\tmop{span} (A)\).
 
 Phrase the Pythagoras observation as an equation.
 #+LATEX: \begin{hidden}
-\vspace{-2ex}
+\vspace{-3ex}
 \begin{eqnarray*}
   \tmop{span} (A) & \perp & \B{b} - A \B{x}\\A^T \B{b} - A^T A \B{x} & = & \B{0}
 \end{eqnarray*}
@@ -1989,8 +1989,7 @@ Write that with an orthogonal projection matrix \(P\).
 
 What is a /projector/?
 #+LATEX: \begin{hidden}
-A matrix satisfying
-\[P^2 = P. \]
+A matrix satisfying \(P^2 = P\).
 #+LATEX: \end{hidden}
 
 What is an /orthogonal projector/?
@@ -2003,10 +2002,10 @@ How do I make one projecting onto \(\tmop{span} \{\B{q}_1, \B{q}_2, \ldots ,
 \B{q}_\ell  \}\) for orthogonal \(\B q_i\)?
 #+LATEX: \begin{hidden}
 First define
-\[Q =
+\(Q =
 \begin{bmatrix}
   \B{q}_1 & \B{q}_2 & \cdots & \B{q}_\ell
-\end{bmatrix}. \]
+\end{bmatrix} \).
 Then
 \[QQ^T \]
 will project and is obviously symmetric.
@@ -2045,6 +2044,7 @@ If \(\tmop{rank} (A) = n\), *pseudoinverse* is \(A^+ = (A^T A)^{- 1} A^T \).
 What can we say about the condition number in the case of a
 tall-and-skinny, full-rank matrix?
 #+LATEX: \begin{hidden}
+\vspace*{-2ex}
 \[\tmop{cond}_2 (A) =
    \norm{A}_2 \norm{A^+}_2 \]
 If not full rank, \(\tmop{cond} (A) = \infty\) by convention.
