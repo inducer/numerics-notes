@@ -2073,13 +2073,30 @@ problems?
 [[./images/least-squares-geo-crop.pdf]]
 #+END_CENTER
 
+Relate $\norm{A\B x}$ and $\B b$ with $\theta via trig functions.
 #+LATEX: \begin{hidden}
-Define
 \[\cos (\theta ) = \frac{\norm{A \B{x}}_2}{\norm{\B{b}}_2}, \]
-then
-\[\frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \leqslant
-   \tmop{cond} (A) \frac{1}{\cos (\theta )} \cdot \frac{\norm{\Delta
-   \B{b}}_2}{\norm{\B{b}}_2} . \]
+#+LATEX: \end{hidden}
+*** Sensitivity and Conditioning of Least Squares (II)
+
+Derive a conditioning bound for the least squares problem.
+#+LATEX: \begin{hidden}
+Recall $\B{x}= A^+ \B{b}$. Also $\Delta
+\B{x}= A^+ \Delta \B{b}$. Take norms, divide by
+$\norm{\B{x}}_2$:
+\begin{eqnarray*}
+  \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} & \leqslant &
+  \norm{A^+}_2 \frac{\norm{\Delta \B{b}}_2}{\norm{\B{x}}_2}\\
+  & = & \frac{\kappa (A)}{\norm{A}_2 \norm{A^+}_2} \norm{A^+}_2
+  \frac{\norm{\B{b}}_2}{\norm{\B{b}}_2}  \frac{\norm{\Delta
+  \B{b}}_2}{\norm{\B{x}}_2}\\
+  & = & \kappa (A) \frac{\norm{\B{b}}_2}{\norm{A}_2
+  \norm{\B{x}}_2}  \frac{\norm{\Delta
+  \B{b}}_2}{\norm{\B{b}}_2}
+   \le  \kappa (A)
+  \underbrace{\frac{\norm{\B{b}}_2}{\norm{A\B{x}}_2}}_{1 / \cos
+  \theta}  \frac{\norm{\Delta \B{b}}_2}{\norm{\B{b}}_2} .
+\end{eqnarray*}
 #+LATEX: \end{hidden}
 
 What values of \(\theta\) are bad?
@@ -2087,7 +2104,7 @@ What values of \(\theta\) are bad?
 \(\B{b} \perp  \tmop{colspan} (A)\), i.e. \(\theta \approx \pi / 2\).
 #+LATEX: \end{hidden}
 
-*** Sensitivity and Conditioning of Least Squares (II)
+*** Sensitivity and Conditioning of Least Squares (III)
 Any comments regarding dependencies?
 #+LATEX: \begin{hidden}
 Unlike for \(A \B{x} = \B{b}\), the sensitivity of least squares solution
