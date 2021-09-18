@@ -714,7 +714,7 @@ a zero?
 *** Subnormal Numbers
 
 What is the smallest representable number in an FP system with 4
-stored bits in the significand and an exponent range of \([- 7, 7]\)?
+stored bits in the significand and a stored exponent range of \([- 7, 8]\)?
 #+LATEX: \begin{hidden}
 First attempt:
 
@@ -728,29 +728,24 @@ So:
 Unfortunately: *wrong*.
 #+LATEX: \end{hidden}
 
-*** Subnormal Numbers II
+*** Subnormal Numbers, Attempt 2
 What is the smallest representable number in an FP system with 4
-stored bits in the significand and an exponent range of \([- 7, 7]\)?
-(Attempt 2)
+stored bits in the significand and a (stored) exponent range of \([- 7, 8]\)?
 #+LATEX: \begin{hidden}
-We can go way smaller by using the
-special exponent (which turns off the implicit leading one). We'll assume that
-the special exponent is \(- 8\). So: \((0.0001)_2 \cdot 2^{- 8} \).
+- Can go way smaller using the /special exponent/ (turns off the leading one)
+- Assume that the special exponent is \(- 7\).
+- So: \((0.001)_2 \cdot 2^{-7}\) (with all four digits stored).
 
 Numbers with the special epxonent are called /subnormal/ (or
 /denormal/) FP numbers. Technically, zero is also a
-subnormal.\medskip
-
-*Note:* It is thus quite natural to `park' the special exponent at
-the low end of the exponent range.
+subnormal.
 #+LATEX: \end{hidden}
 
 Why learn about subnormals?
 
 #+LATEX: \begin{hidden}
-Because computing with them is often slow, because it is implemented using `FP
-assist', i.e. not in actual hardware. Many C compilers support options to
-`flush subnormals to zero'.
+- Subnormal FP is often slow: not implemented in hardware.
+- Many compilers support options to `flush subnormals to zero'.
 #+LATEX: \end{hidden}
 
 *** Underflow
