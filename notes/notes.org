@@ -2333,6 +2333,7 @@ Also used as the basis for /rank-revealing QR/.
 What happens with Least Squares for rank-deficient matrices?
 \[A \B{x} \cong \B{b} \]
 
+#+LATEX: \begin{hidden}
 - QR still finds a solution with minimal residual
 
 - By QR it's easy to see that least squares with a short-and-fat matrix
@@ -2350,7 +2351,8 @@ What happens with Least Squares for rank-deficient matrices?
   - minimize \(\norm{\B{x}}_2^2\), simultaneously.
 
     Unfortunately, QR does not help much with that \(\rightarrow\) Need better
-    tool, the SVD \(A = U \Sigma V^T, \). Let's learn more about it.
+    tool, the SVD \(A = U \Sigma V^T\). Let's learn more about it.
+#+LATEX: \end{hidden}
 
 *** SVD: What's this thing good for? (I)
 
