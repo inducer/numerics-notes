@@ -2302,7 +2302,7 @@ If reflections work, can we make rotations work, too?
     \sqrt{a_1^2 + a_2^2}\\0
     \end{bmatrix}.
 \end{equation*}
-Not hard to sovle for \(c\) and \(s\).\medskip
+Not hard to solve for \(c\) and \(s\).\medskip
 
 *Downside?* Produces only one zero at a time.
 #+LATEX: \end{hidden}
