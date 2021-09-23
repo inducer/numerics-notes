@@ -2411,24 +2411,22 @@ What happens with Least Squares for rank-deficient matrices?
 
 *** SVD: Minimum-Norm, Pseudoinverse
 
-Why is \(\B{y} = \Sigma ^+ U^T \B{b}\) the *minimum 2-norm-solution* to
-\(\Sigma \B{y} \cong U^T \B{b}\)?
 
+What is the minimum 2-norm solution to $A\B x\cong \B b$ and why?
 #+LATEX: \begin{hidden}
-Observe \(\norm{\B{x}}_2 = \norm{\B{y}}_2\).
+Observe \(\norm{\B{x}}_2 = \norm{\B{y}}_2\), and recall that $\norm{\B y}_2$
+was already minimal. (why?)
+
 \[\B{x} = V \Sigma ^+ U^T \B{b} \]
 solves the minimum-norm least-squares problem.\medskip
 #+LATEX: \end{hidden}
 
-What is the minimum 2-norm solution to $A\B x\cong \B b$ and why?
+Generalize the pseudoinverse to the case of a rank-deficient matrix.
 #+LATEX: \begin{hidden}
 Define \(A^+ = V \Sigma ^+ U^T\) and call it the *pseudoinverse* of \(A\).
 
 \medskip
 Coincides with prior definition in case of full rank.
-
-\medskip $\B x=A^+ \B b$ is the minimum 2-norm solution of $A\B x\cong \B b$
-because $\B y$ had minimal 2-norm and $\norm{\B x}_2 =\norm{\B y}_2$.
 #+LATEX: \end{hidden}
 
 *** In-Class Activity: Householder, Givens, SVD
@@ -2444,6 +2442,7 @@ because $\B y$ had minimal 2-norm and $\norm{\B x}_2 =\norm{\B y}_2$.
 
 Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 
+#+LATEX: \begin{hidden}
 - Form: \(A^T A\): \(n^2 m / 2\)
 
   Solve with \(A^T A\): \(n^3 / 6\)
@@ -2456,6 +2455,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
     normal equations
 
 - SVD: \(mn^2 + n^3\) (with a large constant)
+#+LATEX: \end{hidden}
 
 \demolink{linear_least_squares}{Relative cost of matrix factorizations}
 
