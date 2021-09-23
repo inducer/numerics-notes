@@ -2434,9 +2434,9 @@ Coincides with prior definition in case of full rank.
 Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 
 #+LATEX: \begin{hidden}
-- Form: \(A^T A\): \(n^2 m / 2\)
+- Form: \(A^T A\): \(n^2 m / 2\) (symmetric---only need to fill half)
 
-  Solve with \(A^T A\): \(n^3 / 6\)
+  Solve with \(A^T A\): \(n^3 / 6\) (Cholesky \approx  symmetric LU)
 
 - Solve with Householder: \(mn^2 - n^3 / 3\)
 
