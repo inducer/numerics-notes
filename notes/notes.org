@@ -2411,16 +2411,25 @@ What happens with Least Squares for rank-deficient matrices?
 
 *** SVD: Minimum-Norm, Pseudoinverse
 
-\(\B{y} = \Sigma ^+ U^T \B{b}\) is the *minimum norm-solution* to
-\(\Sigma \B{y} \cong U^T \B{b}\).
+Why is \(\B{y} = \Sigma ^+ U^T \B{b}\) the *minimum 2-norm-solution* to
+\(\Sigma \B{y} \cong U^T \B{b}\)?
 
+#+LATEX: \begin{hidden}
 Observe \(\norm{\B{x}}_2 = \norm{\B{y}}_2\).
 \[\B{x} = V \Sigma ^+ U^T \B{b} \]
 solves the minimum-norm least-squares problem.\medskip
+#+LATEX: \end{hidden}
 
+What is the minimum 2-norm solution to $A\B x\cong \B b$ and why?
+#+LATEX: \begin{hidden}
 Define \(A^+ = V \Sigma ^+ U^T\) and call it the *pseudoinverse* of \(A\).
 
+\medskip
 Coincides with prior definition in case of full rank.
+
+\medskip $\B x=A^+ \B b$ is the minimum 2-norm solution of $A\B x\cong \B b$
+because $\B y$ had minimal 2-norm and $\norm{\B x}_2 =\norm{\B y}_2$.
+#+LATEX: \end{hidden}
 
 *** In-Class Activity: Householder, Givens, SVD
   :PROPERTIES:
