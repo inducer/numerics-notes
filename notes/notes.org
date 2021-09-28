@@ -2750,7 +2750,7 @@ Picking \(\sigma \approx \lambda _1\) does not help...
 *Idea:* Invert \emph{and} shift to bring \(\abs{\lambda _1 - \sigma }\) into numerator.
 #+LATEX: \end{hidden}
 
-*** Rayleigh Quotient Iteration
+*** Inverse Iteration
 
 Describe /inverse iteration/.
 #+LATEX: \begin{hidden}
@@ -2763,11 +2763,13 @@ Describe /inverse iteration/.
        \sigma }}{\abs{\lambda _{\text{second-closest}} - \sigma }} e_k . \]
 #+LATEX: \end{hidden}
 
+*** Rayleigh Quotient Iteration
 Describe /Rayleigh Quotient Iteration/.
 #+LATEX: \begin{hidden}
-Compute
-\(\sigma _k = \B{x}_k^T A \B{x}_k / \B{x}_k^T \B{x}_k\) to be the Rayleigh quotient for \(\B{x}_k\).
-\[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
+- Compute the shift
+  \(\sigma _k = \B{x}_k^T A \B{x}_k / \B{x}_k^T \B{x}_k\) to be the Rayleigh quotient for \(\B{x}_k\).
+- Then apply inverse iteration with that shift:
+  \[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Power Iteration and its Variants}
@@ -2798,9 +2800,9 @@ Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v}
 \begin{equation*}
   A = \underbrace{
   \begin{bmatrix}
-    z & \\
+    | & \\
     \B{v} & \text{Basis of \(V^\perp\)}\\
-    z &
+    | &
   \end{bmatrix}}_{Q_1}
   \begin{bmatrix}
     \lambda & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast \\\vdots & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast
@@ -2822,8 +2824,7 @@ The eigenvalues (of \(U\) and \(A\)!) are on the diagonal of \(U\).
 
 And the eigenvectors?
 #+LATEX: \begin{hidden}
-It suffices to find eigenvectors of \(U\): can convert to eigenvectors
-of \(A\) by similarity transform. Suppose \(\lambda\) is an eigenvalue.
+Find eigenvector of $U$: Suppose \(\lambda\) is an eigenvalue.
 
 \begin{equation*}
   U-\lambda I=\begin{bmatrix}
@@ -2832,7 +2833,7 @@ of \(A\) by similarity transform. Suppose \(\lambda\) is an eigenvalue.
     0 & 0 & U_{31} \\
   \end{bmatrix}
 \end{equation*}
-Then \([U_{11}^{-1} \B u ; -1; \B 0]^T\) is an eigenvector.
+\(\B x= [U_{11}^{-1} \B u ; -1; \B 0]^T\) eigenvector of $U$, and $Q\B x$ eigenvector of $A$.
 #+LATEX: \end{hidden}
 
 *** Computing Multiple Eigenvalues
@@ -2910,17 +2911,15 @@ Fix: orthogonalize!
 Once the \(Q_k\) converge (\(Q_{n + 1} \approx Q_n\)), we have a Schur
 factorization!\medskip
 
-*Problem:* \(Q_{n + 1} \approx Q_n\) works poorly as a convergence
-test.\medskip
+*Problem:* \(Q_{n + 1} \approx Q_n\) works poorly as a convergence test.
 
-*Observation 1:* Once \(Q_{n + 1} \approx Q_n\), we also have \(Q_2 R_2 Q_{\tmcolor{red}{2}}^T \approx A\).
+*Observation 1:* Once \(Q_{n + 1} \approx Q_n\), we also have \(Q_n R_n Q_{\tmcolor{red}{n}}^T \approx A\).
 
-*Observation 2:* \(\hat {X}_2 \assign Q_2^T AQ_2 \approx  R_2\).\medskip
+*Observation 2:* \(\hat {X}_n \assign Q_n^T AQ_n \approx  R_n\).
 
-*Idea:* Use magnitude of below-diag part of \(\hat {X}_2\) for
-convergence check.
+*Idea:* Use below-diag part of \(\hat {X}_2\) for convergence check.
 
-*Q:* Can we compute \(\hat {X}_k\) directly?
+*Q:* Can we restate the iteration to compute \(\hat {X}_k\) directly?
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Orthogonal Iteration}
@@ -2932,9 +2931,7 @@ convergence check.
   Orthogonal iteration: & \tmcolor{blue}{QR iteration}:\\\(X_0 = \tmcolor{red}{A}\) & \(\bar {X}_0 = \tmcolor{red}{A}\)\\\(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\\(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
 \end{tabular}
 
-Tracing through reveals:
-
-- \(\hat {X}_k = \bar {X}_{k + 1}\)
+- \(\hat {X}_k = Q_k^T A Q_k = \bar {X}_{k + 1}\)
 
 - \(Q_0 = \bar {Q}_0\)
 
