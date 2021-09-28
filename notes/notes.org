@@ -2553,7 +2553,7 @@ eigenvectors.
 When is a matrix called /diagonalizable/?
 #+LATEX: \begin{hidden}
 If it is not defective, i.e. if it has a \(n\) linear independent eigenvectors (i.e. a
-full basis of them). Call those \((\B{x}_n)_{i = 1}^n\).\medskip
+full basis of them). Call those \((\B{x}_i)_{i = 1}^n\).\medskip
 
 In that case, let
 \[X =
@@ -2754,7 +2754,7 @@ Picking \(\sigma \approx \lambda _1\) does not help...
 
 Describe /inverse iteration/.
 #+LATEX: \begin{hidden}
-\[\B{x}_{k + 1} \assign (A - \sigma )^{- 1} \B{x}_k \]
+\[\B{x}_{k + 1} \assign (A - \sigma I)^{- 1} \B{x}_k \]
 
 - Implemented by storing/solving with LU factorization
 
