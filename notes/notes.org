@@ -2457,7 +2457,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
 
-\inclasslink{svd}{Householder, Givens, SVD}
+\inclasslink{hh-givens-svd}{Householder, Givens, SVD}
 
 * Eigenvalue Problems
   :PROPERTIES:
