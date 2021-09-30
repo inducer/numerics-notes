@@ -3078,9 +3078,7 @@ We find that \(Q_n^T AQ_n\) is also upper Hessenberg: \(Q_n^T A_n Q_n = H. \)
 Also readable as \(AQ_n = Q_n H\), which, read column-by-column, is:
 \[A \B{q}_k = h_{1 k} \B{q}_1 + \ldots h_{k + 1, k}
    \B{q}_{k + 1} \]
-We find: \(h_{j k} = \B{q}_j^T A \B{q}_k\).\medskip
-
-/Important consequence:/ Can compute
+We find: \(h_{j k} = \B{q}_j^T A \B{q}_k\). /Important consequence:/ Can compute
 
 - \(\B{q}_{k + 1}\) from \(\B{q}_1, \ldots , \B{q}_k\)
 
@@ -3205,11 +3203,10 @@ finding?
 
 What are multiple roots?
 #+LATEX: \begin{hidden}
-\vspace{-3ex}
-\begin{eqnarray*}
-  f (x) & = & 0\\f' (x) & = & 0\\& \vdots & \\f^{(m - 1)} (x) & = & 0
-\end{eqnarray*}
-This would be a root of multiplicity \(m\).
+\[
+  0 = f (x) = f' (x) = \cdots = f^{(m - 1)} (x)
+\]
+This is called a *root of multiplicity \(m\)*.
 #+LATEX: \end{hidden}
 
 How do multiple roots interact with conditioning?
@@ -3230,7 +3227,7 @@ The inverse function is steep near one, so conditioning is poor.
 *** Rates of Convergence
 What is /linear convergence/? /quadratic convergence/?
 #+LATEX: \begin{hidden}
-Let \(\B{e}_k = \widehat{\B{u}}_k - \B{u}\) be the error in the \(k\)th iterate
+\(\B{e}_k = \widehat{\B{u}}_k - \B{u}\): error in the \(k\)th iterate
 \(\widehat{\B{u}}_k\). Assume \(\B e_k\to 0\) as \(k\to\infty\).\medskip
 
 An iterative method /converges with rate \(r\)/ if
@@ -3820,15 +3817,14 @@ Linearly convergent. Can we do better?
 \demolink{nonlinear}{Golden Section Proportions}
 
 *** Newton's Method
-
+    
 Reuse the Taylor approximation idea, but for
 optimization.
 #+LATEX: \begin{hidden}
 \[f (x + h) \approx f (x) + f' (x) h + f'' (x)
    \frac{h^2}{2} = : \hat {f} (h) \]
 Solve
-\[0 = \hat {f}' (h) = f' (x) + f'' (x) h:\]
-\(h = - {f' (x)}/{f'' (x)} \).
+\(0 = \hat {f}' (h) = f' (x) + f'' (x) h:\qquad h = - {f' (x)}/{f'' (x)} \).
 1. \(x_0 = \langle \text{some starting guess} \rangle\)
 2. \(x_{k + 1} = x_k - \frac{f' (x_k)}{f'' (x_k)}\)
 
@@ -3886,31 +3882,42 @@ Consider quadratic model problem:
 \[f(\B{x})= \frac{1}{2}\B{x}^T A \B{x} + \B{c}^T \B{x}\]
 where \(A\) is SPD. (A good model of \(f\) near a minimum.)
 
-\medskip
-Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then
+#+LATEX: \begin{hidden}
+Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then can show:
 \[||\B{e}_{k+1}||_{A} = \sqrt{\B{e}_{k+1}^T A \B{e}_{k+1}} = \frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}||\B{e}_k||_{A}\]
 \(\to\) confirms linear convergence.
 
 \medskip
 Convergence constant related to conditioning:
 \[\frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}=\frac{\kappa (A)-1}{\kappa (A)+1}.\]
-*** Hacking Steepest Descent for Better Convergence
+#+LATEX: \end{hidden}
+*** Hacking Steepest Descent for Better Convergence (I)
 
-*Extrapolation methods:* Look back a step, maintain '/momentum/'.
+*Extrapolation methods:* 
 
+#+LATEX: \begin{hidden}
+Look back a step, maintain '/momentum/'.
 \[\B{x}_{k+1} = \B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\]
+#+LATEX: \end{hidden}
 
-*Heavy ball method:* constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
+*Heavy ball method:* 
 
+#+LATEX: \begin{hidden}
+constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
 \[||\B{e}_{k+1}||_{A} = \frac{\sqrt{\kappa (A)} -1}{\sqrt{\kappa (A) }+1}||\B{e}_k||_{A}\]
+#+LATEX: \end{hidden}
 
+*** Hacking Steepest Descent for Better Convergence (II)
+    
 *Conjugate gradient method:*
 
+#+LATEX: \begin{hidden}
 \[(\alpha _k,\beta _k)=\operatorname{argmin}_{\alpha _k,\beta _k}\bigg [f\Big (\B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\Big )\bigg ]\]
 
 - Will see in more detail later (for solving linear systems)
 - Provably optimal first-order method for the quadratic model problem
 - Turns out to be closely related to Lanczos (\(A\)-orthogonal search directions)
+#+LATEX: \end{hidden}
 
 *** Nelder-Mead Method
 
