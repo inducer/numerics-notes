@@ -2889,12 +2889,11 @@ Fix: orthogonalize!
 
 1. \(X_{k + 1} = AQ_k\)
 
-*Good:* \(X_k\) converge to \(X\) with eigenvectors in columns
+*Good:* \(X_k\) obey convergence theory from power iteration
 
 *Bad:*
 
 - Slow/linear convergence
-
 - Expensive iteration
 #+LATEX: \end{hidden}
 
@@ -3050,7 +3049,10 @@ What matrix factorization is obtained through Krylov space methods?
 - \(K_n^{- 1} AK_n = C_n\)
 - \(C_n\) is upper Hessenberg
 - So Krylov is `just' another way to get a matrix into upper Hessenberg
-  form. But: built incrementally!
+  form.
+
+- But: works well when only matvec is available (searches in
+  Krylov space, not the space spanned by first columns)
 #+LATEX: \end{hidden}
 
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (I)
@@ -3066,13 +3068,12 @@ eigenvalue
 \[Q_n R_n = K_n \quad \Rightarrow \quad Q_n = K_n R_n^{- 1} \]
 Then
 \[Q_n^T AQ_n = R_n \underbrace{K_n^{- 1} AK_n}_{C_n} R_n^{- 1}.\]
+- \(C_n\) is upper Hessenberg
+- (Left/right) mul. by triangulars preserves upper Hessenberg
 #+LATEX: \end{hidden}
 
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (II)
 #+LATEX: \begin{hidden}
-- \(C_n\) is upper Hessenberg
-- (Left/right) mul. by triangulars preserves upper Hessenberg
-
 We find that \(Q_n^T AQ_n\) is also upper Hessenberg: \(Q_n^T A_n Q_n = H. \)
 
 Also readable as \(AQ_n = Q_n H\), which, read column-by-column, is:
