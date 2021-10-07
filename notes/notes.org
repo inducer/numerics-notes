@@ -102,6 +102,8 @@
 #+BEAMER_HEADER: \newcommand*{\overlaynumber}{\number\beamer@slideinframe}
 #+BEAMER_HEADER: \makeatother
 
+#+BEAMER_HEADER: \colorlet{dgreen}{green!70!black}
+
 #+LATEX_COMPILER: pdflatex
 #+OPTIONS: H:3 toc:nil ':t tasks:t
 #+BEAMER_THEME: default
@@ -2927,7 +2929,10 @@ factorization!\medskip
 
 #+LATEX: \begin{hidden}
 \begin{tabular}{ll}
-  Orthogonal iteration: & \tmcolor{blue}{QR iteration}:\\\(X_0 = \tmcolor{red}{A}\) & \(\bar {X}_0 = \tmcolor{red}{A}\)\\\(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\\(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
+  Orthogonal iteration: & \tmcolor{blue}{QR iteration}:\\
+  \(X_0 = \tmcolor{red}{A}\) & \(\bar {X}_0 = \tmcolor{red}{A}\)\\
+  \(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\
+  \(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
 \end{tabular}
 
 - \(\hat {X}_k = Q_k^T A Q_k = \bar {X}_{k + 1}\)
@@ -2974,18 +2979,21 @@ Still a similarity transform:
 
 A full QR factorization at each iteration costs \(O (n^3)\)--can we make that cheaper?
 #+LATEX: \begin{hidden}
-*Idea:* /Hessenberg form/
+*Idea:* /Upper Hessenberg form/
 \[A = Q
 \begin{bmatrix}
-  \ast & \ast & \ast & \ast \\\ast & \ast & \ast & \ast \\& \ast & \ast & \ast \\&  & \ast & \ast
+  \ast & \ast & \ast & \ast \\
+  \ast & \ast & \ast & \ast \\
+       & \ast & \ast & \ast \\
+       &      & \ast & \ast
 \end{bmatrix} Q^T \]
 
-- Attainable by \emph{similarity transforms} (!) \(HAH^T\)
+- Attainable by /similarity transforms/ (!) \(HAH^T\)
 
-    with Householders that start 1 entry lower than `usual'
+  with Householders that start 1 entry lower than `usual'
 
 - QR factorization of Hessenberg matrices can be achieved in \(O (n^2)\)
-    time using Givens rotations.
+  time using Givens rotations.
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Householder Similarity Transforms}
@@ -2994,14 +3002,22 @@ A full QR factorization at each iteration costs \(O (n^3)\)--can we make that ch
 Overall procedure:
 
 1. Reduce matrix to Hessenberg form
+2. Apply QR iteration using Givens QR to obtain Schur form
 
-1. Apply QR iteration using Givens QR to obtain Schur form
+Why does QR iteration /stay/ in Hessenberg form?
+   
+#+LATEX: \begin{hidden}
+Asumme $\bar X_k$ is upper Hessenberg ("UH").
+- \(\bar {Q}_k \bar {R}_k = \bar {X}_k\): \(\bar Q_k=\bar R_k^{-1} \bar X_k \) is UH (UH $\cdot$ upper $\triangle$ $=$ UH)
+- \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\) is UH (upper $\triangle$ $\cdot$ UH $=$ UH)
+#+LATEX: \end{hidden}
 
-For symmetric matrices:
+What does this process look like for symmetric matrices?
 
+#+LATEX: \begin{hidden}
 - Use Householders to attain tridiagonal form
-
 - Use QR iteration with Givens to attain diagonal form
+#+LATEX: \end{hidden}
 
 ** Krylov Space Methods
 
@@ -3069,7 +3085,9 @@ eigenvalue
 Then
 \[Q_n^T AQ_n = R_n \underbrace{K_n^{- 1} AK_n}_{C_n} R_n^{- 1}.\]
 - \(C_n\) is upper Hessenberg
-- (Left/right) mul. by triangulars preserves upper Hessenberg
+- \(Q_n^T AQ_n\) is also UH
+
+  (because upper $\triangle$ $\cdot$ UH $=$ UH and UH $\cdot$ upper $\triangle$ $=$ UH).
 #+LATEX: \end{hidden}
 
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (II)
@@ -3098,21 +3116,21 @@ How can we use Arnoldi/Lanczos to compute eigenvalues?
 #+LATEX: \begin{hidden}
 \[Q =
 \begin{bmatrix}
-  \tmcolor{green}{Q_k} & \tmcolor{red}{U_k}
+  \tmcolor{dgreen}{Q_k} & \tmcolor{red}{U_k}
 \end{bmatrix} \]
-\tmcolor{green}{Green:} known (i.e. already computed), \tmcolor{red}{red:} not
+\tmcolor{dgreen}{Green:} known (i.e. already computed), \tmcolor{red}{red:} not
 yet computed.
 \[H = Q^T AQ =
 \begin{bmatrix}
-  \tmcolor{green}{Q_k}\\\tmcolor{red}{U_k}
+  \tmcolor{dgreen}{Q_k}\\\tmcolor{red}{U_k}
 \end{bmatrix} A
 \begin{bmatrix}
-  \tmcolor{green}{Q_k} & \tmcolor{red}{U_k}
+  \tmcolor{dgreen}{Q_k} & \tmcolor{red}{U_k}
 \end{bmatrix} =
 \begin{bmatrix}
-  \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
-  \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
-  & \tmcolor{green}{\ast } & \tmcolor{green}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  \tmcolor{dgreen}{\ast } & \tmcolor{dgreen}{\ast } & \tmcolor{dgreen}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  \tmcolor{dgreen}{\ast } & \tmcolor{dgreen}{\ast } & \tmcolor{dgreen}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
+  & \tmcolor{dgreen}{\ast } & \tmcolor{dgreen}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
   &  & \tmcolor{red}{\ast } & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }\\
   &  &  & \tmcolor{red}{\ast } & \tmcolor{red}{\ast }
 \end{bmatrix} \]
@@ -5067,8 +5085,8 @@ Carrying out this process for quadrature is called *Romberg integration*.
 
 *** What can we solve already?
 
-- Linear Systems: \tmcolor{green}{yes}
-- Nonlinear systems: \tmcolor{green}{yes}
+- Linear Systems: \tmcolor{dgreen}{yes}
+- Nonlinear systems: \tmcolor{dgreen}{yes}
 - Systems with derivatives: \tmcolor{red}{no}
 
 *** Some Applications
