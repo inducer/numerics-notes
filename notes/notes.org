@@ -3536,9 +3536,9 @@ Approximate by linear:
    J_{\B{f}} (\B{x}) \B{s}\).\medskip
 
 Set to 0:
-\[J_{\B{f}} (\B{x}) \B{s} = - \B{f}
+\(J_{\B{f}} (\B{x}) \B{s} = - \B{f}
    (\B{x}) \quad \Rightarrow \quad \B{s} = - (J_{\B{f}}
-   (\B{x}))^{- 1} \B{f} (\B{x}). \]
+   (\B{x}))^{- 1} \B{f} (\B{x})\).
 \begin{eqnarray*}
   \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{x}_k - (J_{\B{f}}
     (\B{x}_k))^{- 1} \B{f} (\B{x}_k)
@@ -3637,7 +3637,7 @@ a minimum exists.
 #+LATEX: \begin{hidden}
 \[\lim _{\norm{\B{x}} \rightarrow \infty } f (x) = + \infty \]
 #+LATEX: \end{hidden}
-If \(f\) is coercive, \dots...
+If \(f\) is coercive, \dots
 #+LATEX: \begin{hidden}
 a global minimum exists (but is possibly non-unique).
 #+LATEX: \end{hidden}
