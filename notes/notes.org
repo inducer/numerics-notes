@@ -3144,26 +3144,22 @@ Those are called *Ritz values*.
 \demolink{eigenvalue}{Arnoldi Iteration} (Part 2)
 
 *** Computing the SVD (Kiddy Version)
-How can I compute an SVD of a matrix $A$?
 #+LATEX: \begin{hidden}
-1. Compute the eigenvalues and eigenvectors of $A^T A$.
-   \[ A^T A \B{v}_1 = \lambda_1 \B{v}_1 \quad \cdots \qquad A^T A
-     \B{v}_n = \lambda_n \B{v}_n \]
-2. Matrix $V$ from the vectors $\B{v}_i$. ($A^T A$ symm.: $V$ orth.)
+1. Compute (orth.) eigenvectors $V$ and eigenvalues $D$ of $A^T A$, 
+   \[ A^T A V = V D \quad \Rightarrow \quad V^T A^TA V = D =:\Sigma^2.\]
+2. Find \(U\) from \( A = U \Sigma V^T \quad \Leftrightarrow \quad U \Sigma = AV. \)
 
-3. Make a diagonal matrix $\Sigma$ from the square roots of the eigenvalues:
-   \(\Sigma = \operatorname{diag}(\sqrt{\lambda_1}, \dots, \sqrt{\lambda_n}) \)
-
-4. Find \(U\) from \( A = U \Sigma V^T \quad \Leftrightarrow \quad U \Sigma = AV. \)
-
-   For square matrices: \( U = AV \Sigma^{- 1} . \)
-
-  Observe $U$ is orthogonal: (Use: $V^T A^T AV = \Sigma^2$)
-  \[ U^T U = \Sigma^{- 1} \underbrace{V^T A^T AV}_{\Sigma^2} \Sigma^{- 1} =
+  Observe $U$ is orthogonal if $\Sigma^{-1}$ exists: (If not, can choose so.)
+  \[ U^T U = \Sigma^{- 1} V^T A^T AV \Sigma^{- 1} =
      \Sigma^{- 1} \Sigma^2 \Sigma^{- 1} = I. \]
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Computing the SVD}
+
+\medskip
+"Actual"/"non-kiddy" computation of the SVD:
+- Bidiagonalize $A=U\begin{bmatrix} B \\ 0\end{bmatrix} V^T$, then diagonalize via variant of QR.
+- References: [[https://doi.org/10.1145/355984.355990][Chan '82]] or Golub/van Loan Sec 8.6.
 
 * Nonlinear Equations
   :PROPERTIES:
