@@ -3459,6 +3459,18 @@ Rate of convergence (not shown) is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  
 \medskip
 Secant (and similar methods) are called *Quasi-Newton Methods*.
 
+*** Improving on Newton?
+
+How would we do "Newton + 1" (i.e. even faster, even better)?
+#+LATEX: \begin{hidden}
+Easy:
+- Use second order Taylor approximation, solve resulting quadratic
+- Get cubic convergence!
+- Get a method that's /extremely/ fast and /extremely/ brittle
+- Need *second* derivatives
+- What if the quadratic has no solution?
+#+LATEX: \end{hidden}
+
 *** Root Finding with Interpolants
 
 Secant method uses a linear interpolant based on points \(f(x_k)\),
