@@ -3402,6 +3402,8 @@ Now find root of this linear approximation in terms of \(h\):
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 
+\demolink{nonlinear}{Newton's method}
+
 *** Convergence and Properties of Newton
 
 What's the rate of convergence of Newton's method?
@@ -3418,8 +3420,6 @@ So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 
   Will see: convergence only local (near root)
 - Have to have derivative!
 #+LATEX: \end{hidden}
-
-\demolink{nonlinear}{Newton's method}
 
 \demolink{nonlinear}{Convergence of Newton's Method}
 
@@ -3503,7 +3503,6 @@ locally. How could we use that?
 - Limit step size
 #+LATEX: \end{hidden}
 
-
 *** In-Class Activity: Nonlinear Equations
   :PROPERTIES:
   :RELATE_TREE_ICON: fa fa-user
@@ -3560,7 +3559,6 @@ Downsides of \(n\)-dim. Newton?
 #+LATEX: \end{hidden}
 
 \demolink{nonlinear}{Newton's method in n dimensions}
-
 
 *** Secant in $n$  dimensions?
 
@@ -3864,7 +3862,6 @@ fast-and-risky (Newton).
 #+LATEX: \end{hidden}
 
 \demolink{optimization}{Newton's Method in 1D}
-
 
 *** In-Class Activity: Optimization Methods
   :PROPERTIES:
