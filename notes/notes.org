@@ -3531,7 +3531,7 @@ quadratic convergence.
 
 \medskip
 *Better:* There exists a norm \(\|\cdot\|_A\) such that \(\rho(A)\le\|A\|_A<\rho(A)+\epsilon\), so
-\(\rho(A)<1\) suffices.
+\(\rho(A)<1\) suffices. ([[https://math.stackexchange.com/a/3834891][proof]])
 #+LATEX: \end{hidden}
 
 *** Newton's Method
