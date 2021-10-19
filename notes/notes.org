@@ -3575,7 +3575,14 @@ Could we `reverse engineer' \(\tilde {J}\) from that equation?
 - Can only hope to `update' \(\tilde {J}\) with information from current
   guess.
 
-One choice: /Broyden's method/ (minimizes change to \(\tilde {J}\))
+Some choices, all called /Broyden's method/:
+- update $J_n$, minimize $\norm{J_n-J_{n-1}}_F$
+- update $J_n^{-1}$ (via Sherman-Morrison), minimize $\norm{J_n^{-1}-J_{n-1}^{-1}}_F$
+
+  \smallskip
+  multiple variants ("good" Broyden and "bad" Broyden)
+
+  
 #+LATEX: \end{hidden}
 
 * Optimization
