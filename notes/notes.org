@@ -3771,6 +3771,9 @@ convergence is not based on function values alone. (then: can solve \(\nabla    
 
 How does optimization react to a slight perturbation of the minimum?
 #+LATEX: \begin{hidden}
+Suppose we still have
+\(\abs{f (\tilde {\B  x}) - f (\B x^\ast )} < \tmop{tol} \),
+where \(\B x^\ast\) is true min. and $\B x=\B x^\ast+h\B s$.
 Assume \(\norm{\B{s}} = 1\).
 \[f (\B{x}^\ast  + h \B{s}) = f (\B{x}^\ast ) + h
     \underbrace{\nabla f (\B{x}^\ast )^T}_{\B{0}}
