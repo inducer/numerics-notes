@@ -3439,8 +3439,9 @@ So
 
 *** Convergence of Properties of Secant
 
-Rate of convergence (not shown) is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  1.618\).\medskip
+Rate of convergence is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  1.618\). ([[https://doi.org/10.1016/S0893-9659(03)90119-4][proof]])
 
+\medskip
 /Drawbacks/ of Secant?
 
 #+LATEX: \begin{hidden}
