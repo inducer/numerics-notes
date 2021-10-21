@@ -3773,14 +3773,6 @@ where the *Hessian*
 PD.
 #+LATEX: \end{hidden}
 
-*** In-Class Activity: Optimization Theory
-  :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
-  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-theory/start/
-  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
-  :END:
-
-\inclasslink{optimization-theory}{Optimization Theory}
 *** Sensitivity and Conditioning (1D)
 
 How does optimization react to a slight perturbation of the minimum?
@@ -3841,6 +3833,14 @@ Need /extra assumption./
 - \(x^\ast  < x_1 \Rightarrow f (x_1) < f (x_2)\)
 #+LATEX: \end{hidden}
 
+*** In-Class Activity: Optimization Theory
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-theory/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{optimization-theory}{Optimization Theory}
 *** Golden Section Search
 
 Suppose we have an interval with \(f\) unimodal:
@@ -3904,14 +3904,6 @@ fast-and-risky (Newton).
 
 \demolink{optimization}{Newton's Method in 1D}
 
-*** In-Class Activity: Optimization Methods
-  :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
-  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-methods/start/
-  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
-  :END:
-
-\inclasslink{optimization-methods}{Optimization Methods}
 ** Methods for unconstrained opt. in $n$  dimensions
 *** Steepest Descent
 
@@ -4049,6 +4041,14 @@ where
 - \(\B{s}_k = \B{x}_{k+1}-\B{x}_k\)
 - \(\B{y_k} =\nabla f(\B{x}_{k+1})-\nabla f(\B{x}_k)\)
 
+*** In-Class Activity: Optimization Methods
+  :PROPERTIES:
+  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-methods/start/
+  :RELATE_PROMOTE_TO_PARENT_LEVEL: true
+  :END:
+
+\inclasslink{optimization-methods}{Optimization Methods}
 ** Nonlinear Least Squares
 
 *** Nonlinear Least Squares: Setup
