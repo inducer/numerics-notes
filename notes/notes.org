@@ -3905,7 +3905,7 @@ fast-and-risky (Newton).
 \demolink{optimization}{Newton's Method in 1D}
 
 ** Methods for unconstrained opt. in $n$  dimensions
-*** Steepest Descent
+*** Steepest Descent/Gradient Descent
 
 Given a scalar function \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
 at a point \(\B{x}\), which way is down?
@@ -3932,7 +3932,7 @@ Unclear--do a line search. For example using Golden Section Search.
 - Linear convergence
 #+LATEX: \end{hidden}
 
-\demolink{optimization}{Steepest Descent}
+\demolink{optimization}{Steepest Descent} (Part 1)
 
 *** Steepest Descent: Convergence
 Consider quadratic model problem:
@@ -3948,7 +3948,7 @@ Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then can show:
 Convergence constant related to conditioning:
 \[\frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}=\frac{\kappa (A)-1}{\kappa (A)+1}.\]
 #+LATEX: \end{hidden}
-*** Hacking Steepest Descent for Better Convergence (I)
+*** Hacking Steepest Descent for Better Convergence
 
 *Extrapolation methods:* 
 
@@ -3964,9 +3964,27 @@ constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
 \[||\B{e}_{k+1}||_{A} = \frac{\sqrt{\kappa (A)} -1}{\sqrt{\kappa (A) }+1}||\B{e}_k||_{A}\]
 #+LATEX: \end{hidden}
 
-*** Hacking Steepest Descent for Better Convergence (II)
+\demolink{optimization}{Steepest Descent} (Part 2)
+
+*** Optimization in Machine Learning
+
+What is /stochastic gradient descent/ (/SGD/)?
+#+LATEX: \begin{hidden}
+Common in ML: Objective functions of the form
+\vspace{-2ex}
+\[f(\B x)=\frac 1n \sum_{i=1}^n f_i(\B x),\]
+where each $f_i$ comes from an /observation/ ("data point") in a (training) data set.
+Then "/batch/" (i.e. normal) gradient descent is
+\vspace{-2ex}
+\[\B x_{k+1} = \B x_k -\alpha \frac 1n \sum_{i=1}^n \nabla f_i(\B x_k).\]
+/Stochastic/ GD uses one (or few, "/minibatch/") observation at a time:
+\[\B x_{k+1} = \B x_k -\alpha \nabla f_{\phi(k)}(\B x_k).\]
+[[https://arxiv.org/abs/1412.6980][/ADAM/ optimizer]]: GD with exp. moving avgs. of $\nabla$ and its square.
+#+LATEX: \end{hidden}
+
+*** Conjugate Gradient Methods
     
-*Conjugate gradient method:*
+Can we optimize in /the space spanned/ by the last two step directions?
 
 #+LATEX: \begin{hidden}
 \[(\alpha _k,\beta _k)=\operatorname{argmin}_{\alpha _k,\beta _k}\bigg [f\Big (\B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\Big )\bigg ]\]
@@ -3975,6 +3993,8 @@ constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
 - Provably optimal first-order method for the quadratic model problem
 - Turns out to be closely related to Lanczos (\(A\)-orthogonal search directions)
 #+LATEX: \end{hidden}
+
+\demolink{optimization}{Conjugate Gradient Method}
 
 *** Nelder-Mead Method
 
