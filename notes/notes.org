@@ -1476,6 +1476,36 @@ The entry we divide by is called the /pivot/.
 
 \demolink{linear_systems}{LU Factorization with Partial Pivoting}
 
+*** Cholesky: LU for Symmetric Positive Definite
+
+LU /can/ be used for SPD matrices. But can we do better?
+#+LATEX: \begin{hidden}
+*Cholesky factorization*: $A=LL^T$, i.e. /like/ LU, but using $L^T$ for $U$.
+
+\[ \begin{bmatrix}
+     \ell_{11} & \\
+     \B{l}_{21} & L_{22}
+   \end{bmatrix} \begin{bmatrix}
+     \ell_{11} & \B{l}_{21}^T\\
+     & L_{22}^T
+   \end{bmatrix} = \begin{bmatrix}
+     a_{11} & \B{a}_{21}^T\\
+     \B{a}_{21} & A_{22}
+   \end{bmatrix} . \]
+$\ell_{11}^2 = a_{11}$, then $\ell_{11} \B{l}_{21} =\B{a}_{21}$,
+i.e. $\B{l}_{21} =\B{a}_{21} / \ell_{11}$. Finally,
+\begin{eqnarray*}
+  \B{l}_{21} \B{l}_{21}^T + L_{22} L_{22}^T & = & A_{22}, \quad
+  \text{or}\\
+  L_{22} L_{22}^T & = & A_{22} -\B{l}_{21} \B{l}_{21}^T .
+\end{eqnarray*}
+\vspace{-2ex}
+- Fails if $a_{11}$ is negative at any point. (\Rightarrow $A$ not SPD)
+- If $a_{11}$ zero: $A$ is positive /semidefinite/.
+- /Cheaper than LU:/ no pivoting, only one factor to compute!
+
+#+LATEX: \end{hidden}
+
 ** Approach to  LU via elimination matrices                        :noexport:
 *** Elimination Matrices                                           
 
