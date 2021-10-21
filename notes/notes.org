@@ -3694,7 +3694,7 @@ a global minimum exists (but is possibly non-unique).
 #+LATEX: \end{hidden}
 
 \(f : S \rightarrow \mathbb{R}\) is called *convex on* \(S \subseteq
-\mathbb{R}^n\) if for \ \(\B{x}, \B{y} \in S\) and
+\mathbb{R}^n\) if for \(\B{x}, \B{y} \in S\) and
 all \(0 \leqslant \alpha \leqslant 1\)
 #+LATEX: \begin{hidden}
 \[f (\alpha \B{x} + (1 - \alpha ) \B{y} \in S) \leqslant
