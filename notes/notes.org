@@ -1500,7 +1500,7 @@ i.e. $\B{l}_{21} =\B{a}_{21} / \ell_{11}$. Finally,
   L_{22} L_{22}^T & = & A_{22} -\B{l}_{21} \B{l}_{21}^T .
 \end{eqnarray*}
 \vspace{-2ex}
-- Fails if $a_{11}$ is negative at any point. (\Rightarrow $A$ not SPD)
+- Fails if $a_{11}$ is negative at any point. (\Rightarrow $A$ not SPSemiD)
 - If $a_{11}$ zero: $A$ is positive /semidefinite/.
 - /Cheaper than LU:/ no pivoting, only one factor to compute!
 
