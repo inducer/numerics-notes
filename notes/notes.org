@@ -3859,7 +3859,6 @@ Would like to maintain unimodality.
 *** Golden Section Search: Efficiency
 
 Where to put \(x_1\), \(x_2\)?
-
 #+LATEX: \begin{hidden}
 - Want symmetry:
 
@@ -3867,12 +3866,12 @@ Where to put \(x_1\), \(x_2\)?
 
   \(x_2 = a + \tau (b - a)\)
 
-- Want to reuse function evaluations: \(\tau ^2 = 1 - \tau\)
-
-  Find: \(\tau = \left ( \sqrt{5} - 1 \right ) / 2\).
-  Also known as the /golden section/.
-
-- Hence *golden section search*.
+- Want to reuse function evaluations
+#+LATEX: \end{hidden}
+\demolink{nonlinear}{Golden Section Proportions}
+#+LATEX: \begin{hidden}
+\(\tau ^2 = 1 - \tau\) Find: \(\tau = \left ( \sqrt{5} - 1 \right ) / 2\).
+Also known as the /golden section/. Hence /golden section search/.
 #+LATEX: \end{hidden}
 
 Convergence rate?
@@ -3880,7 +3879,6 @@ Convergence rate?
 Linearly convergent. Can we do better?
 #+LATEX: \end{hidden}
 
-\demolink{nonlinear}{Golden Section Proportions}
 
 *** Newton's Method
     
