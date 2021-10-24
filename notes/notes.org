@@ -3826,11 +3826,12 @@ In general: No invariant that can be preserved.
 
 Need /extra assumption./
 #+LATEX: \begin{hidden}
-\(f\) is called *unimodal* if for all \(x_1 < x_2\)
+\(f\) is called *unimodal* on an open interval if there exists an
+$x^*$ in the interval such that for all \(x_1 < x_2\) in the interval
 
-- \(x_2 < x^\ast  \Rightarrow f (x_1) > f (x_2)\)
+- \(x_2 < x^*  \Rightarrow f (x_1) > f (x_2)\)
 
-- \(x^\ast  < x_1 \Rightarrow f (x_1) < f (x_2)\)
+- \(x^*  < x_1 \Rightarrow f (x_1) < f (x_2)\)
 #+LATEX: \end{hidden}
 
 *** In-Class Activity: Optimization Theory
