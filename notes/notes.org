@@ -4354,9 +4354,9 @@ within range of numerical operations.
 #+LATEX: \begin{hidden}
 Limit the set of functions to a linear
 combination from an /interpolation basis/ \(\varphi _i\).\medskip
-\[f (x) = \sum _{j = 0}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
+\[f (x) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
 Interpolation becomes solving the linear system:
-\[y_i = f (x_i) = \sum _{j = 0}^{N_{\tmop{func}}} \alpha _j
+\[y_i = f (x_i) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j
    \underbrace{\varphi _j (x_i)}_{V_{i j}} \qquad \leftrightarrow \qquad V
    \B{\alpha } = \B{y} . \]
 Want unique answer: Pick \(N_{\tmop{func}} = N\) \(\rightarrow\) \(V\)
