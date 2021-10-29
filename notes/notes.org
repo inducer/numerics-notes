@@ -4246,31 +4246,56 @@ So we could use any unconstrained method to minimized \(\mathcal{L}\).
 Want \(\B{x}^\ast\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
-   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0} \]
-This is /inequality-constrained optimization/. Develop a necessary
-condition for a minimum.
+   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0}. \]
+Develop a necessary condition for a minimum.
 
 #+LATEX: \begin{hidden}
-Define Lagrangian:
+Again: Assume we're at a feasible point, on the boundary of the
+feasible region. Must ensure descent directions are /infeasible/.
+
+\medskip
+*Motivation:* $\B g = 0$ \Leftrightarrow two inequality constraints: $\B g\le \B 0 \land \B g \ge \B 0$.
+
+\medskip
+Consider the condition
+\(-\nabla f (\B x) = J_{\B h}^T \B\lambda_2\).
+
+- Descent direction must start violating constraint.
+
+  But only one direction is dangerous here!
+- $-\nabla f$: *descent* direction of $f$, $\nabla h_i$: *ascent* direction of $h_i$
+- If we assume $\B \lambda_2> 0$, going towards $-\nabla f$ would increase $\B h$
+
+  (and start violating $\B h \le 0$)
+#+LATEX: \end{hidden}
+
+*** Lagrangian, Active/Inactive
+
+Put together the overall Lagrangian.
+#+LATEX: \begin{hidden}
 \[\mathcal{L} (\B{x}, \B{\lambda }_1, \B{\lambda }_2)
    \assign f (\B{x}) + \B{\lambda }_1^T \B{g}
    (\B{x}) + \B{\lambda }_2^T \B{h} (\B{x}) \]
+#+LATEX: \end{hidden}
+What are *active* and *inactive* constraints?
 
-- Some inequality constrains may not be ``active''
-
-  (\(\text{active } \Leftrightarrow h_i (\B{x}^\ast ) = 0     \Leftrightarrow\)at `boundary' of ineq. constraint)
+#+LATEX: \begin{hidden}
+- *Active:*
+  \(\text{active } \Leftrightarrow h_i (\B{x}^\ast ) = 0     \Leftrightarrow\) at `boundary' of ineq. constraint
 
   (Equality constrains are always `active')
 
-- If \(h_i\) inactive (\(h_i (\B{x}^\ast ) < 0\)), must force
+- *Inactive:* If \(h_i\) inactive (\(h_i (\B{x}^\ast ) < 0\)), must force
   \(\lambda _{2, i} = 0\).
 
   Otherwise: Behavior of \(h\) could change location of minimum of
   \(\mathcal{L}\). Use *complementarity condition*
   \(h_i (\B{x}^\ast ) \lambda _{2, i} = 0\).
+
+  \Leftrightarrow /at least one/ of \(h_i (\B{x}^\ast )\) and \( \lambda _{2, i}\) is zero.
 #+LATEX: \end{hidden}
 
-*** Inequality-Constrained Optimization (cont'd)
+*** Karush-Kuhn-Tucker (KKT) Conditions
 
 Develop a set of necessary conditions for a minimum.
 
