@@ -4161,14 +4161,17 @@ Want \(\B{x}^\ast\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \]
 No inequality constraints just yet. This is /equality-constrained
-optimization/. Develop a necessary condition for a
-minimum.
+optimization/. Develop a (local) necessary condition for a minimum.
 #+LATEX: \begin{hidden}
-Unconstrained necessary condition:
-\[\nabla f (\B{x}) = \B{0} \]
-*Problem:* That alone is not helpful. `Downhill' direction has to be
-\emph{feasible}. So just this doesn't help.\medskip
+Necessary cond.: "no feasible descent possible". Assume $\B g(\B x)=\B 0$. 
 
+\medskip
+Recall unconstrained necessary condition, "no descent possible":
+\[\nabla f (\B{x}) = \B{0} \]
+
+Look for *feasible descent directions* from $\B x$. (Necessary cond.: $\not\exists$)
+
+\medskip
 \(\B{s}\) is a *feasible direction* at $\B x$ if
 \[\B{x} + \alpha \B{s} \quad \text{feasible for } \alpha
    \nocomma \in [0, r] \quad\text{(for some \(r\))} \]
@@ -4177,19 +4180,16 @@ Unconstrained necessary condition:
 *** Constrained Optimization: Necessary Condition
 
 #+LATEX: \begin{hidden}
-- \(\nabla f (\B{x}) \cdot \B{s} \geqslant 0\) (``uphill
-  that way'') for any feasible direction \(\B{s}\).\medskip
-
-  If not at boundary of feasible set:
-
-  \(s\) and \(- s\) are feasible directions
+Need: \(\nabla f (\B{x}) \cdot \B{s} \geqslant 0\) (``uphill
+  that way'') for any feasible direction \(\B{s}\).
+- *Not at boundary:* \(\B s\) and \(- \B s\) are feasible directions
 
   \(\Rightarrow\) \(\nabla f (\B{x}) = 0\)
 
   \(\Rightarrow\) Only the boundary of the feasible set is different from the
   unconstrained case (i.e. interesting)
 
-- At boundary: \(g (x) = 0\). Need:
+- *At boundary:* (the common case) \(\B g (x) = 0\). Need:
   \[- \nabla f (\B{x}) \in \tmop{rowspan} (J_{\B{g}}) \]
   a.k.a. ``all descent directions would cause a change
   (\(\rightarrow\)violation) of the constraints.''
