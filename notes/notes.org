@@ -4483,13 +4483,15 @@ Orthogonality
 #+LATEX: \end{hidden}
 
 But polynomials are functions!
+
+*** Orthogonality of Functions
+How can functions be orthogonal?
 #+LATEX: \begin{hidden}
-\vspace{-3ex}
+Need an *inner product*. Orthogonal then just means \(\ip{f}{g} = 0\).
 \begin{eqnarray*}
   \B{f} \cdot \B{g} & = & \sum _{i = 1}^n f_i g_i \quad =
     \ip{\B{f}}{\B{g}}\\\ip{f}{g} & = & \int _{- 1}^1 f (x) g (x) \mathd x
 \end{eqnarray*}
-Need an *inner product*. Orthogonal then just means \(\ip{f}{g} = 0\).
 #+LATEX: \end{hidden}
 
 *** Constructing Orthogonal Polynomials
@@ -4502,7 +4504,7 @@ Apply Gram-Schmidt to the monomials.
 
 \demolink{interpolation}{Orthogonal Polynomials}
 ---
-Obtained: *Legendre polynomials*.
+Got: *Legendre polynomials*.
 
 But how can I practically compute the Legendre polynomials?
 #+LATEX: \begin{hidden}
@@ -4542,17 +4544,14 @@ What is the Vandermonde matrix for Chebyshev polynomials?
 
 - Need to know the nodes to answer that
 - The answer would be very simple if the nodes were \(\cos      (\ast )\).
-- So why not \(\cos \left ( \text{equispaced)} \right .\)?
-
-Might get
-\[x_i = \cos \left ( \frac{i}{k} \pi \right ) \qquad (i = 0, 1, \ldots , k) \]
+- So why not \(\cos (\text{equispaced}) \)? Maybe
+  \[x_i = \cos \left ( \frac{i}{k} \pi \right ) \qquad (i = 0, 1, \ldots , k) \]
 These are just the /extrema/ (minima/maxima) of \(T_k\).
 
 \[V_{i j} = \cos \left ( j \cos ^{- 1} \left ( \cos \left ( \frac{i}{k} \pi
    \right ) \right ) \right ) = \cos \left ( j \frac{i}{k} \pi \right ) . \]
-This is called the /Discrete Cosine Transform/ and a matvec with this
-matrix (and its inverse!) can be implemented in \(O (N \log N)\) time (similar
-to the /Fast Fourier Transform/\(\rightarrow\)Chapter 12).
+- Called the /Discrete Cosine Transform/ (DCT)
+- Matvec (and inverse!) available with \(O (N \log N)\) cost (\to FFT)
 #+LATEX: \end{hidden}
 
 *** Chebyshev Nodes
