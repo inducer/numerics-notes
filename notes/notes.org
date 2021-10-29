@@ -763,6 +763,7 @@ Why learn about subnormals?
   but it is important to note that subnormals don't have as many accurate
   digits as normal numbers.
 
+  [[https://people.eecs.berkeley.edu/~wkahan/ieee754status/754story.html][Read a story on the epic battle about gradual underflow]]
 - Analogously (but much more simply--no `supernormals'): the overflow
   level, /OFL/.
 
