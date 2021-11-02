@@ -4485,9 +4485,8 @@ Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
 \[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \]
 (At least) two possibilities for coefficent finding:
 
-1. Set up \(V\), run forward substitution.
-
-1. ``Divided Differences'' (see, e.g. Wikipedia)
+- Set up \(V\), run forward substitution.
+- [[https://en.wikipedia.org/wiki/Divided_differences][Divided Differences]] (Wikipedia link)
 #+LATEX: \end{hidden}
 
 Why not Lagrange/Newton?
