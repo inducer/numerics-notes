@@ -4477,6 +4477,12 @@ Denominator: Ensures \(\varphi _i (x_i) = 1\).
 \[\varphi _j (x) = \frac{\prod _{k = 1, k \neq j}^m (x - x_k)}{\prod _{k = 1, k
    \neq j}^m (x_j - x_k)} \]
 
+\bigskip
+Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^m$ and values $(y_i)_{i=1}^m$.
+#+LATEX: \begin{hidden}
+\[p_{m-1}(x)=\sum_{j=1}^m y_j \varphi_j(x) \]
+#+LATEX: \end{hidden}
+
 *** Newton Interpolation
 
 Find a basis so that \(V\) is triangular.
@@ -4559,9 +4565,6 @@ Three equivalent definitions:
 
 - \(T_k (x) = 2 xT_{k-1} (x) - T_{k - 2} (x)\) plus \(T_0=1\), \(T_0=x\)
 
-\medskip
-\demolink{interpolation}{Chebyshev Interpolation } (Part 1)
-
 *** Chebyshev Interpolation
 
 What is the Vandermonde matrix for Chebyshev polynomials?
@@ -4585,16 +4588,13 @@ Might also consider roots (instead of extrema) of \(T_{k}\):
 \[x_i = \cos \left ( \frac{2 i - 1}{2 k} \pi \right ) \quad (i = 1 \ldots , k) . \]
 Vandermonde for these (with \(T_k\)) can be applied in \(O (N \log N)\) time, too.
 
-It turns out that we were still looking for a good set of interpolation
-nodes.
-
-We came up with the criterion that the nodes should bunch towards
-the ends. Do these do that?
+\medskip
+Edge-clustering seemed like a good thing in interpolation nodes. Do these do that?
 #+LATEX: \begin{hidden}
 Yes.
 #+LATEX: \end{hidden}
 
-\demolink{interpolation}{Chebyshev Interpolation } (Part 2)\medskip
+\demolink{interpolation}{Chebyshev Interpolation} (Part I-IV)
 
 *** Chebyshev Interpolation: Summary
 
@@ -4614,7 +4614,7 @@ Yes.
 \inclasslink{interpolation}{Interpolation}
 
 ** Error Estimation
-*** Interpolation Error
+*** Truncation Error in Interpolation
 
 If \(f\) is \(n\) times continuously differentiable on a closed
 interval \(I\) and \(p_{n-1} (x)\)  is a
@@ -4628,23 +4628,22 @@ interval there exists $\xi$ in that interval such that
 #+LATEX: \begin{hidden}
 Set the error term to be \(R(x) := f(x) - p_{n-1}(x) \)
 and set up an auxiliary function:
-\[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i).\]
+\[Y_x(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i).\]
 Note also the introduction of $t$ as an additional variable, independent
 of the point $x$ where we hope to prove the identity.
 #+LATEX: \end{hidden}
 
-*** Interpolation Error: Proof cont'd
-
-\[Y(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i)\]
+*** Truncation Error in Interpolation: cont'd.
+\[Y_x(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i)\]
 #+LATEX: \begin{hidden}
 - Since \(x_i\) are roots of $R(t)$ and $W(t)$, we have
-  \(Y(x)=Y(x_i)=0\), which means $Y$ has at least $n+1$ roots.
-- From Rolle's theorem, $Y'(t)$ has at least $n$ roots, then $Y^{(n)}$ has at
+  \(Y_x(x)=Y_x(x_i)=0\), which means $Y_x$ has at least $n+1$ roots.
+- From Rolle's theorem, $Y_x'(t)$ has at least $n$ roots, then $Y_x^{(n)}$ has at
   least one root $\xi$, where $\xi\in I$.
 - Since \(p_{n-1}(x)\) is a polynomial of degree at most $n-1$, \(R^{(n)}(t) = f^{(n)}(t)\).
   Thus
-  \[ Y^{(n)}(t) = f^{(n)}(t) - \frac{R(x)}{W(x)} n!. \]
-- Plugging $Y^{(n)}(\xi)=0$ into the above yields the result.
+  \[ Y_x^{(n)}(t) = f^{(n)}(t) - \frac{R(x)}{W(x)} n!. \]
+- Plugging $Y_x^{(n)}(\xi)=0$ into the above yields the result.
 #+LATEX: \end{hidden}
 
 *** Error Result: Connection to Chebyshev
@@ -4652,14 +4651,16 @@ of the point $x$ where we hope to prove the identity.
 What is the connection between the error result and Chebyshev interpolation?
 #+LATEX: \begin{hidden}
 - The error bound suggests choosing the interpolation nodes such that the product
-  \(\abs{\prod_{i=1}^n (x-x_i)}\), is as small as possible. The Chebyshev nodes achieve this.
+  \(\abs{\prod_{i=1}^n (x-x_i)}\) is as small as possible. The Chebyshev nodes achieve this.
 
-- Error is zero at the nodes
-
-- If nodes scoot closer together near the interval ends, then
-  \[(x - x_1) (x - x_2) \cdots (x - x_n) \]
+- If nodes are edge-clustered, $\prod_{i=1}^n (x-x_i)$
   clamps down the (otherwise quickly-growing) error there.
+- Confusing: /Chebyshev approximating polynomial/ (or "polynomial best-approximation").
+  *Not* the Chebyshev interpolant.
+- Chebyshev nodes also do *not* minimize the Lebesgue constant.
 #+LATEX: \end{hidden}
+
+\demolink{interpolation}{Chebyshev Interpolation} (Part V)
 
 *** Error Result: Simplified From
 
@@ -4677,11 +4678,12 @@ Assume
 Altogether--there is a constant \(C\) independent of \(h\) so that:
 \[\max _x \abs{f (x) - p_{n - 1} (x)} \leqslant CMh^n . \]
 For the grid spacing \(h \rightarrow 0\), we have
-\[E (h) = O (h^n) . \]
+\(E (h) = O (h^n)\).
 This is called /convergence of order \(n\)/.
 #+LATEX: \end{hidden}
 
 \demolink{interpolation}{Interpolation Error}
+\demolink{interpolation}{Jump with Chebyshev Nodes}
 
 ** Piecewise interpolation, Splines
 *** Going piecewise: Simplest Case
