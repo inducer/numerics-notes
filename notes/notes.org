@@ -4662,7 +4662,7 @@ What is the connection between the error result and Chebyshev interpolation?
 
 \demolink{interpolation}{Chebyshev Interpolation} (Part V)
 
-*** Error Result: Simplified From
+*** Error Result: Simplified Form
 
 Boil the error result down to a simpler form.
 #+LATEX: \begin{hidden}
@@ -4682,13 +4682,13 @@ For the grid spacing \(h \rightarrow 0\), we have
 This is called /convergence of order \(n\)/.
 #+LATEX: \end{hidden}
 
-\demolink{interpolation}{Interpolation Error}
-\demolink{interpolation}{Jump with Chebyshev Nodes}
+- \demolink{interpolation}{Interpolation Error}
+- \demolink{interpolation}{Jump with Chebyshev Nodes}
 
 ** Piecewise interpolation, Splines
 *** Going piecewise: Simplest Case
 
-Construct a piecweise linear interpolant at four points.
+Construct a pieceweise linear interpolant at four points.
 
 #+BEGIN_CENTER
 #+BEGIN_EXPORT latex
