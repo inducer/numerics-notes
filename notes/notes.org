@@ -375,7 +375,7 @@ A function \(\norm{\B{x}} : \mathbb{R}^n \rightarrow \mathbb{R}^+_0\) is called 
 1. \(\norm{\gamma \B{x}} = \abs{\gamma } \norm{\B{x}}\) for
     all scalars \(\gamma\).
 
-1. Obeys triangle inequality \(\norm{\B{x} + \B{y}}     \leqslant \norm{\B{x}} + \norm{\B{y}}\)
+1. Obeys triangle inequality \(\norm{\B{x} + \B{y}}     \le \norm{\B{x}} + \norm{\B{y}}\)
 #+LATEX: \end{hidden}
 
 *** Norms: Examples
@@ -401,7 +401,7 @@ In finitely many dimensions, all /norms are equivalent/.
 
 I.e. for fixed \(n\) and two norms \(\norm{\cdot }, \norm{\cdot }^\ast\), there
 exist \(\alpha , \beta > 0\) so that for all vectors \(\B{x} \in  \mathbb{R}^n\)
-\[\alpha \norm{\B{x}} \leqslant \norm{\B{x}}^\ast  \leqslant
+\[\alpha \norm{\B{x}} \le \norm{\B{x}}^\ast  \le
    \beta \norm{\B{x}} . \]
 So: No, doesn't matter \emph{that much}. Will start mattering more for
 so-called /matrix norms/--see later.
@@ -513,7 +513,7 @@ What can we say about amplification of error?
 #+LATEX: \begin{hidden}
 Define
 /condition number/ as smallest number \(\kappa\) so that
-\[\abs{\text{rel. fwd. err.}} \leqslant \kappa \cdot \abs{\text{rel. bwd.
+\[\abs{\text{rel. fwd. err.}} \le \kappa \cdot \abs{\text{rel. bwd.
    err.}} \]
 Or, somewhat sloppily, with \(x / y\) notation as in previous example:
 \[\tmop{cond} = \max _x \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} /
@@ -965,7 +965,7 @@ What norms would we apply to matrices?
 \medskip
 *Instead:* Choose norms for matrices to interact
 with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
-\[\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}} . \]
+\[\norm{A \B{x}} \le \norm{A} \norm{\B{x}} . \]
 
 \medskip
 For a given vector norm, define *induced matrix norm*
@@ -1028,15 +1028,15 @@ Matrix norms inherit the vector norm properties:
 
 - \(\norm{\gamma A} = \abs{\gamma } \norm{A}\) for all scalars \(\gamma\).
 
-- Obeys triangle inequality \(\norm{A + B} \leqslant \norm{A} + \norm{B}\)
+- Obeys triangle inequality \(\norm{A + B} \le \norm{A} + \norm{B}\)
 
 But also some more properties that stem from our
 definition:
 #+LATEX: \begin{hidden}
 
-- \(\norm{A \B{x}} \leqslant \norm{A} \norm{\B{x}}\)
+- \(\norm{A \B{x}} \le \norm{A} \norm{\B{x}}\)
 
-- \(\norm{AB} \leqslant \norm{A} \norm{B}\) (easy consequence)
+- \(\norm{AB} \le \norm{A} \norm{B}\) (easy consequence)
 
 Both of these are called /submultiplicativity/ of the matrix norm.
 #+LATEX: \end{hidden}
@@ -1058,7 +1058,7 @@ Observe \(A (\B{x} + \Delta \B{x}) = (\B{b} + \Delta  \B{b})\), so \(A \Delta \B
     \frac{\norm{\Delta \B{x}} / \norm{\B{x}}}{\norm{\Delta
     \B{b}} / \norm{\B{b}}} = \frac{\norm{\Delta \B{x}}
     \norm{\B{b}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& = & \frac{\norm{A^{- 1} \Delta \B{b}} \norm{A
-    \B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& \leqslant & \norm{A^{- 1}} \norm{A} \frac{\norm{\Delta \B{b}}
+    \B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& \le & \norm{A^{- 1}} \norm{A} \frac{\norm{\Delta \B{b}}
     \norm{\B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& = & \norm{A^{- 1}} \norm{A} .
 \end{eqnarray*}
 #+LATEX: \end{hidden}
@@ -1124,7 +1124,7 @@ Divide both sides by \(\norm{\widehat{\B{x}}}\):
   \le \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A\widehat{\B{x}}}} 
 \]
 
-- \(\tmop{rel} \tmop{err} \leqslant \tmop{cond} \cdot \tmop{rel}     \tmop{resid}\)
+- \(\tmop{rel} \tmop{err} \le \tmop{cond} \cdot \tmop{rel}     \tmop{resid}\)
 
 - Given small (rel.) residual, (rel.) error is only (guaranteed to be)
   small if the condition number is also small.
@@ -1148,10 +1148,10 @@ Consider
   = - A^{- 1} \Delta A \widehat{\B{x}}.
 \]
 Thus
-\[\norm{\Delta \B{x}} \leqslant \norm{A^{- 1}} \norm{\Delta A}
+\[\norm{\Delta \B{x}} \le \norm{A^{- 1}} \norm{\Delta A}
    \norm{\widehat{\B{x}}} . \]
 And we get
-\[\frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}} \leqslant
+\[\frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}} \le
    \tmop{cond} (A) \frac{\norm{\Delta A}}{\norm{A}} . \]
 #+LATEX: \end{hidden}
 
@@ -2113,7 +2113,7 @@ Recall $\B{x}= A^+ \B{b}$. Also $\Delta
 \B{x}= A^+ \Delta \B{b}$. Take norms, divide by
 $\norm{\B{x}}_2$:
 \begin{eqnarray*}
-  \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} & \leqslant &
+  \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} & \le &
   \norm{A^+}_2 \frac{\norm{\Delta \B{b}}_2}{\norm{\B{x}}_2}\\
   & = & \frac{\kappa (A)}{\norm{A}_2 \norm{A^+}_2} \norm{A^+}_2
   \frac{\norm{\B{b}}_2}{\norm{\B{b}}_2}  \frac{\norm{\Delta
@@ -2142,7 +2142,7 @@ depends on both \(A\) and \(\B{b}\).
 What about changes in the matrix?
 #+LATEX: \begin{hidden}
 \[
-   \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \leqslant
+   \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \le
    [\tmop{cond} (A)^2 \tan (\theta ) + \tmop{cond} (A)] \cdot
    \frac{\norm{\Delta A}_2}{\norm{A}_2} . \]
 Two behaviors:
@@ -2675,20 +2675,20 @@ Suppose \(\B{v}\) is a perturbed eigenvector.
   & \Leftrightarrow & F \B{v} = (\mu I - D) \B{v}\\
   & \Leftrightarrow & (\mu I - D)^{- 1} F \B{v} = \B{v} \qquad
     \text{(when is that invertible?)}\\
-  & \Rightarrow & \norm{\B{v}} \leqslant \norm{(\mu I - D)^{- 1}}
+  & \Rightarrow & \norm{\B{v}} \le \norm{(\mu I - D)^{- 1}}
     \norm{F} \norm{\B{v}}\\
-  & \Rightarrow & \norm{(\mu I - D)^{- 1}}^{- 1} \leqslant \norm{F}
+  & \Rightarrow & \norm{(\mu I - D)^{- 1}}^{- 1} \le \norm{F}
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 *** Sensitivity (II)
 
 \(X^{- 1} (A + E) X = D + F \).
-Have \(\norm{(\mu I - D)^{- 1}}^{- 1} \leqslant \norm{F}\).
+Have \(\norm{(\mu I - D)^{- 1}}^{- 1} \le \norm{F}\).
 #+LATEX: \begin{hidden}
 \[\norm{(\mu I - D)^{- 1}}^{- 1} = | \mu - \lambda _k | \]
 where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\).
-\[\left | \mu - \lambda _k \left | = \norm{(\mu I - D)^{- 1}}^{- 1} \leqslant
-   \norm{F} = \norm{X^{- 1} EX} \leqslant \tmop{cond} (X) \norm{E} . \right .
+\[\left | \mu - \lambda _k \left | = \norm{(\mu I - D)^{- 1}}^{- 1} \le
+   \norm{F} = \norm{X^{- 1} EX} \le \tmop{cond} (X) \norm{E} . \right .
    \right . \]
 
 - This is `bad' if \(X\) is ill-conditioned, i.e. if the eigenvectors are
@@ -2895,7 +2895,7 @@ simultaneously?
 #+LATEX: \begin{hidden}
 /Simultaneous Iteration/:
 
-1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
+1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \le n\)) with
     (arbitrary) iteration vectors in columns
 
 1. \(X_{k + 1} = AX_k\)
@@ -2915,7 +2915,7 @@ Fix: orthogonalize!
 #+LATEX: \begin{hidden}
 /Orthogonal Iteration/:
 
-1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \leqslant n\)) with
+1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \le n\)) with
     (arbitrary) iteration vectors in columns
 
 1. \(Q_k R_k = X_k\) (reduced)
@@ -3228,7 +3228,7 @@ How can we show existence of a root?
   A function \(\B{g} : \mathbb{R}^n \rightarrow \mathbb{R}^n\) is called
   /contractive/ if there exists a \(0 < \gamma < 1\) so that
   \(\norm{\B{g} (\B{x}) - \B{g} (\B{y})}
-     \leqslant \gamma \norm{\B{x} - \B{y}} . \)
+     \le \gamma \norm{\B{x} - \B{y}} . \)
   A fixed point of \(\B{g}\) is a point where \(\B{g}     (\B{x}) = \B{x}\).\medskip
 
   /Then:/ On a closed set \(S \subseteq \mathbb{R}^n\) with
@@ -3301,11 +3301,11 @@ Characterize linear, quadratic convergence in terms of the
 `number of accurate digits'.
 #+LATEX: \begin{hidden}
 - Linear convergence gains a constant number of digits each step:
-  \[\norm{\B{e}_{k + 1}} \leqslant C \norm{\B{e}_k} \]
+  \[\norm{\B{e}_{k + 1}} \le C \norm{\B{e}_k} \]
   (and \(C < 1\) matters!)
 
 - Quadratic convergence
-  \[\norm{\B{e}_{k + 1}} \leqslant C \norm{\B{e}_k}^2 \]
+  \[\norm{\B{e}_{k + 1}} \le C \norm{\B{e}_k}^2 \]
   (Only starts making sense once \(\norm{\B{e}_k}\) is small. \(C\) doesn't
   matter much.)
 #+LATEX: \end{hidden}
@@ -3315,12 +3315,12 @@ Characterize linear, quadratic convergence in terms of the
 Contrast the following `alternate' definitions of convergence rate:
 \begin{eqnarray*}
   (1) \quad \frac{\norm{\B{e}_{k + 1}}}{\norm{\B{e}_k}^r} &
-    \leqslant & C
+    \le & C
   \begin{cases}
     > 0,\\< \infty .
   \end{cases}\\
-  (2) \quad 0 < C_{\tmop{low}} \leqslant \frac{\norm{\B{e}_{k +
-    1}}}{\norm{\B{e}_k}^r} & \leqslant & C_{\tmop{high}}\\(3) \quad \lim _{k \rightarrow \infty } \frac{\norm{\B{e}_{k +
+  (2) \quad 0 < C_{\tmop{low}} \le \frac{\norm{\B{e}_{k +
+    1}}}{\norm{\B{e}_k}^r} & \le & C_{\tmop{high}}\\(3) \quad \lim _{k \rightarrow \infty } \frac{\norm{\B{e}_{k +
     1}}}{\norm{\B{e}_k}^r} & = & C
   \begin{cases}
     > 0,\\< \infty .
@@ -3404,7 +3404,7 @@ Mean value theorem says: There is a \(\B{\theta }_k\) between
    . \]
 So:
 \(e_{k + 1} = g' (\theta _k) e_k \)
-and if \(\norm{g'} \leqslant C < 1\) near \(\B{x}^\ast\), then we have
+and if \(\norm{g'} \le C < 1\) near \(\B{x}^\ast\), then we have
 linear convergence with constant \(C\).\medskip
 
 *Q:* What if \(g' (x^\ast ) = 0\)?\medskip
@@ -3630,9 +3630,9 @@ Some choices, all called /Broyden's method/:
 /Want:/ *Minimizer* \(\B{x}^\ast  \in \mathbb{R}^n\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
-   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0} . \]
+   \text{and} \quad \B{h} (\B{x}) \le \B{0} . \]
 
-- \(\B{g} (\B{x}) = \B{0}\) and \(\B{h}     (\B{x}) \leqslant \B{0}\)
+- \(\B{g} (\B{x}) = \B{0}\) and \(\B{h}     (\B{x}) \le \B{0}\)
   are called *constraints*.
 
   They define the set of *feasible points* \(\B{x} \in S     \subseteq \mathbb{R}^n\).
@@ -3689,16 +3689,16 @@ a global minimum exists (but is possibly non-unique).
 
 *** Convexity
 
-\(S \subseteq \mathbb{R}^n\) is called *convex* if for all \(\B{x}, \B{y} \in S\) and all \(0 \leqslant \alpha \leqslant 1\)
+\(S \subseteq \mathbb{R}^n\) is called *convex* if for all \(\B{x}, \B{y} \in S\) and all \(0 \le \alpha \le 1\)
 #+LATEX: \begin{hidden}
 \(\alpha \B{x} + (1 - \alpha ) \B{y} \in S. \)
 #+LATEX: \end{hidden}
 
 \(f : S \rightarrow \mathbb{R}\) is called *convex on* \(S \subseteq
 \mathbb{R}^n\) if for \(\B{x}, \B{y} \in S\) and
-all \(0 \leqslant \alpha \leqslant 1\)
+all \(0 \le \alpha \le 1\)
 #+LATEX: \begin{hidden}
-\[f (\alpha \B{x} + (1 - \alpha ) \B{y} \in S) \leqslant
+\[f (\alpha \B{x} + (1 - \alpha ) \B{y} \in S) \le
     \alpha f (\B{x}) + (1 - \alpha ) f (\B{y}) . \]
     With `\(<\)': /strictly convex/.
 #+LATEX: \end{hidden}
@@ -3786,7 +3786,7 @@ Apply Taylor's theorem:
 \[f (x^\ast  + h) = f (x^\ast ) + \underbrace{f' (x^\ast )}_0 h + f''
     (x^\ast ) \frac{h^2}{2} + O (h^3) \]
 Solve for \(h\):
-\(\abs{\tilde {x} - x^\ast } \leqslant \sqrt{2 \tmop{tol} / f'' (x^\ast )}
+\(\abs{\tilde {x} - x^\ast } \le \sqrt{2 \tmop{tol} / f'' (x^\ast )}
 \).
 
 *In other words:* Can expect \emph{half as many digits} in
@@ -3811,7 +3811,7 @@ Assume \(\norm{\B{s}} = 1\).
     \B{s} + \frac{h^2}{2} \B{s}^T H_f (\B{x}^\ast ) \B{s} + O
     (h^3) \]
 Yields:
-\[\abs{h}^2 \leqslant \frac{2 \tmop{tol}}{\lambda _{\min}  (H_f
+\[\abs{h}^2 \le \frac{2 \tmop{tol}}{\lambda _{\min}  (H_f
     (\B{x}^\ast ))} . \]
 *In other words:* Conditioning of \(H_f\) determines sensitivity of
 \(\B{x^\ast }\).
@@ -3855,7 +3855,7 @@ Would like to maintain unimodality.
 #+LATEX: \begin{hidden}
 1. Pick \(x_1, x_2\)
 2. If \(f (x_1) > f (x_2)\), reduce to \((x_1, b)\)
-3. If \(f (x_1) \leqslant f (x_2)\), reduce to \((a, x_2)\)
+3. If \(f (x_1) \le f (x_2)\), reduce to \((a, x_2)\)
 #+LATEX: \end{hidden}
 
 *** Golden Section Search: Efficiency
@@ -4247,7 +4247,7 @@ So we could use any unconstrained method to minimized \(\mathcal{L}\).
 Want \(\B{x}^\ast\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
-   \text{and} \quad \B{h} (\B{x}) \leqslant \B{0}. \]
+   \text{and} \quad \B{h} (\B{x}) \le \B{0}. \]
 Develop a necessary condition for a minimum.
 
 #+LATEX: \begin{hidden}
@@ -4306,7 +4306,7 @@ rank, this set of conditions is /necessary/:
 \begin{eqnarray*}
   (\ast ) \quad \nabla _{\B{x}} \mathcal{L} (\B{x}^\ast ,
     \B{\lambda }^\ast _1, \B{\lambda }^\ast _2) & = &
-    \B{0}\\(\ast ) \quad \B{g} (\B{x}^\ast ) & = & \B{0}\\\B{h} (\B{x}^\ast ) & \leqslant & \B{0}\\\B{\lambda }_2 & \geqslant & \B{0}\\(\ast ) \quad \B{h} (\B{x}^\ast ) \cdot \B{\lambda }_2 &
+    \B{0}\\(\ast ) \quad \B{g} (\B{x}^\ast ) & = & \B{0}\\\B{h} (\B{x}^\ast ) & \le & \B{0}\\\B{\lambda }_2 & \geqslant & \B{0}\\(\ast ) \quad \B{h} (\B{x}^\ast ) \cdot \B{\lambda }_2 &
     = & 0
 \end{eqnarray*}
 These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
@@ -4669,14 +4669,14 @@ Boil the error result down to a simpler form.
 Assume
 \(x_1 < \cdots < x_n\).
 
-- \(\abs{f^{(n)} (x)} \leqslant M\) for \(x \in [x_{1,} x_n]\),
+- \(\abs{f^{(n)} (x)} \le M\) for \(x \in [x_{1,} x_n]\),
 
 - Set the interval length \(h = x_n - x_1\).
 
-    Then \(| x - x_i | \leqslant h \).
+    Then \(| x - x_i | \le h \).
 
 Altogether--there is a constant \(C\) independent of \(h\) so that:
-\[\max _x \abs{f (x) - p_{n - 1} (x)} \leqslant CMh^n . \]
+\[\max _x \abs{f (x) - p_{n - 1} (x)} \le CMh^n . \]
 For the grid spacing \(h \rightarrow 0\), we have
 \(E (h) = O (h^n)\).
 This is called /convergence of order \(n\)/.
@@ -4805,8 +4805,8 @@ Let \(\hat {f} (x) \assign f (x) + e (x)\), where \(e (x)\)
 is a perturbation.
 
 \begin{eqnarray*}
-  &  & \abs{\int _a^b f (x) \mathd x - \int _a^b \hat {f} (x) \mathd x}\\& = & \abs{\int _a^b e (x) \mathd x} \leqslant \int _a^b \abs{e (x)} \mathd x
-    \leqslant (b - a) \max _{x \in [a, b]} \abs{e (x)} .
+  &  & \abs{\int _a^b f (x) \mathd x - \int _a^b \hat {f} (x) \mathd x}\\& = & \abs{\int _a^b e (x) \mathd x} \le \int _a^b \abs{e (x)} \mathd x
+    \le (b - a) \max _{x \in [a, b]} \abs{e (x)} .
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 
@@ -4907,10 +4907,10 @@ What can you say about the accuracy of the method?
 \vspace{-3ex}
 \begin{eqnarray*}
     &  & \abs{\int _a^b f (x) \mathd x - \int _a^b p_{n - 1} (x) \mathd x}\\
-    & \leqslant & \int _a^b \abs{f (x) - p_{n - 1} (x)} \mathd x\\
-    & \leqslant & (b - a) \norm{f - p_{n - 1}}_\infty \\
-    \text{(using interpolation error)} \quad & \leqslant & C (b - a) h^n \norm{f^{(n)}}_\infty \\
-    & \leqslant & Ch^{n + 1} \norm{f^{(n)}}_\infty
+    & \le & \int _a^b \abs{f (x) - p_{n - 1} (x)} \mathd x\\
+    & \le & (b - a) \norm{f - p_{n - 1}}_\infty \\
+    \text{(using interpolation error)} \quad & \le & C (b - a) h^n \norm{f^{(n)}}_\infty \\
+    & \le & Ch^{n + 1} \norm{f^{(n)}}_\infty
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 
@@ -4968,11 +4968,12 @@ Recall
 What can you say about the stability of this method?
 #+LATEX: \begin{hidden}
 Again consider \(\hat {f} (x) = f (x) + e (x)\).
-\begin{eqnarray*}
-  &  & \abs{\sum _i \omega _i f (x_i) - \sum _i \omega _i \hat {f} (x_i)}
-   = \abs{\sum _i \omega _i e (x_i)} \leqslant \sum _i \abs{\omega _i e (x_i)}\\
-    & \leqslant & \left ( \sum _i \abs{\omega _i} \right ) \norm{e}_\infty
-\end{eqnarray*}
+\[
+  \abs{\sum _i \omega _i f (x_i) - \sum _i \omega _i \hat {f} (x_i)}
+  % = \abs{\sum _i \omega _i e (x_i)}
+  \le \sum _i \abs{\omega _i e (x_i)}
+  \le \left ( \sum _i \abs{\omega _i} \right ) \norm{e}_\infty
+\]
 *Q:* So, what quadrature weights make for bad stability bounds?
 
 *A:* Quadratures with large negative weights. (Recall: \(\sum _i \omega _i\) is fixed.)
@@ -5034,11 +5035,11 @@ alleviate smoothness requirement.
 
 What can we say about the error in the case of composite quadrature?
 #+LATEX: \begin{hidden}
-Error for one panel of length \(h\): \(\abs{\int f - p_{n - 1}} \leqslant C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
+Error for one panel of length \(h\): \(\abs{\int f - p_{n - 1}} \le C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
 \begin{eqnarray*}
     &  & \abs{\int _a^b f (x) \mathd x - \sum _{j = 1}^m \sum _{i = 1}^n
     \omega _{j, i} f (x_{j, i})}\\
-    & \leqslant & C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m (a_{j + 1} - a_j)^{n
+    & \le & C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m (a_{j + 1} - a_j)^{n
     + 1}\\
     & = & C \norm{f^{(n)}}_\infty  (a_{j + 1} - a_j)^n \sum _{j = 1}^m (a_{j +
     1} - a_j)\\& = & C \norm{f^{(n)}}_\infty  h^n (b - a),
@@ -5297,7 +5298,7 @@ Consider the perturbed problem
 Then if \(\B{f}\) is /Lipschitz continuous/ (has `bounded slope'),
 i.e.
 \[\norm{\B{f} (\B{y}) - \B{f} (\widehat{\B{y}})}
-   \leqslant L \norm{\B{y} - \widehat{\B{y}}} \]
+   \le L \norm{\B{y} - \widehat{\B{y}}} \]
 (where \(L\) is called the /Lipschitz constant/), then...
 
 #+LATEX: \begin{hidden}
@@ -5305,7 +5306,7 @@ i.e.
 - there exists a solution \(\B{y}\) in a neighborhood of \(t_0\),
     and...
 
-- \(\norm{\B{y} (t) - \widehat{\B{y}} (t)} \leqslant e^{L     (t - t_0)} \norm{\B{y}_0 - \widehat{\B{y}}_0}\)
+- \(\norm{\B{y} (t) - \widehat{\B{y}} (t)} \le e^{L     (t - t_0)} \norm{\B{y}_0 - \widehat{\B{y}}_0}\)
 #+LATEX: \end{hidden}
 
 What does this mean for uniqueness?
@@ -5361,7 +5362,7 @@ When is this stable?
 #+LATEX: \begin{hidden}
 
 \begin{tabular}{cc}
-  When \(a = \tmop{Re} \lambda > 0\): & When \(a = \tmop{Re} \lambda \leqslant      0\):\\
+  When \(a = \tmop{Re} \lambda > 0\): & When \(a = \tmop{Re} \lambda \le      0\):\\
     \includegraphics[height=2cm]{images/ivp-unstable-crop.pdf} &
     \includegraphics[height=2cm]{images/ivp-stable-crop.pdf}
 \end{tabular}
@@ -5388,7 +5389,7 @@ Find \(\B{y} (t) = V \B{w} (t)\).
 
 When is this stable?
 #+LATEX: \begin{hidden}
-When \(\tmop{Re} \lambda _i \leqslant 0\) for
+When \(\tmop{Re} \lambda _i \le 0\) for
 all eigenvalues \(\lambda _i\).
 #+LATEX: \end{hidden}
 
@@ -5504,7 +5505,7 @@ Find out when forward Euler is stable when applied to
 \begin{eqnarray*}
   y_k & = & y_{k - 1} + h \lambda y_{k - 1}\\& = & (1 + h \lambda ) y_{k - 1}\\& = & (1 + h \lambda )^k y_0
 \end{eqnarray*}
-So: stable \(\Leftrightarrow\) \(\abs{1 + h \lambda } \leqslant 1\).
+So: stable \(\Leftrightarrow\) \(\abs{1 + h \lambda } \le 1\).
 
 \(\abs{1 + h \lambda }\) is also called the *amplification factor*.
 
@@ -5527,7 +5528,7 @@ What about stability for systems, i.e.
 
 1. apply scalar analysis to components.
 
-\(\rightarrow\) Stable if \(\abs{1 + h \lambda _i} \leqslant 1\) for all
+\(\rightarrow\) Stable if \(\abs{1 + h \lambda _i} \le 1\) for all
 eigenvalues \(\lambda _i\).
 #+LATEX: \end{hidden}
 
@@ -5855,7 +5856,7 @@ Define /Green's function/
 \begin{equation*}
     G (x, y) \assign
     \begin{cases}
-    \phantom{-} \Phi (x) B_a \Phi (a) \Phi ^{- 1} (y) & y \leqslant x,\\
+    \phantom{-} \Phi (x) B_a \Phi (a) \Phi ^{- 1} (y) & y \le x,\\
     - \Phi (x) B_b \Phi (b) \Phi ^{- 1} (y) & y > x.
     \end{cases}
 \end{equation*}
@@ -5866,7 +5867,7 @@ Can verify that this solves $(\ast)$ by plug'n'chug.
 *** ODE Systems: Conditioning
 
 For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta \B{c}\):
-\[\norm{\Delta \B{y}}_\infty  \leqslant \max \left (
+\[\norm{\Delta \B{y}}_\infty  \le \max \left (
    \norm{\Phi }_\infty , \norm{G}_\infty  \right ) \left ( \norm{\Delta
    \B{c}}_1 + \int \norm{\Delta \B{b} (y)}_1 \mathd y \right ) .
 \]
