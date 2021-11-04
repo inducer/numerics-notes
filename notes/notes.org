@@ -5214,9 +5214,7 @@ Want: Function \(\B{y} : [0, T] \rightarrow \mathbb{R}^n\) so
 that
 
 - \(\B{y}^{(k)} (t) = \B{f} (t, \B{y},     \B{y}', \B{y}'', \ldots , \B{y}^{(k - 1)})\)\quad
-    (/explicit/)
-
-    or
+    (/explicit/), or
 
 - \(\B{f} (t, \B{y}, \B{y}', \B{y}'', \ldots ,     \B{y}^{(k)}) = \B{0}\)\quad (/implicit/)
 
@@ -5375,14 +5373,12 @@ When is this stable?
   \B{y}' (t) = A \B{y} (t)\\\B{y} (t_0) = \B{y}_0
 \end{array}\right . \]
 Assume \(V^{- 1} \tmop{AV} = D = \tmop{diag} (\lambda _1, \ldots , \lambda _n)\)
-diagonal.\medskip
-
-How do we find a solution?
+diagonal. Find a solution.
 #+LATEX: \begin{hidden}
 Define \(\B{w} (t) \assign V^{- 1} \B{y} (t)\). Then
 \[\B{w}' (t) = V^{- 1} \B{y'} (t) = V^{- 1} A \B{y} (t)
    = V^{- 1} \tmop{AV} \B{w} (t) = D \B{w} (t) . \]
-Now: \(n\) \emph{decoupled} IVPs (with \(\B{w}_0 = V^{- 1} \B{y}_0\)) \(\rightarrow\) Solve as in scalar case.
+Now: \(n\) \emph{decoupled} IVPs (with \(\B{w}_0 = V^{- 1} \B{y}_0\)) \(\rightarrow\) Solve as scalar.
 
 Find \(\B{y} (t) = V \B{w} (t)\).
 #+LATEX: \end{hidden}
@@ -5420,19 +5416,16 @@ obtain *Euler's method*.
 
 Use `left rectangle rule' on integral:
 #+LATEX: \begin{hidden}
-\vspace{-1ex}
+\vspace{-1.5ex}
 \[\B{y}_{k + 1} = \B{y}_k + h \B{f} (\B{y}_k) \]
-Time advancement requires /evaluating the RHS/. A method like that is called *explicit*. This
-method is called *Forward Euler*.
+Requires /evaluating the RHS/. Called an *explicit* method. *Forward Euler*.
 #+LATEX: \end{hidden}
 
 Use `right rectangle rule' on integral:
 #+LATEX: \begin{hidden}
-\vspace{-1ex}
+\vspace{-1.5ex}
 \[\B{y}_{k + 1} = \B{y}_k + h \B{f} (\B{y}_{k + 1}) \]
-Time advancement requires /solving a system of
-equations/. A method like that is called *implicit*. This
-method is called *Backward Euler*.
+Requires /solving a system of equations/. Called an *implicit* method. *Backward Euler*.
 #+LATEX: \end{hidden}
 
 \demolink{ivp_odes}{Forward Euler stability}
@@ -5447,9 +5440,7 @@ method is called *Backward Euler*.
 #+END_CENTER
 
 Let \(u_k (t)\) be the function that solves the ODE with the initial condition
-\(u_k (t_k) = y_k\).\medskip
-
-Define the *local error* at step \(k\) as...
+\(u_k (t_k) = y_k\). Define the *local error* at step \(k\) as...
 #+LATEX: \begin{hidden}
 \(\ell _k = y_k - u_{k - 1} (t_k)\)
 #+LATEX: \end{hidden}
@@ -5511,7 +5502,7 @@ So: stable \(\Leftrightarrow\) \(\abs{1 + h \lambda } \le 1\).
 
 Gives rise to the *stability region* in the complex plane:
 #+BEGIN_CENTER
-#+ATTR_LATEX: :height 3cm
+#+ATTR_LATEX: :height 2.5cm
 [[./images/fw-euler-stab-reg-crop.pdf]]
 #+END_CENTER
 #+LATEX: \end{hidden}
@@ -5806,8 +5797,8 @@ No--need second order
 (or \(n \geqslant 2\)) to allow two boundary conditions.
 #+LATEX: \end{hidden}
 
-*Example:* Linear BCs
-\[B_a \B{y} (a) + B_b \B{y} (b) = \B{c} \]
+*Example:* Linear BCs \(B_a \B{y} (a) + B_b \B{y} (b) = \B{c} \).
+
 Is this Dirichlet/Neumann/...?
 #+LATEX: \begin{hidden}
 Could be any--we're in the system
@@ -5984,7 +5975,7 @@ integration by parts:
    (x) \psi ' (x) \mathd x. \]
    
 - Also called *weighted residual* methods.
-- Can view collocation as a type of WR method with \(\psi_j(x)=\delta(x-x_j)\)
+- Can view collocation as a WR method with \(\psi_j(x)=\delta(x-x_j)\)
 #+LATEX: \end{hidden}
 
 *** Galerkin: Choices in Weak Solutions
@@ -6165,7 +6156,7 @@ How do we generate the \(\B{s}_k\)?
 - Generate next one by orthogonalizing from Krylov space procedure
   \(\B{z}, A \B{z}, A^2 \B{z} \)
 
-  Insight: Use three-term Lanczos iteration to generate. \(\rightarrow\) cheap!
+  *Insight:* Use three-term Lanczos it. to generate. \(\rightarrow\) cheap!
 #+LATEX: \end{hidden}
 
 \demolink{pdes}{Conjugate Gradient Method}
@@ -6264,3 +6255,4 @@ Three main types of PDEs:
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: misc
   :END:
+# do not delete this section: the sympy demo attaches to this
