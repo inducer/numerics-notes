@@ -4814,11 +4814,14 @@ is a perturbation.
 
 *** Interpolatory Quadrature
 
-Design a quadrature method based on
-interpolation.
+Design a quadrature method based on interpolation.
 #+LATEX: \begin{hidden}
-*Idea:* The result ought to be a linear (Q:
-why linear?) combination of a few function values.
+With interpolation: $f(x)\approx\sum_{i=1}^n \alpha_i \phi_i(x)$. Then
+\[\int_a^b f(x) dx\approx \int_a^b \sum_{i=1}^n \alpha_i \phi_i(x) dx=\sum_{i=1}^n \alpha_i \int_a^b \phi_i(x) dx.\]
+
+$\alpha_i$ are linear combination of function values $(f(x_i))_{i=1}^n$.
+
+*Want:*
 \[\int _a^b f (x) \mathd x \approx \sum _{i = 1}^n \omega _i f (x_i) \]
 Then: /nodes/ \((x_i)\) and /weights/ \((\omega _i)\) together make a
 quadrature rule.\medskip
@@ -4839,7 +4842,7 @@ where \(\ell _i (x)\) is the Lagrange polynomial for the node \(x_i\). Then
 - With polynomials and (often) equispaced nodes, this is called
   *Newton-Cotes quadrature*.
 
-- With Chebyshev nodes and Chebyshev weights, this is called
+- With Chebyshev nodes and (Chebyshev or other) polynomials , this is called
   *Clenshaw-Curtis quadrature*.
 #+LATEX: \end{hidden}
 
@@ -4870,7 +4873,6 @@ exactly.
 
 To what polynomial degree are the following rules exact?
 
-
 \begin{tabular}{lll}
     \tmem{Midpoint rule} & \((b - a) f \left ( \frac{a + b}{2} \right )\) &
     \includegraphics[height=1cm]{images/midpoint-rule-crop.pdf}\\
@@ -4880,16 +4882,14 @@ To what polynomial degree are the following rules exact?
     & \includegraphics[height=1cm]{images/simpsons-rule-crop.pdf}
 \end{tabular}
 #+LATEX: \begin{hidden}
-Answers:
+*Midpoint:* technically 0 (constants), actually 1 (linears)
 
-- Midpoint: technically 0 (constants), actually 1 (linears)
+*Trapezoidal:* 1 (linears)
 
-- Trapezoidal: 1 (linears)
+*Simpson's:* technically 2 (parabolas), actually 3 (cubics)
 
-- Simpson's: technically 2 (parabolas), actually 3 (cubics)
-
-*Idea:* Could use difference between trapezoidal and midpoint rule as
-an error estimate.
+- Cancellation of odd-order error requires symmetric nodes.
+- $(\text{trapz.}-\text{midpt.})$ usable as (/"a-posteriori"/) error estimate.
 #+LATEX: \end{hidden}
 
 ** Accuracy and Stability
@@ -4928,7 +4928,7 @@ What can you say about the accuracy of the method?
     Midp. & 1 & 0 & 1 & 1 & 2 & 3\\
     Trapz. & 2 & 1 & 1 & 2 & 3 & 3\\
     Simps. & 3 & 2 & 3 & 3 & 4 & 5\\\
-    --- & 4 & 3 & 3 & 4 & 5 & 5
+    S. $3/8$ & 4 & 3 & 3 & 4 & 5 & 5
 \end{tabular}\medskip
 #+END_EXPORT
 
@@ -4974,30 +4974,29 @@ Again consider \(\hat {f} (x) = f (x) + e (x)\).
   \le \sum _i \abs{\omega _i e (x_i)}
   \le \left ( \sum _i \abs{\omega _i} \right ) \norm{e}_\infty
 \]
-*Q:* So, what quadrature weights make for bad stability bounds?
+#+LATEX: \end{hidden}
+So, what quadrature weights make for bad stability bounds?
 
-*A:* Quadratures with large negative weights. (Recall: \(\sum _i \omega _i\) is fixed.)
+#+LATEX: \begin{hidden}
+Quadratures with large negative weights. (Recall: \(\sum _i \omega _i\) is fixed.)
 #+LATEX: \end{hidden}
 
 *** About Newton-Cotes
 
-What's not to like about Newton-Cotes
-quadrature?
-#+LATEX: \begin{hidden}
+What's not to like about Newton-Cotes quadrature?
+
 \demolink{quadrature_and_diff}{Newton-Cotes weight finder} (again, with many nodes)
 
-In fact, Newton-Cotes must have at least one negative weight as soon as \(n \geqslant 11\).\medskip
+#+LATEX: \begin{hidden}
+In fact, Newton-Cotes must have at least one negative weight as soon as \(n \geqslant 11\).
 
+\medskip
 More drawbacks:
 
 - All the fun of high-order interpolation with monomials and equispaced
-    nodes (i.e. convergence not guaranteed)
-
+  nodes (i.e. convergence not guaranteed)
 - Weights possibly non-negative (\(\rightarrow\)stability issues)
-
-- Coefficients determined by (possibly ill-conditioned) Vandermonde
-    matrix
-
+- Coefficients determined by (possibly ill-conditioned) Vandermonde matrix
 - Thus hard to extend to arbitrary number of points.
 #+LATEX: \end{hidden}
 
