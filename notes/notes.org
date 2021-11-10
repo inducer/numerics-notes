@@ -6,7 +6,7 @@
 
 * LaTeX header setup stuff                                         :noexport:
 
-#+startup: beamer content
+#+startup: beamer content indent
 #+LATEX_CLASS: beamer
 #+LaTeX_CLASS_OPTIONS: [aspectratio=149]
 
