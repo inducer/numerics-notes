@@ -3617,6 +3617,21 @@ Some choices, all called /Broyden's method/:
   
 #+LATEX: \end{hidden}
 
+*** Numerically Testing Derivatives
+
+Getting derivatives right is important. How can I test/debug them?
+#+LATEX: \begin{hidden}
+Verify convergence of the Taylor remainder by checking that, for a unit vector $\B s$ and an input vector $\B x$,
+
+\[\left\|\frac{\B f(\B x +h \B s) - \B f(\B x)}h - J_{\B f}(\B x) \B s\right\|\to 0\quad \text{as $h\to 0$}.\]
+
+- Same trick can be used to check the Hessian (needed in optimization):
+  It is the Jacobian of the gradient. 
+- Norm is not necessarily small. Convergence (i.e. decrease with $h$) matters.
+- Important to divide by $h$, so that the norm is $O(1)$.
+- Can "bootstrap" the derivatives: do the above one term at a time.
+#+LATEX: \end{hidden}
+
 * Optimization
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: optimization
@@ -3880,7 +3895,6 @@ Convergence rate?
 #+LATEX: \begin{hidden}
 Linearly convergent. Can we do better?
 #+LATEX: \end{hidden}
-
 
 *** Newton's Method
     
