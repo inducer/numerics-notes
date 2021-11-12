@@ -5048,16 +5048,14 @@ alleviate smoothness requirement.
 
 What can we say about the error in the case of composite quadrature?
 #+LATEX: \begin{hidden}
-Error for one panel of length \(h\): \(\abs{\int f - p_{n - 1}} \le C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
-\begin{eqnarray*}
-    &  & \abs{\int _a^b f (x) \mathd x - \sum _{j = 1}^m \sum _{i = 1}^n
-    \omega _{j, i} f (x_{j, i})}\\
-    & \le & C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m (a_{j + 1} - a_j)^{n
-    + 1}\\
-    & = & C \norm{f^{(n)}}_\infty  (a_{j + 1} - a_j)^n \sum _{j = 1}^m (a_{j +
-    1} - a_j)\\& = & C \norm{f^{(n)}}_\infty  h^n (b - a),
-\end{eqnarray*}
-where \(h\) is now the length of a single panel.
+Error for one panel of length \(h\): \(\abs{\int (f - p_{n - 1})} \le C \cdot h^{n + 1} \norm{f^{ (n)}}_\infty\)
+\begin{gather*}
+    \abs{\int _a^b f (x) \mathd x - \sum _{j = 1}^m \sum _{i = 1}^n \omega _{j, i} f (x_{j, i})}
+     \le C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m (a_j - a_{j-1})^{n + 1}\\
+    = C \norm{f^{(n)}}_\infty  \sum _{j = 1}^m \underbrace{(a_j - a_{j-1})^n}_{\le h^n} (a_j - a_{j-1})
+    \le C \norm{f^{(n)}}_\infty  h^n (b - a),
+\end{gather*}
+where \(h\) is the length of a single panel.
 #+LATEX: \end{hidden}
 
 *** Composite Quadrature: Notes
