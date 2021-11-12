@@ -5135,38 +5135,57 @@ formulas.
 ** Richardson Extrapolation
 *** Richardson Extrapolation
 
-If we have two estimates of something, can we get a third that's
-more accurate? Suppose we have an approximation
-\(F = \tilde {F} (h) + O (h^p) \)
-and we know \(\tilde {F} (h_1)\) \emph{and} \(\tilde {F} (h_2)\).
+Deriving high-order methods is hard work. Can I just do multiple
+low-order approximations (with different $h$ and get a high-order one out?
+
+\medskip
+Suppose we have \(F = \tilde {F} (h) + O (h^p) \)
+and \(\tilde {F} (h_1)\) /and/ \(\tilde {F} (h_2)\).
 #+LATEX: \begin{hidden}
 Grab one more term of the Taylor series: \(F = \tilde {F} (h) + ah^p + O (h^q) \)
 
-Typically: \(q = p + 1\) (but not necessarily).\medskip
+Typically: \(q = p + 1\) (but not necessarily). Do *not* know $a$.
 
+\medskip
 *Idea:* Construct new approximation with the goal of \(O (h^q)\)
 accuracy:
 \[F = \alpha \tilde {F} (h_1) + \beta \tilde {F} (h_2) + O (h^q) \]
-To get this, must have
-\(\alpha ah_1^p + \beta ah_2^p = 0. \)
-Also require \(\alpha + \beta = 1\).
-\begin{eqnarray*}
-  \alpha (h_1^p - h_2^p) + 1 h_2^p & = & 0\\\alpha & = & \frac{- h_2^p}{h_1^p - h_2^p}
-\end{eqnarray*}
+\vspace{-2ex}
+- Need \(\alpha ah_1^p + \beta ah_2^p = 0\)
+- Need $\alpha + \beta = 1$ ($\Leftrightarrow \beta=1-\alpha$) (maintain low-order terms!)
+
+\vspace{-2ex}
+\[
+  \alpha (h_1^p - h_2^p) + 1 h_2^p  = 0
+  \quad\Leftrightarrow\quad
+  \alpha = \frac{- h_2^p}{h_1^p - h_2^p}
+\]
 #+LATEX: \end{hidden}
 
-*** Richardson Extrapolation: Observations, Romberg Integration
+*** Richardson Extrapolation: Observations, 
 
-Important observation: Never needed to know \(a\).\medskip
+What are $\alpha$ and $\beta$ for a first-order (e.g. finite-difference) method if we choose $h_2=h_1/2$?
+#+LATEX: \begin{hidden}
+$p=1$.
+\[
+\alpha= \frac{- h_2^p}{h_1^p - h_2^p}= \frac{-\frac12}{1-\frac12}=-1, \qquad
+\beta=1-\alpha=2.
+\]
+#+LATEX: \end{hidden}
 
-*Idea:* Can repeat this for even higher accuracy.
+\demolink{quadrature_and_diff}{Richardson with Finite Differences}
 
+*** Romberg Integration
+
+Can this be used to get /even higher order/ accuracy?
+
+#+LATEX: \begin{hidden}
 #+ATTR_LATEX: :height 4cm
 [[./images/repeated-richardson-crop.pdf]]
 
 Carrying out this process for quadrature is called *Romberg integration*.
+#+LATEX: \end{hidden}
 
-\demolink{quadrature_and_diff}{Richardson with Finite Differences}
 
 *** In-Class Activity: Differentiation and Quadrature
   :PROPERTIES:
