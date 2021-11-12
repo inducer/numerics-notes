@@ -5096,9 +5096,127 @@ Why /shouldn't/ you take derivatives numerically?
     (where \(n\) is the number of points)
 #+LATEX: \end{hidden}
 
+*** Numerical Differentiation: How?
+
+How can we take derivatives numerically?
+
+Let $(x_i)_{i = 1}^n$ be interpolation nodes and $(\varphi_i)_{i = 1}^n$ an
+interpolation basis.
+
+#+LATEX: \begin{hidden}
+Then, with $\B{\alpha}= (\alpha_i)_{i = 1}^n = V^{- 1} f
+(\B{x})$, interpolation gives:
+\begin{eqnarray*}
+  f (\xi) \approx p_{n - 1} (\xi) & = & \sum_{i = 1}^n \alpha_i \varphi_i
+  (\xi),
+\end{eqnarray*}
+Then, simply take a derivative:
+\begin{eqnarray*}
+  f' (\xi) \approx p_{n - 1}' (\xi) & = & \sum_{i = 1}^n \alpha_i \varphi_i'
+  (\xi) .
+\end{eqnarray*}
+$\varphi_i'$ are known because the interpolation basis $\varphi_i$ is known!
+#+LATEX: \end{hidden}
+
 \demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
 
-*** Finite Differences
+*** Numerical Differentiation: Accuracy
+
+How accurate is numerical differentiation (with a polynomial basis)?
+
+#+LATEX: \begin{hidden}
+Recall from interpolation error:
+If $f (\B{x}) = p_{n - 1} (\B{x})$, then
+\[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi)}{n!} \prod_{i = 1}^n (x - x_i).\]
+Thus
+\[ f' (x) - p_{n - 1}' (x) = \frac{f^{(n)} (\xi)}{n!} \left( \prod_{i =
+   1}^n (x - x_i) \right)', \]
+so
+\[ \abs{f' (x) - p_{n - 1} (x)} \leqslant C \norm{f^{(n)} (\theta)}_{\infty}
+   h^{n - 1} . \]
+#+LATEX: \end{hidden}
+*** Differentiation Matrices
+
+How can numerical differentiation be cast as a matrix-vector operation?
+
+#+LATEX: \begin{hidden}
+Let
+\[ V' = \begin{bmatrix}
+     \varphi_1' (x_1) & \cdots & \varphi_n' (x_1)\\
+     \vdots & \ddots & \vdots\\
+     \varphi'_1 (x_n) & \cdots & \varphi_n' (x_n)
+   \end{bmatrix} .
+\]
+Then altogether:
+\[f' (\B{x}) \approx p_{n - 1} (\B{x}) = V' \B{\alpha}= V' V^{- 1} f (\B{x}) .\]
+
+So $D = V' V^{- 1}$ acts as a differentiation matrix.
+#+LATEX: \end{hidden}
+
+*** Properties of Differentiation Matrices
+
+How do I find second derivatives?
+
+#+LATEX: \begin{hidden}
+$D^2$.
+#+LATEX: \end{hidden}
+
+Does $D$ have a nullspace?
+
+#+LATEX: \begin{hidden}
+- Yes, constant vectors.
+
+  (At least for polynomial interpolation bases.)
+
+- I.e. rows of differentiation matrices always sum to 0.
+#+LATEX: \end{hidden}
+
+*** Numerical Differentiation: Shift and Scale
+
+Does $D$ change if we shift the nodes $(x_i)_{i = 1}^n \rightarrow (x_i +
+c)_{i = 1}^n$?
+
+#+LATEX: \begin{hidden}
+Let $\tilde{f} (x) = f (x - c)$. Define
+$\tilde{p}_{n - 1}$ via $\tilde{p}_{n - 1} (\B{x}+ c) = \tilde{f} (\B{x}+ c)$. Then $\tilde{p}_{n - 1}
+(x) = p_{n - 1} (x - c)$ for all $x$ because polynomial bases of degree
+$\leqslant n - 1$ are closed under translation, i.e. a shifted basis again
+consists of polynomials of degree $\leqslant n - 1$. Thus $\tilde{p}_{n - 1}'
+(\B{x}+ c) = p_{n - 1}' (\B{x})$. In other words,
+$D_{\B{x}} = D_{\B{x}+ c}$.
+#+LATEX: \end{hidden}
+
+Does $D$ change if we scale the nodes $(x_i)_{i = 1}^n \rightarrow (\alpha
+x_i)_{i = 1}^n$?
+
+#+LATEX: \begin{hidden}
+Let $\tilde{f} (x) = f (x / \alpha)$. Define $\tilde{p}_{n - 1}$ via
+$\tilde{p}_{n - 1} (\alpha \B{x}) = \tilde{f} (\alpha \B{x})$.
+Then $\tilde{p}_{n - 1} (x) = p_{n - 1} (x / \alpha)$ for all $x$ because
+polynomial bases of degree $\leqslant n - 1$ are closed under dilation, i.e. a
+dilated basis again consist of polynomials of degree $\leqslant n - 1$. Thus
+$\tilde{p}_{n - 1}' (\B{x}) = p_{n - 1}' (\B{x}/ \alpha) /
+\alpha$, or $\tilde{p}_{n - 1}' (\alpha \B{x}) = p_{n - 1}'
+(\B{x}) / \alpha$. In other words, $D_{\alpha \B{x}} =
+D_{\B{x}} / \alpha$.
+#+LATEX: \end{hidden}
+
+*** Finite Difference Formulas from Diff. Matrices
+
+How do the rows of a differentiation matrix relate to finite difference
+formulas?
+
+#+LATEX: \begin{hidden}
+Let $D = (d_{i, j})_{i, j = 1}^n$. Then
+\[ f' (x_i) \approx \sum_{j = 1}^n d_{i, j} f (x_j) . \]
+For example, if $D$ is $3 \times 3$, then \dots
+
+- the first row contains an FD formula $f' (x_1) \approx d_{1,1} f (x_1) + d_{1,2} f (x_2) + d_{1,3} f (x_3)$,
+
+- the second row contains an FD formula $f' (x_2) \approx d_{2,1} f (x_1) + d_{2,2} f (x_2) + d_{2,3} f (x_3)$, \dots
+#+LATEX: \end{hidden}
+
+*** Finite Differences: via Taylor
 
 #+LATEX: \begin{hidden}
 Idea: Start from definition of derivative.
