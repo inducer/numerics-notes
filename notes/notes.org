@@ -5235,6 +5235,9 @@ Carrying out this process for quadrature is called *Romberg integration*.
         \item temperature
 
         (steady state)
+        \item waves
+
+        (time-harmonic)
   \end{itemize}\\\hline
 \end{tabular}
 
@@ -5280,6 +5283,8 @@ In first-order form:
 \end{bmatrix} \]
 Because:
 \[y_1'' (t) = (y_1' (t))' = y_2' (t) = f (y_1 (t)) . \]
+
+So we can design our methods to only handle first-order problems.
 #+LATEX: \end{hidden}
 
 *** Properties of ODEs
