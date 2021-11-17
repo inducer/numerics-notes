@@ -5368,6 +5368,9 @@ Carrying out this process for quadrature is called *Romberg integration*.
   \end{itemize}\\\hline
 \end{tabular}
 
+\medskip
+\demolink{ivp_odes}{Predator-Prey System}
+
 *** Initial Value Problems: Problem Statement
 
 Want: Function \(\B{y} : [0, T] \rightarrow \mathbb{R}^n\) so
