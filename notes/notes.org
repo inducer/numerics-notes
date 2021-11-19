@@ -4555,7 +4555,7 @@ But how can I practically compute the Legendre polynomials?
 #+LATEX: \begin{hidden}
 \(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
 
-- There exist three-term recurrences, e.g.: \(T_{n+1}=2xT_n -T_{n+1}\)
+- There exist three-term recurrences, e.g.: \(T_{n+1}=2xT_n -T_{n-1}\)
 - There is a whole zoo of polynomials there, depending on the weight
   function \(w\) in the (generalized) inner product:
   \[\ip{f}{g} = \int w (x) f (x) g (x) \mathd x. \]
