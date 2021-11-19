@@ -5421,7 +5421,7 @@ So we can design our methods to only handle first-order problems.
 
 What is a *linear* ODE?
 #+LATEX: \begin{hidden}
-\(\B{f} (t, \B{x}) = A (t) \B{x} + \B{b}\)
+\(\B{f} (t, \B{x}) = A (t) \B{x} + \B{b}(t)\)
 #+LATEX: \end{hidden}
 
 What is a *linear and homogeneous* ODE?
@@ -5431,7 +5431,7 @@ What is a *linear and homogeneous* ODE?
 
 What is a *constant-coefficient* ODE?
 #+LATEX: \begin{hidden}
-\(\B{f} (t, \B{x}) = A \B{x}\)
+\(\B{f} (t, \B{x}) = A \B{x}+\B b\)
 #+LATEX: \end{hidden}
 
 *** Properties of ODEs (II)
@@ -5517,6 +5517,7 @@ An ODE is *asymptotically stable* if and only if
 \end{array}\right . \quad \text{where} \quad \lambda = a + ib \]
 Solution?
 #+LATEX: \begin{hidden}
+\vspace{-2ex}
 \[y (t) = y_0 e^{\lambda t} = y_0 (e^{at} \cdot
    e^{ibt}) \]
 #+LATEX: \end{hidden}
@@ -5524,11 +5525,53 @@ Solution?
 When is this stable?
 #+LATEX: \begin{hidden}
 
-\begin{tabular}{cc}
-  When \(a = \tmop{Re} \lambda > 0\): & When \(a = \tmop{Re} \lambda \le      0\):\\
-    \includegraphics[height=2cm]{images/ivp-unstable-crop.pdf} &
-    \includegraphics[height=2cm]{images/ivp-stable-crop.pdf}
-\end{tabular}
+**** Unstable
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_opt: [t]
+:END:
+$\operatorname{Re}(t) < 0$:
+\begin{tikzpicture}[domain=0:2,scale=0.8]
+  \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
+  \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
+  \foreach \c/\alpha in {0.3/0.1, 0.4/0.2, 0.5/0.3, 0.6/0.4}
+  \draw[color=orange] plot (\x,{\c*exp(\alpha*\x)});
+\end{tikzpicture}
+Unstable
+
+**** Stable
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_opt: [t]
+:END:
+$\operatorname{Re}(t) = 0$:
+\begin{tikzpicture}[domain=0:2,scale=0.8]
+  \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
+  \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
+  \foreach \c/\alpha in {0.3/0, 0.4/0, 0.5/0, 0.6/0}
+  \draw[color=orange] plot (\x,{\c*exp(\alpha*\x)});
+\end{tikzpicture}
+Stable, not asympt. stable
+
+**** Asymptotically stable
+:PROPERTIES:
+:BEAMER_col: 0.3
+:BEAMER_opt: [t]
+:END:
+
+$\operatorname{Re}(t) = 0$:
+\begin{tikzpicture}[domain=0:2,scale=0.8]
+  \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
+  \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
+  \foreach \c/\alpha in {0.7/-1.5, 0.9/-1.1, 1.1/-0.7, 1.3/-0.3}
+  \draw[color=orange] plot (\x,{\c*exp(\alpha*\x)});
+\end{tikzpicture}
+Asymptotically stable
+**** End cols
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+
 #+LATEX: \end{hidden}
 
 *** Example II: Constant-Coefficient System
@@ -5789,8 +5832,9 @@ In terms of accuracy: no.
 *** Predictor-Corrector Methods
 
 *Idea:* Obtain intermediate result, improve it (with same or
-different method).\medskip
+different method).
 
+#+LATEX: \begin{hidden}
 For example:
 
 1. /Predict/ with forward Euler: \(\tilde {y}_{k + 1} = y_k + hf     (y_k)\)
@@ -5798,22 +5842,24 @@ For example:
 1. /Correct/ with the trapezoidal rule: \(y_{k + 1} = y_k +     \frac{h}{2} (f (y_k) + f (\tilde {y}_{k + 1})) .\)
 
 This is called *Heun's method*.
+#+LATEX: \end{hidden}
 
 *** Runge-Kutta/`Single-step'/`Multi-Stage' Methods
 
-*Idea:* Compute intermediate `stage values':
-
+*Idea:* Compute intermediate `stage values', compute new state from those:
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
 \begin{eqnarray*}
   r_1 & = & f (t_k + {\color[HTML]{008000}c_1} h, y_k +
     (\tmcolor{blue}{a_{11}} \cdot r_1 + \cdots + \tmcolor{blue}{a_{1 s}} \cdot
     r_s) h)\\\vdots &  & \vdots \\r_s & = & f (t_k + {\color[HTML]{008000}c_s} h, y_k + (\tmcolor{blue}{a_{s
     1}} \cdot r_1 + \cdots + \tmcolor{blue}{a_{s s}} \cdot r_s) h)
 \end{eqnarray*}
-Then compute the new state from those:
-\[y_{k + 1} = y_k + (\tmcolor{red}{b_1} \cdot r_1 + \cdots +
-   \tmcolor{red}{b_s} \cdot r_s) h \]
-Can summarize in a /Butcher tableau/: \medskip
+\[y_{k + 1} = y_k + (\tmcolor{red}{b_1} \cdot r_1 + \cdots + \tmcolor{red}{b_s} \cdot r_s) h \]
+#+LATEX: \end{hidden}
+Can summarize in a /Butcher tableau/:
 
+#+LATEX: \begin{hidden}
 #+BEGIN_CENTER
 \begin{tabular}{l|lll}
   \({\color[HTML]{008000}c_1}\) & \(\tmcolor{blue}{a_{11}}\) & \(\cdots\) &
@@ -5822,6 +5868,7 @@ Can summarize in a /Butcher tableau/: \medskip
       & \(\tmcolor{red}{b_1}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s}\)
 \end{tabular}
 #+END_CENTER
+#+LATEX: \end{hidden}
 
 *** Runge-Kutta: Properties
 When is an RK method explicit?
@@ -5853,14 +5900,47 @@ Stuff Heun's method into a Butcher tableau:
 #+LATEX: \begin{hidden}
 
 \begin{tabular}{l|ll}
-  0 &  & \\1 & 1 & \\\hline
-    & \(\frac{1}{2}\) & \(\frac{1}{2}\)
+  0 &  & \\
+  1 & 1 & \\\hline
+  & \(\frac{1}{2}\) & \(\frac{1}{2}\)
 \end{tabular}
 #+LATEX: \end{hidden}
-
+*** RK4
 What is RK4?
 #+LATEX: \begin{hidden}
-(See Wikipedia page, note similarity to Simpson's rule.)
+
+**** Butcher
+:PROPERTIES:
+:BEAMER_col: 0.4
+:END:
+\begin{tabular}{l|llll}
+  0 &  & \\
+  $\frac12$ & $\frac12$ & \\
+  $\frac12$ & 0 & $\frac12$ & \\
+  1 & 0 & 1 & \\ \hline
+  & $\frac16$ & $\frac13$ & $\frac13$ & $\frac16$
+\end{tabular}
+
+\medskip
+Note similarity to Simpson's rule!
+
+**** Formulas
+:PROPERTIES:
+:BEAMER_col: 0.6
+:END:
+\begin{align*}
+  k_1 &= \ f(t_n, y_n), \\
+  k_2 &= \ f\left(t_n + \frac{h}{2}, y_n + h\frac{k_1}{2}\right), \\ 
+  k_3 &= \ f\left(t_n + \frac{h}{2}, y_n + h\frac{k_2}{2}\right), \\
+  k_4 &= \ f\left(t_n + h, y_n + hk_3\right)\\
+  y_{n+1} &= y_n + \frac{1}{6}h\left(k_1 + 2k_2 + 2k_3 + k_4 \right),
+\end{align*}
+
+**** End col
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+
 #+LATEX: \end{hidden}
 
 \demolink{ivp_odes}{Dissipation in Runge-Kutta Methods}
@@ -5869,9 +5949,11 @@ What is RK4?
 
 *Idea:* Instead of computing stage values, use \emph{history} (of
 either values of \(f\) or \(y\)--or both):
+#+LATEX: \begin{hidden}
 \[y_{k + 1} = \sum _{i = 1}^M \alpha _i y_{k + 1 - i} + h \sum _{i = 1}^N
    \beta _i f (y_{k + 1 - i}) \]
 Extensions to implicit possible.
+#+LATEX: \end{hidden}
 
 Method relies on existence of history. What if there isn't any?
 (Such as at the start of time integration?)
