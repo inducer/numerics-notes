@@ -4392,16 +4392,19 @@ within range of numerical operations.
 *** Making the Interpolation Problem Unique
 
 #+LATEX: \begin{hidden}
-Limit the set of functions to span of an /interpolation basis/ \(\varphi _i\).\medskip
+Limit the set of functions to span of an /interpolation basis/ \(\{\varphi _i\}_{i=1}^{N_{\tmop{Func}}}\):
 \[f (x) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
+\vspace{-3ex}
+
 Interpolation becomes solving the linear system:
 \[y_i = f (x_i) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j
    \underbrace{\varphi _j (x_i)}_{V_{i j}} \qquad \leftrightarrow \qquad V
    \B{\alpha } = \B{y} . \]
-\vspace{-1ex}
+\vspace{-3ex}
 - Want unique answer: Pick \(N_{\tmop{func}} = N\) \(\rightarrow\) \(V\) square.
 - \(V\) is called the /(generalized) Vandermonde matrix/.
 - \(V ( \text{coefficients} ) = ( \text{values at nodes} ) \).
+- Can prescribe derivatives: Use $\varphi_j'$, $f'$ in a row. (*Hermite interp.*)
 #+LATEX: \end{hidden}
 
 *** Existence/Sensitivity
