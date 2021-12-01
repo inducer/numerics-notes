@@ -5920,7 +5920,7 @@ What is RK4?
   0 &  & \\
   $\frac12$ & $\frac12$ & \\
   $\frac12$ & 0 & $\frac12$ & \\
-  1 & 0 & 1 & \\ \hline
+  1 & 0 & 0 & 1 & \\ \hline
   & $\frac16$ & $\frac13$ & $\frac13$ & $\frac16$
 \end{tabular}
 
