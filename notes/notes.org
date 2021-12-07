@@ -6332,10 +6332,13 @@ Assume \(A\) is symmetric positive definite.
 
 *Idea:* View solving \(A \B{x} = \B{b}\) as an
 optimization problem.
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
 \[\text{Minimize} \quad \varphi (\B{x}) = \frac{1}{2} \B{x}^T
    A \B{x} - \B{x}^T \B{b} \quad \Leftrightarrow \quad
    \text{Solve} \quad A \B{x} = \B{b} . \]
 Observe \(- \nabla \varphi (\B{x}) = \B{b} - A \B{x} = \B{r}\) (residual).\medskip
+#+LATEX: \end{hidden}
 
 Use an iterative procedure (\(\B{s}_k\) is the search direction):
 
@@ -6350,14 +6353,14 @@ What should we choose for \(\alpha _k\) (assuming we know \(\B{s}_k\))?
 \begin{eqnarray*}
   0 & \overset{!}{=} & \frac{\partial }{\partial \alpha } \varphi
     (\B{x}_k + \alpha _k \B{s}_k)\\& = & \nabla \varphi (\B{x}_{k + 1}) \cdot \B{s}_k =
-    \B{r}_{k + 1} \cdot \B{s}_k .
+    -\B{r}_{k + 1} \cdot \B{s}_k .
 \end{eqnarray*}
 *Learned:* Choose \(\alpha\) so that next residual is \(\perp\) to
 current search direction.
 \begin{eqnarray*}
-  \B{r}_{k + 1} & = & \B{r}_k + \alpha _k A \B{s}_k\\0 \overset{!}{=} \tmcolor{blue}{\B{s}_k^T} \B{r}_{k + 1} & = &
-    \tmcolor{blue}{\B{s}_k^T} \B{r}_k + \alpha _k
-    \tmcolor{blue}{\B{s}_k^T} A \B{s}_k
+  \B{r}_{k + 1} & = & \B{r}_k - \alpha _k A \B{s}_k\\
+    0 \overset{!}{=} \tmcolor{blue}{\B{s}_k^T} \B{r}_{k + 1}
+    & = & \tmcolor{blue}{\B{s}_k^T} \B{r}_k - \alpha _k \tmcolor{blue}{\B{s}_k^T} A \B{s}_k
 \end{eqnarray*}
 Solve:
 \[\alpha _k = \frac{\B{s}_k^T \B{r}_k}{\B{s}_k^T A
@@ -6391,7 +6394,7 @@ View error as linear combination of search directions, with some (thus far unkno
 #+LATEX: \begin{hidden}
 \[\B{s}_k^T A \B{e}_0 = \sum _i \delta _i \B{s}_k^T A
    \B{s}_i = \delta _k \B{s}_k^T A \B{s}_k . \]
-Then
+Solve for $\delta_k$ and expand:
 \begin{eqnarray*}
   \delta _k & = & \frac{\B{s}_k^T A \B{e}_0}{\B{s}_k^T A
     \B{s}_k} = \frac{\B{s}_k A \left ( \B{e}_0 + \sum _{i =
