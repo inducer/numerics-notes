@@ -6395,11 +6395,9 @@ View error as linear combination of search directions, with some (thus far unkno
    \B{s}_i = \delta _k \B{s}_k^T A \B{s}_k . \]
 Solve for $\delta_k$ and expand:
 \begin{eqnarray*}
-  \delta _k & = & \frac{\B{s}_k^T A \B{e}_0}{\B{s}_k^T A
-    \B{s}_k} = \frac{\B{s}_k A \left ( \B{e}_0 + \sum _{i =
-    1}^{k - 1} \alpha _i \B{s}_i \right )}{\B{s}_k^T A
-    \B{s}_k} = \frac{\B{s}_k^T A \B{e}_k}{\B{s}_k^T
-    A \B{s}_k} = - \alpha _k .
+  \delta _k & = & \frac{\B{s}_k^T A \B{e}_0}{\B{s}_k^T A \B{s}_k}
+    = \frac{\B{s}_k^T A \left ( \B{e}_0 + \sum _{i = 1}^{k - 1} \alpha _i \B{s}_i \right )}{\B{s}_k^T A \B{s}_k}
+    = \frac{\B{s}_k^T A \B{e}_k}{\B{s}_k^T A \B{s}_k} = - \alpha _k .
 \end{eqnarray*}
 How do we generate the \(\B{s}_k\)?
 
