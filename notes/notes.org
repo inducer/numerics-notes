@@ -6113,9 +6113,8 @@ For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta
    \B{c}}_1 + \int \norm{\Delta \B{b} (y)}_1 \mathd y \right ) .
 \]
 
-- Did not prove uniqueness. (But true.)
+- Conditioning bound implies uniqueness.
 - Also get continuous dependence on data.
-
 
 ** Numerical Methods
 
