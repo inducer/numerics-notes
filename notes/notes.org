@@ -4328,6 +4328,7 @@ These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
 *Computational approach:* Solve \((\ast )\) equations by Newton.
 #+LATEX: \end{hidden}
 
+*** TODO Add a worked example here
 * Interpolation
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: interpolation
