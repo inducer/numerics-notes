@@ -5866,10 +5866,11 @@ Can summarize in a /Butcher tableau/:
 #+LATEX: \begin{hidden}
 #+BEGIN_CENTER
 \begin{tabular}{l|lll}
-  \({\color[HTML]{008000}c_1}\) & \(\tmcolor{blue}{a_{11}}\) & \(\cdots\) &
-      \(\tmcolor{blue}{a_{1 s}}\)\\\({\color[HTML]{008000}\vdots }\) & \(\vdots\) &  & \(\vdots\)\\\({\color[HTML]{008000}c_s}\) & \(\tmcolor{blue}{a_{s 1}}\) & \(\cdots\) &
-      \(\tmcolor{blue}{a_{s s}}\)\\\hline
-      & \(\tmcolor{red}{b_1}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s}\)
+  \(\tmcolor{dgreen}{c_1}\) & \(\tmcolor{blue}{a_{11}}\) & \(\cdots\) & \(\tmcolor{blue}{a_{1 s}}\)\\
+  \(\tmcolor{dgreen}{\vdots }\) & \(\vdots\) &  & \(\vdots\)\\
+  \(\tmcolor{dgreen}{c_s}\) & \(\tmcolor{blue}{a_{s 1}}\) & \(\cdots\) & \(\tmcolor{blue}{a_{s s}}\)\\
+  \hline
+  & \(\tmcolor{red}{b_1}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s}\)
 \end{tabular}
 #+END_CENTER
 #+LATEX: \end{hidden}
@@ -5895,6 +5896,28 @@ This means that one can solve for one stage value at a time (and not
 multiple).
 #+LATEX: \end{hidden}
 
+*** Runge-Kutta: Embedded Pairs
+How can error in RK integration be controlled?
+
+#+LATEX: \begin{hidden}
+Most of the cost is in computing stage values $r_1,\dots,r_s$. Reuse for a second (order $p^*$ accurate) state estimate:
+\begin{align*}
+y_{k + 1} &= y_k + (\tmcolor{red}{b_1} \cdot r_1 + \cdots + \tmcolor{red}{b_s} \cdot r_s) h \\
+y_{k + 1}^* &= y_k + (\tmcolor{red}{b_1^*} \cdot r_1 + \cdots + \tmcolor{red}{b_s}^* \cdot r_s) h
+\end{align*}
+$|y_{k + 1} - y_{k + 1}^*|$ can serve as an estimate of local error $\ell_{k+1}$, e.g. for time step control.
+Called an *embedded pair*.
+#+BEGIN_CENTER
+\begin{tabular}{l|lll}
+  \(\tmcolor{dgreen}{c_1}\) & \(\tmcolor{blue}{a_{11}}\) & \(\cdots\) & \(\tmcolor{blue}{a_{1 s}}\)\\
+  \(\tmcolor{dgreen}{\vdots }\) & \(\vdots\) &  & \(\vdots\)\\
+  \(\tmcolor{dgreen}{c_s}\) & \(\tmcolor{blue}{a_{s 1}}\) & \(\cdots\) & \(\tmcolor{blue}{a_{s s}}\)\\
+  \hline
+  \(p\)& \(\tmcolor{red}{b_1}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s}\)\\
+  \(p^*\)& \(\tmcolor{red}{b_1^*}\) & \(\tmcolor{red}{\cdots }\) & \(\tmcolor{red}{b_s^*}\)
+\end{tabular}
+#+END_CENTER
+#+LATEX: \end{hidden}
 *** Heun and Butcher
 Stuff Heun's method into a Butcher tableau:
 
