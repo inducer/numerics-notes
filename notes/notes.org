@@ -6059,56 +6059,84 @@ case, and \(B_a\) and \(B_b\) are matrices--so conditions could be ony
 
 ** Existence, Uniqueness, Conditioning
 
-*** Does a solution even exist? How sensitive are they?
+*** Do solutions even exist? How sensitive are they?
 
 General case is harder than root finding, and we couldn't say much there.
 
-\(\rightarrow\) Only consider linear BVP.
-\[(\ast) \left \{
-\begin{array}{l}
-  \B{y}' (x) = A (x) \B{y} (x) + \B{b} (x)\\B_a \B{y} (a) + B_b \B{y} (b) = \B{c}
-\end{array}\right . \]
-To solve that, consider /homogeneous IVP/
-\[\B{y}_i' (x) = A (x) \B{y}_i (x) \]
-with initial condition
-\[\B{y}_i (a) = \B{e_{}}_i . \]
-Note: \(\B{y} \neq \B{y_i}\). \(\B{e}_i\) is the \(i\)th unit
-vector. With that, build the *fundamental solution matrix*
+\rightarrow Only consider linear BVP.
+\[(\ast) \begin{cases}
+  \B y' (x) = A (x) \B y (x) + \B{b} (x) \\
+  B_a \B y (a) + B_b \B y (b) = \B{c}
+\end{cases} \]
+Exploit linearity: split into multiple problems.
+#+LATEX: \begin{hidden}
+Split into boundary (B) and volume (V) parts.
+\begin{align*}
+(B) & \begin{cases}
+  \B y_B' (x) = A (x) \B y_B (x) \\
+  B_a \B y_B (a) + B_b \B y_B (b) = \B{c}
+\end{cases}\\
+(V) & \begin{cases}
+  \B y_V' (x) = A (x) \B y_V (x) + \B{b} (x) \\
+  B_a \B y_V (a) + B_b \B y_V (b) = \B{0}
+\end{cases}
+\end{align*}
+Then $\B y = \B y_B + \B y_V$.
+#+LATEX: \end{hidden}
+*** Solving the ``Boundary'' BVP
+\[(B) \begin{cases}
+  \B y_B' (x) = A (x) \B y_B (x) \\
+  B_a \B y_B (a) + B_b \B y_B (b) = \B{c}
+\end{cases}\]
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
+\[\B{y}_{B,i}' (x) = A (x) \B{y}_{B,i} (x), \qquad \B y_{B,i} (a) = \B e_i . \qquad (i=1,\dots,n)\]
+\(\B{e}_i\) is the \(i\)th unit vector. Define *fundamental sol. matrix*:
 #+BEGIN_EXPORT latex
 \[Y (x) =
 \begin{bmatrix}
   \vbar  &  & |  \\
-  \B{y}_1 & \cdots & \B{y}_n\\
+  \B{y}_{B,1} & \cdots & \B{y}_{B,n}\\
   \vbar &  & |
 \end{bmatrix}
 \]
 #+END_EXPORT
-*** ODE Systems: Existence
-Let
-\[Q \assign B_a Y (a) + B_b Y (b) \]
-Then \((\ast )\) has a unique solution if and only if \(Q\) is invertible. Solve to
-find coefficients:
-\[Q \B{\alpha } = \B{c} \]
-Then \(Y (x) \B{\alpha }\) solves \((\ast )\) with \(\B{b} (x) = \B{0}\).\medskip
+Let \(Q \assign B_a Y (a) + B_b Y (b) \).
+\((\ast )\) has a unique solution \Leftrightarrow \(Q\) is invertible.
+Solve \(Q \B{\alpha } = \B{c} \) to find coefficients: \(Y (x) \B{\alpha }\) solves (B).
 
-Define \(\Phi (x) \assign Y (x) Q^{- 1}\). So \(\Phi (x) \B{c}\) solves
-$(\ast)$ with \(\B{b} (x) = \B{0}\).
+Define \(\Phi (x) \assign Y (x) Q^{- 1}\). \(\Phi (x) \B{c}\) /also/ solves (B).
+#+LATEX: \end{hidden}
+*** TODO The volume BVP construction should be justified better
+- Liken to matvec
+*** Solving the ``Volume'' BVP
+\[(V) \begin{cases}
+  \B y_V' (x) = A (x) \B y_V (x) + \B{b} (x) \\
+  B_a \B y_V (a) + B_b \B y_V (b) = \B{0}
+\end{cases} \]
 
-Define /Green's function/
+#+LATEX: \begin{hidden}
+Define *Green's function*
 \begin{equation*}
-    G (x, y) \assign
+    G (x, z) \assign
     \begin{cases}
-    \phantom{-} \Phi (x) B_a \Phi (a) \Phi ^{- 1} (y) & y \le x,\\
-    - \Phi (x) B_b \Phi (b) \Phi ^{- 1} (y) & y > x.
+    \phantom{-} \Phi (x) B_a \Phi (a) \Phi ^{- 1} (z) & z \le x,\\
+    - \Phi (x) B_b \Phi (b) \Phi ^{- 1} (z) & z > x.
     \end{cases}
 \end{equation*}
 Then
-\[\B{y} (x) = \Phi (x) \B{c} + \int _a^b G (x, y) \B{b}
-   (y) \mathd y. \]
-Can verify that this solves $(\ast)$ by plug'n'chug.
+\[\B y_V (x) = \int _a^b G (x, y) \B{b} (z) d z \]
+solves (V).
+#+LATEX: \end{hidden}
+
 *** ODE Systems: Conditioning
 
-For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta \B{c}\):
+Altogether:
+\[\B{y} (x) =\B y_B + \B y_V = \Phi (x) \B{c} + \int _a^b G (x, y) \B{b} (y) \mathd y. \]
+For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta \B{c}\),
+derive a bound on $\norm{\Delta \B{y}}_\infty$.
+#+LATEX: \begin{hidden}
+\vspace{-3ex}
 \[\norm{\Delta \B{y}}_\infty  \le \max \left (
    \norm{\Phi }_\infty , \norm{G}_\infty  \right ) \left ( \norm{\Delta
    \B{c}}_1 + \int \norm{\Delta \B{b} (y)}_1 \mathd y \right ) .
@@ -6116,6 +6144,8 @@ For perturbed problem with \(\B{b} (x) + \Delta \B{b} (x)\) and \(\B{c} + \Delta
 
 - Conditioning bound implies uniqueness.
 - Also get continuous dependence on data.
+#+LATEX: \end{hidden}
+
 
 ** Numerical Methods
 
