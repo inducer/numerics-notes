@@ -5,12 +5,12 @@ analysis, following the textbook
 [Scientific Computing: An Introductory Survey](https://heath.cs.illinois.edu/scicomp/)
 by Michael T. Heath.
 
-Developed over the years while teaching [CS450](https://relate.cs.illinois.edu/course/cs450-f21/)
+Developed over the years while teaching [CS450](https://relate.cs.illinois.edu/course/cs450-f22/)
 in the [Department of Computer Science](https://cs.illinois.edu/)
 at the [University of Illinois](https://illinois.edu/). A number of the demos
 were based on material initially developed by Luke Olson.
 
--   [PDF](https://andreask.cs.illinois.edu/cs450-f21/notes.pdf) of these slides/notes (see `notes`
+-   [PDF](https://andreask.cs.illinois.edu/cs450-f22/notes.pdf) of these slides/notes (see `notes`
     for source)
 
 -   [Demos](https://mybinder.org/v2/gh/inducer/numerics-notes/main?filepath=demos)
