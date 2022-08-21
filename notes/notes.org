@@ -919,6 +919,8 @@ This phenomenon is called /Catastrophic Cancellation/.
 
 - David Goldberg, [[http://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html][What every computer programmer should know about floating point]]
 
+- Evan Wallace, [[https://evanw.github.io/float-toy/][Float Toy]]
+
 * Systems of Linear Equations
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: linear_systems
