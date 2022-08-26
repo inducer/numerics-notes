@@ -562,10 +562,10 @@ Therefore:
 \[\kappa = \max_{x} \frac{\abs{\Delta y} /
    \abs{y}}{\abs{\Delta x} / \abs{x}} \]
 Forward error:
-\[\Delta y = f (x + \Delta x)-f(x) = f' (x) \Delta x \]
+\[\Delta y = f (x + \Delta x)-f(x) \approx f' (x) \Delta x \]
 Condition number:
 \[\kappa \geqslant \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} / \abs{x}}
-   = \frac{\abs{f' (x)} \abs{\Delta x} / \abs{f (x)}}{\abs{\Delta x} /
+   \approx \frac{\abs{f' (x)} \abs{\Delta x} / \abs{f (x)}}{\abs{\Delta x} /
    \abs{x}} = \frac{\abs{xf' (x)}}{\abs{f (x)}} . \]
 #+LATEX: \end{hidden}
 
