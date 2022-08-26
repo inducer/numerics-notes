@@ -477,7 +477,7 @@ What's the (magnitude of) the forward error?
 Relative forward error:
 \[\frac{\abs{\Delta y}}{\abs{y}} = \frac{0.0142 \ldots }{1.41421 \ldots }
    \approx 0.01. \]
-About 1 percent, or /two accurate digits/.
+About 1 percent, or /two accurate significant digits/.
 #+LATEX: \end{hidden}
 
 *** Forward/Backward Error: Example
