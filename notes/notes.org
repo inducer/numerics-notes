@@ -428,10 +428,6 @@ How? /Attempt 1:/
 #+LATEX: \end{hidden}
 
 
-*** TODO Fix internal contradictions
-
-- [ ] Backward error is based on model perturbation, but in conditioning suddenly it's value perturbation
-
 *** Forward/Backward Error
 
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
@@ -509,17 +505,35 @@ This amplification factor seems worth studying in more detail.
 
 *** Sensitivity and Conditioning
 
-What can we say about amplification of error?
+Consider a more general setting: An input $x$ and its perturbation $\hat x$.
 #+LATEX: \begin{hidden}
-Define
-/condition number/ as smallest number \(\kappa\) so that
-\[\abs{\text{rel. fwd. err.}} \le \kappa \cdot \abs{\text{rel. bwd.
-   err.}} \]
-Or, somewhat sloppily, with \(x / y\) notation as in previous example:
-\[\tmop{cond} = \max _x \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} /
-   \abs{x}} . \]
-(Technically: should use `supremum'.)\medskip
+Want: the smallest number \(\kappa_{\text{rel}}\) such that
+\begin{align*}
+\frac{\abs{f(x)-f(\hat x)}}{\abs{x-\hat x}} &\le \kappa_{\text{rel}} \cdot \frac{\abs{x-\hat x}}{\abs{x}} \\
+\text{(rel. perturbation in output)} &\le \kappa_{\text{rel}} \cdot \text{(rel. perturbation in input)}
+\end{align*}
+Call this the /(relative) condition number/. Find it via:
+\[\kappa_{\text{rel}} = \max _{x,\hat x} \frac{\abs{f(x)-f(\hat x)}/\abs{x-\hat x}}{\abs{x-\hat x}/\abs{x}}. \]
+\vspace{-2ex}
+- Technically: should use `supremum'.
+- Must specify set of $x$, $\hat x$ that are ``of interest''.
+#+LATEX: \end{hidden}
+*** Absolute Condition Number
+Can you also define an /absolute/ condition number?
+#+LATEX: \begin{hidden}
+Certainly:
+\[\kappa_{\text{abs}} = \max _{x,\hat x} \frac{\abs{f(x)-f(\hat x)}}{\abs{x-\hat x}} \]
 
+But: less commonly used than relative, because we /typically/ care about relative
+error.
+
+\medskip
+When not specified: Assume condition number means /relative/.
+#+LATEX: \end{hidden}
+
+*** Interpreting a Condition Number
+What does it mean for condition numbers to be small/large?
+#+LATEX: \begin{hidden}
 If the condition number is...
 
 - ...small: the problem /well-conditioned/ or
@@ -528,6 +542,17 @@ If the condition number is...
 - ...large: the problem /ill-conditioned/ or sensitive
 
 /Can/ also talk about condition number for a single input \(x\).
+#+LATEX: \end{hidden}
+
+Relate the (relative) condition number back to the setting of (relative) backward error.
+
+#+LATEX: \begin{hidden}
+Realize $\hat x$ in backward error is just a perturbation of $x$: Same
+setting as conditioning.
+
+\medskip
+Therefore:
+\[\abs{\text{rel. fwd. err.}} \le \kappa_{\text{rel}} \cdot \abs{\text{rel. bwd. err.}} \]
 #+LATEX: \end{hidden}
 
 *** Example: Condition Number of Evaluating a Function
