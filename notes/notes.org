@@ -594,8 +594,7 @@ When is a method /stable/?
   If the method's sensitivity to variation in the input is no (or not
   much) greater than that of the problem itself.
 
-*Note:* Necessarily includes insensitivity to variation in
-intermediate results.
+# *Note:* implies insensitivity to variation in intermediate results.
 #+LATEX: \end{hidden}
 
 *** Getting into Trouble with Accuracy and Stability
