@@ -427,7 +427,6 @@ How? /Attempt 1:/
    \text{approximate value}} \]
 #+LATEX: \end{hidden}
 
-
 *** Forward/Backward Error
 
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
@@ -509,11 +508,11 @@ Consider a more general setting: An input $x$ and its perturbation $\hat x$.
 #+LATEX: \begin{hidden}
 Want: the smallest number \(\kappa_{\text{rel}}\) such that
 \begin{align*}
-\frac{\abs{f(x)-f(\hat x)}}{\abs{x-\hat x}} &\le \kappa_{\text{rel}} \cdot \frac{\abs{x-\hat x}}{\abs{x}} \\
+\frac{\abs{f(x)-f(\hat x)}}{\abs{f(x)}} &\le \kappa_{\text{rel}} \cdot \frac{\abs{x-\hat x}}{\abs{x}} \\
 \text{(rel. perturbation in output)} &\le \kappa_{\text{rel}} \cdot \text{(rel. perturbation in input)}
 \end{align*}
 Call this the /(relative) condition number/. Find it via:
-\[\kappa_{\text{rel}} = \max _{x,\hat x} \frac{\abs{f(x)-f(\hat x)}/\abs{x-\hat x}}{\abs{x-\hat x}/\abs{x}}. \]
+\[\kappa_{\text{rel}} = \max _{x,\hat x} \frac{\abs{f(x)-f(\hat x)}/\abs{f(x)}}{\abs{x-\hat x}/\abs{x}}. \]
 \vspace{-2ex}
 - Technically: should use `supremum'.
 - Must specify set of $x$, $\hat x$ that are ``of interest''.
