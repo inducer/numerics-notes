@@ -427,6 +427,7 @@ How? /Attempt 1:/
    \text{approximate value}} \]
 #+LATEX: \end{hidden}
 
+*** TODO Backward error hangs out a bit unmotivated until backward stability comes along
 *** Forward/Backward Error
 
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
@@ -570,6 +571,8 @@ Condition number:
 
 \demolink{error_and_fp}{Conditioning of Evaluating tan}
 
+*** TODO Stability, Accuracy: Add examples/describe better
+*** TODO Make backward stability discussion more precise
 *** Stability and Accuracy
 
 *Previously:* Considered /problems/ or /questions/.
