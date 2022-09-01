@@ -688,7 +688,7 @@ What pieces do you need to store an FP number?
 #+LATEX: \end{hidden}
 *** Floating Point: Implementation, Normalization
 
-*Previously:* Consider /mathematical/ view of FP. (via example: \((1.101)_2\))
+*Previously:* Consider /mathematical/ view of FP. (via example: \((1101)_2\))
 
 *Next:* Consider /implementation/ of FP in hardware.
 
