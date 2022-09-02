@@ -742,7 +742,7 @@ a zero?
 *** Subnormal Numbers
 
 What is the smallest representable number in an FP system with 4
-stored bits in the significand and a stored exponent range of \([- 7, 8]\)?
+stored bits (5 total) in the significand and a stored exponent range of \([- 7, 8]\)?
 #+LATEX: \begin{hidden}
 First attempt:
 
@@ -819,7 +819,7 @@ Up or down? It turns out that picking the same direction every time introduces
 
 *** Smallest Numbers Above...
 
-- What is smallest FP number > 1? Assume 4 bits in the significand.
+- What is smallest FP number > 1? Assume 4 stored bits (5 total) in the significand.
 #+LATEX: \begin{hidden}
 \[(1.0001)_2 \cdot 2^0 = x \cdot (1 + 0.0001)_2 \]
 #+LATEX: \end{hidden}
@@ -872,7 +872,7 @@ point calculations?
 *** FP: Machine Epsilon
 
 What's that same number for double-precision floating point? (52
-bits in the significand)
+stored bits in the significand, 53 total)
 #+LATEX: \begin{hidden}
 \[2^{- 53} \approx 10^{- 16} \]
 *Bonus Q:* What does \(1 + 2^{- 53}\) do on your computer?
@@ -900,7 +900,7 @@ Working in double precision gives you about 16 (decimal) accurate digits.
 How is floating point addition implemented?
 
 Consider adding \(a = (1.101)_2 \cdot 2^1\) and \(b = (1.001)_2 \cdot 2^{- 1}\) in
-a system with three bits in the significand.
+a system with three stored bits (four total) in the significand.
 #+LATEX: \begin{hidden}
 Rough algorithm:
 
