@@ -831,22 +831,24 @@ What's the smallest FP number > 1024 in that same system?
 #+LATEX: \end{hidden}
 
 Can we give that number a name?
+*** TODO Does defining machine epsilon relative to the rounding rule really make sense?
+(Consider round-to-infinity)
 *** Unit Roundoff
 
 /Unit roundoff/ or /machine precision/ or /machine epsilon/ or
-\( \varepsilon _{\tmop{mach}}\) is the smallest
-number such that
-\[\tmop{float} (1 + \varepsilon ) > 1. \]
+\( \varepsilon _{\tmop{mach}}\) is\dots
+
+#+LATEX: \begin{hidden}
+the smallest number such that \(\tmop{float} (1 + \varepsilon ) > 1\).
 
 - *Technically* that makes \( \varepsilon _{\tmop{mach}}\) depend on the rounding rule.
   
-  \medskip
-  Assuming round-towards-infinity, in the above system, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
-- Note the extra zero.
-
+- For rules with tie-breaking (e.g. round-to-nearest): assume bias towards 'different'.
+- For example: Assuming round-to-nearest, in a system with five bits in the significand, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
 - Another, related, quantity is /ULP/, or /unit in the last place/.
 
-  (\( \varepsilon _{\tmop{mach}} = 0.5 \tmop{ULP})\)
+  For round-to-nearest: (\( \varepsilon _{\tmop{mach}} = 0.5 \tmop{ULP})\)
+#+LATEX: \end{hidden}
 
 *** FP: Relative Rounding Error
 
@@ -871,7 +873,7 @@ point calculations?
 
 *** FP: Machine Epsilon
 
-What's that same number for double-precision floating point? (52
+What's machine epsilon for double-precision floating point with round-to-nearest? (52
 stored bits in the significand, 53 total)
 #+LATEX: \begin{hidden}
 \[2^{- 53} \approx 10^{- 16} \]
