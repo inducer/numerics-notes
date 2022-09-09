@@ -1154,7 +1154,7 @@ Divide both sides by \(\norm{\widehat{\B{x}}}\):
   \le \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A\widehat{\B{x}}}} 
 \]
 
-- \(\tmop{rel} \tmop{err} \le \tmop{cond} \cdot \tmop{rel}     \tmop{resid}\)
+- \(\text{``rel err.''} \le \tmop{cond} \cdot \text{rel. resid}\)
 
 - Given small (rel.) residual, (rel.) error is only (guaranteed to be)
   small if the condition number is also small.
