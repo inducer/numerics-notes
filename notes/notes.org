@@ -2272,7 +2272,7 @@ For the residual vector \(\B r\), we find
 - Householder Reflectors
 - Givens Rotations
 
-\demolink{linear_least_squares}{Gram-Schmidt--The Movie}
+\demolink{linear_least_squares}{Gram-Schmidt--The Movie} (shows /modified G-S/)
 
 \demolink{linear_least_squares}{Gram-Schmidt and Modified Gram-Schmidt}
 
