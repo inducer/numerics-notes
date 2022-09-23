@@ -1222,6 +1222,27 @@ What is this called as a general concept?
 
 \inclasslink{conditioning}{Matrix Norms and Conditioning}
 
+*** Recap: Orthogonal Matrices
+
+What's an /orthogonal (=orthonormal)
+matrix/?
+#+LATEX: \begin{tcolorbox}
+One that satisfies \(Q^T Q = I\) and \(QQ^T = I\).
+#+LATEX: \end{tcolorbox}
+
+# Are orthogonal projectors orthogonal?
+# #+LATEX: \begin{tcolorbox}
+# Nope, not in general.
+# #+LATEX: \end{tcolorbox}
+
+How do orthogonal matrices interact with the 2-norm?
+#+LATEX: \begin{tcolorbox}
+\[\norm{Q
+   \B{v}}_2^2 = (Q \B{v})^T (Q \B{v}) = \B{v}^T
+   Q^T Q \B{v} = \B{v}^T \B{v} = \norm{\B{v}}_2^2
+   . \]
+#+LATEX: \end{tcolorbox}
+
 *** Singular Value Decomposition (SVD)
 
 What is the /Singular Value Decomposition/ of an \(m \times  n\) matrix?
@@ -2203,27 +2224,6 @@ Bad:
 - \(4 \times\) the storage, including two copies of \(A\).
 #+LATEX: \end{hidden}
 
-
-*** Recap: Orthogonal Matrices
-
-What's an /orthogonal (=orthonormal)
-matrix/?
-#+LATEX: \begin{tcolorbox}
-One that satisfies \(Q^T Q = I\) and \(QQ^T = I\).
-#+LATEX: \end{tcolorbox}
-
-# Are orthogonal projectors orthogonal?
-# #+LATEX: \begin{tcolorbox}
-# Nope, not in general.
-# #+LATEX: \end{tcolorbox}
-
-How do orthogonal matrices interact with the 2-norm?
-#+LATEX: \begin{tcolorbox}
-\[\norm{Q
-   \B{v}}_2^2 = (Q \B{v})^T (Q \B{v}) = \B{v}^T
-   Q^T Q \B{v} = \B{v}^T \B{v} = \norm{\B{v}}_2^2
-   . \]
-#+LATEX: \end{tcolorbox}
 
 *** Transforming Least Squares to Upper Triangular
 
