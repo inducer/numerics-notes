@@ -2152,7 +2152,7 @@ problems?
 [[./images/least-squares-geo-crop.pdf]]
 #+END_CENTER
 
-Relate $\norm{A\B x}$ and $\B b$ with $\theta via trig functions.
+Relate $\norm{A\B x}$ and $\B b$ with \theta via trig functions.
 #+LATEX: \begin{hidden}
 \[\cos (\theta ) = \frac{\norm{A \B{x}}_2}{\norm{\B{b}}_2}, \]
 #+LATEX: \end{hidden}
@@ -2262,7 +2262,7 @@ For the residual vector \(\B r\), we find
    \norm{\B{r}}_2^2
   = \norm{(Q^T\B{b})_{\text{top}} - R_{\text{top}} \B{x}}_2^2 +
    \norm{(Q^T\B{b})_{\text{bottom}}}_2^2 . \]
-\(R\) is invertible, so we can find \(\B{x}\) to zero out the first term, leaving
+\(R_{\text{top}}\) is invertible, so we can find \(\B{x}\) to zero out the first term, leaving
 \[\norm{\B{r}}_2^2 = \norm{(Q^T\B{b})_{\text{bottom}}}_2^2. \]
 #+LATEX: \end{hidden}
 
