@@ -2365,7 +2365,7 @@ If reflections work, can we make rotations work, too?
     \sqrt{a_1^2 + a_2^2}\\0
     \end{bmatrix}.
 \end{equation*}
-Not hard to solve for \(c\) and \(s\).\medskip
+where $c=a_1/\norm{\B a}_2$ and $s=a_2/\norm{\B a}_2$, with $\B a=[a_1,a_2]^T$.
 
 *Downside?* Produces only one zero at a time.
 #+LATEX: \end{hidden}
@@ -2376,18 +2376,18 @@ Not hard to solve for \(c\) and \(s\).\medskip
 
 What happens with QR for rank-deficient matrices?
 #+LATEX: \begin{hidden}
-\[A
-   = Q
-\begin{bmatrix}
-  \ast & \ast & \ast \\& (\tmop{small}) & \ast \\&  & \ast
-\end{bmatrix} \]
-(where \(\ast\) represents a generic non-zero)\medskip
+$A=QR$, where $R$ has some small diagonal entries, in undetermined order.
 
+\medskip
 Practically, it makes sense to ask for all these `small' columns to be
 gathered near the `right' of \(R\) \(\rightarrow\) Column pivoting.\medskip
 
 *Q:* What does the resulting factorization look like?
 \[AP = QR \]
+\[AP = Q
+\begin{bmatrix}
+  \ast & \ast & \ast \\& (\text{small}) & (\text{small}) \\&  & (\text{smaller})
+\end{bmatrix} \]
 Also used as the basis for /rank-revealing QR/.
 #+LATEX: \end{hidden}
 
@@ -2415,6 +2415,22 @@ What happens with Least Squares for rank-deficient matrices?
 
     Unfortunately, QR does not help much with that \(\rightarrow\) Need better
     tool, the SVD \(A = U \Sigma V^T\). Let's learn more about it.
+#+LATEX: \end{hidden}
+
+*** SVD: Reduced and Full
+
+For a matrix of shape $m\times n$ with $m>n$, what are the shapes of the factors
+in the SVD?
+#+LATEX: \begin{hidden}
+Again, there is the *full* version of the factorization:
+- $U$: $m\times m$
+- $\Sigma$: $m\times n$
+- $V$: $n\times n$
+
+and the *economical/reduced* version:
+- $U$: $m\times n$
+- $\Sigma$: $n\times n$
+- $V$: $n\times n$
 #+LATEX: \end{hidden}
 
 *** SVD: What's this thing good for? (I)
