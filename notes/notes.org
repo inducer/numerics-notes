@@ -2752,7 +2752,7 @@ where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\).
 
 *** Power Iteration
 
-What are the eigenvalues of \(A^{1000}\)?\medskip
+\demolink{eigenvalue}{Motivating Power Iteration}
 
 Assume \(\abs{\lambda _1} > \abs{\lambda _2} > \cdots > \abs{\lambda _n}\) with
 eigenvectors \(\B{x}_1, \ldots , \B{x}_n\).
