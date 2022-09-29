@@ -2515,7 +2515,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 #+LATEX: \begin{hidden}
 - Form: \(A^T A\): \(n^2 m / 2\) (symmetric---only need to fill half)
 
-  Solve with \(A^T A\): \(n^3 / 6\) (Cholesky \approx  symmetric LU)
+  Solve with \(A^T A\): \(n^3 / 6\) (Cholesky)
 
 - Solve with Householder: \(mn^2 - n^3 / 3\)
 
@@ -2577,7 +2577,7 @@ has degree \(n\), and therefore \(n\) (potentially complex) roots.\medskip
 for roots of polynomial. IOW: no.\medskip
 
 - For LU and QR, we obtain /exact/ answers (except rounding).
-- For eigenvalue problems: not possible---must /approximate/.
+- For eigenvalue problems: not possible---must /iterate/.
 #+LATEX: \end{tcolorbox}
 
 \demolink{eigenvalue}{Rounding in characteristic polynomial using SymPy}
@@ -2607,7 +2607,7 @@ Give characteristic polynomial, eigenvalues, eigenvectors of
 #+LATEX: \begin{hidden}
 CP: \((\lambda - 1)^2\)
 
-Eigenvalues: 1 (with multiplicity 2)
+Eigenvalues: 1 (with algebraic multiplicity 2)
 
 Eigenvectors:
 #+BEGIN_EXPORT latex
@@ -2715,7 +2715,7 @@ What happens to the eigenvalues?
 - \(A + E\) and \(D + F\) have same eigenvalues
 - \(D + F\) is not necessarily diagonal
 
-Suppose \(\B{v}\) is a perturbed eigenvector.
+Suppose \(\B{v}\) is an eigenvector of $D+F$.
 \begin{eqnarray*}
   &  & (D + F) \B{v} = \mu \B{v}\\
   & \Leftrightarrow & F \B{v} = (\mu I - D) \B{v}\\
@@ -2730,23 +2730,24 @@ Suppose \(\B{v}\) is a perturbed eigenvector.
 
 \(X^{- 1} (A + E) X = D + F \).
 Have \(\norm{(\mu I - D)^{- 1}}^{- 1} \le \norm{F}\).
+
+\demolink{eigenvalue}{Bauer-Fike Eigenvalue Sensitivity Bound}
 #+LATEX: \begin{hidden}
 \[\norm{(\mu I - D)^{- 1}}^{- 1} = | \mu - \lambda _k | \]
-where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\).
+where \(\lambda _k\) is the closest eigenvalue of \(D\) to \(\mu\). (see demo)
+
+Since we made no assumptions on $\mu$ other than that it doesn't match
+an existing eigenvalue, this bound holds for /all/ eigenvalues of $A+E$.
 \[\left | \mu - \lambda _k \left | = \norm{(\mu I - D)^{- 1}}^{- 1} \le
    \norm{F} = \norm{X^{- 1} EX} \le \tmop{cond} (X) \norm{E} . \right .
    \right . \]
 
-- This is `bad' if \(X\) is ill-conditioned, i.e. if the eigenvectors are
-  nearly linearly dependent.
+- `Bad' if \(X\) ill-conditioned, i.e. if eigenvectors are nearly lin.dep.
 
-- If \(X\) is orthogonal (e.g. for symmetric \(A\)), then eigenvalues are
-  always well-conditioned.
+- \(X\) orthogonal (e.g. for symmetric \(A\)) \Rightarrow $\tmop{cond}_2(X)=1$.
 
 - This bound is in terms of /all/ eigenvalues, so may overestimate for each individual eigenvalue.
 #+LATEX: \end{hidden}
-
-\demolink{eigenvalue}{Bauer-Fike Eigenvalue Sensitivity Bound}
 
 ** Computing Eigenvalues
 
