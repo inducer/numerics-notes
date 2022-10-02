@@ -116,13 +116,13 @@
   :END:
 ** Notes
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-book
+  :RELATE_TREE_ICON: bi bi-book
   :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f22/notes.pdf
   :END:
 
 ** Notes (unfilled, with empty boxes)
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-book
+  :RELATE_TREE_ICON: bi bi-book
   :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f22/notes-folded.pdf
   :END:
 ** About the Class
@@ -610,7 +610,7 @@ How can I produce inaccurate results?
 
 *** In-Class Activity: Forward/Backward Error
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-fwd-bwd-error/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -890,7 +890,7 @@ Working in double precision gives you about 16 (decimal) accurate digits.
 
 *** In-Class Activity: Floating Point
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-floating-point/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -1215,7 +1215,7 @@ What is this called as a general concept?
 
 *** In-Class Activity: Matrix Norms and Conditioning
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-conditioning/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -1876,7 +1876,7 @@ FYI: There is a rank-\(k\) analog called the *Sherman-Morrison-Woodbury formula*
 
 *** In-Class Activity: LU
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-lu/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -2137,7 +2137,7 @@ problems?
 
 *** In-Class Activity: Least Squares
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-least-squares/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -2298,7 +2298,7 @@ proof relies on the 'full' form.
 
 *** In-Class Activity: QR
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-qr/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -2531,7 +2531,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 
 *** In-Class Activity: Householder, Givens, SVD
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-hh-givens-svd/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -2856,7 +2856,7 @@ Describe /Rayleigh Quotient Iteration/.
 
 *** In-Class Activity: Eigenvalues
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-eigenvalues/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -3309,7 +3309,7 @@ The inverse function is steep near one, so conditioning is poor.
 
 *** In-Class Activity: Krylov and Nonlinear Equations
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-krylov-nonlinear/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -3584,7 +3584,7 @@ locally. How could we use that?
 
 *** In-Class Activity: Nonlinear Equations
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-nonlinear/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -3899,7 +3899,7 @@ $x^*$ in the interval such that for all \(x_1 < x_2\) in the interval
 
 *** In-Class Activity: Optimization Theory
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-theory/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -4124,7 +4124,7 @@ where
 
 *** In-Class Activity: Optimization Methods
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-methods/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -4671,7 +4671,7 @@ Yes.
 
 *** In-Class Activity: Interpolation
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-interpolation/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -5367,7 +5367,7 @@ Carrying out this process for quadrature is called *Romberg integration*.
 
 *** In-Class Activity: Differentiation and Quadrature
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-quadrature/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
@@ -6073,7 +6073,7 @@ Discuss:
      
 *** In-Class Activity: Initial Value Problems
   :PROPERTIES:
-  :RELATE_TREE_ICON: fa fa-user
+  :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-ivp/start/
   :RELATE_PROMOTE_TO_PARENT_LEVEL: true
   :END:
