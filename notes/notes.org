@@ -2460,7 +2460,7 @@ and the *economical/reduced* version:
     \min _{\tmop{rank} (B) = k} \norm{A - B}_2 &= \norm{A - A_k}_2 =
       \sigma _{k + 1},\\
     \min _{\tmop{rank} (B) = k} \norm{A - B}_F &= \norm{A - A_k}_F =
-      \sqrt{\sum_{j=k}^n \sigma_j^2} .
+      \sqrt{\sum_{j=k+1}^n \sigma_j^2} .
   \end{align*}
 \end{theorem}
 \vspace*{-2ex}
