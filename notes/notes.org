@@ -2791,6 +2791,9 @@ Iteration?
 - \(|\lambda _1| = |\lambda _2|\)
 
   Real problem.
+- Complex eigenvalues
+  
+  Real problem.
 #+LATEX: \end{hidden}
 
 *** What about Eigenvalues?
@@ -2873,6 +2876,7 @@ This is called the *Schur form* or *Schur factorization*.
 #+LATEX: \begin{hidden}
 Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 \(V = \tmop{span} \{\B{v} \}\). Then
+\vspace{-2ex}
 \begin{eqnarray*}
   A : \qquad V & \rightarrow & V\\V^\perp  & \rightarrow & V \oplus V^\perp
 \end{eqnarray*}
@@ -2884,11 +2888,13 @@ Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v}
     \B{v} & \text{Basis of \(V^\perp\)}\\
     | &
   \end{bmatrix}}_{Q_1}
-  \begin{bmatrix}
+  \underbrace{\begin{bmatrix}
     \lambda & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast \\\vdots & \ast & \ast & \ast & \ast \\0 & \ast & \ast & \ast & \ast
-  \end{bmatrix} Q_1^T .
+  \end{bmatrix}}_{U_1} Q_1^T .
 \end{equation*}
-Repeat \(n\) times $to$ triangular: \(Q_n \cdots Q_1 UQ_1^T \cdots Q_n^T \).
+\vspace{-2ex}
+- Bottom right of $U_1$: Same eigenvalues as $A$ without $\lambda$.
+- Repeat \(n\) times $to$ triangular: \(A=Q_n \cdots Q_1 UQ_1^T \cdots Q_n^T \).
 #+LATEX: \end{hidden}
 
 *** Schur Form: Comments, Eigenvalues, Eigenvectors
@@ -2965,9 +2971,9 @@ Fix: orthogonalize!
 1. Start with \(X_0 \in \mathbb{R}^{n \times p}\) (\(p \le n\)) with
     (arbitrary) iteration vectors in columns
 
-1. \(Q_k R_k = X_k\) (reduced)
-
-1. \(X_{k + 1} = AQ_k\)
+1. \(\hat Q_k R_k = X_k\) (reduced)
+   
+1. \(X_{k + 1} = A\hat Q_k\)
 
 *Good:* \(X_k\) obey convergence theory from power iteration
 
@@ -2996,7 +3002,7 @@ factorization!\medskip
 
 *Observation 2:* \(\hat {X}_n \assign Q_n^T AQ_n \approx  R_n\).
 
-*Idea:* Use below-diag part of \(\hat {X}_2\) for convergence check.
+*Idea:* Use below-diag part of \(\hat {X}_n\) for convergence check.
 
 *Q:* Can we restate the iteration to compute \(\hat {X}_k\) directly?
 #+LATEX: \end{hidden}
@@ -3012,21 +3018,85 @@ factorization!\medskip
   \(Q_k R_k = X_k\) & \(\bar {Q}_k \bar {R}_k = \bar {X}_k\)\\
   \(X_{k + 1} = AQ_k\) & \(\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k\)
 \end{tabular}
+- \(\bar X_{k + 1} = \bar R_k \bar Q_k = \bar Q_k^H \bar X_k \bar Q_k
+  = \underbrace{\bar Q_k^H \bar Q_{k-1}^H\cdots \bar Q_0^H} A \underbrace{\bar Q_0\cdots \bar Q_k}\).
+- The \(\bar {X}_k\) are all similar to $A$ \rightarrow have same eigenvalues.
+- $A^2= \bar Q_1 \bar R_1 \bar Q_1 \bar R_1 = \bar Q_1 \bar Q_2 \bar R_2 \bar R_1$ (analogous for $A^k$)
 
-- \(\hat {X}_k = Q_k^T A Q_k = \bar {X}_{k + 1}\)
+\smallskip
+**Claim:** (see next slide) Orth.it. and QR it. are equivalent, via
+- \(Q_k = \bar Q_0 \bar Q_1 \cdots \bar Q_k\).
+- $\hat X_k=\bar X_{k+1}$.
 
-- \(Q_0 = \bar {Q}_0\)
-
-    \(Q_1 = \bar {Q}_0 \bar {Q}_1\)
-
-    \(Q_k = \bar {Q}_0 \bar {Q}_1 \cdots \bar {Q}_k\)
-
-Orthogonal iteration showed: \(\hat {X}_k = \bar {X}_{k + 1}\) converge. Also:
-\[\bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k = \bar {Q}_k^T \bar {X}_k \bar {Q}_k, \]
-so the \(\bar {X}_k\) are all similar \(\rightarrow\) all have the same
-eigenvalues.
+From orthogonal iteration: Observed \(\hat {X}_k = \bar {X}_{k + 1}\) converge.
 
 \(\rightarrow\) QR iteration produces Schur form.
+#+LATEX: \end{hidden}
+*** Proof sketch: Equivalence of QR iteration/Orth. iteration
+**** Orthogonal iteration
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_opt: [t]
+:END:
+/Orthogonal Iteration/ (no bars)
+
+- $X_0:=A$
+  - $Q_0R_0:=X_0$,
+  - 
+    where we may choose $Q_0=\bar Q_0$
+  - $\hat X_0 = Q_0^H A Q_0=Q_0^H Q_0 R_0 Q_0 = R_0 Q_0$
+- $X_1:=AQ_0$
+  
+  - $Q_1R_1:= X_1$,
+
+    and because of
+    
+    $X_1=Q_0Q_0^H A Q_0=Q_0 \bar X_1 = Q_0\bar Q_1 \bar R_1$  
+    
+    we may choose $Q_1=Q_0 \bar Q_1 =\bar Q_0 \bar Q_1$.
+
+- $\vdots$
+
+**** QR Iteration
+:PROPERTIES:
+:BEAMER_col: 0.5
+:BEAMER_opt: [t]
+:END:
+/QR Iteration/ (with bars)
+- $\bar X_0:=A$
+  - $\bar Q_0 \bar R_0 :=A$
+    
+    \bigskip
+    \bigskip
+    
+- $\bar X_1 := \bar R_0 \bar Q_0=\hat X_0$
+  - $\bar Q_1 \bar R_1 :=\bar X_1$
+
+    \bigskip
+    \bigskip
+  
+- $\bar X_2 := \bar R_1 \bar Q_1$
+  - $\bar X_2 = Q_1^H A Q_1=\hat X_1$
+
+- $\vdots$
+
+*** QR Iteration: Forward /and/ Inverse
+
+QR iteration may be viewed as performing *inverse iteration*. How?
+
+#+LATEX: \begin{hidden}
+Take an inverse (conjugate) transpose of the whole method.
+
+- $\bar X_0^{-H} = A^{-H}$.
+
+- Recall $\bar Q_k\bar R_k=\bar X_k$. Invert and transpose both sides:
+  \[ Q_k R_k^{-H} = \bar X_k ^{-H}\]
+- Recall $\bar X_{k+1} = \bar R_k\bar Q_k$. Invert and transpose both sides:
+  \[ \bar X_{k+1}^{-H} = \bar R_k^{-H} \bar Q_k\]
+
+I.e. /exact same iterates/ would be produced by ``QL iteration'' on $A^{-H}$.
+
+Therefore: would expect /shifts/ to be effective.
 #+LATEX: \end{hidden}
 
 *** QR Iteration: Incorporating a Shift
@@ -3041,7 +3111,7 @@ How can we accelerate convergence of QR iteration using shifts?
 \end{eqnarray*}
 Still a similarity transform:
 \[ \bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k + \sigma _k I =
-   \overline{[Q  }_k^T \bar {X}_k - \bar {Q}_k^T \sigma _k] \bar {Q}_k +
+   [\bar Q_k^T \bar {X}_k - \bar {Q}_k^T \sigma _k] \bar {Q}_k +
    \sigma _k I \]
 *Q:* How should the shifts be chosen?
 
