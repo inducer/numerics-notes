@@ -2903,7 +2903,7 @@ Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v}
 - Either complex matrices, or
 - \(2 \times 2\) blocks on diag.
 
-If we had a Schur form of \(A\), how can we find the eigenvalues?
+If we had a Schur form of \(A\) (no $2\times2$ blocks), can we find the eigenvalues?
 #+LATEX: \begin{hidden}
 The eigenvalues (of \(U\) and \(A\)!) are on the diagonal of \(U\).
 #+LATEX: \end{hidden}
@@ -3021,7 +3021,7 @@ factorization!\medskip
 - \(\bar X_{k + 1} = \bar R_k \bar Q_k = \bar Q_k^H \bar X_k \bar Q_k
   = \underbrace{\bar Q_k^H \bar Q_{k-1}^H\cdots \bar Q_0^H} A \underbrace{\bar Q_0\cdots \bar Q_k}\).
 - The \(\bar {X}_k\) are all similar to $A$ \rightarrow have same eigenvalues.
-- $A^2= \bar Q_1 \bar R_1 \bar Q_1 \bar R_1 = \bar Q_1 \bar Q_2 \bar R_2 \bar R_1$ (analogous for $A^k$)
+- $A^2= \bar Q_0 \bar R_0 \bar Q_0 \bar R_0 = \bar Q_0 \bar Q_1 \bar R_1 \bar R_0$ (analogous for $A^k$)
 
 \smallskip
 **Claim:** (see next slide) Orth.it. and QR it. are equivalent, via
@@ -3094,8 +3094,9 @@ Take an inverse (conjugate) transpose of the whole method.
 - Recall $\bar X_{k+1} = \bar R_k\bar Q_k$. Invert and transpose both sides:
   \[ \bar X_{k+1}^{-H} = \bar R_k^{-H} \bar Q_k\]
 
-I.e. /exact same iterates/ would be produced by ``QL iteration'' on $A^{-H}$.
-
+I.e. /exact same iterates/ as QR iteration (power iteration `from the
+left') would be produced by ``QL iteration'' on $A^{-H}$, i.e. inverse
+iteration `from the right'.
 Therefore: would expect /shifts/ to be effective.
 #+LATEX: \end{hidden}
 
