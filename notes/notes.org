@@ -3362,7 +3362,9 @@ In general, /no uniquness/ results available.
 What is the sensitivity/conditioning of root
 finding?
 #+LATEX: \begin{hidden}
-\(\tmop{cond} \left ( \text{root finding} \right ) = \tmop{cond} \left ( \text{evaluation of the inverse function} \right )\)
+\(\tmop{cond} \left ( \text{root finding} \right ) = \tmop{cond} \left ( \text{evaluation of the inverse function \textbf{at 0}} \right )\)
+
+Evaluation (of the inverse) at 0: must use /absolute/ condition numbers.
 #+LATEX: \end{hidden}
 
 What are multiple roots?
