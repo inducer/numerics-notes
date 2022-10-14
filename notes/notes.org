@@ -2855,7 +2855,7 @@ Describe /Rayleigh Quotient Iteration/.
   \[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
 #+LATEX: \end{hidden}
 
-\demolink{eigenvalue}{Power iteration and its Variants}
+\demolink{eigenvalue}{Power Iteration and its Variants}
 
 *** In-Class Activity: Eigenvalues
   :PROPERTIES:
