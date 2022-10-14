@@ -3271,7 +3271,7 @@ How can we use Arnoldi/Lanczos to compute eigenvalues?
 yet computed.
 \[H = Q^T AQ =
 \begin{bmatrix}
-  \tmcolor{dgreen}{Q_k}\\\tmcolor{red}{U_k}
+  \tmcolor{dgreen}{Q_k^T}\\\tmcolor{red}{U_k^T}
 \end{bmatrix} A
 \begin{bmatrix}
   \tmcolor{dgreen}{Q_k} & \tmcolor{red}{U_k}
