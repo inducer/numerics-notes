@@ -3653,6 +3653,7 @@ locally. How could we use that?
   - Stop if Newton leaves bracket
 - Fix a region where they're `trustworthy' (*trust region methods*)
 - Limit step size
+- Sufficient conditions for convergence of Newton (under /strong/ assumptions) are [[https://doi.org/10.1137/1.9780898719468][available]].
 #+LATEX: \end{hidden}
 
 *** In-Class Activity: Nonlinear Equations
