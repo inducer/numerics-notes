@@ -3814,11 +3814,11 @@ a minimum exists.
 #+LATEX: \end{hidden}
 
 \(f : S \rightarrow \mathbb{R}\) is called /coercive/ on \(S \subseteq
-\mathbb{R}^n\) (which must be unbounded) if
+\mathbb{R}^n\) if
 #+LATEX: \begin{hidden}
 \[\lim _{\norm{\B{x}} \rightarrow \infty } f (x) = + \infty \]
 #+LATEX: \end{hidden}
-If \(f\) is coercive, \dots
+If \(f\) is coercive and continuous and $S$ is closed, \dots
 #+LATEX: \begin{hidden}
 a global minimum exists (but is possibly non-unique).
 #+LATEX: \end{hidden}
