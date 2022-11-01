@@ -4174,7 +4174,7 @@ Drawbacks?
 - Works poorly when \(H_f\) is nearly indefinite
 #+LATEX: \end{hidden}
 
-\demolink{optimization}{Newton's method in n dimensions}
+\demolink{optimization}{Newton's Method in n dimensions}
 
 *** Quasi-Newton Methods
 
@@ -4186,15 +4186,15 @@ Come up with a way to update to update the approximate Hessian.
 \[\B{x}_{k+1}  = \B{x}_k -\alpha _k B_k^{-1}\nabla f(\B{x}_k)\]
 
 - \(\alpha _k\): a line search/damping parameter.
+- \(\B{s}_k = \B{x}_{k+1}-\B{x}_k\)
+- \(\B{y_k} =\nabla f(\B{x}_{k+1})-\nabla f(\B{x}_k)\)
+- Secant condition: $B_{k+1} \B s_k = \B y_k$
+- Ansatz for update of Hessian estimate: $B_{k+1} = B_k + a \B u \B u^T + b \B v\B v^T$
 #+LATEX: \end{hidden}
 
 *BFGS*: Secant-type method, similar to Broyden:
 
 \[\B{B}_{k+1} = \B{B}_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} - \frac{\B{B}_k\B{s}_k \B{s}_k^T\B{B}_k}{\B{s}_k^T\B{B}_k \B{s}_k}\]
-
-where
-- \(\B{s}_k = \B{x}_{k+1}-\B{x}_k\)
-- \(\B{y_k} =\nabla f(\B{x}_{k+1})-\nabla f(\B{x}_k)\)
 
 *** In-Class Activity: Optimization Methods
   :PROPERTIES:
@@ -4263,23 +4263,23 @@ Observations?
 #+LATEX: \end{hidden}
 
 *** Levenberg-Marquardt
-If Gauss-Newton on its own is poorly, conditioned, can try
+If Gauss-Newton on its own is poorly conditioned, can try
 *Levenberg-Marquardt*:
 #+LATEX: \begin{hidden}
 \[(J_{\B{r}} (\B{x}_k)^T J_{\B{r}} (\B{x}_k)
    \tmcolor{red}{+ \mu _k I}) \B{s}_k = - J_{\B{r}}
    (\B{x}_k)^T \B{r} (\B{x}_k) \]
 for a `carefully chosen' \(\mu _k\). This makes the system matrix `more
-invertible' but also less accurate/faithful to the problem. Can also be
-translated into a least squares problem (see book).\medskip
+invertible' but also less accurate/faithful to the problem.
 
+\medskip
 What Levenberg-Marquardt does is generically called *regularization*: Make \(H\)
 more positive definite.
 
 Easy to rewrite to least-squares problem:
 \begin{equation*}
   \begin{bmatrix}
-    J_{\B r} (\B x_k) \\ \sqrt{\mu_k}
+    J_{\B r} (\B x_k) \\ \sqrt{\mu_k} I
   \end{bmatrix}
   \B s_k
   \cong
