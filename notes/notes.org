@@ -4005,10 +4005,28 @@ Where to put \(x_1\), \(x_2\)?
   \(x_2 = a + \tau (b - a)\)
 
 - Want to reuse function evaluations
-#+LATEX: \end{hidden}
-\demolink{nonlinear}{Golden Section Proportions}
-#+LATEX: \begin{hidden}
-\(\tau ^2 = 1 - \tau\) Find: \(\tau = \left ( \sqrt{5} - 1 \right ) / 2\).
+\begin{tikzpicture}[yscale=3,xscale=7]
+  \def\tauv{0.6180339887498949}
+  \def\tic{0.05}
+  \draw [->] (-0.2, 0) -- (1.2, 0) ;
+
+  \draw [thick] (0,0.5*\tic) -- ++(0,-\tic) node [below] {$0$\strut};
+  \draw [thick] (1,0.5*\tic) -- ++(0,-\tic) node [below] {$1$\strut};
+  \draw (\tauv,0.5*\tic) -- ++(0,-\tic) node [below] {$\tau$\strut};
+  \draw (1-\tauv,0.5*\tic) -- ++(0,-\tic) node [below] {$1-\tau$\strut};
+
+  \draw [->] (-0.2, -0.25) -- (1.2, -0.25) ;
+
+  \draw [thick] (0,-0.25+0.5*\tic) -- ++(0,-\tic) node [below] {$0$\strut};
+  \draw [thick] (\tauv,-0.25+0.5*\tic) -- ++(0,-\tic) node [below] {$\tau$\strut};
+  \draw (\tauv*\tauv,-0.25+0.5*\tic) -- ++(0,-\tic) node [below] {$\tau^2$\strut};
+  \draw (\tauv-\tauv*\tauv,-0.25+0.5*\tic) -- ++(0,-\tic) node [below] {$\tau(1-\tau)$\strut};
+
+  \draw [->,dashed,shorten >=3mm,shorten <=3mm] (1,0) -- (\tauv,-0.25);
+\end{tikzpicture}
+
+Need: \(\tau ^2 = 1 - \tau\). Find: \(\tau = \left ( \sqrt{5} - 1 \right ) / 2\).
+
 Also known as the /golden section/. Hence /golden section search/.
 #+LATEX: \end{hidden}
 
