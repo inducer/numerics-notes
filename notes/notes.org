@@ -4533,11 +4533,11 @@ within range of numerical operations.
 
 #+LATEX: \begin{hidden}
 Limit the set of functions to span of an /interpolation basis/ \(\{\varphi _i\}_{i=1}^{N_{\tmop{Func}}}\):
-\[f (x) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
+\[p_{n-1} (x) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j \varphi _j (x)_{} \]
 \vspace{-3ex}
 
 Interpolation becomes solving the linear system:
-\[y_i = f (x_i) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j
+\[y_i = p_{n-1} (x_i) = \sum _{j = 1}^{N_{\tmop{func}}} \alpha _j
    \underbrace{\varphi _j (x_i)}_{V_{i j}} \qquad \leftrightarrow \qquad V
    \B{\alpha } = \B{y} . \]
 \vspace{-3ex}
@@ -4698,7 +4698,7 @@ But how can I practically compute the Legendre polynomials?
 #+LATEX: \begin{hidden}
 \(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
 
-- There exist three-term recurrences, e.g.: \(T_{n+1}=2xT_n -T_{n-1}\)
+- There exist three-term recurrences, e.g.: \((n+1)P_{n+1}=(2n+1)xP_n -nP_{n-1}\)
 - There is a whole zoo of polynomials there, depending on the weight
   function \(w\) in the (generalized) inner product:
   \[\ip{f}{g} = \int w (x) f (x) g (x) \mathd x. \]
@@ -4720,7 +4720,7 @@ Three equivalent definitions:
 
 - \(T_k (x) = \cos (k \cos ^{- 1} (x))\)
 
-- \(T_k (x) = 2 xT_{k-1} (x) - T_{k - 2} (x)\) plus \(T_0=1\), \(T_0=x\)
+- \(T_k (x) = 2 xT_{k-1} (x) - T_{k - 2} (x)\) plus \(T_0=1\), \(T_1=x\)
 
 *** Chebyshev Interpolation
 
@@ -4779,7 +4779,7 @@ polynomial of degree at most $n$ that interpolates $f$ at $n$ distinct
 points \(\{x_i\}\) ($i=1,...,n$) in that interval, then for each $x$ in the
 interval there exists $\xi$ in that interval such that
 
-\[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi )}{n!} (x - x_1) (x - x_2) \cdots
+\[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi(x) )}{n!} (x - x_1) (x - x_2) \cdots
    (x - x_n). \]
 
 #+LATEX: \begin{hidden}
