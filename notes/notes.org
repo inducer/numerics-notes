@@ -5268,8 +5268,8 @@ How accurate is numerical differentiation (with a polynomial basis)?
 Recall from interpolation error:
 If $f (\B{x}) = p_{n - 1} (\B{x})$, then
 \[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi)}{n!} \prod_{i = 1}^n (x - x_i).\]
-Thus
-\[ f' (x) - p_{n - 1}' (x) = \frac{f^{(n)} (\xi)}{n!} \left( \prod_{i =
+Thus (ignoring dependency of \xi on $x$):
+\[ f' (x) - p_{n - 1}' (x) \approx \frac{f^{(n)} (\xi)}{n!} \left( \prod_{i =
    1}^n (x - x_i) \right)', \]
 so
 \[ \abs{f' (x) - p_{n - 1} (x)} \leqslant C \norm{f^{(n)} (\theta)}_{\infty}
