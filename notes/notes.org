@@ -5169,7 +5169,7 @@ degree.
 
 *But:* Resulting system would be nonlinear.\medskip
 
-Can use orthogonal polynomials to get a leg up. (\(\rightarrow\) hw)
+Can use orthogonal polynomials to get a leg up.
 
 *Gaussian quadrature* with \(n\) points: Exactly integrates
 polynomials up to degree \(2 n - 1\).
@@ -5209,7 +5209,7 @@ non-composite.\medskip
 *Idea:* If we can estimate errors on each subinterval, we can shrink
 (e.g. by splitting in half) only those contributing the most to the error.
 
-(*adaptivity*, \(\rightarrow\) hw)
+(*adaptivity*)
 
 ** Numerical Differentiation
 
@@ -5604,15 +5604,13 @@ Consider the perturbed problem
 Then if \(\B{f}\) is /Lipschitz continuous/ (has `bounded slope'),
 i.e.
 \[\norm{\B{f} (\B{y}) - \B{f} (\widehat{\B{y}})}
-   \le L \norm{\B{y} - \widehat{\B{y}}} \]
-(where \(L\) is called the /Lipschitz constant/), then...
+   \le L \norm{\B{y} - \widehat{\B{y}}}, \]
 
 #+LATEX: \begin{hidden}
-
 - there exists a solution \(\B{y}\) in a neighborhood of \(t_0\),
     and...
-
 - \(\norm{\B{y} (t) - \widehat{\B{y}} (t)} \le e^{L     (t - t_0)} \norm{\B{y}_0 - \widehat{\B{y}}_0}\)
+- This is the *Picard-Lindelöf theorem*.
 #+LATEX: \end{hidden}
 
 What does this mean for uniqueness?
@@ -5634,7 +5632,7 @@ To adapt to conventional terminology, we will use `Stability' for
 
 Some terminology:\medskip
 
-An ODE is *stable* if and only if...
+An IVP is *stable* if and only if...
 #+LATEX: \begin{hidden}
 The
 solution is continously dependent on the initial condition, i.e.
@@ -5645,7 +5643,7 @@ For all \(\varepsilon > 0\) there exists a \(\delta > 0\) so that
    \quad \text{for all \(t \geqslant t_0\)} . \]
 #+LATEX: \end{hidden}
 
-An ODE is *asymptotically stable* if and only if
+An IVP is *asymptotically stable* if and only if
 #+LATEX: \begin{hidden}
 \[
    \norm{\widehat{\B{y}} (t) - \B{y} (t)} \rightarrow 0 \quad (t
@@ -5673,7 +5671,7 @@ When is this stable?
 :BEAMER_col: 0.3
 :BEAMER_opt: [t]
 :END:
-$\operatorname{Re}(t) < 0$:
+$\operatorname{Re}(\lambda) > 0$:
 \begin{tikzpicture}[domain=0:2,scale=0.8]
   \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
   \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
@@ -5687,7 +5685,7 @@ Unstable
 :BEAMER_col: 0.3
 :BEAMER_opt: [t]
 :END:
-$\operatorname{Re}(t) = 0$:
+$\operatorname{Re}(\lambda) = 0$:
 \begin{tikzpicture}[domain=0:2,scale=0.8]
   \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
   \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
@@ -5702,7 +5700,7 @@ Stable, not asympt. stable
 :BEAMER_opt: [t]
 :END:
 
-$\operatorname{Re}(t) = 0$:
+$\operatorname{Re}(\lambda) < 0$:
 \begin{tikzpicture}[domain=0:2,scale=0.8]
   \draw [->] (-0.15,0) -- (2,0) node [anchor=west] {$t$};
   \draw [->] (0,-0.15) -- (0,1.5) node [anchor=west] {$|y(t)|$};
