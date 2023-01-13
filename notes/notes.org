@@ -949,6 +949,8 @@ This phenomenon is called /Catastrophic Cancellation/.
 
 - Evan Wallace, [[https://evanw.github.io/float-toy/][Float Toy]]
 
+- Julia Evans, [[https://jvns.ca/blog/2023/01/13/examples-of-floating-point-problems/][Examples of Floating Point Problems]], 2022
+
 * Systems of Linear Equations
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: linear_systems
