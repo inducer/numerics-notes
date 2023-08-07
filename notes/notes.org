@@ -1,7 +1,7 @@
 #+TITLE: Numerical Analysis / Scientific Computing
 #+SUBTITLE: CS450
 #+AUTHOR: Andreas Kloeckner
-#+DATE: Fall 2022
+#+DATE: Fall 2023
 
 
 * LaTeX header setup stuff                                         :noexport:
@@ -117,13 +117,13 @@
 ** Notes
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-book
-  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f22/notes.pdf
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes.pdf
   :END:
 
 ** Notes (unfilled, with empty boxes)
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-book
-  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f22/notes-folded.pdf
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes-folded.pdf
   :END:
 ** About the Class
 *** What's the point of this class?
@@ -196,7 +196,7 @@ How do numerical methods /get implemented/?
 *** Class web page
 
 #+BEGIN_CENTER
-[[https://bit.ly/cs450-f22]]
+[[https://bit.ly/cs450-f23]]
 #+END_CENTER
 
 - Assignments
