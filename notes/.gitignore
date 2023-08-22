@@ -1,8 +1,12 @@
 latex.out
 notes.tex
 notes-folded.tex
+notes-empty.tex
+notes-lecture.tex
 notes.pdf
 notes-folded.pdf
+notes-empty.pdf
+notes-lecture.pdf
 
 *-converted-to.pdf
 ltximg

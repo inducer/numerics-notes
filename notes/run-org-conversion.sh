@@ -51,5 +51,8 @@ fi
 
 build_latex notes.tex
 
-grep -v '\\showhiddentrue' notes.tex > notes-folded.tex
-build_latex notes-folded.tex
+grep -v '\\showhiddentrue' notes.tex > notes-lecture.tex
+build_latex notes-lecture.tex
+
+grep -v '\\showhiddentrue' notes.tex | grep -v '\\showlatertrue' > notes-empty.tex
+build_latex notes-empty.tex

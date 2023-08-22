@@ -18,9 +18,20 @@
 #+BEAMER_HEADER: \usepackage{environ}
 #+BEAMER_HEADER: \usepackage{tcolorbox}
 #+BEAMER_HEADER: \newif\ifshowhidden
+#+BEAMER_HEADER: \newif\ifshowlater
 #+BEAMER_HEADER: \showhiddentrue
+#+BEAMER_HEADER: \showlatertrue
 #+BEAMER_HEADER: \def\fillinbox#1{\begin{tcolorbox}[height=#1]\end{tcolorbox}}
 #+BEAMER_HEADER: \NewEnviron{hidden}[0]{\begin{tcolorbox}\ifshowhidden\BODY\else\phantom{\vbox{\BODY}}\vspace*{-1.25ex}\fi\end{tcolorbox}}
+#+BEAMER_HEADER: \NewEnviron{showlater}[0]{\begin{tcolorbox}[colback=blue!5!white]%
+#+BEAMER_HEADER: \ifshowhidden\BODY\else%
+#+BEAMER_HEADER:   \ifshowlater%
+#+BEAMER_HEADER:     \uncover<2>{\BODY}\vspace*{-1.25ex}%
+#+BEAMER_HEADER:   \else%
+#+BEAMER_HEADER:     \phantom{\vbox{\BODY}}\vspace*{-1.25ex}%
+#+BEAMER_HEADER:   \fi%
+#+BEAMER_HEADER: \fi%
+#+BEAMER_HEADER: \end{tcolorbox}}
 
 #+BEAMER_HEADER: \let\plainhref=\href
 #+BEAMER_HEADER: \let\plainurl=\url
@@ -123,7 +134,7 @@
 ** Notes (unfilled, with empty boxes)
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-book
-  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes-folded.pdf
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes-empty.pdf
   :END:
 ** About the Class
 *** What's the point of this class?
