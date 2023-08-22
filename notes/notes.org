@@ -143,7 +143,7 @@
 approximate solutions to problems /once they've been stated mathematically/.
 
 Name some applications:
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - Engineering simulation
   - E.g. Drag from flow over airplane wings, behavior of photonic
@@ -156,44 +156,44 @@ Name some applications:
   - Enlargement/Filtering
   - \(\rightarrow\) Interpolation
 - Lots more.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** What do we study, and how?
 
 Problems with real numbers (i.e. /continuous/ problems)
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - As opposed to /discrete/ problems.
 - Including: How can we put a real number into a computer?
   (and with what restrictions?)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 What's the general approach?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - Pick a /representation/ (e.g.: a polynomial)
 - Existence/uniqueness?
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** What makes for /good/ numerics?
 How good of an answer can we expect to our problem?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Can't even represent numbers exactly.
 - Answers will always be /approximate/.
 - So, it's natural to ask /how far off the mark/ we really are.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 /How fast/ can we expect the computation to complete?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - A.k.a. what algorithms do we use?
 - What is the cost of those algorithms?
 - Are they efficient?
 
   (I.e. do they make good use of available machine time?)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Implementation concerns
 How do numerical methods /get implemented/?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Like anything in computing: A layer cake of /abstractions/
 
   ("careful lies")
@@ -202,7 +202,7 @@ How do numerical methods /get implemented/?
 - Are the methods easy to implement?
 - If not, how do we make use of existing tools?
 - How robust is our implementation? (e.g. for error cases)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Class web page
 
@@ -290,13 +290,13 @@ THE SOFTWARE.
 
 To be able to compute a solution (through a process that
 introduces errors), the problem...
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - Needs to /have/ a solution
 - That solution should be /unique/
 - And /depend continuously/ on the inputs
 
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 If it satisfies these criteria, the problem is called /well-posed/. Otherwise, /ill-posed/.
 
 *** Dependency on Inputs
@@ -306,7 +306,7 @@ chance for those.
 
 ...what if the problem's input dependency is just /close to
 discontinuous/?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - We call those problems /sensitive/ to their input data.
 
@@ -314,12 +314,12 @@ discontinuous/?
 
 - Ideally, the computational method will not /amplify/ the
     sensitivity
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Approximation
 
 \emph{When} does approximation happen?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - Before computation
   - modeling
@@ -330,7 +330,7 @@ discontinuous/?
   - truncation / discretization
   - rounding
 
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{error_and_fp}{Truncation vs Rounding}
 
@@ -339,14 +339,14 @@ discontinuous/?
 Compute the surface area of the earth.
 
 What parts of your computation are approximate?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
  /All of them./
 \[A = 4 \pi r^2 \]
 
 - Earth isn't really a sphere
 - What does radius mean if the earth isn't a sphere?
 - How do you compute with \(\pi\)? (By rounding/truncating.)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Measuring Error
 
@@ -504,7 +504,7 @@ About 2 percent.
 #+LATEX: \end{hidden}
 *** Forward/Backward Error: Observations
 What do you observe about the relative manitude of the relative errors?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - In this case: Got smaller, i.e. variation /damped out/.
 - Typically: Not that lucky: Input error /amplified/.
 - If backward error is smaller than the input error:
@@ -512,7 +512,7 @@ What do you observe about the relative manitude of the relative errors?
   result "as good as possible".
 
 This amplification factor seems worth studying in more detail.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Sensitivity and Conditioning
 
@@ -531,7 +531,7 @@ Call this the /(relative) condition number/. Find it via:
 #+LATEX: \end{hidden}
 *** Absolute Condition Number
 Can you also define an /absolute/ condition number?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Certainly:
 \[\kappa_{\text{abs}} = \max _{x,\hat x} \frac{\abs{f(x)-f(\hat x)}}{\abs{x-\hat x}} \]
 
@@ -540,11 +540,11 @@ error.
 
 \medskip
 When not specified: Assume condition number means /relative/.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Interpreting a Condition Number
 What does it mean for condition numbers to be small/large?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 If the condition number is...
 
 - ...small: the problem /well-conditioned/ or
@@ -553,7 +553,7 @@ If the condition number is...
 - ...large: the problem /ill-conditioned/ or sensitive
 
 /Can/ also talk about condition number for a single input \(x\).
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 Relate the (relative) condition number back to the setting of (relative) backward error.
 
@@ -591,13 +591,13 @@ Condition number:
 *Next:* Considered /methods/, i.e. computational approaches to find solutions.
 
 When is a method /accurate/?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Closeness of
 method output to true answer for unperturbed input.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 When is a method /stable/?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - ``A method is stable if the result it produces is the exact solution
   to a nearby problem.''
 
@@ -608,16 +608,16 @@ When is a method /stable/?
   much) greater than that of the problem itself.
 
 # *Note:* implies insensitivity to variation in intermediate results.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Getting into Trouble with Accuracy and Stability
 How can I produce inaccurate results?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 
 - Apply an inaccurate method
 - Apply an unstable method to a well-conditioned problem
 - Apply any type of method to an ill-conditioned problem
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** In-Class Activity: Forward/Backward Error
   :PROPERTIES:
