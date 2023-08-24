@@ -598,8 +598,8 @@ method output to true answer for unperturbed input.
 
 When is a method /stable/?
 #+LATEX: \begin{showlater}
-- ``A method is stable if the result it produces is the exact solution
-  to a nearby problem.''
+- ``A method is stable if the result it produces is the exact answer
+  for a nearby input.''
 
 - The above is commonly called /backward stability/ and is a stricter
   requirement than just the temptingly simple:\medskip
