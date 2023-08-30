@@ -136,6 +136,11 @@
   :RELATE_TREE_ICON: bi bi-book
   :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes-empty.pdf
   :END:
+** Notes (source code on Github)
+  :PROPERTIES:
+  :RELATE_TREE_ICON: bi bi-book
+  :RELATE_TREE_LINK: https://github.com/inducer/numerics-notes
+  :END:
 ** About the Class
 *** What's the point of this class?
 
