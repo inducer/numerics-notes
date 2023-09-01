@@ -692,13 +692,14 @@ let it /float/.
 
 Convert \(13 = (1101)_2\) into floating point representation.
 #+LATEX: \begin{hidden}
-\[13
-   = 2^3 + 2^2 + 2^0 = (1.101)_2 \cdot 2^3 \]
+\[13 = 2^3 + 2^2 + 2^0 = (1.101)_2 \cdot 2^3 \]
 #+LATEX: \end{hidden}
 
 What pieces do you need to store an FP number?
 #+LATEX: \begin{hidden}
 /Significand:/ \((1.101)_2\)
+- Generally: $0 \le \text{significand} < 2$
+- Can actually require: $1 \le \text{significand} < 2$ (*normalization*)
 
 /Exponent:/ 3
 #+LATEX: \end{hidden}
@@ -941,7 +942,7 @@ or, once we normalize,
 \[1. ? ? ? ? \cdot 2^{- 3} . \]
 There is no data to indicate what the missing digits should be.
 
-\(\rightarrow\) Machine fills them with its `best guess', which is not often good.\medskip
+\(\rightarrow\) Machine fills them with zero.\medskip
 
 This phenomenon is called /Catastrophic Cancellation/.
 #+LATEX: \end{hidden}
