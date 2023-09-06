@@ -778,10 +778,10 @@ What is the smallest representable number in an FP system with 4
 stored bits in the significand and a (stored) exponent range of \([- 7, 8]\)?
 #+LATEX: \begin{showlater}
 - Can go way smaller using the /special exponent/ (turns off the leading one)
-- Assume that the special exponent is \(- 7\).
-- So: \((0.001)_2 \cdot 2^{-7}\) (with all four digits stored).
+- Assume that the special exponent is $- 7$; interpreted as $-6$.
+- So: \((0.0001)_2 \cdot 2^{-6}\) (with four digits after the point stored).
 
-Numbers with the special epxonent are called /subnormal/ (or
+Numbers with the special exponent are called /subnormal/ (or
 /denormal/) FP numbers. Technically, zero is also a
 subnormal.
 #+LATEX: \end{showlater}
