@@ -1206,21 +1206,8 @@ And we get
 
 *** Changing Condition Numbers
 
-Once we have a matrix \(A\) in a linear system \(A \B{x} = \B{b}\), are we stuck with its condition number? Or could we improve
-it?
-#+LATEX: \begin{hidden}
-/Diagonal scaling/ is a simple strategy that sometimes
-helps.
-
-- Row-wise:
-    \(DA \B{x} = D \B{b} \)
-- Column-wise:
-    \(AD \widehat{\B{x}} = \B{b} \)
-
-  Different \(\widehat{\B{x}}\): Recover \(\B{x} = D     \widehat{\B{x}}\).
-#+LATEX: \end{hidden}
-
-What is this called as a general concept?
+Once we have a matrix \(A\) in a linear system \(A \B{x} = \B{b}\),
+are we stuck with its condition number? Or could we improve it?
 #+LATEX: \begin{hidden}
 /Preconditioning/
 
@@ -1230,6 +1217,16 @@ What is this called as a general concept?
     \(AM \widehat{\B{x}} = \B{b} \)
 
   Different \(\widehat{\B{x}}\): Recover \(\B{x} = M     \widehat{\B{x}}\).
+#+LATEX: \end{hidden}
+A typical case: use diagonal matrix as the preconditioner. What is the
+effect in each case?
+#+LATEX: \begin{hidden}
+- Row-wise scaling:
+    \(DA \B{x} = D \B{b} \)
+- Column-wise scaling:
+    \(AD \widehat{\B{x}} = \B{b} \)
+
+  Different \(\widehat{\B{x}}\): Recover \(\B{x} = D     \widehat{\B{x}}\).
 #+LATEX: \end{hidden}
 
 *** In-Class Activity: Matrix Norms and Conditioning
