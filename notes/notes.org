@@ -1456,7 +1456,7 @@ Or, written differently:
      \end{array}\right]\\
      \left[\begin{array}{cc}
        1 & \\
-       \B{l}_{21} & L_{22}
+       \B{\ell}_{21} & L_{22}
      \end{array}\right] & \left[\begin{array}{cc}
        a_{11} & \B{a}_{12}\\
        \B{a}_{21} & A_{22}
@@ -1465,9 +1465,9 @@ Or, written differently:
 #+END_EXPORT
 - Clear: $u_{11} = a_{11}$, $\B{u}_{12}^T =\B{a}_{12}^T$.
 
-- $\B{a}_{21} = u_{11} \B{l}_{21}$, or $\B{l}_{21} =\B{a}_{21} / u_{11}$.
+- $\B{a}_{21} = u_{11} \B{\ell}_{21}$, or $\B{\ell}_{21} =\B{a}_{21} / u_{11}$.
 
-- $A_{22} =\B{l}_{21} \B{u}_{12}^T + L_{22} U_{22}$, or $L_{22} U_{22} = A_{22} -\B{l}_{21} \B{u}_{12}^T$.
+- $A_{22} =\B{\ell}_{21} \B{u}_{12}^T + L_{22} U_{22}$, or $L_{22} U_{22} = A_{22} -\B{\ell}_{21} \B{u}_{12}^T$.
 #+LATEX: \end{hidden}
 
 \demolink{linear_systems}{LU Factorization}
@@ -1480,8 +1480,8 @@ What is the computational cost of multiplying two \(n \times n\) matrices?
 #+LATEX: \end{hidden}
 
 - $u_{11} = a_{11}$, $\B{u}_{12}^T =\B{a}_{12}^T$.
-- $\B{l}_{21} =\B{a}_{21} / u_{11}$.
-- $L_{22} U_{22} = A_{22} -\B{l}_{21} \B{u}_{12}^T$.
+- $\B{\ell}_{21} =\B{a}_{21} / u_{11}$.
+- $L_{22} U_{22} = A_{22} -\B{\ell}_{21} \B{u}_{12}^T$.
 
 \medskip
 What is the computational cost of carrying out LU factorization
@@ -1552,20 +1552,20 @@ LU /can/ be used for SPD matrices. But can we do better?
 
 \[ \begin{bmatrix}
      \ell_{11} & \\
-     \B{l}_{21} & L_{22}
+     \B{\ell}_{21} & L_{22}
    \end{bmatrix} \begin{bmatrix}
-     \ell_{11} & \B{l}_{21}^T\\
+     \ell_{11} & \B{\ell}_{21}^T\\
      & L_{22}^T
    \end{bmatrix} = \begin{bmatrix}
      a_{11} & \B{a}_{21}^T\\
      \B{a}_{21} & A_{22}
    \end{bmatrix} . \]
-$\ell_{11}^2 = a_{11}$, then $\ell_{11} \B{l}_{21} =\B{a}_{21}$,
-i.e. $\B{l}_{21} =\B{a}_{21} / \ell_{11}$. Finally,
+$\ell_{11}^2 = a_{11}$, then $\ell_{11} \B{\ell}_{21} =\B{a}_{21}$,
+i.e. $\B{\ell}_{21} =\B{a}_{21} / \ell_{11}$. Finally,
 \begin{eqnarray*}
-  \B{l}_{21} \B{l}_{21}^T + L_{22} L_{22}^T & = & A_{22}, \quad
+  \B{\ell}_{21} \B{\ell}_{21}^T + L_{22} L_{22}^T & = & A_{22}, \quad
   \text{or}\\
-  L_{22} L_{22}^T & = & A_{22} -\B{l}_{21} \B{l}_{21}^T .
+  L_{22} L_{22}^T & = & A_{22} -\B{\ell}_{21} \B{\ell}_{21}^T .
 \end{eqnarray*}
 \vspace{-2ex}
 - Fails if $a_{11}$ is negative at any point. (\Rightarrow $A$ not SPSemiD)
