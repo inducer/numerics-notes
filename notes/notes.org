@@ -1307,14 +1307,14 @@ The 2-norm is very costly to compute. Can we make something simpler?
 is called the *Frobenius norm*.
 #+LATEX: \end{hidden}
 What about its properties?
-#+LATEX: \begin{hidden}
-Satisfies the mat. norm properties. (proofs via Cauchy-Schwarz)
+#+LATEX: \begin{showlater}
+Satisfies the mat. norm properties.
 
 - definiteness
 - scaling
 - triangle inequality
-- submultiplicativity
-#+LATEX: \end{hidden}
+- submultiplicativity (proof via Cauchy-Schwarz)
+#+LATEX: \end{showlater}
 
 *** Frobenius Norm: Properties
 
@@ -1408,6 +1408,8 @@ What is the *LU factorization*?
 A factorization $A=LU$ with:
 - $L$ lower triangular, unit diagonal
 - $U$ upper triangular
+
+Existence? Good question \to will answer later.
 #+LATEX: \end{hidden}
 
 *** Solving $A\B x=\B b$
@@ -1525,7 +1527,7 @@ LU has exactly one failure mode: the division when $u_{11}=0$.
 *** Saving the LU Factorization
 What can be done to get something \emph{like} an LU
 factorization?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 *Idea from linear algebra class:* In Gaussian elimination, simply swap
 rows, equivalent linear system.
 
@@ -1539,8 +1541,8 @@ The entry we divide by is called the /pivot/.
 
 - Swapping rows to get a bigger pivot is called *partial pivoting*.
 - Swapping rows /and columns/ to get an even bigger pivot is called *complete pivoting*.
-  (downside: additional $O(n^2)$ cost to find the pivot!)
-#+LATEX: \end{hidden}
+  (downside: additional $O(n^2)$ cost /per step/ to find the pivot!)
+#+LATEX: \end{showlater}
 
 \demolink{linear_systems}{LU Factorization with Partial Pivoting}
 
