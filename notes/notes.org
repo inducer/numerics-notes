@@ -1790,16 +1790,16 @@ Special matrix formats can also help save const significantly, e.g.
 
 *** LU on Blocks: The Schur Complement
 
-Given a matrix
-\[\begin{bmatrix} A & B \\ C & D \end{bmatrix},\]
-can we do `block LU' to get a /block triangular matrix/?
+Given a linear system
+\[\left[\begin{array}{cc|c} A & B & \B b_1 \\ C & D & \B b_2\end{array}\right],\]
+can we do `block Gaussian elimination' to get a /block triangular matrix/?
 #+LATEX: \begin{hidden}
 Multiply the top row by $-C A^{-1}$, add to second row, gives:
 
-\[\begin{bmatrix} A & B \\ 0 & D-CA^{-1}B \end{bmatrix}.\]
+\[\left[\begin{array}{cc|c} A & B & \B b_1 \\ 0 & D-CA^{-1}B & \B b_2-CA^{-1}\B b_1\end{array}\right],\]
 
-\(D-CA^{-1}B\) is called the *Schur complement*.
-Block pivoting is also possible if needed.
+- \(D-CA^{-1}B\) is called the *Schur complement*.
+- Block pivoting is also possible if needed.
 #+LATEX: \end{hidden}
 
 *** LU: Special cases
