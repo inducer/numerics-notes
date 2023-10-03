@@ -2308,11 +2308,11 @@ precision arithmetic because of roundoff.
 *** Economical/Reduced QR
 
 Is QR with square \(Q\) for \(A\in\mathbb R^{m\times n}\) with \(m>n\) efficient?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 No. Can obtain *economical* or *reduced QR* with \(Q\in\mathbb R^{m\times n}\) and \(R\in\mathbb R^{n\times n}\).
 Least squares solution process works unmodified with the economical form, though the equivalence
 proof relies on the 'full' form.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** In-Class Activity: QR
   :PROPERTIES:
@@ -2425,7 +2425,7 @@ where $c=a_1/\norm{\B a}_2$ and $s=a_2/\norm{\B a}_2$, with $\B a=[a_1,a_2]^T$.
 *** Rank-Deficient Matrices and QR
 
 What happens with QR for rank-deficient matrices?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 $A=QR$, where $R$ has some small diagonal entries, in undetermined order.
 
 \medskip
@@ -2439,7 +2439,7 @@ gathered near the `right' of \(R\) \(\rightarrow\) Column pivoting.\medskip
   \ast & \ast & \ast \\& (\text{small}) & (\text{small}) \\&  & (\text{smaller})
 \end{bmatrix} \]
 Also used as the basis for /rank-revealing QR/.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Rank-Deficient Matrices and Least-Squares
 
@@ -2471,7 +2471,7 @@ What happens with Least Squares for rank-deficient matrices?
 
 For a matrix of shape $m\times n$ with $m>n$, what are the shapes of the factors
 in the SVD?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Again, there is the *full* version of the factorization:
 - $U$: $m\times m$
 - $\Sigma$: $m\times n$
@@ -2481,7 +2481,7 @@ and the *economical/reduced* version:
 - $U$: $m\times n$
 - $\Sigma$: $n\times n$
 - $V$: $n\times n$
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** SVD: What's this thing good for? (I)
 
@@ -2562,7 +2562,7 @@ Coincides with prior definition in case of full rank.
 
 Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Form: \(A^T A\): \(n^2 m / 2\) (symmetric---only need to fill half)
 
   Solve with \(A^T A\): \(n^3 / 6\) (Cholesky)
@@ -2575,7 +2575,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
     normal equations
 
 - SVD: \(mn^2 + n^3\) (with a large constant)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{linear_least_squares}{Relative cost of matrix factorizations}
 
