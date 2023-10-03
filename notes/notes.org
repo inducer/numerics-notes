@@ -2491,7 +2491,7 @@ and the *economical/reduced* version:
 - Nullspace \(N (A) = \tmop{span} (\{\B{v}_i : \sigma _i = 0 \})\).
 - \(\tmop{rank} (A) =\#\{i : \sigma _i \neq 0 \}\)\medskip
 
-    Computing rank in the presence of round-off error is not laughably
+    Computing rank in the presence of round-off error is laughably
     non-robust. More robust:
 
 - /Numerical rank/:
