@@ -17,13 +17,14 @@
 
 #+BEAMER_HEADER: \usepackage{environ}
 #+BEAMER_HEADER: \usepackage{tcolorbox}
+#+BEAMER_HEADER: \tcbuselibrary{skins}
 #+BEAMER_HEADER: \newif\ifshowhidden
 #+BEAMER_HEADER: \newif\ifshowlater
 #+BEAMER_HEADER: \showhiddentrue
 #+BEAMER_HEADER: \showlatertrue
 #+BEAMER_HEADER: \def\fillinbox#1{\begin{tcolorbox}[height=#1]\end{tcolorbox}}
 #+BEAMER_HEADER: \NewEnviron{hidden}[0]{\begin{tcolorbox}\ifshowhidden\BODY\else\phantom{\vbox{\BODY}}\vspace*{-1.25ex}\fi\end{tcolorbox}}
-#+BEAMER_HEADER: \NewEnviron{showlater}[0]{\begin{tcolorbox}[colback=blue!5!white]%
+#+BEAMER_HEADER: \NewEnviron{showlater}[0]{\begin{tcolorbox}[enhanced,frame hidden,colback=blue!5!white,borderline={1pt}{0pt}{blue,dashed}]%
 #+BEAMER_HEADER: \ifshowhidden\BODY\else%
 #+BEAMER_HEADER:   \ifshowlater%
 #+BEAMER_HEADER:     \uncover<2>{\BODY}\vspace*{-1.25ex}%
