@@ -2462,6 +2462,8 @@ What happens with Least Squares for rank-deficient matrices?
 #+LATEX: \begin{hidden}
 - QR still finds a solution with minimal residual
 
+  But: need to deal with zeros on diagonal in $R$
+
 - By QR it's easy to see that least squares with a short-and-fat matrix
     is equivalent to a rank-deficient one.
 
