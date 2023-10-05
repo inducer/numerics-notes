@@ -2438,7 +2438,7 @@ change as soon as other Givens rotations are applied.)
 
 What happens with QR for rank-deficient matrices?
 #+LATEX: \begin{showlater}
-$A=QR$, where $R$ has some small diagonal entries, in undetermined order.
+$A=QR$, where $R$ has some zero diagonal entries, in undetermined order.
 
 \medskip
 Practically, it makes sense to ask for all these `small' columns to be
