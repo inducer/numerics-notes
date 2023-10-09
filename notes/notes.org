@@ -2429,7 +2429,7 @@ Given a matrix
 \[A = \begin{bmatrix} a_{11} & a_{12} & a_{13} \\a_{21} & a_{22} & a_{23} \\a_{31} & a_{32} & a_{33} \end{bmatrix},\]
 in what order can we apply Givens rotations to eliminate the nonzeros below the diagonal?
 #+LATEX: \begin{hidden}
-\[G_{12}G_{21}G_{31} A = R,\]
+\[G_{32}G_{21}G_{31} A = R,\]
 where $G_{ij}$ is the Givens rotation that zeros out the entry at row
 $i$, column $j$ of the matrix preceding it. (NB: not of $A$, as the entries
 change as soon as other Givens rotations are applied.)
