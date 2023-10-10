@@ -2624,6 +2624,21 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
     eigenvalue:
     \[\rho (A) = \max \left \{\abs{\lambda } : \lambda (A) \right \}\]
 
+*** Eigenvalue Problems: Motivation from Mechanics
+
+Consider mass-spring systems, e.g. as modeled in (e.g.) [[https://www.myphysicslab.com][myphysicslab.com]]
+
+What is needed to model?
+#+LATEX: \begin{hidden}
+- Hooke's law: $F=\alpha (x-x_0)$: spring force prop. to extension
+- $\B x(t)$: vector of mass position
+- Model Hooke's law as $\B F(t)=A \B x(t)$, i.e. spring constants and position differences computed via matrix
+\[\B F=m \B a \Leftrightarrow A \B x(t) = m \frac{\partial^2 \B x(t)}{\partial t^2}.\]
+
+Observ thes systems `wobble': assume $\B x(t)=\sin(\omega t) \B x_0$. Then
+\[A \B x_0(t) \sin(\omega t)= m (-\omega^2) \B x_0 \sin(\omega t).\]
+Cancel $\sin(\omega t)$: yields an eigenvalue problem for $\B x_0$ and $-\omega^2$.
+#+LATEX: \end{hidden}
 *** Finding Eigenvalues
 
 How do you find eigenvalues?
