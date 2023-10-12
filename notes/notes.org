@@ -423,6 +423,10 @@ exist \(\alpha , \beta > 0\) so that for all vectors \(\B{x} \in  \mathbb{R}^n\)
 So: No, doesn't matter \emph{that much}. Will start mattering more for
 so-called /matrix norms/--see later.
 #+LATEX: \end{hidden}
+\bigskip
+In these notes: If we write \(\norm \cdot\) without any specifics, then the
+statement is true for any norm.
+If a specific norm is needed, the notation will indicate that.
 
 *** Norms and Errors
 
@@ -1090,6 +1094,10 @@ definition:
 
 Both of these are called /submultiplicativity/ of the matrix norm.
 #+LATEX: \end{hidden}
+
+In these notes: If we write \(\norm \cdot\) (for matrix norms) without any
+specifics, then the statement is true for any induced norm.
+If a specific norm is needed, the notation will indicate that.
 
 *** Conditioning
 
