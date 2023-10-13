@@ -2962,7 +2962,8 @@ matrix, i.e.
 This is called the *Schur form* or *Schur factorization*.
 
 #+LATEX: \begin{hidden}
-Assume \(A\) non-defective for now. Suppose \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
+Let $(\lambda, \B v)$ be an eigenpair (at least one always exists),
+i.e. \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 \(V = \tmop{span} \{\B{v} \}\). Then
 \vspace{-2ex}
 \begin{eqnarray*}
