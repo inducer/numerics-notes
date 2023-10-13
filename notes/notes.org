@@ -2841,48 +2841,195 @@ an existing eigenvalue, this bound holds for /all/ eigenvalues of $A+E$.
 
 *** Power Iteration
 
+
 \demolink{eigenvalue}{Motivating Power Iteration}
 
-Assume \(\abs{\lambda _1} > \abs{\lambda _2} > \cdots > \abs{\lambda _n}\) with
-eigenvectors \(\B{x}_1, \ldots , \B{x}_n\).
+Let $A \in \mathbb{R}^{n \times n}$ and $A\B{v}_j = \lambda_j \B{v}_j$ ($j \in \{ 1, 2, \ldots, n \}$) and $\abs{\lambda_1} > \abs{\lambda_2} > \cdots > \abs{\lambda_n}$.
 
-Further assume \(\norm{\B{x}_i} = 1\).
-#+LATEX: \begin{hidden}
-Use \(\B{x} = \alpha \B{x}_1 + \beta \B{x}_2\).
-\[\B{y} = \B{} A^{1000} (\alpha \B{x}_1 + \beta
-   \B{x}_2) = \alpha \lambda _1^{1000} \B{x}_1 + \beta
-   \lambda _2^{1000} \B{x}_2 \]
-Or
-\[\frac{\B{y}}{\lambda _1^{1000}} = \alpha \B{x}_1 + \beta
-   \underbrace{\left ( \underbrace{\frac{\lambda _2}{\lambda _1}}_{< 1}
-   \right )^{1000}}_{\ll 1} \B{x}_2 . \]
-*Idea:* Use this as a computational procedure to find
-\(\B{x}_1\).
-
+Pick some $\B x_0$, consider $\B{x}_{i + 1} = A\B{x}_i$ ($i \in \{ 0, \ldots \}$).
 Called *Power Iteration*.
+
+#+LATEX: \begin{hidden}
+Let $\B{x}_0 = \sum_{j = 1}^n \alpha_j \B{v}_j$.
+Observe that $\B{x}_i = \sum_{j = 1}^n \alpha_j \lambda^i \B{v}_j$.
+
+Define $\B{e}_i =\B{x}_i / \lambda_1^i - \alpha_1 \B{v}_1$.
+\begin{gather*}
+  \norm{\B{e}_{i + 1}}  =  \norm{\frac{\B{x}_{i +
+  1}}{\lambda_1^{i + 1}} - \alpha_1 \B{v}_1} = \norm{\frac{\sum_{j =
+  1}^n \alpha_j \lambda_j^{i + 1} \B{v}_j}{\lambda_1^{i + 1}} -
+  \alpha_1 \B{v}_1}\\
+   =  \norm{\sum_{j = 2}^n \alpha_j \left( \frac{\lambda_j }{\lambda_1}
+  \right)^{i + 1} \B{v}_j} \leqslant
+  \abs{\frac{\lambda_2}{\lambda_1}}^{i + 1} \norm{\sum_{j = 2}^n \alpha_j
+  \B{v}_j} = \abs{\frac{\lambda_2}{\lambda_1}}^{i + 1}
+  \norm{\B{e}_0} .
+\end{gather*}
+
+I.e. converges to (a multiple of) $\B v_1$ `linearly' (see later).
 #+LATEX: \end{hidden}
 
 *** Power Iteration: Issues?
 
-What could go wrong with Power
-Iteration?
+What could go wrong with Power Iteration?
 #+LATEX: \begin{hidden}
 
 - Starting vector has no component along \(\B{x}_1\)
 
     Not a problem in practice: Rounding will introduce one.
 
-- Overflow in computing \(\lambda _1^{1000}\)
+- Overflow in computing \(\lambda _1^i\)
 
-  \(\rightarrow\) /Normalized Power Iteration/
+  \rightarrow Normalize after each step
 
 - \(|\lambda _1| = |\lambda _2|\)
 
-  Real problem.
+  - If $\lambda_1=\lambda_2$: multipliclity, defer.
+  - If $\lambda_1\ne\lambda_2$: use shift+invert to separate magnitudes
 - Complex eigenvalues
   
-  Real problem.
+  \to use complex-valued shift, and invert.
 #+LATEX: \end{hidden}
+*** Convergence Power Iteration: Notation
+
+- $\lambda_{\max} (A)$: biggest eigenvalue by magnitude
+
+- $\lambda_{\max 2} (A)$: second-biggest eigenvalue by magnitude.
+
+- $\lambda_{\min 2} (A)$: second-smallest eigenvalue by magnitude
+
+- $\lambda_{\min} (A)$: smallest eigenvalue by magnitude
+
+(Not well-defined if there are multiple $\lambda$ with the same magnitudes.
+Assume that's not the case.)
+
+
+*** Power Iteration: Shift
+How does a shift ($A - \sigma I$) change power iteration?
+
+#+LATEX: \begin{showlater}
+- Converges to eigenvector for $\lambda_{\max} (A - \sigma I)$ with
+  convergence factor $\abs{\frac{\lambda_{\max 2} (A - \sigma I)}{\lambda_{\max} (A - \sigma I)}}$.
+
+- Can help guide convergence to eigenvalues `on boundary' of spectrum.
+
+#+BEAMER_HEADER: \def\numpmeigenvalues{10}
+#+BEAMER_HEADER: \def\pmeigenvalues{
+#+BEAMER_HEADER:   \coordinate (lam1) at (1.68,0);
+#+BEAMER_HEADER:   \coordinate (lam2) at (1,0);
+#+BEAMER_HEADER:   \coordinate (lam3) at (1.2,0);
+#+BEAMER_HEADER:   \coordinate (lam4) at (-0.81,1);
+#+BEAMER_HEADER:   \coordinate (lam5) at (-0.81,-1);
+#+BEAMER_HEADER:   \coordinate (lam6) at (-0.2,0);
+#+BEAMER_HEADER:   \coordinate (lam7) at (-0.3,-1.4);
+#+BEAMER_HEADER:   \coordinate (lam8) at (-0.3,1.4);
+#+BEAMER_HEADER:   \coordinate (lam9) at (-1.9,0);
+#+BEAMER_HEADER:   \coordinate (lam10) at (0.5,0);
+#+BEAMER_HEADER: }
+#+BEAMER_HEADER: \def\pmcoordsys#1{
+#+BEAMER_HEADER:    \draw [->] (-5,0) -- ++ (10,0) node [anchor=south] {$\text{Re} \lambda$};
+#+BEAMER_HEADER:    \draw [->] (0,-3) --++ (0,6)
+#+BEAMER_HEADER:      node [anchor=west] {$\text{Im} \lambda$\strut }
+#+BEAMER_HEADER:      node [anchor=east,xshift=-1cm] {#1};
+#+BEAMER_HEADER: }
+
+#+BEGIN_EXPORT latex
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A)$}
+  \draw (0,0) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) circle (0.08);
+  \fill [orange] (lam1) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max2}}$ };
+  \fill [blue] (lam9) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max}}$ };
+  \draw [purple] (0,0) -- (-1.4,-0.4) circle (0.04) node [anchor=north] {$\sigma$ };
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A-\sigma I)$}
+  \draw (0,0) ++(1.4,0.4) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) ++(1.4,0.4) circle (0.08);
+  \fill [blue] (lam1) ++(1.4,0.4) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max}}$ };
+  \fill [orange] (lam3) ++(1.4,0.4) circle (0.08) node [anchor=north] { $\lambda_{\operatorname{max2}}$ };
+\end{tikzpicture}
+#+END_EXPORT
+
+#+LATEX: \end{showlater}
+
+*** Power Iteration: Inversion
+
+How does inversion ($A^{- 1}$) change power iteration?
+
+#+LATEX: \begin{showlater}
+- Converges to eigenvector for $\lambda_{\max} (A^{- 1}) = 1/\lambda_{\min} (A)$
+  with convergence factor
+  \[ \abs{\frac{\lambda_{\max 2} (A^{- 1})}{\lambda_{\max} (A^{- 1})}}
+    = \abs{\frac{1 / \lambda_{\min 2} (A)}{1 / \lambda_{\min} (A)}}
+    = \abs{\frac{\lambda_{\min} (A)}{\lambda_{\min 2} (A)}} . \]
+- Guide convergence to smallest eigenvalues.
+
+#+BEGIN_EXPORT latex
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A)$}
+  \draw (0,0) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) circle (0.08);
+  \fill [orange] (lam1) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max2}}$ };
+  \fill [blue] (lam9) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max}}$ };
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A)$}
+  \draw (0,0) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) circle (0.08);
+  \fill [orange] (lam10) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{min2}}$ };
+  \fill [blue] (lam6) circle (0.08) node [anchor=north] { $\lambda_{\operatorname{min}}$ };
+\end{tikzpicture}
+#+END_EXPORT
+#+LATEX: \end{showlater}
+
+*** Power Iteration: Shift and Inversion
+
+How does shift-invert ($(A - \sigma I)^{- 1}$) change power iteration?
+
+#+LATEX: \begin{showlater}
+- Converges to eigenvector for
+  $\lambda_{\max} ((A - \sigma I)^{- 1}) = 1/\lambda_{\min} (A - \sigma I)$ with convergence factor
+  \[ \abs{\frac{\lambda_{\max 2} ((A - \sigma I)^{- 1})}{\lambda_{\max} ((A - \sigma I)^{- 1})}}
+      =\abs{\frac{\lambda_{\min} (A - \sigma I)}{\lambda_{\min 2} (A - \sigma I)}} . \]
+- Guide convergence to eigenvalue *closest to $\sigma$*.
+
+#+BEGIN_EXPORT latex
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A)$}
+  \draw (0,0) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) circle (0.08);
+  \fill [orange] (lam1) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max2}}$ };
+  \fill [blue] (lam9) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{max}}$ };
+  \draw [purple] (0,0) -- (-1.4,-0.4) circle (0.04) node [anchor=north] {$\sigma$ };
+\end{tikzpicture}
+\begin{tikzpicture}[scale=0.5]
+  \pmeigenvalues
+  \pmcoordsys{$\sigma(A-\sigma I)$}
+  \draw (0,0) ++(1.4,0.4) circle (2);
+
+  \foreach \i in {1,...,\numpmeigenvalues}
+    \fill (lam\i) ++(1.4,0.4) circle (0.08);
+  \fill [blue] (lam5) ++(1.4,0.4) circle (0.08) node [anchor=north] { $\lambda_{\operatorname{min}}$ };
+  \fill [orange] (lam9) ++(1.4,0.4) circle (0.08) node [anchor=south] { $\lambda_{\operatorname{min2}}$ };
+\end{tikzpicture}
+#+END_EXPORT
+#+LATEX: \end{showlater}
 
 *** What about Eigenvalues?
 
@@ -2898,49 +3045,8 @@ Estimate them:
 - Otherwise, an estimate of a `nearby' eigenvalue
 
 This is called the /Rayleigh quotient/.
-#+LATEX: \end{hidden}
 
-*** Convergence of Power Iteration
-
-What can you say about the convergence of the power method?
-
-Say \(\B{v}_1^{(k)}\) is the \(k\)th estimate of the eigenvector
-\(\B{x}_1\), and
-\[e_k = \norm{\B{x}_1 - \B{v}_1^{(k)}} . \]
-#+LATEX: \begin{hidden}
-Easy to see:
-\[e_{k + 1} \approx \frac{\abs{\lambda _2}}{\abs{\lambda _1}} e_k . \]
-We will later learn that this is /linear convergence/. It's quite
-slow.
-
-What does a shift do to this situation?
-\[e_{k + 1} \approx \frac{\abs{\lambda _2 - \sigma }}{\abs{\lambda _1 - \sigma }}
-   e_k . \]
-Picking \(\sigma \approx \lambda _1\) does not help...
-
-*Idea:* Invert \emph{and} shift to bring \(\abs{\lambda _1 - \sigma }\) into numerator.
-#+LATEX: \end{hidden}
-
-*** Inverse Iteration
-
-Describe /inverse iteration/.
-#+LATEX: \begin{hidden}
-\[\B{x}_{k + 1} \assign (A - \sigma I)^{- 1} \B{x}_k \]
-
-- Implemented by storing/solving with LU factorization
-
-- Converges to eigenvector for eigenvalue closest to \(\sigma\), with
-    \[e_{k + 1} \approx \frac{\abs{\lambda _{\tmop{closest}} -
-       \sigma }}{\abs{\lambda _{\text{second-closest}} - \sigma }} e_k . \]
-#+LATEX: \end{hidden}
-
-*** Rayleigh Quotient Iteration
-Describe /Rayleigh Quotient Iteration/.
-#+LATEX: \begin{hidden}
-- Compute the shift
-  \(\sigma _k = \B{x}_k^T A \B{x}_k / \B{x}_k^T \B{x}_k\) to be the Rayleigh quotient for \(\B{x}_k\).
-- Then apply inverse iteration with that shift:
-  \[\B{x}_{k + 1} \assign (A - \sigma _k I)^{- 1} \B{x}_k \]
+Idea: Could use Rayleigh quotient as a shift. Yields *Rayleigh quotient iteration*.
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Power Iteration and its Variants}
