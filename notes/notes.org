@@ -2851,7 +2851,7 @@ Called *Power Iteration*.
 
 #+LATEX: \begin{hidden}
 Let $\B{x}_0 = \sum_{j = 1}^n \alpha_j \B{v}_j$.
-Observe that $\B{x}_i = \sum_{j = 1}^n \alpha_j \lambda^i \B{v}_j$.
+Observe that $\B{x}_i = A^i\B{x_0} = \sum_{j = 1}^n \alpha_j \lambda^i \B{v}_j$.
 
 Define $\B{e}_i =\B{x}_i / \lambda_1^i - \alpha_1 \B{v}_1$.
 \begin{gather*}
@@ -2890,7 +2890,7 @@ What could go wrong with Power Iteration?
   
   \to use complex-valued shift, and invert.
 #+LATEX: \end{hidden}
-*** Convergence Power Iteration: Notation
+*** Convergence of Power Iteration: Notation
 
 - $\lambda_{\max} (A)$: biggest eigenvalue by magnitude
 
@@ -2902,7 +2902,6 @@ What could go wrong with Power Iteration?
 
 (Not well-defined if there are multiple $\lambda$ with the same magnitudes.
 Assume that's not the case.)
-
 
 *** Power Iteration: Shift
 How does a shift ($A - \sigma I$) change power iteration?
