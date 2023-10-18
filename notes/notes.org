@@ -2889,6 +2889,9 @@ What could go wrong with Power Iteration?
 - Complex eigenvalues
   
   \to use complex-valued shift, and invert.
+
+  \medskip
+  Recall: for real-valued matrices, eigenvalues come in conjugate pairs $\lambda$ and $\lambda^*$, with $|\lambda|=|\lambda^*|$.
 #+LATEX: \end{hidden}
 *** Convergence of Power Iteration: Notation
 
