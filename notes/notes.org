@@ -3062,6 +3062,17 @@ Idea: Could use Rayleigh quotient as a shift. Yields *Rayleigh quotient iteratio
 
 \inclasslink{eigenvalues}{Eigenvalues}
 
+*** Schur form: Motivation
+
+For finding multiple eigenvalues, want factorization that allows access to *all* eigenvalues and eigenvectors.
+
+Suggestions?
+#+LATEX: \begin{showlater}
+- Diagonalization $A=XDX^{-1}$ cannot provide what we need: it does not always exist.
+- Even if it did exist, computing/applying $X^{-1}$ would be subject to rounding concerns.
+  - Idea: use a similarity transform with /orthogonal/ matrices.
+#+LATEX: \end{showlater}
+
 *** Schur form
 
 Show: Every matrix is orthonormally similar to an upper triangular
