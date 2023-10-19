@@ -3144,7 +3144,7 @@ Two ideas:
     \lambda _1 & \ast \\& B
   \end{bmatrix},
   \]
-  i.e. one step in Schur form. Now find eigenvalues of \(B\).
+  i.e. use the argument for the existence of Schur form as a computational procedure.
 
 1. Iterate with multiple vectors simultaneously.
 #+LATEX: \end{hidden}
