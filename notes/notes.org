@@ -3273,20 +3273,27 @@ From orthogonal iteration: Observed \(\hat {X}_k = \bar {X}_{k + 1}\) converge.
 /QR Iteration/ (with bars)
 - $\bar X_0:=A$
   - $\bar Q_0 \bar R_0 :=A$
-    
+
     \bigskip
     \bigskip
-    
+
 - $\bar X_1 := \bar R_0 \bar Q_0=\hat X_0$
   - $\bar Q_1 \bar R_1 :=\bar X_1$
 
     \bigskip
     \bigskip
-  
+
 - $\bar X_2 := \bar R_1 \bar Q_1$
   - $\bar X_2 = Q_1^H A Q_1=\hat X_1$
 
 - $\vdots$
+**** Below
+:PROPERTIES:
+:BEAMER_env: ignoreheading
+:END:
+
+\medskip
+\demolink{eigenvalue}{QR Iteration}
 
 *** QR Iteration: Forward /and/ Inverse
 
@@ -3314,7 +3321,6 @@ How can we accelerate convergence of QR iteration using shifts?
 #+LATEX: \begin{hidden}
 \vspace{-3ex}
 \begin{eqnarray*}
-    &  & \bar {X}_0 = A\\
     &  & \bar {Q}_k \bar {R}_k = \bar {X}_k \tmcolor{magenta}{- \sigma _k I}\\
     &  & \bar {X}_{k + 1} = \bar {R}_k \bar {Q}_k \tmcolor{magenta}{+ \sigma _k I}
 \end{eqnarray*}
@@ -3331,6 +3337,8 @@ Still a similarity transform:
   - Eigenvalues of lower right \(2 \times 2\) of \(\bar {X}_k\)
 
 #+LATEX: \end{hidden}
+
+\demolink{eigenvalue}{QR Iteration} (Shifted)
 
 *** QR Iteration: Computational Expense
 
