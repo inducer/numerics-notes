@@ -3797,17 +3797,16 @@ Now find root of this linear approximation in terms of \(h\):
 
 What's the rate of convergence of Newton's method?
 #+LATEX: \begin{hidden}
-
+Recall the quotient rule $(f/g)'=(f'g-g'f)/g^2$.
 \[g' (x) = \frac{f (x) f'' (x)}{f' (x)^2} \]
 So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 0\), i.e. quadratic convergence toward single roots.\medskip
 #+LATEX: \end{hidden}
 
 /Drawbacks/ of Newton?
 #+LATEX: \begin{showlater}
-- Convergence argument only good \emph{locally}
+- Convergence (argument) only /locally/
 
-  Will see: convergence only local (near root)
-- Have to have derivative!
+- Have to know $f'$!
 #+LATEX: \end{showlater}
 
 \demolink{nonlinear}{Convergence of Newton's Method}
