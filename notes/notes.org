@@ -3722,7 +3722,7 @@ smooth.
 #+LATEX: \begin{hidden}
 Let \(x^\ast\) be the fixed point with \(x^\ast  = g (x^\ast )\).
 
-If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges.\medskip
+*Claim:* If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges.\medskip
 
 Error:
 \[e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \]
@@ -3781,12 +3781,12 @@ So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 
 #+LATEX: \end{hidden}
 
 /Drawbacks/ of Newton?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Convergence argument only good \emph{locally}
 
   Will see: convergence only local (near root)
 - Have to have derivative!
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{nonlinear}{Convergence of Newton's Method}
 
@@ -3811,14 +3811,14 @@ Rate of convergence is \(\left ( 1 + \sqrt{5} \right ) / 2 \approx  1.618\). ([[
 \medskip
 /Drawbacks/ of Secant?
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Convergence argument only good \emph{locally}
 
   Will see: convergence only local (near root)
 
 - Slower convergence
 - Need two starting guesses
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{nonlinear}{Secant Method}
 
@@ -3830,14 +3830,14 @@ Secant (and similar methods) are called *Quasi-Newton Methods*.
 *** Improving on Newton?
 
 How would we do "Newton + 1" (i.e. even faster, even better)?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Easy:
 - Use second order Taylor approximation, solve resulting quadratic
 - Get cubic convergence!
 - Get a method that's /extremely/ fast and /extremely/ brittle
 - Need *second* derivatives
 - What if the quadratic has no solution?
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Root Finding with Interpolants
 
@@ -3864,13 +3864,13 @@ What about existence of roots in that case?
 
 The linear approximations in Newton and Secant are only good
 locally. How could we use that?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Hybrid methods: bisection + Newton
   - Stop if Newton leaves bracket
 - Fix a region where they're `trustworthy' (*trust region methods*)
 - Limit step size
 - Sufficient conditions for convergence of Newton (under /strong/ assumptions) are [[https://doi.org/10.1137/1.9780898719468][available]].
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** In-Class Activity: Nonlinear Equations
   :PROPERTIES:
@@ -3960,7 +3960,8 @@ Getting derivatives right is important. How can I test/debug them?
 #+LATEX: \begin{hidden}
 Verify convergence of the Taylor remainder by checking that, for a unit vector $\B s$ and an input vector $\B x$,
 
-\[\left\|\frac{\B f(\B x +h \B s) - \B f(\B x)}h - J_{\B f}(\B x) \B s\right\|\to 0\quad \text{as $h\to 0$}.\]
+\[\left\|\frac{\B f(\B x +h \B s) - \B f(\B x)}h - J_{\B f}(\B x) \B
+s\right\| =O(h) \quad (h\to 0).\]
 
 - Same trick can be used to check the Hessian (needed in optimization):
   It is the Jacobian of the gradient. 
