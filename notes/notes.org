@@ -3460,15 +3460,19 @@ Then
 We find that \(Q_n^T AQ_n\) is also upper Hessenberg: \(Q_n^T A_n Q_n = H. \)
 
 Also readable as \(AQ_n = Q_n H\), which, read column-by-column, is:
-\[A \B{q}_k = h_{1 k} \B{q}_1 + \ldots h_{k + 1, k}
-   \B{q}_{k + 1} \]
-We find: \(h_{j k} = \B{q}_j^T A \B{q}_k\). /Important consequence:/ Can compute
+\[A \B{q}_k = h_{1 k} \B{q}_1 + \cdots + h_{k + 1, k} \B{q}_{k + 1} \]
+We find: \(h_{j k} = \B{q}_j^T A \B{q}_k\). Use that to rewrite, letting $\B v=A\B {q}_k$:
+#+BEGIN_EXPORT latex
+\[\B{v}
+- (\B{q}_1^T \B v) \B{q}_1
+-\cdots
+- (\B{q}_k^T \B v) \B{q}_k
+= h_{k + 1, k} \B{q}_{k + 1}
+\]
+#+END_EXPORT
 
-- \(\B{q}_{k + 1}\) from \(\B{q}_1, \ldots , \B{q}_k\)
-
-- \((k + 1)\)st column of \(H\)
-
-analogously to Gram-Schmidt QR!\medskip
+- Looks just like Gram-Schmidt QR!
+- Can compute \((k + 1)\)st column of \(H\) and \(\B{q}_{k + 1}\) from \(\B{q}_1, \ldots , \B{q}_k\).
 
 This is called *Arnoldi iteration*. For symmetric: *Lanczos iteration*.
 #+LATEX: \end{hidden}
