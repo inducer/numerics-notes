@@ -3714,6 +3714,24 @@ What's the rate of convergence? What's the constant?
 Linear with constant \(1 / 2\).
 #+LATEX: \end{hidden}
 
+
+*** Mini Review: Taylor's Theorem
+
+#+LATEX: \begin{showlater}
+\vspace*{-2ex}
+\[ f (x + h) = f (x) + f' (x) h + \frac{f'' (x)}{2!} h^2 + \cdots \quad
+   \text{(requires $f$ analytic)} \]
+Taylor *with explicit remainder term* $(\theta \in [x, x + h], f \in C^{k + 1})$:
+\[ f (x + h) = f (x) + \cdots + \frac{f^{(k - 1)} (x)}{(k - 1) !} h^{k - 1} +
+   \frac{f^k (\theta)}{k!} h^k \]
+Special case $k = 1$: Equivalent to *mean value theorem*:
+\[ f (x + h) = f (x) + f' (\theta) h  \quad (\theta \in [x, x + h], f \in C^1)
+\]
+With *big-O truncation*:
+\[ f (x + h) = f (x) + \cdots + \frac{f^{(k - 1)} (x)}{(k - 1) !} h^{k - 1} +
+   O (h^k) \quad (h \rightarrow 0, f \in C^{k + 1}) \]
+#+LATEX: \end{showlater}
+
 *** Fixed Point Iteration
 
 \begin{eqnarray*}
