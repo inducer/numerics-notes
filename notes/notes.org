@@ -3955,7 +3955,7 @@ Downsides of \(n\)-dim. Newton?
 What would the secant method look like in \(n\) dimensions?
 #+LATEX: \begin{hidden}
 Need an `approximate Jacobian' satisfying
-\[\tilde {J} (\B{x}_{k + 1} - \B{x}_k) = \B{f}
+\[\tilde {J}\cdot (\B{x}_{k + 1} - \B{x}_k) = \B{f}
    (\B{x}_{k + 1}) - \B{f} (\B{x}_k) . \]
 Suppose we have \emph{already taken} a step to \(\B{x}_{k + 1}\).
 Could we `reverse engineer' \(\tilde {J}\) from that equation?
