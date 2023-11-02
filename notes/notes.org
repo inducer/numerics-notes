@@ -3862,8 +3862,8 @@ Easy:
 
 *** Root Finding with Interpolants
 
-Secant method uses a linear interpolant based on points \(f(x_k)\),
-\(f(x_{k-1})\), could use more points and higher-order interpolant:
+Secant method uses a linear approximation to $f$ based on points \(f(x_k)\),
+\(f(x_{k-1})\), could use more points and higher-order approximation:
 #+LATEX: \begin{hidden}
 
 - Can fit polynomial to (subset of) \((x_0,f(x_0)),\ldots ,(x_k,f(x_k))\)
@@ -3877,7 +3877,7 @@ What about existence of roots in that case?
 #+LATEX: \begin{hidden}
 - *Inverse quadratic interpolation*
 
-  - Interpolate quadratic polynomial \(q\) so that \(q(f(x_i))=x_i\) for \(i\in \{k,k-1,k-2\}\).
+  - Fit/`interpolate' quadratic polynomial \(q\) so that \(q(f(x_i))=x_i\) for \(i\in \{k,k-1,k-2\}\).
   - Approximate root by evaluating \(x_{k+1}=q(0)\).
 #+LATEX: \end{hidden}
 
