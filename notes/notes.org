@@ -4025,20 +4025,20 @@ s\right\| =O(h) \quad (h\to 0).\]
 *Q:* What if we are looking for a /maximizer/ not a minimizer?
 
 Give some examples:
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - What is the fastest/cheapest/shortest... way to do...?
 - Solve a system of equations `as well as you can' (if no exact
   solution exists)--similar to what least squares does for linear systems:
   \[\min \norm{F (\B{x})} \]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 What about multiple objectives?
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - In general: Look up *Pareto optimality*.
 - *For 450:* Make up your mind--decide on one (or build a combined
   objective). Then we'll talk.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Existence/Uniqueness
 Terminology: *global minimum* / *local minimum*\medskip
