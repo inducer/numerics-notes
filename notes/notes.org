@@ -4330,7 +4330,7 @@ Consider quadratic model problem:
 \[f(\B{x})= \frac{1}{2}\B{x}^T A \B{x} + \B{c}^T \B{x}\]
 where \(A\) is SPD. (A good model of \(f\) near a minimum.)
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then can show:
 \[||\B{e}_{k+1}||_{A} = \sqrt{\B{e}_{k+1}^T A \B{e}_{k+1}} = \frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}||\B{e}_k||_{A}\]
 \(\to\) confirms linear convergence.
@@ -4338,29 +4338,29 @@ Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then can show:
 \medskip
 Convergence constant related to conditioning:
 \[\frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}=\frac{\kappa (A)-1}{\kappa (A)+1}.\]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 *** Hacking Steepest Descent for Better Convergence
 
 *Extrapolation methods:* 
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Look back a step, maintain '/momentum/'.
 \[\B{x}_{k+1} = \B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *Heavy ball method:* 
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
 \[||\B{e}_{k+1}||_{A} = \frac{\sqrt{\kappa (A)} -1}{\sqrt{\kappa (A) }+1}||\B{e}_k||_{A}\]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{optimization}{Steepest Descent} (Part 2)
 
 *** Optimization in Machine Learning
 
 What is /stochastic gradient descent/ (/SGD/)?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Common in ML: Objective functions of the form
 \vspace{-2ex}
 \[f(\B x)=\frac 1n \sum_{i=1}^n f_i(\B x),\]
@@ -4371,19 +4371,19 @@ Then "/batch/" (i.e. normal) gradient descent is
 /Stochastic/ GD uses one (or few, "/minibatch/") observation at a time:
 \[\B x_{k+1} = \B x_k -\alpha \nabla f_{\phi(k)}(\B x_k).\]
 [[https://arxiv.org/abs/1412.6980][/ADAM/ optimizer]]: GD with exp. moving avgs. of $\nabla$ and its square.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Conjugate Gradient Methods
     
 Can we optimize in /the space spanned/ by the last two step directions?
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 \[(\alpha _k,\beta _k)=\operatorname{argmin}_{\alpha _k,\beta _k}\bigg [f\Big (\B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\Big )\bigg ]\]
 
 - Will see in more detail later (for solving linear systems)
 - Provably optimal first-order method for the quadratic model problem
 - Turns out to be closely related to Lanczos (\(A\)-orthogonal search directions)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{optimization}{Conjugate Gradient Method}
 
