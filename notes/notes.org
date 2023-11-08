@@ -4436,8 +4436,9 @@ Drawbacks?
 
 Secant/Broyden-type ideas carry over to optimization. How?
 
-#+LATEX: \begin{hidden}
 Come up with a way to update to update the approximate Hessian.
+
+#+LATEX: \begin{hidden}
 
 \[\B{x}_{k+1}  = \B{x}_k -\alpha _k B_k^{-1}\nabla f(\B{x}_k)\]
 
@@ -4445,7 +4446,7 @@ Come up with a way to update to update the approximate Hessian.
 - \(\B{s}_k = \B{x}_{k+1}-\B{x}_k\)
 - \(\B{y_k} =\nabla f(\B{x}_{k+1})-\nabla f(\B{x}_k)\)
 - Secant condition: $B_{k+1} \B s_k = \B y_k$
-- Ansatz for update of Hessian estimate: $B_{k+1} = B_k + a \B u \B u^T + b \B v\B v^T$
+- Ansatz for Hessian update: $B_{k+1} = B_k + a \B u \B u^T + b \B v\B v^T$
 #+LATEX: \end{hidden}
 
 *BFGS*: Secant-type method, similar to Broyden:
@@ -4936,7 +4937,7 @@ But how can I practically compute the Legendre polynomials?
 #+LATEX: \begin{hidden}
 \(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
 
-- There exist three-term recurrences, e.g.: \((n+1)P_{n+1}=(2n+1)xP_n -nP_{n-1}\)
+- Three-term recurrences: \((n+1)P_{n+1}=(2n+1)xP_n -nP_{n-1}\)
 - There is a whole zoo of polynomials there, depending on the weight
   function \(w\) in the (generalized) inner product:
   \[\ip{f}{g} = \int w (x) f (x) g (x) \mathd x. \]
