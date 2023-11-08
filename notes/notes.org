@@ -4105,7 +4105,7 @@ Assume \(f\) is smooth, i.e. has all needed derivatives.
 
   - Necessary: \(f' (x^\ast ) = 0\) (i.e. \(x^\ast\) is an extremal point)
 
-  - Sufficient: \(f' (x^\ast ) = 0\) and \(f'' (x^\ast ) > 0\)
+  - Sufficient: \(f' (x^\ast ) = 0\) and \(f'' (x^\ast ) \ge 0\)
 
     (implies \(x^\ast\) is a local minimum)
 
