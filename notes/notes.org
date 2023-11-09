@@ -4451,7 +4451,8 @@ Come up with a way to update to update the approximate Hessian.
 
 *BFGS*: Secant-type method, similar to Broyden:
 
-\[\B{B}_{k+1} = \B{B}_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} - \frac{\B{B}_k\B{s}_k \B{s}_k^T\B{B}_k}{\B{s}_k^T\B{B}_k \B{s}_k}\]
+\[B_{k+1} = B_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} -
+\frac{B_k\B{s}_k \B{s}_k^TB_k}{\B{s}_k^TB_k \B{s}_k}\]
 
 *** In-Class Activity: Optimization Methods
   :PROPERTIES:
