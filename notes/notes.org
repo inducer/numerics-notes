@@ -4420,7 +4420,7 @@ to find
 
 Drawbacks?
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Need second (!) derivatives
 
   (addressed by Conjugate Gradients, later in the class)
@@ -4428,7 +4428,7 @@ Drawbacks?
 - local convergence
 
 - Works poorly when \(H_f\) is nearly indefinite
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{optimization}{Newton's Method in n dimensions}
 
