@@ -4159,8 +4159,8 @@ Suppose we still have
 Apply Taylor's theorem:
 \[f (x^\ast  + h) = f (x^\ast ) + \underbrace{f' (x^\ast )}_0 h + f''
     (x^\ast ) \frac{h^2}{2} + O (h^3) \]
-Solve for \(h\):
-\(\abs{\tilde {x} - x^\ast } \le \sqrt{2 \tmop{tol} / f'' (x^\ast )}
+Ignore higher-order terms, solve for \(h\):
+\(\abs{\tilde {x} - x^\ast } \lessapprox \sqrt{2 \tmop{tol} / f'' (x^\ast )}
 \).
 
 *In other words:* Can expect \emph{half as many digits} in
@@ -4184,8 +4184,8 @@ Assume \(\norm{\B{s}} = 1\).
     \underbrace{\nabla f (\B{x}^\ast )^T}_{\B{0}}
     \B{s} + \frac{h^2}{2} \B{s}^T H_f (\B{x}^\ast ) \B{s} + O
     (h^3) \]
-Yields:
-\[\abs{h}^2 \le \frac{2 \tmop{tol}}{\lambda _{\min}  (H_f
+After ignoring high-order terms, yields:
+\[\abs{h}^2 \lessapprox \frac{2 \tmop{tol}}{\lambda _{\min}  (H_f
     (\B{x}^\ast ))} . \]
 *In other words:* Conditioning of \(H_f\) determines sensitivity of
 \(\B{x^\ast }\).
