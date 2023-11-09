@@ -4351,7 +4351,7 @@ Look back a step, maintain '/momentum/'.
 *Heavy ball method:* 
 
 #+LATEX: \begin{showlater}
-constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \). Gives:
+For specific constant \(\alpha _k=\alpha \) and \(\beta _k=\beta \), can attain:
 \[||\B{e}_{k+1}||_{A} = \frac{\sqrt{\kappa (A)} -1}{\sqrt{\kappa (A) }+1}||\B{e}_k||_{A}\]
 #+LATEX: \end{showlater}
 
