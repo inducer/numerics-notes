@@ -4513,13 +4513,13 @@ Solve that using our existing methods for least-squares problems.\medskip
 \medskip
 Observations?
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Newton on its own is still only locally convergent
 - Gauss-Newton is clearly similar
 - It's worse because the step is only approximate
 
   \(\rightarrow\) Much depends on the starting guess.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Levenberg-Marquardt
 If Gauss-Newton on its own is poorly conditioned, can try
@@ -4722,7 +4722,7 @@ These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
 
 \medskip
 How is this not the same as function fitting? (from least squares)
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 It's very similar--but the key difference is that we are asking for
 \emph{exact equality}, not just minimization of a residual
 norm.
@@ -4734,7 +4734,7 @@ residual\medskip
 approximating from the known point values.\medskip
 
 *Error here:* Distance from that underlying function
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Interpolation: Setup (II)
 
@@ -4744,17 +4744,17 @@ approximating from the known point values.\medskip
 
 \medskip
 Does this problem have a unique answer?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 No--there are infinitely
 many functions that satisfy the problem as stated:
 
 #+ATTR_LATEX: :height 3cm
 [[./images/interpolation-non-unique-crop.pdf]]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Interpolation: Importance
 Why is interpolation important?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 It brings all of calculus
 within range of numerical operations.
 
@@ -4768,7 +4768,7 @@ within range of numerical operations.
   2. Apply calculus
   3. Re-discretize (evaluate at points)
 
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Making the Interpolation Problem Unique
 
@@ -4894,22 +4894,22 @@ Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
 #+LATEX: \end{hidden}
 
 Why not Lagrange/Newton?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Cheap to form, expensive to evaluate,
 expensive to do calculus on.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Better conditioning: Orthogonal polynomials
 
 What caused monomials to have a terribly conditioned Vandermonde?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Being close to linearly dependent.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 What's a way to make sure two vectors are /not/ like that?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Orthogonality
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 But polynomials are functions!
 
