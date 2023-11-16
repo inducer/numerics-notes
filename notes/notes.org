@@ -5210,38 +5210,23 @@ is a perturbation.
 
 ** Quadrature Methods
 
-*** Interpolatory Quadrature
-
-Design a quadrature method based on interpolation.
-#+LATEX: \begin{hidden}
-With interpolation: $f(x)\approx\sum_{i=1}^n \alpha_i \phi_i(x)$. Then
-\[\int_a^b f(x) dx\approx \int_a^b \sum_{i=1}^n \alpha_i \phi_i(x) dx=\sum_{i=1}^n \alpha_i \int_a^b \phi_i(x) dx.\]
-
-$\alpha_i$ are linear combination of function values $(f(x_i))_{i=1}^n$.
-
-*Want:*
-\[\int _a^b f (x) \mathd x \approx \sum _{i = 1}^n \omega _i f (x_i) \]
-Then: /nodes/ \((x_i)\) and /weights/ \((\omega _i)\) together make a
-quadrature rule.\medskip
-
-*Idea:* Any interpolation method (nodes+basis) gives rise to an
-/interpolatory quadrature method/.
-#+LATEX: \end{hidden}
-
 *** Interpolatory Quadrature: Examples
 
 #+LATEX: \begin{hidden}
 *Example:* Fix \((x_i)\). Then
-\[f (x) \approx \sum _i f (x_i) \ell _i (x), \]
+\(f (x) \approx p_{n-1}(x)= \sum _i f (x_i) \ell _i (x), \)
 where \(\ell _i (x)\) is the Lagrange polynomial for the node \(x_i\). Then
+
 \[\int _a^b f (x) \mathd x \approx \sum _i f (x_i) \underbrace{\int _a^b \ell _i
 (x) \mathd x}_{\omega _i} . \]
 
-- With polynomials and (often) equispaced nodes, this is called
-  *Newton-Cotes quadrature*.
+\to a computational recipe ("*quadrature rule*") applicable to any $f$:
+\[\int _a^b f (x) \mathd x \approx \sum _i f (x_i) \omega_i. \]
 
-- With Chebyshev nodes and (Chebyshev or other) polynomials , this is called
-  *Clenshaw-Curtis quadrature*.
+$x_i$: *quadrature nodes*, $\omega_i$: *quadrature weights*.
+
+- Equispaced nodes: *Newton-Cotes quadrature*.
+- Chebyshev nodes: *Clenshaw-Curtis quadrature*.
 #+LATEX: \end{hidden}
 
 *** Interpolatory Quadrature: Computing Weights
