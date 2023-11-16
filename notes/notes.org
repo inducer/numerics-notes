@@ -5024,11 +5024,11 @@ interval there exists $\xi$ in that interval such that
    (x - x_n). \]
 
 #+LATEX: \begin{hidden}
-Set the error term to be \(R(x) := f(x) - p_{n-1}(x) \)
-and set up an auxiliary function:
+Define the error \(R(x) := f(x) - p_{n-1}(x) \)
+and an auxiliary function:
 \[Y_x(t) = R(t) - \frac{R(x)}{W(x)} W(t)\quad\text{where}\quad W(t) = \prod_{i=1}^n (t-x_i).\]
-Note also the introduction of $t$ as an additional variable, independent
-of the point $x$ where we hope to prove the identity.
+- Let $x\in I$ (where we prove the identity) with $x\ne x_i$ for $i\in\{1,\dots,n\}$ (WLOG).
+- Note the introduction of the /additional/ variable $t$.
 #+LATEX: \end{hidden}
 
 *** Truncation Error in Interpolation: cont'd.
