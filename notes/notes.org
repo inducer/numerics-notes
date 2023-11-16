@@ -4939,11 +4939,11 @@ But how can I practically compute the Legendre polynomials?
 #+LATEX: \begin{hidden}
 \(\rightarrow\) [[https://dlmf.nist.gov/18][DLMF: Chapter on orthogonal polynomials]]
 
-- Three-term recurrences: \((n+1)P_{n+1}=(2n+1)xP_n -nP_{n-1}\)
-- There is a whole zoo of polynomials there, depending on the weight
+- Three-term recurrence: \((n+1)P_{n+1}=(2n+1)xP_n -nP_{n-1}\), \(P_0=1\), \(P_1=x\)
+- A whole zoo of polynomials there, depending on the weight
   function \(w\) in the (generalized) inner product:
   \[\ip{f}{g} = \int w (x) f (x) g (x) \mathd x. \]
-  Some sets of orth. polys. live on intervals \(\ne(- 1, 1)\).
+  # Some sets of orth. polys. live on intervals \(\ne(- 1, 1)\).
 #+LATEX: \end{hidden}
 
 *** Chebyshev Polynomials: Definitions
