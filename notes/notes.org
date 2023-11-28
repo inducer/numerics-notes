@@ -5179,20 +5179,20 @@ conditions). These are called *B-Splines*.
 *** Numerical Integration: About the Problem
 
 What is numerical integration? (Or *quadrature*?)
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 Given \(a\), \(b\), \(f\), compute
 \[\int _a^b f (x) \mathd x. \]
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 What about existence and uniqueness?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - Answer exists e.g. if \(f\) is /integrable/ in the Riemann or
   Lebesgue senses.
 
 - Answer is unique if \(f\) is e.g. piecewise continuous and bounded.
 
   (this also implies existence)
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 *** Conditioning
 
@@ -5370,7 +5370,7 @@ What's not to like about Newton-Cotes quadrature?
 
 \demolink{quadrature_and_diff}{Newton-Cotes weight finder} (again, with many nodes)
 
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 In fact, Newton-Cotes must have at least one negative weight as soon as \(n \geqslant 11\).
 
 \medskip
@@ -5381,7 +5381,7 @@ More drawbacks:
 - Weights possibly non-negative (\(\rightarrow\)stability issues)
 - Coefficients determined by (possibly ill-conditioned) Vandermonde matrix
 - Thus hard to extend to arbitrary number of points.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 ** Gaussian Quadrature
 *** Gaussian Quadrature
