@@ -5180,7 +5180,7 @@ conditions). These are called *B-Splines*.
 
 What is numerical integration? (Or *quadrature*?)
 #+LATEX: \begin{showlater}
-Given \(a\), \(b\), \(f\), compute
+Given \(a\), \(b\), \(f\), approximate
 \[\int _a^b f (x) \mathd x. \]
 #+LATEX: \end{showlater}
 
