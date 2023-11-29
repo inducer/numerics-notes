@@ -5343,11 +5343,11 @@ interpolation--even more for odd-order rules. (i.e. more accurate)
 
 *** Interpolatory Quadrature: Stability
 
-Let \(p_n\) be an interpolant of \(f\) at nodes \(x_1, \ldots , x_n\) (of
+Let \(p_{n-1}\) be an interpolant of \(f\) at nodes \(x_1, \ldots , x_n\) (of
 degree \(n - 1\))
 
 Recall
-\[\sum _i \omega _i f (x_i) = \int _a^b p_n (x) \mathd x \]
+\[\sum _i \omega _i f (x_i) = \int _a^b p_{n-1} (x) \mathd x \]
 What can you say about the stability of this method?
 #+LATEX: \begin{hidden}
 Again consider \(\hat {f} (x) = f (x) + e (x)\).
