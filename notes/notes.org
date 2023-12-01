@@ -5286,14 +5286,13 @@ Recall
 
 What can you say about the accuracy of the method?
 #+LATEX: \begin{hidden}
-# Notation: \(\norm{f}_\infty  = \max _{x \in [a, b]} \abs{f (x)}\)
-\vspace{-3ex}
+Notation: \(\norm{f}_\infty  = \max _{x \in [a, b]} \abs{f (x)}\)
 \begin{eqnarray*}
     &  & \abs{\int _a^b f (x) \mathd x - \int _a^b p_{n - 1} (x) \mathd x}\\
     & \le & \int _a^b \abs{f (x) - p_{n - 1} (x)} \mathd x\\
     & \le & (b - a) \norm{f - p_{n - 1}}_\infty \\
-    \text{(using interpolation error)} \quad & \le & C (b - a) h^n \norm{f^{(n)}}_\infty \\
-    & \le & Ch^{n + 1} \norm{f^{(n)}}_\infty
+    \text{(using interp. error)} \quad & \le & C (b - a) h^n \norm{f^{(n)}}_\infty 
+    \le  Ch^{n + 1} \norm{f^{(n)}}_\infty
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 
