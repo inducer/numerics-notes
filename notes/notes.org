@@ -5541,6 +5541,9 @@ Does $D$ have a nullspace?
 - I.e. rows of differentiation matrices always sum to 0.
 #+LATEX: \end{hidden}
 
+\demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
+(Shifting and scaling the nodes)
+
 *** Numerical Differentiation: Shift and Scale
 
 Does $D$ change if we shift the nodes $(x_i)_{i = 1}^n \rightarrow (x_i + c)_{i = 1}^n$?
@@ -5564,8 +5567,7 @@ $\tilde{p}_{n - 1} (\alpha \B{x}) = \tilde{f} (\alpha \B{x})$.
 Then $\tilde{p}_{n - 1} (x) = p_{n - 1} (x / \alpha)$ for all $x$ because
 polynomial bases of degree $\leqslant n - 1$ are closed under dilation, i.e. a
 dilated basis again consists of polynomials of degree $\leqslant n - 1$. Thus
-$\tilde{p}_{n - 1}' (\B{x}) = p_{n - 1}' (\B{x}/ \alpha) /
-\alpha$, or $\tilde{p}_{n - 1}' (\alpha \B{x}) = p_{n - 1}'
+$\tilde{p}_{n - 1}' (\alpha \B{x}) = p_{n - 1}'
 (\B{x}) / \alpha$.  *In other words, $D_{\alpha \B{x}} = D_{\B{x}} / \alpha$.*
 #+LATEX: \end{hidden}
 
