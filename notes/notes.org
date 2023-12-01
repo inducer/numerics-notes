@@ -5487,20 +5487,19 @@ $\varphi_i'$ are known because the interpolation basis $\varphi_i$ is known!
 
 *** Numerical Differentiation: Accuracy
 
-How accurate is numerical differentiation (with a polynomial basis)?
-
 #+LATEX: \begin{hidden}
-Recall from interpolation error:
-If $f (\B{x}) = p_{n - 1} (\B{x})$, then
-\[f (x) - p_{n - 1} (x) = \frac{f^{(n)} (\xi)}{n!} \prod_{i = 1}^n (x - x_i).\]
-Thus (ignoring dependency of \xi on $x$):
-\[ f' (x) - p_{n - 1}' (x) \approx \frac{f^{(n)} (\xi)}{n!} \left( \prod_{i =
-   1}^n (x - x_i) \right)', \]
-so
-\[ \abs{f' (x) - p_{n - 1} (x)} \leqslant C \norm{f^{(n)} (\theta)}_{\infty}
+Interpolation error:
+If $\B x=(x_i)_{i=1}^n$ and $f (\B{x}) = p_{n - 1} (\B{x})$, then
+\begin{align*}
+f (x) - p_{n - 1} (x) &= \frac{f^{(n)} (\xi)}{n!} \prod_{i = 1}^n (x - x_i).\\
+f' (x) - p_{n - 1}' (x) &\approx \frac{f^{(n)} (\xi)}{n!} \left( \prod_{i = 1}^n (x - x_i) \right)'.
+\end{align*}
+(ignoring dependency of \xi on $x$)
+Note that the derivative of $\prod(x-x_i)$ has $n-1$ roots (extrema of $\prod(x-x_i)$),
+interspersed between $(x_i)$, so can be bounded by $h^{n-1}$:
+\[ \abs{f' (x) - p_{n - 1} (x)} \leqslant C \norm{f^{(n)}}_{\infty}
    h^{n - 1} . \]
 #+LATEX: \end{hidden}
-
 
 \demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
 (Accuracy)
