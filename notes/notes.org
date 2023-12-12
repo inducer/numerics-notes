@@ -4072,7 +4072,7 @@ a global minimum exists (but is possibly non-unique).
 \mathbb{R}^n\) if for \(\B{x}, \B{y} \in S\) and
 all \(0 \le \alpha \le 1\)
 #+LATEX: \begin{hidden}
-\[f (\alpha \B{x} + (1 - \alpha ) \le
+\[f (\alpha \B{x} + (1 - \alpha )\B y) \le
     \alpha f (\B{x}) + (1 - \alpha ) f (\B{y}) . \]
     With `\(<\)': /strictly convex/.
 #+LATEX: \end{hidden}
