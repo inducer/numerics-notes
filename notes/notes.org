@@ -908,7 +908,7 @@ about \(10^{- 16}\).\medskip
 Working in double precision gives you about 16 (decimal) accurate digits.
 #+LATEX: \end{hidden}
 
-\demolink{error_and_fp}{Floating Point and the Harmonic Series}
+\demolink{error_and_fp}{Floating point and the Harmonic Series}
 
 *** Implementing Arithmetic
 
