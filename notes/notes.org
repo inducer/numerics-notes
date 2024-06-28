@@ -1,7 +1,7 @@
 #+TITLE: Numerical Analysis / Scientific Computing
 #+SUBTITLE: CS450
 #+AUTHOR: Andreas Kloeckner
-#+DATE: Fall 2023
+#+DATE: Fall 2024
 
 
 * LaTeX header setup stuff                                         :noexport:
@@ -42,7 +42,7 @@
 #+BEAMER_HEADER: \usepackage{pifont}
 #+BEAMER_HEADER: \usepackage[normalem]{ulem}
 
-#+BEAMER_HEADER: \def\classurl{https://relate.cs.illinois.edu/course/cs450-f23/}
+#+BEAMER_HEADER: \def\classurl{https://relate.cs.illinois.edu/course/cs450-f24/}
 
 #+BEAMER_HEADER: \def\activity#1{\href{\classurl/flow/#1/start}{Activity: #1}}
 #+BEAMER_HEADER: \def\demonote#1{\ifshowhidden\medskip\par Demo Instructions: {\color{blue} #1}\fi}
@@ -129,13 +129,13 @@
 ** Notes
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-book
-  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes.pdf
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f24/notes.pdf
   :END:
 
 ** Notes (unfilled, with empty boxes)
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-book
-  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f23/notes-empty.pdf
+  :RELATE_TREE_LINK: https://andreask.cs.illinois.edu/cs450-f24/notes-empty.pdf
   :END:
 ** Notes (source code on Github)
   :PROPERTIES:
@@ -213,7 +213,7 @@ How do numerical methods /get implemented/?
 *** Class web page
 
 #+BEGIN_CENTER
-[[https://bit.ly/cs450-f23]]
+[[https://bit.ly/cs450-f24]]
 #+END_CENTER
 
 - Assignments
