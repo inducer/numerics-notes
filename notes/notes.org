@@ -611,14 +611,15 @@ When is a method /stable/?
 - ``A method is stable if the result it produces is the exact answer
   for a nearby input.''
 
-- The above is commonly called /backward stability/ and is a stricter
-  requirement than just the temptingly simple:\medskip
+- The above is commonly called /backward stability/.\medskip
 
-  If the method's sensitivity to variation in the input is no (or not
-  much) greater than that of the problem itself.
+  Stricter than: the method's sensitivity to input variation is not much
+  worse than the conditioning.
 
 # *Note:* implies insensitivity to variation in intermediate results.
 #+LATEX: \end{showlater}
+
+\demolink{error_and_fp}{Backward Stability by Example}
 
 *** Getting into Trouble with Accuracy and Stability
 How can I produce inaccurate results?
