@@ -513,7 +513,7 @@ Relative backward error:
 About 2 percent.
 #+LATEX: \end{hidden}
 *** Forward/Backward Error: Observations
-What do you observe about the relative manitude of the relative errors?
+What do you observe about the relative magnitude of the relative errors?
 #+LATEX: \begin{showlater}
 - In this case: Got smaller, i.e. variation /damped out/.
 - Typically: Not that lucky: Input error /amplified/.
