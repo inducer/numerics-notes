@@ -592,7 +592,6 @@ Condition number:
 
 \demolink{error_and_fp}{Conditioning of Evaluating tan}
 
-*** TODO Stability, Accuracy: Add examples/describe better
 *** TODO Make backward stability discussion more precise
 *** Stability and Accuracy
 
