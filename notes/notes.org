@@ -418,8 +418,7 @@ In finitely many dimensions, all /norms are equivalent/.
 
 I.e. for fixed \(n\) and two norms \(\norm{\cdot }, \norm{\cdot }^\ast\), there
 exist \(\alpha , \beta > 0\) so that for all vectors \(\B{x} \in  \mathbb{R}^n\)
-\[\alpha \norm{\B{x}} \le \norm{\B{x}}^\ast  \le
-   \beta \norm{\B{x}} . \]
+\[\alpha \norm{\B{x}} \le \norm{\B{x}}^\ast  \le \beta \norm{\B{x}} . \]
 So: No, doesn't matter \emph{that much}. Will start mattering more for
 so-called /matrix norms/--see later.
 #+LATEX: \end{hidden}
