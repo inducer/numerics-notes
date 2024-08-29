@@ -619,6 +619,23 @@ When is a method /stable/?
 
 \demolink{error_and_fp}{Backward Stability by Example}
 
+*** Relevance of Backward Error
+
+What do we gain from a bound on backward error like
+\[\frac{\norm{\B{x}-\B{\hat x}}}{\norm{\B x}} \le \epsilon?\]
+#+LATEX: \begin{showlater}
+It allows a condition number bound of the type
+\[
+\frac{\norm{f(\B x)-f(\B{\hat x})}}{\norm{f(\B x)}} \le \kappa_{\text{rel}} \cdot \frac{\norm{\B x-\B{\hat x}}}{\norm{\B x}}
+\]
+
+to do double duty:
+
+- First, it characterizes sensitivity of the `true' problem.
+- Second, it characterizes the (forward) stability of the approximation.
+
+Both use cases were `in the air' when we introduced conditioning.
+#+LATEX: \end{showlater}
 *** Getting into Trouble with Accuracy and Stability
 How can I produce inaccurate results?
 #+LATEX: \begin{showlater}
