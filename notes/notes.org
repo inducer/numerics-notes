@@ -587,7 +587,7 @@ Forward error:
 Condition number:
 \[\kappa \geqslant \frac{\abs{\Delta y} / \abs{y}}{\abs{\Delta x} / \abs{x}}
    \approx \frac{\abs{f' (x)} \abs{\Delta x} / \abs{f (x)}}{\abs{\Delta x} /
-   \abs{x}} = \frac{\abs{xf' (x)}}{\abs{f (x)}} . \]
+   \abs{x}} \to \frac{\abs{xf' (x)}}{\abs{f (x)}} . \]
 #+LATEX: \end{hidden}
 
 \demolink{error_and_fp}{Conditioning of Evaluating tan}
@@ -718,11 +718,11 @@ Do you notice a source of inefficiency in our number representation?
 
 #+LATEX: \begin{hidden}
 *Idea:* Notice that the leading digit (in binary) of the significand
-is always one.
+is always one. Call the rest the *fraction*.
 
 Only store `101'. Final storage format:
 
-/Significand:/ \(101\) -- a fixed number of bits
+/Fraction:/ \(101\) -- a fixed number of bits
 
 /Exponent:/ 3 -- a (\emph{signed!}) integer allowing a certain
 range
