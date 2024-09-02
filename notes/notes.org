@@ -617,8 +617,6 @@ When is a method /stable/?
 # *Note:* implies insensitivity to variation in intermediate results.
 #+LATEX: \end{showlater}
 
-\demolink{error_and_fp}{Backward Stability by Example}
-
 *** Relevance of Backward Error
 
 What do we gain from a bound on backward error like
@@ -636,6 +634,9 @@ to do double duty:
 
 Both use cases were `in the air' when we introduced conditioning.
 #+LATEX: \end{showlater}
+
+\demolink{error_and_fp}{Backward Stability by Example}
+
 *** Getting into Trouble with Accuracy and Stability
 How can I produce inaccurate results?
 #+LATEX: \begin{showlater}
