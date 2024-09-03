@@ -564,17 +564,6 @@ If the condition number is...
 /Can/ also talk about condition number for a single input \(x\).
 #+LATEX: \end{showlater}
 
-Relate the (relative) condition number back to the setting of (relative) backward error.
-
-#+LATEX: \begin{hidden}
-Realize $\hat x$ in backward error is just a perturbation of $x$: Same
-setting as conditioning.
-
-\medskip
-Therefore:
-\[\abs{\text{rel. fwd. err.}} \le \kappa_{\text{rel}} \cdot \abs{\text{rel. bwd. err.}} \]
-#+LATEX: \end{hidden}
-
 *** Example: Condition Number of Evaluating a Function
 
 \(y = f (x)\). Assume \(f\) differentiable.
