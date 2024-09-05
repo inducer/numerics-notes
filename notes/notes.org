@@ -600,7 +600,7 @@ When is a method /stable/?
 
 - The above is commonly called /backward stability/.\medskip
 
-  Stricter than: the method's sensitivity to input variation is not much
+  As opposed to: the method's sensitivity to input variation is not much
   worse than the conditioning.
 
 # *Note:* implies insensitivity to variation in intermediate results.
