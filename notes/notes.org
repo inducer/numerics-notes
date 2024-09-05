@@ -740,6 +740,26 @@ number. E.g.
 Actually stored: 1026, a positive integer.
 #+LATEX: \end{hidden}
 
+*** Implementing Arithmetic
+
+How is floating point addition implemented?
+
+Consider adding \(a = (1.101)_2 \cdot 2^1\) and \(b = (1.001)_2 \cdot 2^{- 1}\) in
+a system with three stored bits (four total) in the significand.
+#+LATEX: \begin{showlater}
+Rough algorithm:
+
+1. Bring both numbers onto a common exponent
+2. Do grade-school addition from the front, until you run out of digits
+    in your system.
+3. Round result.
+\begin{eqnarray*}
+  a = & 1. & \tmcolor{orange}{101} \cdot 2^1\\
+  b = & 0. & \tmcolor{orange}{010} \tmcolor{red}{01} \cdot 2^1\\
+  a + b \approx & 1. & \tmcolor{orange}{111} \cdot 2^1
+\end{eqnarray*}
+#+LATEX: \end{showlater}
+
 *** Unrepresentable numbers?
 
 Can you think of a somewhat central number that we cannot
@@ -915,26 +935,6 @@ Working in double precision gives you about 16 (decimal) accurate digits.
 #+LATEX: \end{hidden}
 
 \demolink{error_and_fp}{Floating point and the Harmonic Series}
-
-*** Implementing Arithmetic
-
-How is floating point addition implemented?
-
-Consider adding \(a = (1.101)_2 \cdot 2^1\) and \(b = (1.001)_2 \cdot 2^{- 1}\) in
-a system with three stored bits (four total) in the significand.
-#+LATEX: \begin{showlater}
-Rough algorithm:
-
-1. Bring both numbers onto a common exponent
-2. Do grade-school addition from the front, until you run out of digits
-    in your system.
-3. Round result.
-\begin{eqnarray*}
-  a = & 1. & \tmcolor{orange}{101} \cdot 2^1\\
-  b = & 0. & \tmcolor{orange}{010} \tmcolor{red}{01} \cdot 2^1\\
-  a + b \approx & 1. & \tmcolor{orange}{111} \cdot 2^1
-\end{eqnarray*}
-#+LATEX: \end{showlater}
 
 *** Problems with FP Addition
 
