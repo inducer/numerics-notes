@@ -843,6 +843,8 @@ Why learn about subnormals?
 
 *** Rounding Modes
 
+\demolink{error_and_fp}{Density of Floating Point Numbers}
+
 How is rounding performed? (Imagine trying to represent $\pi$.)
 \[\big ( \underbrace{\tmcolor{orange}{1.1101010}}_{\text{representable}} 11
    \big )_2 \]
@@ -860,10 +862,6 @@ Up or down? It turns out that picking the same direction every time introduces
 \emph{bias}. Trick: /round-to-even/.
 \[0.5 \rightarrow 0, \qquad 1.5 \rightarrow 2 \]
 #+LATEX: \end{showlater}
-
-\demolink{error_and_fp}{Density of Floating Point Numbers}
-
-\demolink{error_and_fp}{Floating Point vs Program Logic}
 
 *** Smallest Numbers Above...
 
@@ -887,11 +885,12 @@ Can we give that number a name?
 \( \varepsilon _{\tmop{mach}}\) is\dots
 
 #+LATEX: \begin{hidden}
-the smallest number such that \(\tmop{float} (1 + \varepsilon ) > 1\).
+the smallest (real) number such that \(\tmop{float} (1 + \varepsilon ) > 1\).
 
 - *Technically* that makes \( \varepsilon _{\tmop{mach}}\) depend on the rounding rule.
   
-- For rules with tie-breaking (e.g. round-to-nearest): assume bias towards 'different'.
+- Tie-breaking (e.g. round-to-nearest) doesn't matter:
+  any number $\varepsilon>\varepsilon_{\tmop{mach}}$ will push $1+\epsilon > 1$.
 - For example: Assuming round-to-nearest, in a system with five bits in the significand, \(\varepsilon _{\tmop{mach}} = (0.00001)_2\).
 - Another, related, quantity is /ULP/, or /unit in the last place/.
 
@@ -904,14 +903,12 @@ What does this say about the relative error incurred in floating
 point calculations?
 #+LATEX: \begin{hidden}
 
-- The factor to get from one FP number to the next larger one is
-  (mostly) independent of magnitude: \(1 + \varepsilon _{\tmop{mach}}\).
-
 - Since we can't represent any results between
-  \(x \quad \text{and} \quad x \cdot (1 + \varepsilon _{\tmop{mach}}) \),
-  that's really the minimum error incurred.
+  $x$ and $x \cdot (1 + ULP)$,
+  half that distance serves as an upper bound on
+  (absolute) rounding error.
 
-- In terms of relative error:
+- In terms of relative error: Let $\tilde x =x (1+\varepsilon _{\tmop{mach}} )$.
   \[\abs{\frac{\tilde {x} - x}{x}} = \abs{\frac{x (1 +
      \varepsilon _{\tmop{mach}}) - x}{x}} = \varepsilon _{\tmop{mach}} . \]
   At least theoretically, \(\varepsilon _{\tmop{mach}}\) is the maximum relative
@@ -935,6 +932,8 @@ Working in double precision gives you about 16 (decimal) accurate digits.
 #+LATEX: \end{hidden}
 
 \demolink{error_and_fp}{Floating point and the Harmonic Series}
+
+\demolink{error_and_fp}{Floating Point vs Program Logic}
 
 *** Problems with FP Addition
 
@@ -1015,43 +1014,21 @@ Unique solution exists iff \(A\) is /nonsingular/.
 
 *** Matrix Norms
 
-What norms would we apply to matrices?
+We need norms to interact with matrix multiplication in a defined way.
 #+LATEX: \begin{hidden}
-
-*Could use:* "/Flatten/" matrix as vector, use vector norm.
-
-*But we won't:* Not very meaningful.
-
-\medskip
-*Instead:* Choose norms for matrices to interact
-with an `associated' vector norm \(\norm{\cdot }\) so that \(\norm{A}\) obeys
-\[\norm{A \B{x}} \le \norm{A} \norm{\B{x}} . \]
-
-\medskip
-For a given vector norm, define *induced matrix norm*
-\(\norm{\cdot }\),
+Define $\norm{A}$ relative to its `associated' vector norm \(\norm{\cdot }\) to obey
+\[\norm{A \B{x}} \le \norm{A} \norm{\B{x}} \]
+\[\Leftrightarrow\qquad \frac{\norm{A \B{x}}}{\norm{\B x}} \le \norm{A}
+\qquad \Leftrightarrow \qquad
+\Big\| A \underbrace{\frac{\B x}{\norm{\B x}}}_{\norm{\cdot}=1}\Big\|\le \norm{A}.
+\]
+This motivates the definition of the *induced matrix norm* as
 \[\norm{A} \assign \max _{\norm{\B{x}} = 1} \norm{A \B{x}} .
 \]
 
-\medskip
 For each vector norm, we get a different matrix norm,
 e.g. for the vector 2-norm \(\norm{\B{x}}_2\) we get a matrix
 2-norm \(\norm{A}_2\).
-#+LATEX: \end{hidden}
-
-*** Intuition for Matrix Norms
-
-Provide some intuition for the matrix norm.
-
-#+LATEX: \begin{hidden}
-\[
-  \max_{x\ne 0} \frac{\norm{Ax}}{\norm{x}}
-  =\max_{x\ne 0} \norm{Ax\cdot \frac{1}{\norm{x}}}
-  =\max_{\norm y=1} \norm{Ay}
-  =\norm{A}.
-\]
-
-I.e. the matrix norm gives the maximum (relative) growth of the vector norm after multiplying a vector by $A$.
 #+LATEX: \end{hidden}
 
 *** Identifying Matrix Norms
@@ -1116,7 +1093,6 @@ error \(\Delta \B{b}\),
 *Output:* \(\B{x}\) with error \(\Delta \B{x}\).\medskip
 
 Observe \(A (\B{x} + \Delta \B{x}) = (\B{b} + \Delta  \B{b})\), so \(A \Delta \B{x} = \Delta \B{b}\).
-
 \begin{eqnarray*}
   \frac{\text{rel err. in output}}{\text{rel err. in input}} & = &
     \frac{\norm{\Delta \B{x}} / \norm{\B{x}}}{\norm{\Delta
@@ -1125,16 +1101,19 @@ Observe \(A (\B{x} + \Delta \B{x}) = (\B{b} + \Delta  \B{b})\), so \(A \Delta \B
     \B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& \le & \norm{A^{- 1}} \norm{A} \frac{\norm{\Delta \B{b}}
     \norm{\B{x}}}{\norm{\Delta \B{b}} \norm{\B{x}}}\\& = & \norm{A^{- 1}} \norm{A} .
 \end{eqnarray*}
+A dependency on $\B b$ would be allowed, but does not emerge.
 #+LATEX: \end{hidden}
 
 *** Conditioning of Linear Systems: Observations
 
 Showed \(\kappa(\text{Solve $A\B x=\B b$})\le \norm{A^{-1}}\norm{A}\).
 
-I.e. found an /upper bound/ on the condition number. With a
-little bit of fiddling, it's not too hard to find examples that achieve this
-bound, i.e. that it is /sharp/.\medskip
+I.e. found an /upper bound/ on the condition number. By finding
+vectors $\B x$ and $\Delta \B b$ that attain equality in submultiplicativity,
+equality in the condition bound can be achieved for all matrices, i.e.
+it is /sharp/.
 
+\medskip
 So we've found the /condition number of linear system solving/, also
 called the *condition number of the matrix \(A\)*:
 \[\tmop{cond} (A) = \kappa (A) = \norm{A} \norm{A^{- 1}} . \]
