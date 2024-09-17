@@ -1158,16 +1158,16 @@ one another?
      =  \norm{A^{- 1} (\B{b} - A \widehat{\B{x}})}
      =  \norm{A^{- 1} \B{r}}
 \]
-Divide both sides by \(\norm{\widehat{\B{x}}}\):
+Divide both sides by \(\norm{\B{x}}\):
 \[
-  \frac{\norm{\Delta \B{x}}}{\norm{\widehat{\B{x}}}}
-  = \frac{\norm{A^{- 1} \B{r}}}{\norm{\widehat{\B{x}}}}
-  \le \frac{\norm{A^{- 1}} \norm{\B{r}}}{\norm{\widehat{\B{x}}}}
-  = \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A} \norm{\widehat{\B{x}}}} 
-  \le \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A\widehat{\B{x}}}} 
+  \frac{\norm{\Delta \B{x}}}{\norm{\B{x}}}
+  = \frac{\norm{A^{- 1} \B{r}}}{\norm{\B{x}}}
+  \le \frac{\norm{A^{- 1}} \norm{\B{r}}}{\norm{\B{x}}}
+  = \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{A} \norm{\B{x}}}
+  \le \tmop{cond} (A) \frac{\norm{\B{r}}}{\norm{\B{b}}}
 \]
 
-- \(\text{``rel err.''} \le \tmop{cond} \cdot \text{rel. resid}\)
+- \(\text{rel err.} \le \tmop{cond} \cdot \text{rel. resid}\)
 
 - Given small (rel.) residual, (rel.) error is only (guaranteed to be)
   small if the condition number is also small.
