@@ -940,7 +940,7 @@ Working in double precision gives you about 16 (decimal) accurate digits.
 What happens if you subtract two numbers of very similar
 magnitude?
 
-As an example, consider \(a = (1.1011)_2 \cdot 2^0\) and \(b = (1.1010)_2 \cdot  2^0\).
+As an example, consider \(a = (1.1011)_2 \cdot 2^1\) and \(b = (1.1010)_2 \cdot  2^1\).
 #+LATEX: \begin{hidden}
 
 \begin{eqnarray*}
