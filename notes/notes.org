@@ -1764,7 +1764,7 @@ Shrinking the constant: surprisingly hard (even for 'just' matmul)\medskip
     \tmtt{?gemm}, \tmtt{?trsm}
 \end{tabular}
 
-*Show (using perf):* =numpy= matmul calls BLAS =dgemm=
+\demolink{linear_systems}{BLAS Level 2 vs Level 3}
 
 *** LAPACK
 
