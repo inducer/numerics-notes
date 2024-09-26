@@ -2007,7 +2007,12 @@ has a minimum.
 
 Is it always unique?
 #+LATEX: \begin{hidden}
-No, for example if \(A\) has a nullspace.
+Yes. (again assuming full rank)
+#+LATEX: \end{hidden}
+What happens if $A$ does not have full rank?
+#+LATEX: \begin{hidden}
+There's a nullspace, i.e. a $\B n$ with $A\B n=0$.
+If $\B x$ is a solution, $\norm{\B b - A(\B x +\B n)}_=\norm{\B b - A\B x}_2$.
 #+LATEX: \end{hidden}
 
 *** Least-Squares: Finding a Solution by Minimization
@@ -2052,8 +2057,9 @@ Because then the distance between \(\B{y} = A \B{x}\) and \(\B{b}\) is minimal.
 
 *Q:* Why?
 
-Because of Pythagoras's theorem--another \(\B{y}\) would mean additional
-distance traveled in \(\tmop{span} (A)\).
+Because of Pythagoras's theorem. Suppose you had another $\B r_2$ claiming to minimize $\norm{\B r_2}_2$.
+Then $\norm{\B r_2}_2^2 =\norm{\B r}_2^2  + \norm{\B z}_2^2$ with $\B z\in\tmop{span}(A)$ and $\norm{\B z}_2>0$,
+i.e. $\norm{\B r_2}_2$ can't be minimal.
 #+LATEX: \end{hidden}
 
 *** Least Squares, Viewed Geometrically (II)
@@ -2090,7 +2096,7 @@ projector.
 #+LATEX: \end{hidden}
 
 How do I make one projecting onto \(\tmop{span} \{\B{q}_1, \B{q}_2, \ldots ,
-\B{q}_\ell  \}\) for orthogonal \(\B q_i\)?
+\B{q}_\ell  \}\) for orthonormal \(\B q_i\)?
 #+LATEX: \begin{hidden}
 First define
 \(Q =
