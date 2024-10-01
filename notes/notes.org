@@ -2132,14 +2132,13 @@ question?
 
 What is the *pseudoinverse* of \(A\)?
 #+LATEX: \begin{hidden}
-Nonsquare \(m \times n\) matrix \(A\) has no inverse in usual sense.
+Nonsquare \(m \times n\) matrix \(A\) (with $m>n$) has no inverse in usual sense.
 
 If \(\tmop{rank} (A) = n\), *pseudoinverse* is \(A^+ = (A^T A)^{- 1} A^T \).
 (colspan-projector with final \(A\) missing)
 #+LATEX: \end{hidden}
 
-What can we say about the condition number in the case of a
-tall-and-skinny, full-rank matrix?
+/Define/ the condition number of a tall-and-skinny matrix.
 #+LATEX: \begin{hidden}
 \vspace*{-2ex}
 \[\tmop{cond}_2 (A) =
@@ -2209,7 +2208,7 @@ depends on both \(A\) and \(\B{b}\).
 #+LATEX: \end{hidden}
 
 What about changes in the matrix?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 \[
    \frac{\norm{\Delta \B{x}}_2}{\norm{\B{x}}_2} \le
    [\tmop{cond} (A)^2 \tan (\theta ) + \tmop{cond} (A)] \cdot
@@ -2219,7 +2218,7 @@ Two behaviors:
 - If \(\tan (\theta ) \approx 0\), condition number is \(\tmop{cond} (A)\).
 
 - Otherwise, \(\tmop{cond} (A)^2\).
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 ** Solving Least Squares
 
