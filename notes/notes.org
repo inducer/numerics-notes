@@ -2322,6 +2322,23 @@ proof relies on the 'full' form.
 
 \inclasslink{qr}{QR}
 
+*** Computing QR: A Better Approach
+
+Propose an alternate construction principle for a QR factorization.
+#+LATEX: \begin{hidden}
+- Suppose an orth. $Q_1$ so that $Q_1A$ has some nonzeros.
+- Suppose an orth. $Q_2$ so that $Q_2Q_1A$ has even more nonzeros.
+- ...
+- Suppose an orth. $Q_n$ so that $Q_n \cdots Q_2Q_1A=R$ is upper triangular.
+
+Then
+- $A=Q_1^T\cdots Q_n^T R$ is a QR factorization.
+- Because $\kappa_2(Q_i)=1$, no undue loss of accuracy can take place.
+
+Next: Look for a way to construct the orthogonal $Q_i$. Geometrically, orthogonal matricesperform
+reflections and rotations.
+#+LATEX: \end{hidden}
+
 *** Constructing Reflections
 
 Given a plane represented by its (unit) normal vector $\B n$, construct a reflection
