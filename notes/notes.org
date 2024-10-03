@@ -2404,9 +2404,6 @@ Remarks:
 
     *A:* Use \(\B{e}_i\) above.
 
-- A product \(H_n \cdots H_1 A = R\) of Householders makes it easy (and
-  quite efficient!) to build a QR factorization.
-
 - It turns out \(\B{v}' = \B{a} + \norm{\B{a}}_2     \B{e}_1\) works out, too--just pick whichever one causes less
   cancellation.
 
