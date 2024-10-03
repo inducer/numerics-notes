@@ -2415,6 +2415,7 @@ Remarks:
 - \(H\) is orthogonal
 
 \demolink{linear_least_squares}{3x3 Householder demo}
+\demolink{linear_least_squares}{Householder in 3D}
 
 *** Givens Rotations
 
