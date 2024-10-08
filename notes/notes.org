@@ -2412,6 +2412,7 @@ Remarks:
 - \(H\) is orthogonal
 
 \demolink{linear_least_squares}{3x3 Householder demo}
+
 \demolink{linear_least_squares}{Householder in 3D}
 
 *** Givens Rotations
@@ -2476,9 +2477,6 @@ What happens with Least Squares for rank-deficient matrices?
 - QR still finds a solution with minimal residual
 
   But: need to deal with zeros on diagonal in $R$
-
-- By QR it's easy to see that least squares with a short-and-fat matrix
-    is equivalent to a rank-deficient one.
 
 - *But:* No longer unique. \(\B{x} + \B{n}\) for
     \(\B{n} \in N (A)\) has the same residual.
