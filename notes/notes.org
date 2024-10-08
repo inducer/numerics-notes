@@ -1293,7 +1293,7 @@ Express the matrix condition number $\tmop{cond}_2(A)$ in terms of the SVD:
 - \(\tmop{cond}_2 (A) = \norm A_2 \norm{A^{-1}}_2 =\sigma_{\text{max}}/\sigma_{\text{min}}\)
 #+LATEX: \end{hidden}
 
-*** Not a matrix norm: Frobenius
+*** Not an Induced Norm: Frobenius
 
 The 2-norm is very costly to compute. Can we make something simpler?
 #+LATEX: \begin{hidden}
