@@ -1806,8 +1806,7 @@ LU?
 (\tmcolor{blue}{invertible}, \tmcolor{red}{not invertible}) (Why?)
 #+LATEX: \end{hidden}
 
-What happens if we feed LU an \(m \times n\) non-square
-matrices?
+What happens if we feed LU an \(m \times n\) non-square matrix?
 #+LATEX: \begin{hidden}
 Think carefully about sizes of factors and columns/rows
 that do/don't matter. Two cases:
