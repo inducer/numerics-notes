@@ -1454,7 +1454,7 @@ Or, written differently:
        1 & \\
        \B{\ell}_{21} & L_{22}
      \end{array}\right] & \left[\begin{array}{cc}
-       a_{11} & \B{a}_{12}\\
+       a_{11} & \B{a}_{12}^T\\
        \B{a}_{21} & A_{22}
      \end{array}\right]
    \end{array} \]
