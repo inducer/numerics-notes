@@ -49,8 +49,8 @@
 #+BEAMER_HEADER: \newcommand{\inclass}[1]{\tmcolor{purple}{\textbf{In-class activity: }#1}}
 #+BEAMER_HEADER: \newcommand{\demo}[1]{\tmcolor{purple}{\textbf{Demo: }#1}}
 #+BEAMER_HEADER: \newcommand{\demolink}[2]{{\color{purple}%
-#+BEAMER_HEADER: \plainhref{https://relate.cs.illinois.edu/jupyterlite/lab/?path=cs450/demos/#1/#2.ipynb}{\uline{\textbf{Demo: }#2}}
-#+BEAMER_HEADER: [\plainhref{https://relate.cs.illinois.edu/jupyterlite/lab/?path=cs450/cleared/#1/#2.ipynb}{\uline{cleared}}]%
+#+BEAMER_HEADER: \plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/demos/#1/#2.ipynb}{\uline{\textbf{Demo: }#2}}
+#+BEAMER_HEADER: [\plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/cleared/#1/#2.ipynb}{\uline{cleared}}]%
 #+BEAMER_HEADER: }}
 #+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
 
