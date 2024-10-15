@@ -2871,30 +2871,6 @@ Define $\B{e}_i =\B{x}_i / \lambda_1^i - \alpha_1 \B{v}_1$.
 I.e. converges to (a multiple of) $\B v_1$ `linearly' (see later).
 #+LATEX: \end{hidden}
 
-*** Power Iteration: Issues?
-
-What could go wrong with Power Iteration?
-#+LATEX: \begin{hidden}
-
-- Starting vector has no component along \(\B{x}_1\)
-
-    Not a problem in practice: Rounding will introduce one.
-
-- Overflow in computing \(\lambda _1^i\)
-
-  \rightarrow Normalize after each step
-
-- \(|\lambda _1| = |\lambda _2|\)
-
-  - If $\lambda_1=\lambda_2$: multipliclity, defer.
-  - If $\lambda_1\ne\lambda_2$: use shift+invert to separate magnitudes
-- Complex eigenvalues
-  
-  \to use complex-valued shift, and invert.
-
-  \medskip
-  Recall: for real-valued matrices, eigenvalues come in conjugate pairs $\lambda$ and $\lambda^*$, with $|\lambda|=|\lambda^*|$.
-#+LATEX: \end{hidden}
 *** Convergence of Power Iteration: Notation
 
 - $\lambda_{\max} (A)$: biggest eigenvalue by magnitude
@@ -3035,6 +3011,30 @@ How does shift-invert ($(A - \sigma I)^{- 1}$) change power iteration?
 #+END_EXPORT
 #+LATEX: \end{showlater}
 
+*** Power Iteration: Issues?
+
+What could go wrong with Power Iteration?
+#+LATEX: \begin{hidden}
+
+- Starting vector has no component along \(\B{x}_1\)
+
+    Not a problem in practice: Rounding will introduce one.
+
+- Overflow in computing \(\lambda _1^i\)
+
+  \rightarrow Normalize after each step
+
+- \(|\lambda _1| = |\lambda _2|\)
+
+  - If $\lambda_1=\lambda_2$: multipliclity, defer.
+  - If $\lambda_1\ne\lambda_2$: use shift+invert to separate magnitudes
+- Complex eigenvalues
+
+  \to use complex-valued shift, and invert.
+
+  \medskip
+  Recall: for real-valued matrices, eigenvalues come in conjugate pairs $\lambda$ and $\lambda^*$, with $|\lambda|=|\lambda^*|$.
+#+LATEX: \end{hidden}
 *** What about Eigenvalues?
 
 Power Iteration generates eigenvectors. What if we would like to
