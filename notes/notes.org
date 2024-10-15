@@ -2846,7 +2846,7 @@ an existing eigenvalue, this bound holds for /all/ eigenvalues of $A+E$.
 
 \demolink{eigenvalue}{Motivating Power Iteration}
 
-Let $A \in \mathbb{R}^{n \times n}$ and $A\B{v}_j = \lambda_j \B{v}_j$ ($j \in \{ 1, 2, \ldots, n \}$) and $\abs{\lambda_1} > \abs{\lambda_2} > \cdots > \abs{\lambda_n}$.
+Let $A \in \mathbb{R}^{n \times n}$ and $A\B{v}_j = \lambda_j \B{v}_j$ ($j \in \{ 1, 2, \ldots, n \}$) and $\abs{\lambda_1} > \abs{\lambda_2} \ge \cdots \ge \abs{\lambda_n}$.
 
 Pick some $\B x_0$, consider $\B{x}_{i + 1} = A\B{x}_i$ ($i \in \{ 0, \ldots \}$).
 Called *Power Iteration*.
