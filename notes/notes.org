@@ -3104,7 +3104,7 @@ i.e. \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 \end{equation*}
 \vspace{-2ex}
 - Bottom right of $U_1$: Same eigenvalues as $A$ without $\lambda$.
-- Repeat \(n\) times $to$ triangular: \(A=Q_n \cdots Q_1 UQ_1^T \cdots Q_n^T \).
+- Repeat \(n\) times $to$ triangular: \(A=Q_1 \cdots Q_n UQ_n^T \cdots Q_1^T \).
 #+LATEX: \end{hidden}
 
 *** Schur Form: Comments, Eigenvalues, Eigenvectors
