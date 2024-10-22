@@ -3344,7 +3344,7 @@ Still a similarity transform:
 
 *** QR Iteration: Computational Expense
 
-A full QR factorization at each iteration costs \(O (n^3)\)--can we make that cheaper?
+QR at each iteration costs \(O (n^3)\)---can we make that cheaper?
 #+LATEX: \begin{hidden}
 *Idea:* /Upper Hessenberg form/
 \[A = Q
@@ -3361,6 +3361,8 @@ A full QR factorization at each iteration costs \(O (n^3)\)--can we make that ch
 
 - QR factorization of Hessenberg matrices can be achieved in \(O (n^2)\)
   time using Givens rotations.
+
+  (And $RQ$ is `matrix \cdot Givens', also $O(n^2)$.)
 #+LATEX: \end{hidden}
 
 \demolink{eigenvalue}{Householder Similarity Transforms}
