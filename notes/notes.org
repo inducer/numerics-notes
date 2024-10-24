@@ -3394,7 +3394,7 @@ What does this process look like for symmetric matrices?
 
 What subspaces can we use to look for eigenvectors?
 #+LATEX: \begin{hidden}
-QR: \[\tmop{span} \{A^\ell  \B{y}_1, A^\ell  \B{y}_2, \ldots ,
+Orthogonal iteration (and there by QR): \[\tmop{span} \{A^\ell  \B{y}_1, A^\ell  \B{y}_2, \ldots ,
    A^\ell  \B{y}_k \}\]
 
 *Krylov space:* \[\tmop{span} \{\underbrace{\B{x}}_{\B{x_0}}, A \B{x},
