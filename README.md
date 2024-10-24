@@ -5,12 +5,12 @@ analysis, following the textbook
 [Scientific Computing: An Introductory Survey](https://heath.cs.illinois.edu/scicomp/)
 by Michael T. Heath.
 
-Developed over the years while teaching [CS450](https://relate.cs.illinois.edu/course/cs450-f22/)
+Developed over the years while teaching [CS450](https://relate.cs.illinois.edu/course/cs450-f24/)
 in the [Department of Computer Science](https://cs.illinois.edu/)
 at the [University of Illinois](https://illinois.edu/). A number of the demos
 were based on material initially developed by Luke Olson.
 
--   [PDF](https://andreask.cs.illinois.edu/cs450-f22/notes.pdf) of these slides/notes (see `notes`
+-   [PDF](https://andreask.cs.illinois.edu/cs450-f24/notes.pdf) of these slides/notes (see `notes`
     for source)
 
 -   [Demos](https://mybinder.org/v2/gh/inducer/numerics-notes/main?filepath=demos)
@@ -19,7 +19,7 @@ were based on material initially developed by Luke Olson.
 -   The demos use annotations for [`ipython-demo-tools`](https://github.com/inducer/ipython-demo-tools).
     A `#clear` annotation at the beginning of a code cell allows the
     `clear-marked-inputs` subcommand of
-    [`prepare-ipynb`](https://github.com/inducer/ipython-demo-tools/blob/main/prepare-ipynb) 
+    [`prepare-ipynb`](https://github.com/inducer/ipython-demo-tools/blob/main/prepare-ipynb)
     to remove the content of those input cells, maybe to use them for live coding in class.
     The `#clear` marks themselves can be removed by that `remove-marks` subcommand.
 
