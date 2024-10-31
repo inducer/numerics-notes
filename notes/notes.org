@@ -3759,14 +3759,14 @@ Error:
 
 Error in FPI: \(e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \)
 #+LATEX: \begin{hidden}
-Mean value theorem says: There is a \(\B{\theta }_k\) between
-\(\B{x}_k\) and \(\B{x}^\ast\)
+Mean value theorem says: There is a \(\theta_k\) between
+\(x_k\) and \(x^\ast\)
  so that
 \[g (x_k) - g (x^\ast ) = g' (\theta _k) (x_k - x^\ast ) = g' (\theta _k) e_k
    . \]
 So:
 \(e_{k + 1} = g' (\theta _k) e_k \)
-and if \(\norm{g'} \le C < 1\) near \(\B{x}^\ast\), then we have
+and if \(\norm{g'} \le C < 1\) near \(x^\ast\), then we have
 linear convergence with constant \(C\).\medskip
 
 *Q:* What if \(g' (x^\ast ) = 0\)?\medskip
@@ -3822,10 +3822,10 @@ What would Newton without the use of the derivative look like?
 Approximate
 \[f' (x_k) \approx \frac{f (x_k) - f (x_{k - 1})}{x_k - x_{k - 1}} . \]
 So
-
 \begin{eqnarray*}
-  x_0 & = & \langle \text{starting guess} \rangle \\x_{k + 1} & = & x_k - \frac{f (x_k)}{\frac{f (x_k) - f (x_{k - 1})}{x_k -
-    x_{k - 1}}} .
+  x_0 & = & \langle \text{starting guess} \rangle \\
+  x_1 & = & \langle \text{another starting guess} \rangle \\
+  x_{k + 1} & = & x_k - \frac{f (x_k)}{\frac{f (x_k) - f (x_{k - 1})}{x_k - x_{k - 1}}} .
 \end{eqnarray*}
 #+LATEX: \end{hidden}
 
@@ -3906,7 +3906,7 @@ locally. How could we use that?
 \inclasslink{nonlinear}{Nonlinear Equations}
 ** Methods in $n$  Dimensions (``Systems of Equations'')
 
-*** Fixed Point Iteration
+*** Fixed Point Iteration ($n$ dimensions)
 
 \begin{eqnarray*}
   \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{g} (\B{x}_k)
@@ -3924,11 +3924,11 @@ Similarly: If \(J_{\B{g}} (\B{x}^\ast ) = 0\), we have at least
 quadratic convergence.
 
 \medskip
-*Better:* There exists a norm \(\|\cdot\|_A\) such that \(\rho(A)\le\|A\|_A<\rho(A)+\epsilon\), so
-\(\rho(A)<1\) suffices. ([[https://math.stackexchange.com/a/3834891][proof]])
+*Better:* For all matrices $A$ and for all $\epsilon>0$ there exists a norm \(\|\cdot\|_A\) such that \(\rho(A)\le\|A\|_A<\rho(A)+\epsilon\).
+Thus \(\rho(A)<1\) suffices. ([[https://math.stackexchange.com/a/3834891][proof]])
 #+LATEX: \end{hidden}
 
-*** Newton's Method
+*** Newton's Method ($n$ dimensions)
 
 What does Newton's method look like in \(n\) dimensions?
 #+LATEX: \begin{hidden}
