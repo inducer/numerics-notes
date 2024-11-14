@@ -4799,19 +4799,17 @@ Equivalent to existence/uniqueness of the linear system
 #+LATEX: \end{hidden}
 Sensitivity?
 #+LATEX: \begin{hidden}
-- Shallow answer: Simply consider the condition number of the linear system
+- Shallow answer: Simply consider the condition number of $V$
 - \(\|\text{coefficients} \|\) does not suffice as measure of stability.
 
-  $f(x)$ can be evaluated in many places. (\(f\) is interpolant.)
+  $p_{n-1}(x)$ can be evaluated anywhere. (\(p_{n-1}\) is the interpolant.)
 
 - Want: \(\max_{x \in[a,b]}|f(x)| \le \Lambda \|\B y\|_\infty \)
-
-- \(\Lambda\): *Lebesgue constant*
-- \(\Lambda\) depends on \(n\) and \(\{x_i\}_i\)
-
-  - Technically also depends on \(\{\phi_i\}_i\)
-  - But: same for all polynomial bases
+- \(\Lambda\): *Lebesgue constant*, depends on \(n\) and \(\{x_i\}_i\) 
+  - Technically also depends on \(\{\phi_i\}_i\) (same for all polys)
 #+LATEX: \end{hidden}
+
+\demolink{interpolation}{Lebesgue Constant}
 
 ** Methods
 *** Modes and Nodes (aka Functions and Points)
