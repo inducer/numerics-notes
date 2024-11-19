@@ -5049,7 +5049,7 @@ and an auxiliary function:
 *** Error Result: Connection to Chebyshev
 
 What is the connection between the error result and Chebyshev interpolation?
-#+LATEX: \begin{hidden}
+#+LATEX: \begin{showlater}
 - The error bound suggests choosing the interpolation nodes such that the product
   \(\abs{\prod_{i=1}^n (x-x_i)}\) is as small as possible. The Chebyshev nodes achieve this.
 
@@ -5058,7 +5058,7 @@ What is the connection between the error result and Chebyshev interpolation?
 - Confusing: /Chebyshev approximating polynomial/ (or "polynomial best-approximation").
   *Not* the Chebyshev interpolant.
 - Chebyshev nodes also do *not* minimize the Lebesgue constant.
-#+LATEX: \end{hidden}
+#+LATEX: \end{showlater}
 
 \demolink{interpolation}{Chebyshev Interpolation} (Part V)
 
