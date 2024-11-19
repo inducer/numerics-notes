@@ -1648,7 +1648,7 @@ How?
 This is called *LU factorization* (or *LU decomposition*).
 #+LATEX: \end{hidden}
 
-*** Recap: Permuation Matrices
+*** Recap: Permutation Matrices
 How do we capture `row switches' in a factorization?
 
 \[
@@ -2645,7 +2645,7 @@ What is needed to model?
 - Model Hooke's law as $\B F(t)=A \B x(t)$, i.e. spring constants and position differences computed via matrix
 \[\B F=m \B a \Leftrightarrow A \B x(t) = m \frac{\partial^2 \B x(t)}{\partial t^2}.\]
 
-Observ thes systems `wobble': assume $\B x(t)=\sin(\omega t) \B x_0$. Then
+Observe these systems `wobble': assume $\B x(t)=\sin(\omega t) \B x_0$. Then
 \[A \B x_0(t) \sin(\omega t)= m (-\omega^2) \B x_0 \sin(\omega t).\]
 Cancel $\sin(\omega t)$: yields an eigenvalue problem for $\B x_0$ and $-\omega^2$.
 #+LATEX: \end{hidden}
@@ -3678,7 +3678,7 @@ Contrast the following `alternate' definitions of convergence rate:
   (and only weak promises about asymptotic behavior)
 
 - (3) is actually the most informative about what happens `eventually'
-  (i.e. asymptotically), and it does not restrict pre-asymptotic beahvior.
+  (i.e. asymptotically), and it does not restrict pre-asymptotic behavior.
 #+LATEX: \end{hidden}
 
 *** Stopping Criteria
@@ -4889,7 +4889,7 @@ Find a basis so that \(V\) is triangular.
 #+LATEX: \begin{hidden}
 Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
 \[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \]
-(At least) two possibilities for coefficent finding:
+(At least) two possibilities for coefficient finding:
 
 - Set up \(V\), run forward substitution.
 - [[https://en.wikipedia.org/wiki/Divided_differences][Divided Differences]] (Wikipedia link)
@@ -5088,7 +5088,7 @@ This is called /convergence of order \(n\)/.
 ** Piecewise interpolation, Splines
 *** Going piecewise: Simplest Case
 
-Construct a pieceweise linear interpolant at four points.
+Construct a piecewise linear interpolant at four points.
 
 #+BEGIN_CENTER
 #+BEGIN_EXPORT latex
@@ -5863,7 +5863,7 @@ Some terminology:\medskip
 An IVP is *stable* if and only if...
 #+LATEX: \begin{hidden}
 The
-solution is continously dependent on the initial condition, i.e.
+solution is continuously dependent on the initial condition, i.e.
 
 For all \(\varepsilon > 0\) there exists a \(\delta > 0\) so that
 \[\norm{\widehat{\B{y}}_0 - \B{y}_0} < \delta \quad \Rightarrow
@@ -6132,7 +6132,7 @@ In particular: stable for any \(h\) if \(\Re \lambda\le 0\) ("*unconditionally s
 BE can be stable even when ODE is /unstable/. (\(\tmop{Re} \lambda > 0\)). Accuracy?
 
 - /Explicit/ methods: main concern in choosing $h$ is /stability/ (but /also/ accuracy).
-- /Implicit/ methods: main concern in chosing $h$ is /accuracy/.
+- /Implicit/ methods: main concern in choosing $h$ is /accuracy/.
 #+LATEX: \end{hidden}
 
 \demolink{ivp_odes}{Backward Euler stability}
@@ -6441,7 +6441,7 @@ No--need second order
 Is this Dirichlet/Neumann/...?
 #+LATEX: \begin{hidden}
 Could be any--we're in the system
-case, and \(B_a\) and \(B_b\) are matrices--so conditions could be ony
+case, and \(B_a\) and \(B_b\) are matrices--so conditions could be only
 \emph{any} component.
 #+LATEX: \end{hidden}
 

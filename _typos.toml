@@ -1,0 +1,7 @@
+[type.ipynb]
+extend-glob = ["*.ipynb"]
+check-file = false
+
+[default.extend-words]
+# Don't correct the surname "Fike"
+fike = "fike"

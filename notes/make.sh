@@ -23,6 +23,6 @@ else
     ./run-org-conversion.sh
 fi
 
-echo "NOTES BUILD SCCESSFULLY COMPLETED"
+echo "NOTES BUILD SUCCESSFULLY COMPLETED"
 
 # vim: sw=4
