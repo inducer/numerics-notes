@@ -3748,7 +3748,7 @@ smooth.
 #+LATEX: \begin{hidden}
 Let \(x^\ast\) be the fixed point with \(x^\ast  = g (x^\ast )\).
 
-*Claim:* If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges.\medskip
+*Claim:* If \(\abs{g' (x^\ast )} < 1\) at the fixed point, FPI converges locally.\medskip
 
 Error:
 \[e_{k + 1} = x_{k + 1} - x^\ast  = g (x_k) - g (x^\ast ) \]
