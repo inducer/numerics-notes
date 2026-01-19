@@ -654,7 +654,7 @@ How can I produce inaccurate results?
 - Apply any type of method to an ill-conditioned problem
 #+LATEX: \end{showlater}
 
-*** In-Class Activity: Forward/Backward Error
+*** In-Class Activity: Forward/Backward Error :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-fwd-bwd-error/start/
@@ -979,7 +979,7 @@ This phenomenon is called /Catastrophic Cancellation/.
 
 \demolink{error_and_fp}{Catastrophic Cancellation}
 
-*** In-Class Activity: Floating Point
+*** In-Class Activity: Floating Point :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-floating-point/start/
@@ -1249,7 +1249,7 @@ effect in each case?
   Different \(\widehat{\B{x}}\): Recover \(\B{x} = D     \widehat{\B{x}}\).
 #+LATEX: \end{hidden}
 
-*** In-Class Activity: Matrix Norms and Conditioning
+*** In-Class Activity: Matrix Norms and Conditioning :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-conditioning/start/
@@ -1922,7 +1922,7 @@ FYI: There is a rank-\(k\) analog called the *Sherman-Morrison-Woodbury formula*
 
 \demolink{linear_systems}{Sherman-Morrison}
 
-*** In-Class Activity: LU
+*** In-Class Activity: LU :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-lu/start/
@@ -2192,7 +2192,7 @@ problems?
 \(\B{x} = A^+ \B{b}\) solves \(A \B{x} \cong \B{b}\).
 #+LATEX: \end{hidden}
 
-*** In-Class Activity: Least Squares
+*** In-Class Activity: Least Squares :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-least-squares/start/
@@ -2356,7 +2356,7 @@ Least squares solution process works unmodified with the economical form, though
 proof relies on the 'full' form.
 #+LATEX: \end{showlater}
 
-*** In-Class Activity: QR
+*** In-Class Activity: QR :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-qr/start/
@@ -2652,7 +2652,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
 
 \demolink{linear_least_squares}{Relative cost of matrix factorizations}
 
-*** In-Class Activity: Householder, Givens, SVD
+*** In-Class Activity: Householder, Givens, SVD :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-hh-givens-svd/start/
@@ -3107,7 +3107,7 @@ Idea: Could use Rayleigh quotient as a shift. Yields *Rayleigh quotient iteratio
 
 \demolink{eigenvalue}{Power Iteration and its Variants}
 
-*** In-Class Activity: Eigenvalues
+*** In-Class Activity: Eigenvalues :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-eigenvalues/start/
@@ -3666,7 +3666,7 @@ How do multiple roots interact with conditioning?
 The inverse function is steep near one, so conditioning is poor.
 #+LATEX: \end{hidden}
 
-*** In-Class Activity: Krylov and Nonlinear Equations
+*** In-Class Activity: Krylov and Nonlinear Equations :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-krylov-nonlinear/start/
@@ -3967,7 +3967,7 @@ locally. How could we use that?
 - Sufficient conditions for convergence of Newton (under /strong/ assumptions) are [[https://doi.org/10.1137/1.9780898719468][available]].
 #+LATEX: \end{showlater}
 
-*** In-Class Activity: Nonlinear Equations
+*** In-Class Activity: Nonlinear Equations :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-nonlinear/start/
@@ -4289,7 +4289,7 @@ $x^*$ in the interval such that for all \(x_1 < x_2\) in the interval
 - \(x^*  < x_1 \Rightarrow f (x_1) < f (x_2)\)
 #+LATEX: \end{hidden}
 
-*** In-Class Activity: Optimization Theory
+*** In-Class Activity: Optimization Theory :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-theory/start/
@@ -4541,7 +4541,7 @@ Come up with a way to update to update the approximate Hessian.
 \[B_{k+1} = B_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} -
 \frac{B_k\B{s}_k \B{s}_k^TB_k}{\B{s}_k^TB_k \B{s}_k}\]
 
-*** In-Class Activity: Optimization Methods
+*** In-Class Activity: Optimization Methods  :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-optimization-methods/start/
@@ -5093,7 +5093,7 @@ Yes.
 - But sometimes a piecewise approximation (with a specifiable level of
   smoothness) is more suited to the application
 
-*** In-Class Activity: Interpolation
+*** In-Class Activity: Interpolation :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-interpolation/start/
@@ -5787,7 +5787,7 @@ Carrying out this process for quadrature is called *Romberg integration*.
 #+LATEX: \end{hidden}
 
 
-*** In-Class Activity: Differentiation and Quadrature
+*** In-Class Activity: Differentiation and Quadrature :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-quadrature/start/
@@ -6500,7 +6500,7 @@ Discuss:
 #+ATTR_LATEX: :width \textwidth
 [[./images/stab-regions-crop.pdf]]
      
-*** In-Class Activity: Initial Value Problems
+*** In-Class Activity: Initial Value Problems :noexport:
   :PROPERTIES:
   :RELATE_TREE_ICON: bi bi-person
   :RELATE_TREE_LINK: CLASSURL/flow/inclass-ivp/start/
