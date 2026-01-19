@@ -388,7 +388,7 @@ result.
 #+LATEX: \end{hidden}
 
 *** Recap: Norms
-#+LATEX: \contentid{vecnorm}
+#+LATEX: \contentid{vec_norm}
 
 What's a norm?
 #+LATEX: \begin{hidden}
@@ -465,7 +465,7 @@ How? /Attempt 1:/
 
 *** TODO Backward error hangs out a bit unmotivated until backward stability comes along
 *** Forward/Backward Error
-#+LATEX: \contentid{fwbwerror}
+#+LATEX: \contentid{fw_bw_error}
 
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
 
@@ -600,7 +600,7 @@ Condition number:
 
 *** TODO Make backward stability discussion more precise
 *** Stability and Accuracy
-#+LATEX: \contentid{stabilityaccuracy}
+#+LATEX: \contentid{stability_accuracy}
 
 *Previously:* Considered /problems/ or /questions/.
 
@@ -666,7 +666,7 @@ How can I produce inaccurate results?
 ** Floating Point
 
 *** Wanted: Real Numbers... in a computer
-#+LATEX: \contentid{floatingpoint}
+#+LATEX: \contentid{fp_intro}
 
 Computers can represent \emph{integers}, using bits:
 \[23 = 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 =
@@ -808,6 +808,7 @@ a zero?
 \demolink{error_and_fp}{Picking apart a floating point number}
 
 *** Subnormal Numbers
+#+LATEX: \contentid{fp_subnormal}
 
 What is the smallest representable number in an FP system with 4
 stored bits (5 total) in the significand and a stored exponent range of \([- 7, 8]\)?
@@ -862,6 +863,7 @@ Why learn about subnormals?
   level, /OFL/.
 
 *** Rounding Modes
+#+LATEX: \contentid{fp_rounding}
 
 \demolink{error_and_fp}{Density of Floating Point Numbers}
 
@@ -1006,7 +1008,7 @@ This phenomenon is called /Catastrophic Cancellation/.
 ** Theory: Conditioning
 
 *** Solving a Linear System
-#+LATEX: \contentid{solvesetup}
+#+LATEX: \contentid{linsolve_setup}
 
 Given:
 
@@ -1034,7 +1036,7 @@ Unique solution exists iff \(A\) is /nonsingular/.
  measure distances of matrices.
 
 *** Matrix Norms
-#+LATEX: \contentid{matnorm}
+#+LATEX: \contentid{mat_norm}
 
 We need norms to interact with matrix multiplication in a defined way.
 #+LATEX: \begin{hidden}
@@ -1105,7 +1107,7 @@ specifics, then the statement is true for any induced norm.
 If a specific norm is needed, the notation will indicate that.
 
 *** Conditioning
-#+LATEX: \contentid{matconditioning}
+#+LATEX: \contentid{mat_conditioning}
 
 What is the condition number of solving a linear system
 \(A \B{x} = \B{b}\)?
@@ -1198,7 +1200,7 @@ Divide both sides by \(\norm{\B{x}}\):
 #+LATEX: \end{hidden}
 
 *** Changing the Matrix
-#+LATEX: \contentid{linsolve_matchange}
+#+LATEX: \contentid{linsolve_mat_change}
 
 So far, only discussed changing the RHS, i.e.
 \(A \B{x} = \B{b} \quad \rightarrow \quad A \widehat{\B{x}} = \widehat{\B{b}} \).
@@ -1424,7 +1426,7 @@ computationally inefficient. We won't look at it.
 #+LATEX: \end{hidden}
 
 *** LU Factorization
-#+LATEX: \contentid{linsolvelu}
+#+LATEX: \contentid{linsolve_lu}
 What is the *LU factorization*?
 
 #+LATEX: \begin{hidden}
@@ -2495,7 +2497,7 @@ change as soon as other Givens rotations are applied.)
 #+LATEX: \end{hidden}
 
 *** Rank-Deficient Matrices and QR
-#+LATEX: \contentid{lsq_rankdeficient}
+#+LATEX: \contentid{lsq_rank_deficient}
 
 What happens with QR for rank-deficient matrices?
 #+LATEX: \begin{showlater}
@@ -3601,6 +3603,7 @@ Those are called *Ritz values*.
 
 ** Introduction
 *** Solving Nonlinear Equations
+#+LATEX: \contentid{solve_setup}
 
 What is the goal here?
 #+LATEX: \begin{hidden}
@@ -3614,7 +3617,6 @@ for intersections.
 \demolink{nonlinear}{Three quadratic functions}
 #+LATEX: \end{hidden}
 
-#+LATEX: \contentid{solve_setup}
 
 *** Showing Existence
 
@@ -4141,6 +4143,7 @@ a global minimum exists (but is possibly non-unique).
 #+LATEX: \end{hidden}
 
 *** Convexity
+#+LATEX: \contentid{opt_convex}
 
 \(S \subseteq \mathbb{R}^n\) is called *convex* if for all \(\B{x}, \B{y} \in S\) and all \(0 \le \alpha \le 1\)
 #+LATEX: \begin{hidden}
@@ -4174,6 +4177,7 @@ If \(f\) is strictly convex, \dots
 #+LATEX: \end{hidden}
 
 *** Optimality Conditions
+#+LATEX: \contentid{opt_cond}
 
 If we have found a candidate \(\B{x}^\ast\) for a minimum,
 how do we know it actually is one?
@@ -4228,6 +4232,7 @@ PD.
 #+LATEX: \end{hidden}
 
 *** Sensitivity and Conditioning (1D)
+#+LATEX: \contentid{opt_sensitivity}
 
 How does optimization react to a slight perturbation of the minimum?
 #+LATEX: \begin{hidden}
