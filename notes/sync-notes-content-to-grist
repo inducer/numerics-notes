@@ -1,0 +1,113 @@
+#!/usr/bin/env -S uv run --script
+#
+# /// script
+# dependencies = [
+#   "pygrist-mini",
+#   "typed-argparse",
+# ]
+# ///
+
+
+import os
+import re
+from pathlib import Path
+from typing import cast
+
+import typed_argparse as tap
+from pygrist_mini import GristClient
+from tomllib import loads
+
+
+class CommonArgs(tap.TypedArgs):
+    grist_root_url: str = tap.arg(metavar="URL")
+    grist_doc_id: str = tap.arg(metavar="DOC_ID")
+    grist_api_key: str = tap.arg(
+                    metavar="FILENAME",
+                    default=os.path.expanduser("~/.grist-api-key"))
+
+
+def get_grist_client(args: CommonArgs) -> GristClient:
+    grist_api_key = Path(args.grist_api_key).read_text().strip()
+    return GristClient(args.grist_root_url, grist_api_key, args.grist_doc_id)
+
+
+def strip_braces(s: str):
+    if s.startswith("{") and s.endswith("}"):
+        return s[1:-1]
+    else:
+        return s
+
+
+HYPERLINK_RE = re.compile(r"\\hyperlink\s*\{(.*?)\}\{(.*?)\}")
+
+
+def strip_hyperlink(s: str):
+    match = HYPERLINK_RE.match(s)
+    if not match:
+        return s
+    return match.group(2)
+
+
+class SyncArgs(CommonArgs):
+    run_id: int = tap.arg(positional=True)
+
+
+def sync(args: SyncArgs):
+    grist = get_grist_client(args)
+    toml_txt = (
+        Path("out/notes-content.toml")
+        .read_text()
+        .replace("\\", "\\\\")
+        )
+
+    toml_data = loads(toml_txt)["content"]
+    our_data = [
+            {
+                "Identifier": cast("str", row["identifier"]),
+                "Start": row["start"],
+                "End": (
+                    toml_data[i+1]["start"] if i+1 < len(toml_data) else row["start"]),
+                "Section": row["section"],
+                "Frame_Title": strip_braces(row["frame_title"]),
+                "Section_Title": strip_hyperlink(row["section_title"]),
+                "Subsection_Title": strip_hyperlink(row["subsection_title"])
+            }
+            for i, row in enumerate(toml_data)]
+
+    db_data = grist.get_records("Content", filter={"Course_run": [args.run_id]})
+
+    our_ident_to_row = {row["Identifier"]: row for row in our_data}
+    our_idents = set(our_ident_to_row.keys())
+    db_ident_to_id = {
+        cast("str", row["fields"]["Identifier"]): row["id"] for row in db_data}
+    db_idents = set(db_ident_to_id.keys())
+
+    if our_idents - db_idents:
+        _ = grist.add_records("Content", [
+                              {**our_ident_to_row[ident], "Course_run": args.run_id}
+                              for ident in our_idents - db_idents
+                          ])
+
+    if db_idents - our_idents:
+        grist.patch_records("Content", [
+                                (db_ident_to_id[ident], {
+                                    "Start": None,
+                                    "End": None,
+                                    "Section": None,
+                                })
+                                for ident in db_idents - our_idents
+                            ])
+
+    if db_idents & our_idents:
+        grist.patch_records("Content", [
+                                (db_ident_to_id[ident], our_ident_to_row[ident])
+                                for ident in db_idents & our_idents
+                            ])
+
+
+def main():
+    tap.Parser(SyncArgs).bind(sync).run()
+
+
+if __name__ == "__main__":
+    main()
