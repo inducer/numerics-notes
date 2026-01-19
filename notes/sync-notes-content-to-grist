@@ -61,23 +61,31 @@ def sync(args: SyncArgs):
         )
 
     toml_data = loads(toml_txt)["content"]
+
+    our_idents: set[str] = set()
+    for row in toml_data:
+        ident = cast("str", row["identifier"])
+        if ident in our_idents:
+            raise ValueError(f"non-unique identifier: {ident}")
+        our_idents.add(ident)
+
     our_data = [
             {
+                "Ordinal": i + 1,
                 "Identifier": cast("str", row["identifier"]),
-                "Start": row["start"],
-                "End": (
-                    toml_data[i+1]["start"] if i+1 < len(toml_data) else row["start"]),
-                "Section": row["section"],
-                "Frame_Title": strip_braces(row["frame_title"]),
-                "Section_Title": strip_hyperlink(row["section_title"]),
-                "Subsection_Title": strip_hyperlink(row["subsection_title"])
+                "Start_slide": row["start"],
+                "End_slide": (
+                    toml_data[i+1]["start"]-1 if i+1 < len(toml_data) else row["start"]),
+                "Slides_section": row["section"],
+                "Frame_title": strip_braces(row["frame_title"]),
+                "Section_title": strip_hyperlink(row["section_title"]),
+                "Subsection_title": strip_hyperlink(row["subsection_title"])
             }
             for i, row in enumerate(toml_data)]
 
     db_data = grist.get_records("Content", filter={"Course_run": [args.run_id]})
 
-    our_ident_to_row = {row["Identifier"]: row for row in our_data}
-    our_idents = set(our_ident_to_row.keys())
+    our_ident_to_row = {cast("str", row["Identifier"]): row for row in our_data}
     db_ident_to_id = {
         cast("str", row["fields"]["Identifier"]): row["id"] for row in db_data}
     db_idents = set(db_ident_to_id.keys())
@@ -91,9 +99,10 @@ def sync(args: SyncArgs):
     if db_idents - our_idents:
         grist.patch_records("Content", [
                                 (db_ident_to_id[ident], {
-                                    "Start": None,
-                                    "End": None,
-                                    "Section": None,
+                                    "Start_slide": None,
+                                    "End_slide": None,
+                                    "Slides_section": None,
+                                    "Ordinal": None,
                                 })
                                 for ident in db_idents - our_idents
                             ])
