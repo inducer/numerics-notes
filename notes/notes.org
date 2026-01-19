@@ -116,6 +116,18 @@
 
 #+BEAMER_HEADER: \colorlet{dgreen}{green!70!black}
 
+#+BEAMER_HEADER: \newwrite\mycontentdata
+#+BEAMER_HEADER: \immediate\openout\mycontentdata=\jobname-content.toml
+#+BEAMER_HEADER: \def\contentid#1{
+#+BEAMER_HEADER:   \write\mycontentdata{[[content]]}
+#+BEAMER_HEADER:   \write\mycontentdata{identifier = "#1"}
+#+BEAMER_HEADER:   \write\mycontentdata{start = \insertframenumber}
+#+BEAMER_HEADER:   \write\mycontentdata{section = "\thesection.\thesubsection"}
+#+BEAMER_HEADER:   \write\mycontentdata{frame_title = "\insertframetitle"}
+#+BEAMER_HEADER:   \write\mycontentdata{section_title = "\insertsection"}
+#+BEAMER_HEADER:   \write\mycontentdata{subsection_title = "\insertsubsection"}
+#+BEAMER_HEADER: }
+
 #+LATEX_COMPILER: pdflatex
 #+OPTIONS: H:3 toc:nil ':t tasks:t
 #+BEAMER_THEME: default
@@ -144,6 +156,7 @@
   :END:
 ** About the Class
 *** What's the point of this class?
+#+LATEX: \contentid{meta}
 
 '/Scientific Computing/' describes a family of approaches to obtain
 approximate solutions to problems /once they've been stated mathematically/.
@@ -293,6 +306,7 @@ THE SOFTWARE.
 ** Errors, Conditioning, Accuracy, Stability
 
 *** What problems /can/ we study in the first place?
+#+LATEX: \contentid{intro}
 
 To be able to compute a solution (through a process that
 introduces errors), the problem...
@@ -355,6 +369,7 @@ What parts of your computation are approximate?
 #+LATEX: \end{showlater}
 
 *** Measuring Error
+#+LATEX: \contentid{error}
 
 How do we measure error?
 
@@ -373,6 +388,7 @@ result.
 #+LATEX: \end{hidden}
 
 *** Recap: Norms
+#+LATEX: \contentid{vecnorm}
 
 What's a norm?
 #+LATEX: \begin{hidden}
@@ -449,6 +465,7 @@ How? /Attempt 1:/
 
 *** TODO Backward error hangs out a bit unmotivated until backward stability comes along
 *** Forward/Backward Error
+#+LATEX: \contentid{fwbwerror}
 
 Suppose /want/ to compute \(y = f (x)\), but /approximate/ \(\hat {y} = \hat {f} (x)\).\medskip
 
@@ -524,6 +541,7 @@ This amplification factor seems worth studying in more detail.
 #+LATEX: \end{showlater}
 
 *** Sensitivity and Conditioning
+#+LATEX: \contentid{condition}
 
 Consider a more general setting: An input $x$ and its perturbation $\hat x$.
 #+LATEX: \begin{hidden}
@@ -582,6 +600,7 @@ Condition number:
 
 *** TODO Make backward stability discussion more precise
 *** Stability and Accuracy
+#+LATEX: \contentid{stabilityaccuracy}
 
 *Previously:* Considered /problems/ or /questions/.
 
@@ -647,6 +666,7 @@ How can I produce inaccurate results?
 ** Floating Point
 
 *** Wanted: Real Numbers... in a computer
+#+LATEX: \contentid{floatingpoint}
 
 Computers can represent \emph{integers}, using bits:
 \[23 = 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 =
@@ -986,6 +1006,7 @@ This phenomenon is called /Catastrophic Cancellation/.
 ** Theory: Conditioning
 
 *** Solving a Linear System
+#+LATEX: \contentid{solvesetup}
 
 Given:
 
@@ -1013,6 +1034,7 @@ Unique solution exists iff \(A\) is /nonsingular/.
  measure distances of matrices.
 
 *** Matrix Norms
+#+LATEX: \contentid{matnorm}
 
 We need norms to interact with matrix multiplication in a defined way.
 #+LATEX: \begin{hidden}
@@ -1083,6 +1105,7 @@ specifics, then the statement is true for any induced norm.
 If a specific norm is needed, the notation will indicate that.
 
 *** Conditioning
+#+LATEX: \contentid{matconditioning}
 
 What is the condition number of solving a linear system
 \(A \B{x} = \B{b}\)?
@@ -1138,6 +1161,7 @@ What is the condition number of matrix-vector multiplication?
 \demolink{linear_systems}{Conditioning of 2x2 Matrices}
 
 *** Residual Vector
+#+LATEX: \contentid{linsolve_residual}
 
 What is the *residual vector* of solving the linear system
 \[\B{b} = A \B{x} ? \]
@@ -1174,6 +1198,7 @@ Divide both sides by \(\norm{\B{x}}\):
 #+LATEX: \end{hidden}
 
 *** Changing the Matrix
+#+LATEX: \contentid{linsolve_matchange}
 
 So far, only discussed changing the RHS, i.e.
 \(A \B{x} = \B{b} \quad \rightarrow \quad A \widehat{\B{x}} = \widehat{\B{b}} \).
@@ -1199,6 +1224,7 @@ And we get
 #+LATEX: \end{hidden}
 
 *** Changing Condition Numbers
+#+LATEX: \contentid{preconditioning}
 
 Once we have a matrix \(A\) in a linear system \(A \B{x} = \B{b}\),
 are we stuck with its condition number? Or could we improve it?
@@ -1233,6 +1259,7 @@ effect in each case?
 \inclasslink{conditioning}{Matrix Norms and Conditioning}
 
 *** Recap: Orthogonal Matrices
+#+LATEX: \contentid{svd}
 
 What's an /orthogonal (=orthonormal)
 matrix/?
@@ -1326,6 +1353,7 @@ How does it relate to the SVD?
 ** Methods to Solve Systems
 
 *** Solving Systems: Simple cases
+#+LATEX: \contentid{linsolve_simple}
 
 Solve $D\B x=\B b$ if $D$ is diagonal. (Computational cost?)
 #+LATEX: \begin{hidden}
@@ -1396,6 +1424,7 @@ computationally inefficient. We won't look at it.
 #+LATEX: \end{hidden}
 
 *** LU Factorization
+#+LATEX: \contentid{linsolvelu}
 What is the *LU factorization*?
 
 #+LATEX: \begin{hidden}
@@ -1489,6 +1518,7 @@ on an \(n \times n\) matrix?
 \demolink{linear_systems}{Complexity of Mat-Mat multiplication and LU}
 
 *** LU: Failure Cases?
+#+LATEX: \contentid{lu_pivoting}
 
 Is LU/Gaussian Elimination bulletproof?
 #+LATEX: \begin{hidden}
@@ -1541,6 +1571,7 @@ The entry we divide by is called the /pivot/.
 \demolink{linear_systems}{LU Factorization with Partial Pivoting}
 
 *** Cholesky: LU for Symmetric Positive Definite
+#+LATEX: \contentid{cholesky}
 
 LU /can/ be used for SPD matrices. But can we do better?
 #+LATEX: \begin{hidden}
@@ -1712,6 +1743,7 @@ Define \(L_1 := P_3 P_2 M_1 P_2^{- 1} P_3^{- 1}\)\medskip
 
 ** LU: Application and Implementation
 *** More cost concerns
+#+LATEX: \contentid{lu_app_cost}
 
 What's the cost of solving \(A \B{x} = \B{b} ?\)
 #+LATEX: \begin{hidden}
@@ -1736,6 +1768,7 @@ so still \(O (n^3)\).
 #+LATEX: \end{hidden}
 
 *** Cost: Worrying about the Constant, BLAS
+#+LATEX: \contentid{blas}
 
 \(O (n^3)\) really means
 \[\alpha \cdot n^3 + \beta \cdot n^2 + \gamma \cdot n + \delta . \]
@@ -1783,6 +1816,7 @@ Special matrix formats can also help save const significantly, e.g.
 - =dgetrf=, =dgetrs=
 
 *** LU on Blocks: The Schur Complement
+#+LATEX: \contentid{schur_complement}
 
 Given a linear system
 \[\left[\begin{array}{cc|c} A & B & \B b_1 \\ C & D & \B b_2\end{array}\right],\]
@@ -1797,6 +1831,7 @@ Multiply the top row by $-C A^{-1}$, add to second row, gives:
 #+LATEX: \end{hidden}
 
 *** LU: Special cases
+#+LATEX: \contentid{lu_special}
 
 What happens if we feed a non-invertible matrix to
 LU?
@@ -1819,6 +1854,7 @@ This is called *reduced LU factorization*.
 #+LATEX: \end{hidden}
 
 *** Round-off Error in LU without Pivoting
+#+LATEX: \contentid{lu_roundoff}
 
 Consider factorization of \(\begin{bmatrix}\epsilon & 1 \\1 & 1
 \end{bmatrix}\) where \(\epsilon <\epsilon _\text {mach}\):
@@ -1865,6 +1901,7 @@ L}|\cdot |\B{\hat {U}}|)_{ij}\)
   Using this, for complete pivoting, we can show \(|\delta a_{ij}| \leq \epsilon_\text {mach} n^2||\B{A}||_\infty .\)
 
 *** Changing matrices
+#+LATEX: \contentid{sherman}
 
 Seen: LU cheap to re-solve if RHS changes. (Able to keep the
 expensive bit, the LU factorization) What if the \emph{matrix}
@@ -1902,6 +1939,7 @@ FYI: There is a rank-\(k\) analog called the *Sherman-Morrison-Woodbury formula*
 ** Introduction
 
 *** What about non-square systems?
+#+LATEX: \contentid{lsq_intro}
 
 Specifically, what about linear systems with `tall and skinny' matrices? (A:
 \(m \times n\) with \(m > n\)) (aka /overdetermined/ linear
@@ -2015,6 +2053,7 @@ If $\B x$ is a solution, $\norm{\B b - A(\B x +\B n)}_=\norm{\B b - A\B x}_2$.
 #+LATEX: \end{hidden}
 
 *** Least-Squares: Finding a Solution by Minimization
+#+LATEX: \contentid{lsq_normal_eq}
 
 Examine the objective function, find its minimum.
 #+LATEX: \begin{hidden}
@@ -2082,6 +2121,7 @@ Write that with an orthogonal projection matrix \(P\).
 #+LATEX: \end{hidden}
 
 *** About Orthogonal Projectors
+#+LATEX: \contentid{lsq_orth}
 
 What is a /projector/?
 #+LATEX: \begin{hidden}
@@ -2128,6 +2168,7 @@ question?
 #+LATEX: \end{hidden}
 
 *** Pseudoinverse
+#+LATEX: \contentid{lsq_pseudoinverse}
 
 What is the *pseudoinverse* of \(A\)?
 #+LATEX: \begin{hidden}
@@ -2162,6 +2203,7 @@ problems?
 ** Sensitivity and Conditioning
 
 *** Sensitivity and Conditioning of Least Squares
+#+LATEX: \contentid{lsq_sensitivity}
 
 #+BEGIN_CENTER
 #+ATTR_LATEX: :height 2.5cm
@@ -2242,6 +2284,7 @@ Bad:
 
 
 *** Transforming Least Squares to Upper Triangular
+#+LATEX: \contentid{lsq_qr}
 
 Suppose we have \(A=QR\), with \(Q\) square and orthogonal, and $R$ upper triangular.
 This is called a *QR factorization*.
@@ -2283,6 +2326,7 @@ For the residual vector \(\B r\), we find
 #+LATEX: \end{hidden}
 
 *** Computing QR
+#+LATEX: \contentid{qr_compute}
 
 - Gram-Schmidt
 - Householder Reflectors
@@ -2322,6 +2366,7 @@ proof relies on the 'full' form.
 \inclasslink{qr}{QR}
 
 *** Computing QR: A Better Approach
+#+LATEX: \contentid{qr_householder}
 
 Propose an alternate construction principle for a QR factorization.
 #+LATEX: \begin{hidden}
@@ -2415,6 +2460,7 @@ Remarks:
 \demolink{linear_least_squares}{Householder in 3D}
 
 *** Givens Rotations
+#+LATEX: \contentid{qr_givens}
 
 If reflections work, can we make rotations work, too?
 #+LATEX: \begin{hidden}
@@ -2449,6 +2495,7 @@ change as soon as other Givens rotations are applied.)
 #+LATEX: \end{hidden}
 
 *** Rank-Deficient Matrices and QR
+#+LATEX: \contentid{lsq_rankdeficient}
 
 What happens with QR for rank-deficient matrices?
 #+LATEX: \begin{showlater}
@@ -2493,6 +2540,7 @@ What happens with Least Squares for rank-deficient matrices?
 #+LATEX: \end{hidden}
 
 *** SVD: Reduced and Full
+#+LATEX: \contentid{lsq_svd}
 
 For a matrix of shape $m\times n$ with $m>n$, what are the shapes of the factors
 in the SVD?
@@ -2619,6 +2667,7 @@ Methods to solve least squares with \(A\) an \(m \times n\) matrix:
   :END:
 
 *** Eigenvalue Problems: Setup/Math Recap
+#+LATEX: \contentid{eig_intro}
 
 \(A\) is an \(n \times n\) matrix.
 
@@ -2755,6 +2804,7 @@ Suppose \(A\B x= \lambda \B x\). We have \(B=X^{-1}AX\). Let \(\B w=X^{-1}\B v\)
 
 ** Properties and Transformations
 *** Eigenvalue Transformations (I)
+#+LATEX: \contentid{eig_transform}
 
 What do the following transformations of the eigenvalue problem \(A \B{x} = \lambda \B{x}\) do?
 
@@ -2794,6 +2844,7 @@ Let
 ** Sensitivity
 
 *** Sensitivity (I)
+#+LATEX: \contentid{eig_sensitivity}
 
 Assume \(A\) not defective. Suppose \(X^{- 1} AX = D\). Perturb
 \(A \rightarrow A + E \).
@@ -2842,7 +2893,7 @@ an existing eigenvalue, this bound holds for /all/ eigenvalues of $A+E$.
 ** Computing Eigenvalues
 
 *** Power Iteration
-
+#+LATEX: \contentid{eig_power}
 
 \demolink{eigenvalue}{Motivating Power Iteration}
 
@@ -3036,6 +3087,7 @@ What could go wrong with Power Iteration?
   Recall: for real-valued matrices, eigenvalues come in conjugate pairs $\lambda$ and $\lambda^*$, with $|\lambda|=|\lambda^*|$.
 #+LATEX: \end{hidden}
 *** What about Eigenvalues?
+#+LATEX: \contentid{eig_rayleigh}
 
 Power Iteration generates eigenvectors. What if we would like to
 know eigenvalues?
@@ -3065,6 +3117,7 @@ Idea: Could use Rayleigh quotient as a shift. Yields *Rayleigh quotient iteratio
 \inclasslink{eigenvalues}{Eigenvalues}
 
 *** Schur form: Motivation
+#+LATEX: \contentid{eig_schur}
 
 For finding multiple eigenvalues, want factorization that allows access to *all* eigenvalues and eigenvectors.
 
@@ -3133,6 +3186,7 @@ Find eigenvector of $U$: Suppose \(\lambda\) is an eigenvalue.
 #+LATEX: \end{hidden}
 
 *** Computing Multiple Eigenvalues
+#+LATEX: \contentid{eig_multi}
 
 All Power Iteration Methods compute one eigenvalue at a time.
 
@@ -3194,6 +3248,7 @@ Fix: orthogonalize!
 #+LATEX: \end{hidden}
 
 *** Toward the QR Algorithm
+#+LATEX: \contentid{eig_qr}
 
 #+LATEX: \begin{hidden}
 \vspace{-3ex}
@@ -3298,6 +3353,7 @@ From orthogonal iteration: Observed \(\hat {X}_k = \bar {X}_{k + 1}\) converge.
 \demolink{eigenvalue}{QR Iteration}
 
 *** QR Iteration: Forward /and/ Inverse
+#+LATEX: \contentid{eig_qr_shift}
 
 QR iteration may be viewed as performing *inverse iteration*. How?
 
@@ -3343,6 +3399,7 @@ Still a similarity transform:
 \demolink{eigenvalue}{QR Iteration} (Shifted)
 
 *** QR Iteration: Computational Expense
+#+LATEX: \contentid{eig_qr_cost}
 
 QR at each iteration costs \(O (n^3)\)---can we make that cheaper?
 #+LATEX: \begin{hidden}
@@ -3391,6 +3448,7 @@ What does this process look like for symmetric matrices?
 ** Krylov Space Methods
 
 *** Krylov space methods: Intro
+#+LATEX: \contentid{krylov}
 
 What subspaces can we use to look for eigenvectors?
 #+LATEX: \begin{hidden}
@@ -3441,6 +3499,7 @@ What matrix factorization is obtained through Krylov space methods?
 #+LATEX: \end{hidden}
 
 *** Conditioning in Krylov Space Methods/Arnoldi Iteration (I)
+#+LATEX: \contentid{eig_arnoldi}
 
 What is a problem with Krylov space methods? How can we fix it?
 #+LATEX: \begin{hidden}
@@ -3517,6 +3576,7 @@ Those are called *Ritz values*.
 \demolink{eigenvalue}{Arnoldi Iteration} (Part 2)
 
 *** Computing the SVD (Kiddy Version)
+#+LATEX: \contentid{eig_svd}
 #+LATEX: \begin{hidden}
 1. Compute (orth.) eigenvectors $V$ and eigenvalues $D$ of $A^T A$, 
    \[ A^T A V = V D \quad \Rightarrow \quad V^T A^TA V = D =:\Sigma^2.\]
@@ -3553,6 +3613,8 @@ for intersections.
 
 \demolink{nonlinear}{Three quadratic functions}
 #+LATEX: \end{hidden}
+
+#+LATEX: \contentid{solve_setup}
 
 *** Showing Existence
 
@@ -3615,6 +3677,8 @@ The inverse function is steep near one, so conditioning is poor.
 
 ** Iterative Procedures
 *** Rates of Convergence
+#+LATEX: \contentid{solve_iterative}
+
 What is /linear convergence/? /quadratic convergence/?
 #+LATEX: \begin{hidden}
 \(\B{e}_k = \widehat{\B{u}}_k - \B{u}\): error in the \(k\)th iterate
@@ -3710,6 +3774,7 @@ almost always depends on the application.
 ** Methods in One Dimension
 
 *** Bisection Method
+#+LATEX: \contentid{solve_bisection}
 
 \demolink{nonlinear}{Bisection Method}\medskip
 
@@ -3720,6 +3785,7 @@ Linear with constant \(1 / 2\).
 
 
 *** Mini Review: Taylor's Theorem
+#+LATEX: \contentid{solve_taylor}
 
 #+LATEX: \begin{showlater}
 \vspace*{-2ex}
@@ -3737,6 +3803,7 @@ With *big-O truncation*:
 #+LATEX: \end{showlater}
 
 *** Fixed Point Iteration
+#+LATEX: \contentid{solve_fixedpoint_1d}
 
 \begin{eqnarray*}
   x_0 & = & \langle \text{starting guess} \rangle \\x_{k + 1} & = & g (x_k)
@@ -3780,6 +3847,7 @@ quadratic convergence.
 #+LATEX: \end{hidden}
 
 *** Newton's Method
+#+LATEX: \contentid{solve_newton_1d}
 
 Derive Newton's method.
 #+LATEX: \begin{hidden}
@@ -3816,6 +3884,7 @@ So if \(f (x^\ast ) = 0\) and \(f' (x^\ast ) \neq 0\), we have \(g' (x^\ast ) = 
 \demolink{nonlinear}{Convergence of Newton's Method}
 
 *** Secant Method
+#+LATEX: \contentid{solve_secant}
 
 What would Newton without the use of the derivative look like?
 #+LATEX: \begin{hidden}
@@ -3865,6 +3934,7 @@ Easy:
 #+LATEX: \end{showlater}
 
 *** Root Finding with Interpolants
+#+LATEX: \contentid{solve_additional}
 
 Secant method uses a linear approximation to $f$ based on points \(f(x_k)\),
 \(f(x_{k-1})\), could use more points and higher-order approximation:
@@ -3907,6 +3977,7 @@ locally. How could we use that?
 ** Methods in $n$  Dimensions (``Systems of Equations'')
 
 *** Fixed Point Iteration ($n$ dimensions)
+#+LATEX: \contentid{solve_fixedpoint_nd}
 
 \begin{eqnarray*}
   \B{x}_0 & = & \langle \text{starting guess} \rangle \\\B{x}_{k + 1} & = & \B{g} (\B{x}_k)
@@ -3929,6 +4000,7 @@ Thus \(\rho(A)<1\) suffices. ([[https://math.stackexchange.com/a/3834891][proof]
 #+LATEX: \end{hidden}
 
 *** Newton's Method ($n$ dimensions)
+#+LATEX: \contentid{solve_newton_nd}
 
 What does Newton's method look like in \(n\) dimensions?
 #+LATEX: \begin{hidden}
@@ -3955,6 +4027,7 @@ Downsides of \(n\)-dim. Newton?
 \demolink{nonlinear}{Newton's method in n dimensions}
 
 *** Secant in $n$  dimensions?
+#+LATEX: \contentid{solve_broyden_nd}
 
 What would the secant method look like in \(n\) dimensions?
 #+LATEX: \begin{hidden}
@@ -3980,6 +4053,7 @@ Some choices, all called /Broyden's method/:
 #+LATEX: \end{hidden}
 
 *** Numerically Testing Derivatives
+#+LATEX: \contentid{solve_grad_test}
 
 Getting derivatives right is important. How can I test/debug them?
 #+LATEX: \begin{hidden}
@@ -4002,6 +4076,7 @@ s\right\| =O(h) \quad (h\to 0).\]
 
 ** Introduction
 *** Optimization: Problem Statement
+#+LATEX: \contentid{opt_setup}
 
 /Have:/ *Objective function* \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
 
@@ -4198,6 +4273,7 @@ After ignoring high-order terms, yields:
 ** Methods for unconstrained opt. in one dimension
 
 *** Unimodality
+#+LATEX: \contentid{opt_golden}
 
 Would like a method like bisection, but for optimization.
 
@@ -4278,6 +4354,7 @@ Linearly convergent. Can we do better?
 #+LATEX: \end{hidden}
 
 *** Newton's Method
+#+LATEX: \contentid{opt_newton_1d}
     
 Reuse the Taylor approximation idea, but for
 optimization.
@@ -4301,6 +4378,7 @@ fast-and-risky (Newton).
 
 ** Methods for unconstrained opt. in $n$  dimensions
 *** Steepest Descent/Gradient Descent
+#+LATEX: \contentid{opt_gd}
 
 Given a scalar function \(f : \mathbb{R}^n \rightarrow \mathbb{R}\)
 at a point \(\B{x}\), which way is down?
@@ -4379,6 +4457,7 @@ Then "/batch/" (i.e. normal) gradient descent is
 #+LATEX: \end{showlater}
 
 *** Conjugate Gradient Methods
+#+LATEX: \contentid{opt_cg}
     
 Can we optimize in /the space spanned/ by the last two step directions?
 
@@ -4393,6 +4472,7 @@ Can we optimize in /the space spanned/ by the last two step directions?
 \demolink{optimization}{Conjugate Gradient Method}
 
 *** Nelder-Mead Method
+#+LATEX: \contentid{opt_nelder}
 
 Idea:
 #+LATEX: \begin{hidden}
@@ -4403,6 +4483,7 @@ through the centroid of the remaining points.
 \demolink{optimization}{Nelder-Mead Method}
 
 *** Newton's method ($n$ D)
+#+LATEX: \contentid{opt_newton_nd}
 
 What does Newton's method look like in \(n\) dimensions?
 #+LATEX: \begin{hidden}
@@ -4438,6 +4519,7 @@ Drawbacks?
 \demolink{optimization}{Newton's Method in n dimensions}
 
 *** Quasi-Newton Methods
+#+LATEX: \contentid{opt_quasinewton}
 
 Secant/Broyden-type ideas carry over to optimization. How?
 
@@ -4470,6 +4552,7 @@ Come up with a way to update to update the approximate Hessian.
 ** Nonlinear Least Squares
 
 *** Nonlinear Least Squares: Setup
+#+LATEX: \contentid{opt_nlsq}
 
 What if the \(f\) to be minimized is actually a 2-norm?
 \[f (\B{x}) = \norm{\B{r} (\B{x})}_2, \qquad
@@ -4555,6 +4638,7 @@ Easy to rewrite to least-squares problem:
 ** Constrained Optimization
 
 *** Constrained Optimization: Problem Setup
+#+LATEX: \contentid{opt_constrained}
 
 Want \(\B{x}^\ast\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
@@ -4719,6 +4803,7 @@ These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
   :END:
 ** Introduction
 *** Interpolation: Setup
+#+LATEX: \contentid{interp_setup}
 
 *Given:* \((x_i)_{i = 1}^N\), \((y_i)_{i = 1}^N\)
 
@@ -4813,6 +4898,7 @@ Sensitivity?
 
 ** Methods
 *** Modes and Nodes (aka Functions and Points)
+#+LATEX: \contentid{interp_ideas}
 
 Both function basis and point set are under our control. What do we
 pick?\medskip
@@ -4853,6 +4939,7 @@ Specific issues:
   \demolink{interpolation}{Choice of Nodes for Polynomial Interpolation}
 
 *** Lagrange Interpolation
+#+LATEX: \contentid{interp_lagrange}
 
 Find a basis so that \(V = I\), i.e.
 \[\varphi _j (x_i) =
@@ -4884,6 +4971,7 @@ Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^m$ and values $(y_i)_
 #+LATEX: \end{hidden}
 
 *** Newton Interpolation
+#+LATEX: \contentid{interp_newton}
 
 Find a basis so that \(V\) is triangular.
 #+LATEX: \begin{hidden}
@@ -4916,6 +5004,7 @@ Orthogonality
 But polynomials are functions!
 
 *** Orthogonality of Functions
+#+LATEX: \contentid{interp_orthogonal}
 How can functions be orthogonal?
 #+LATEX: \begin{hidden}
 Need an *inner product*. Orthogonal then just means \(\ip{f}{g} = 0\).
@@ -5015,6 +5104,7 @@ Yes.
 
 ** Error Estimation
 *** Truncation Error in Interpolation
+#+LATEX: \contentid{interp_error}
 
 If \(f\) is \(n\) times continuously differentiable on a closed
 interval \(I\) and \(p_{n-1} (x)\)  is a
@@ -5087,6 +5177,7 @@ This is called /convergence of order \(n\)/.
 
 ** Piecewise interpolation, Splines
 *** Going piecewise: Simplest Case
+#+LATEX: \contentid{interp_spline}
 
 Construct a piecewise linear interpolant at four points.
 
@@ -5179,6 +5270,7 @@ conditions). These are called *B-Splines*.
 ** Numerical Integration
 
 *** Numerical Integration: About the Problem
+#+LATEX: \contentid{quad_setup}
 
 What is numerical integration? (Or *quadrature*?)
 #+LATEX: \begin{showlater}
@@ -5213,6 +5305,7 @@ is a perturbation.
 ** Quadrature Methods
 
 *** Interpolatory Quadrature: Examples
+#+LATEX: \contentid{quad_interpolatory}
 
 #+LATEX: \begin{hidden}
 *Example:* Fix \((x_i)\). Then
@@ -5280,6 +5373,7 @@ To what polynomial degree are the following rules exact?
 ** Accuracy and Stability
 
 *** Interpolatory Quadrature: Accuracy
+#+LATEX: \contentid{quad_acc_stab}
 
 Let \(p_{n - 1}\) be an interpolant of \(f\) at nodes \(x_1, \ldots , x_n\) (of degree \(n - 1\))
 
@@ -5386,6 +5480,8 @@ More drawbacks:
 
 ** Gaussian Quadrature
 *** Gaussian Quadrature
+#+LATEX: \contentid{quad_gauss}
+
 So far: nodes chosen from outside.
 
 Can we gain something if we let the quadrature rule choose the nodes, too?
@@ -5406,6 +5502,8 @@ polynomials up to degree \(2 n - 1\).
 
 ** Composite Quadrature
 *** Composite Quadrature
+#+LATEX: \contentid{quad_composite}
+
 High-order polynomial interpolation requires a high degree of
 smoothness of the function.
 
@@ -5441,6 +5539,7 @@ non-composite.\medskip
 ** Numerical Differentiation
 
 *** Taking Derivatives Numerically
+#+LATEX: \contentid{numdiff_setup}
 
 Why /shouldn't/ you take derivatives numerically?
 #+LATEX: \begin{hidden}
@@ -5506,6 +5605,7 @@ interspersed between $(x_i)$, so can be bounded by $h^{n-1}$:
 \demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
 (Accuracy)
 *** Differentiation Matrices
+#+LATEX: \contentid{numdiff_matrix}
 
 How can numerical differentiation be cast as a matrix-vector operation?
 
@@ -5597,6 +5697,7 @@ Assume a large equispaced grid and 3 nodes w/same spacing. How to use?
 #+LATEX: \end{hidden}
 
 *** Finite Differences: via Taylor
+#+LATEX: \contentid{numdiff_taylor}
 
 #+LATEX: \begin{hidden}
 Idea: Start from definition of derivative.
@@ -5632,6 +5733,7 @@ formulas.
 
 ** Richardson Extrapolation
 *** Richardson Extrapolation
+#+LATEX: \contentid{richardson}
 
 Deriving high-order methods is hard work. Can I just do multiple
 low-order approximations (with different $h$ and get a high-order one out?
@@ -5699,7 +5801,9 @@ Carrying out this process for quadrature is called *Romberg integration*.
   :RELATE_TREE_SECTION_NAME: ivp_odes
   :END:
 
+** Setup
 *** What can we solve already?
+#+LATEX: \contentid{ivp_setup}
 
 - Linear Systems: \tmcolor{dgreen}{yes}
 - Nonlinear systems: \tmcolor{dgreen}{yes}
@@ -5820,6 +5924,7 @@ An ODE can made autonomous by introducing an extra variable:
 ** Existence, Uniqueness, Conditioning
 
 *** Existence and Uniqueness
+#+LATEX: \contentid{ivp_wellposed}
 
 Consider the perturbed problem
 \[\left \{
@@ -5969,6 +6074,7 @@ all eigenvalues \(\lambda _i\).
 ** Numerical Methods (I)
 
 *** Euler's Method
+#+LATEX: \contentid{ivp_euler}
 
 Discretize the IVP
 \[\left \{
@@ -6010,6 +6116,7 @@ Requires /solving a system of equations/. Called an *implicit* method. *Backward
 ** Accuracy and Stability
 
 *** Global and Local Error
+#+LATEX: \contentid{ivp_acc_stab}
 
 #+BEGIN_CENTER
 #+ATTR_LATEX: :height 3cm
@@ -6139,7 +6246,10 @@ BE can be stable even when ODE is /unstable/. (\(\tmop{Re} \lambda > 0\)). Accur
 
 ** Stiffness
 
+
 *** Stiff ODEs: Demo
+#+LATEX: \contentid{ivp_stiffness}
+
 \demolink{ivp_odes}{Stiffness}
 
 *** `Stiff' ODEs
@@ -6199,6 +6309,7 @@ In terms of accuracy: no.
 ** Numerical Methods (II)
 
 *** Predictor-Corrector Methods
+#+LATEX: \contentid{ivp_runge_kutta}
 
 *Idea:* Obtain intermediate result, improve it (with same or
 different method).
@@ -6404,6 +6515,7 @@ Discuss:
   :END:
 
 *** BVP Problem Setup: Second Order
+#+LATEX: \contentid{bvp_setup}
 
 Example: Second-order linear ODE
 \[u'' (x) + p (x) u' (x) + q (x) u (x) = r (x) \]
@@ -6448,6 +6560,7 @@ case, and \(B_a\) and \(B_b\) are matrices--so conditions could be only
 ** Existence, Uniqueness, Conditioning
 
 *** Do solutions even exist? How sensitive are they?
+#+LATEX: \contentid{bvp_wellposed}
 
 General case is harder than root finding, and we couldn't say much there.
 
@@ -6538,6 +6651,7 @@ derive a bound on $\norm{\Delta \B{y}}_\infty$.
 ** Numerical Methods
 
 *** Shooting Method
+#+LATEX: \contentid{bvp_methods}
 
 *Idea:* Want to make use of the fact that we can already solve IVPs.
 
@@ -6610,6 +6724,7 @@ system\(\rightarrow\)Use Newton.
 #+LATEX: \end{tcolorbox}
 
 *** Galerkin/Finite Element Method
+#+LATEX: \contentid{bvp_galerkin}
 
 \[u'' (x) = f (x), \qquad u (a) = u (b) = 0. \]
 *Problem* with collocation: Big dense matrix.
@@ -6705,6 +6820,7 @@ Why is this problematic?\medskip
 
 \demolink{pdes}{Sparse Matrix Factorizations and ``Fill-In''}\medskip
 
+#+LATEX: \contentid{sparse_stationary}
 *** `Stationary' Iterative Methods
 
 *Idea:* Invert only part of the matrix in each iteration. Split
@@ -6744,6 +6860,7 @@ where \(L\) is the below-diagonal part of \(A\), and \(U\) the above-diagonal.
 \demolink{pdes}{Stationary Methods}
 
 *** Conjugate Gradient Method
+#+LATEX: \contentid{sparse_cg}
 
 Assume \(A\) is symmetric positive definite.
 \smallskip
@@ -6834,6 +6951,7 @@ How do we generate the \(\B{s}_k\)?
 ** PDEs
 
 *** Introduction
+#+LATEX: \contentid{pde_setup}
 
 *Notation:*
 \[\frac{\partial }{\partial x} u \quad = \quad \partial _x u \quad = \quad u_x
