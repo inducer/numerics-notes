@@ -7049,3 +7049,10 @@ Three main types of PDEs:
   :RELATE_TREE_SECTION_NAME: misc
   :END:
 # do not delete this section: the sympy demo attaches to this
+* Wrap-up
+*** The End
+#+LATEX: \contentid{end}
+
+#+BEGIN_CENTER
+Thanks for your interest in CS450!
+#+END_CENTER
