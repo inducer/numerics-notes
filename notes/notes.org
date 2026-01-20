@@ -48,10 +48,11 @@
 #+BEAMER_HEADER: \def\demonote#1{\ifshowhidden\medskip\par Demo Instructions: {\color{blue} #1}\fi}
 #+BEAMER_HEADER: \newcommand{\inclass}[1]{\tmcolor{purple}{\textbf{In-class activity: }#1}}
 #+BEAMER_HEADER: \newcommand{\demo}[1]{\tmcolor{purple}{\textbf{Demo: }#1}}
+#+BEAMER_HEADER: \newcounter{demos}
 #+BEAMER_HEADER: \newcommand{\demolink}[2]{{\color{purple}%
 #+BEAMER_HEADER: \plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/demos/#1/#2.ipynb}{\uline{\textbf{Demo: }#2}}
 #+BEAMER_HEADER: [\plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/cleared/#1/#2.ipynb}{\uline{cleared}}]%
-#+BEAMER_HEADER: }}
+#+BEAMER_HEADER: }\stepcounter{demos}}
 #+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
 
 #+BEAMER_HEADER: \let\tmop=\operatorname
@@ -126,6 +127,7 @@
 #+BEAMER_HEADER:   \write\mycontentdata{frame_title = "\insertframetitle"}
 #+BEAMER_HEADER:   \write\mycontentdata{section_title = "\insertsection"}
 #+BEAMER_HEADER:   \write\mycontentdata{subsection_title = "\insertsubsection"}
+#+BEAMER_HEADER:   \write\mycontentdata{demo_counter = \arabic{demos}}
 #+BEAMER_HEADER: }
 
 #+LATEX_COMPILER: pdflatex

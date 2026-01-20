@@ -75,7 +75,13 @@ def sync(args: SyncArgs):
                 "Identifier": cast("str", row["identifier"]),
                 "Start_slide": row["start"],
                 "End_slide": (
-                    toml_data[i+1]["start"]-1 if i+1 < len(toml_data) else row["start"]),
+                    toml_data[i+1]["start"]-1
+                    if i+1 < len(toml_data)
+                    else row["start"]),
+                "Demo_count": (
+                    toml_data[i+1]["demo_counter"] - row["demo_counter"]
+                    if i+1 < len(toml_data)
+                    else None),
                 "Slides_section": row["section"],
                 "Frame_title": strip_braces(row["frame_title"]),
                 "Section_title": strip_hyperlink(row["section_title"]),
@@ -103,6 +109,7 @@ def sync(args: SyncArgs):
                                     "End_slide": None,
                                     "Slides_section": None,
                                     "Ordinal": None,
+                                    "Demo_count": None,
                                 })
                                 for ident in db_idents - our_idents
                             ])
