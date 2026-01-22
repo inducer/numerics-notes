@@ -85,7 +85,8 @@ def sync(args: SyncArgs):
                 "Slides_section": row["section"],
                 "Frame_title": strip_braces(row["frame_title"]),
                 "Section_title": strip_hyperlink(row["section_title"]),
-                "Subsection_title": strip_hyperlink(row["subsection_title"])
+                "Subsection_title": strip_hyperlink(row["subsection_title"]),
+                "Book_section": row["book_section"],
             }
             for i, row in enumerate(toml_data)]
 
@@ -110,6 +111,7 @@ def sync(args: SyncArgs):
                                     "Slides_section": None,
                                     "Ordinal": None,
                                     "Demo_count": None,
+                                    "Book_section": None,
                                 })
                                 for ident in db_idents - our_idents
                             ])
