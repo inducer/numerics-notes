@@ -430,7 +430,9 @@ The so-called /\(p\)-norms/:
 
 \demolink{error_and_fp}{Vector Norms}
 
-*** Norms: Which one?
+*** Norms: Equivalence
+#+LATEX: \contentid{vec_norm_equiv}{}
+
 Does the choice of norm really matter much?
 #+LATEX: \begin{hidden}
 In finitely many dimensions, all /norms are equivalent/.
@@ -447,6 +449,7 @@ statement is true for any norm.
 If a specific norm is needed, the notation will indicate that.
 
 *** Norms and Errors
+#+LATEX: \contentid{error_norm}{}
 
 If we're computing a vector result, the error is a vector.
 
