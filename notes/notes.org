@@ -119,7 +119,7 @@
 
 #+BEAMER_HEADER: \newwrite\mycontentdata
 #+BEAMER_HEADER: \immediate\openout\mycontentdata=\jobname-content.toml
-#+BEAMER_HEADER: \def\contentid#1{
+#+BEAMER_HEADER: \def\contentid#1#2{
 #+BEAMER_HEADER:   \write\mycontentdata{[[content]]}
 #+BEAMER_HEADER:   \write\mycontentdata{identifier = "#1"}
 #+BEAMER_HEADER:   \write\mycontentdata{start = \insertframenumber}
@@ -128,6 +128,7 @@
 #+BEAMER_HEADER:   \write\mycontentdata{section_title = "\insertsection"}
 #+BEAMER_HEADER:   \write\mycontentdata{subsection_title = "\insertsubsection"}
 #+BEAMER_HEADER:   \write\mycontentdata{demo_counter = \arabic{demos}}
+#+BEAMER_HEADER:   \write\mycontentdata{book_section = "#2"}
 #+BEAMER_HEADER: }
 
 #+LATEX_COMPILER: pdflatex
@@ -158,7 +159,7 @@
   :END:
 ** About the Class
 *** What's the point of this class?
-#+LATEX: \contentid{meta}
+#+LATEX: \contentid{meta}{}
 
 '/Scientific Computing/' describes a family of approaches to obtain
 approximate solutions to problems /once they've been stated mathematically/.
@@ -308,7 +309,7 @@ THE SOFTWARE.
 ** Errors, Conditioning, Accuracy, Stability
 
 *** What problems /can/ we study in the first place?
-#+LATEX: \contentid{intro}
+#+LATEX: \contentid{intro}{1}
 
 To be able to compute a solution (through a process that
 introduces errors), the problem...
@@ -1357,7 +1358,7 @@ How does it relate to the SVD?
 ** Methods to Solve Systems
 
 *** Solving Systems: Simple cases
-#+LATEX: \contentid{linsolve_simple}
+#+LATEX: \contentid{linsolve_simple}{}
 
 Solve $D\B x=\B b$ if $D$ is diagonal. (Computational cost?)
 #+LATEX: \begin{hidden}
@@ -1820,7 +1821,7 @@ Special matrix formats can also help save const significantly, e.g.
 - =dgetrf=, =dgetrs=
 
 *** LU on Blocks: The Schur Complement
-#+LATEX: \contentid{schur_complement}
+#+LATEX: \contentid{schur_complement}{}
 
 Given a linear system
 \[\left[\begin{array}{cc|c} A & B & \B b_1 \\ C & D & \B b_2\end{array}\right],\]
@@ -1835,7 +1836,7 @@ Multiply the top row by $-C A^{-1}$, add to second row, gives:
 #+LATEX: \end{hidden}
 
 *** LU: Special cases
-#+LATEX: \contentid{lu_special}
+#+LATEX: \contentid{lu_special}{}
 
 What happens if we feed a non-invertible matrix to
 LU?
@@ -3789,7 +3790,7 @@ Linear with constant \(1 / 2\).
 
 
 *** Mini Review: Taylor's Theorem
-#+LATEX: \contentid{solve_taylor}
+#+LATEX: \contentid{solve_taylor}{}
 
 #+LATEX: \begin{showlater}
 \vspace*{-2ex}
@@ -5612,7 +5613,7 @@ interspersed between $(x_i)$, so can be bounded by $h^{n-1}$:
 \demolink{quadrature_and_diff}{Taking Derivatives with Vandermonde Matrices}
 (Accuracy)
 *** Differentiation Matrices
-#+LATEX: \contentid{numdiff_matrix}
+#+LATEX: \contentid{numdiff_matrix}{}
 
 How can numerical differentiation be cast as a matrix-vector operation?
 
@@ -7053,7 +7054,7 @@ Three main types of PDEs:
 # do not delete this section: the sympy demo attaches to this
 * Wrap-up
 *** The End
-#+LATEX: \contentid{end}
+#+LATEX: \contentid{end}{}
 
 #+BEGIN_CENTER
 Thanks for your interest in CS450!
