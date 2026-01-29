@@ -83,6 +83,7 @@ def sync(args: SyncArgs):
                     if i+1 < len(toml_data)
                     else None),
                 "Slides_section": row["section"],
+                "Description": row["description"],
                 "Frame_title": strip_braces(row["frame_title"]),
                 "Section_title": strip_hyperlink(row["section_title"]),
                 "Subsection_title": strip_hyperlink(row["subsection_title"]),
@@ -112,6 +113,7 @@ def sync(args: SyncArgs):
                                     "Ordinal": None,
                                     "Demo_count": None,
                                     "Book_section": None,
+                                    "Description": None,
                                 })
                                 for ident in db_idents - our_idents
                             ])
