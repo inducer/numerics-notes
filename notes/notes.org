@@ -1461,28 +1461,6 @@ Now know \(\B{x}\) that solves \(A \B{x} = \B{b}\).
 *** Determining an LU factorization
 #+LATEX: \begin{hidden}
 #+BEGIN_EXPORT latex
-\[ \left[\begin{array}{cc}
-    a_{11} & \B{a}_{12}^T\\
-    \B{a}_{21} & A_{22}
-\end{array}\right]
-% = \left[\begin{array}{cc}
-%     1 & \\
-%     \B{l}_{21} & L_{22}
-% \end{array}\right] \left[\begin{array}{cc}
-%     u_{11} & \B{u}_{12}^T\\
-%     & U_{22}
-% \end{array}\right]
-= \left[\begin{array}{cc}
-    L_{11} & \\
-    L_{21} & L_{22}
-\end{array}\right] \left[\begin{array}{cc}
-    U_{11} & U_{12}\\
-    & U_{22}
-\end{array}\right] . \]
-#+END_EXPORT
-
-Or, written differently:
-#+BEGIN_EXPORT latex
 \[ \begin{array}{cc}
      & \left[\begin{array}{cc}
        u_{11} & \B{u}_{12}^T\\
@@ -1503,6 +1481,10 @@ Or, written differently:
 
 - $A_{22} =\B{\ell}_{21} \B{u}_{12}^T + L_{22} U_{22}$, or $L_{22} U_{22} = A_{22} -\B{\ell}_{21} \B{u}_{12}^T$.
 #+LATEX: \end{hidden}
+
+- We have reduced the problem size from $n\times n$ to $(n-1)\times(n-1)$.
+- $\B a_{21}$ and $\B a_{12}$ (etc.) are vectors and $A_{22}$ (etc.) are matrix blocks!
+- Recursively, we next compute an LU factorization of $A_{22} -\B{\ell}_{21} \B{u}_{12}^T$.
 
 \demolink{linear_systems}{LU Factorization}
 
