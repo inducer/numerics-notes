@@ -2895,7 +2895,7 @@ Called *Power Iteration*.
 
 #+LATEX: \begin{hidden}
 Let $\B{x}_0 = \sum_{j = 1}^n \alpha_j \B{v}_j$.
-Observe that $\B{x}_i = A^i\B{x_0} = \sum_{j = 1}^n \alpha_j \lambda^i \B{v}_j$.
+Observe that $\B{x}_i = A^i\B{x_0} = \sum_{j = 1}^n \alpha_j \lambda_j^i \B{v}_j$.
 
 Define $\B{e}_i =\B{x}_i / \lambda_1^i - \alpha_1 \B{v}_1$.
 \begin{gather*}
