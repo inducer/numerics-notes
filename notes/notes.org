@@ -1854,7 +1854,7 @@ Consider factorization of \(\begin{bmatrix}\epsilon & 1 \\1 & 1
 - Without pivoting:
   \(L = \begin{bmatrix}1  & 0 \\1/\epsilon & 1 \end{bmatrix}\),
   \(U = \begin{bmatrix}\epsilon & 1 \\0 & 1-1/\epsilon \end{bmatrix}\)
-- Rounding: \(\fl(U)) = \begin{bmatrix}\epsilon & 1 \\0 & -1/\epsilon \end{bmatrix}\)
+- Rounding: \(\fl(U) = \begin{bmatrix}\epsilon & 1 \\0 & -1/\epsilon \end{bmatrix}\)
 - This leads to \(L\fl(U)) = \begin{bmatrix}\epsilon & 1 \\1 & 0 \end{bmatrix}\), a backward error of \(\begin{bmatrix}0 & 0 \\0 & 1 \end{bmatrix}\)
 #+LATEX: \end{hidden}
 
