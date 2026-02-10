@@ -6945,7 +6945,7 @@ How do we generate the \(\B{s}_k\)?
 ** PDEs
 
 *** Introduction
-#+LATEX: \contentid{pde_setup}{Partial differrential equations}{11.1}
+#+LATEX: \contentid{pde_setup}{Partial differential equations}{11.1}
 
 *Notation:*
 \[\frac{\partial }{\partial x} u \quad = \quad \partial _x u \quad = \quad u_x
