@@ -2040,7 +2040,7 @@ Yes. (again assuming full rank)
 What happens if $A$ does not have full rank?
 #+LATEX: \begin{hidden}
 There's a nullspace, i.e. a $\B n$ with $A\B n=0$.
-If $\B x$ is a solution, $\norm{\B b - A(\B x +\B n)}_=\norm{\B b - A\B x}_2$.
+If $\B x$ is a solution, $\norm{\B b - A(\B x +\B n)}_2=\norm{\B b - A\B x}_2$.
 #+LATEX: \end{hidden}
 
 *** Least-Squares: Finding a Solution by Minimization
