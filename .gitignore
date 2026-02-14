@@ -18,3 +18,5 @@ __pycache__
 .ipynb_checkpoints
 
 common-lisp-jupyter
+
+.jupyter_ystore.db
