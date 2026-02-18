@@ -2498,12 +2498,10 @@ gathered near the `right' of \(R\) \(\rightarrow\) Column pivoting.\medskip
 
 *Q:* What does the resulting factorization look like?
 \[AP = QR \]
-\[AP = Q
-\begin{bmatrix}
-  \ast & \ast & \ast \\& (\text{small}) & (\text{small}) \\&  & (\text{smaller})
-\end{bmatrix} \]
 Also used as the basis for /rank-revealing QR/.
 #+LATEX: \end{showlater}
+
+\demolink{linear_least_squares}{Rank-Revealing QR}
 
 *** Rank-Deficient Matrices and Least-Squares
 
