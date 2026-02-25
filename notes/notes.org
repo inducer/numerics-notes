@@ -3117,7 +3117,7 @@ Suggestions?
   - Idea: use a similarity transform with /orthogonal/ matrices.
 #+LATEX: \end{showlater}
 
-*** Schur form
+*** Schur Form
 
 Show: Every matrix is orthonormally similar to an upper triangular
 matrix, i.e.
@@ -3125,14 +3125,11 @@ matrix, i.e.
 This is called the *Schur form* or *Schur factorization*.
 
 #+LATEX: \begin{hidden}
-Let $(\lambda, \B v)$ be an eigenpair (at least one always exists),
+Let $(\lambda, \B v)$ be an eigenpair (exists!),
 i.e. \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 \(V = \tmop{span} \{\B{v} \}\). Then
+$A$ maps $V\to V$ and $V^\perp  \rightarrow  V \oplus V^\perp$.
 \vspace{-2ex}
-\begin{eqnarray*}
-  A : \qquad V & \rightarrow & V\\V^\perp  & \rightarrow & V \oplus V^\perp
-\end{eqnarray*}
-\vspace{-3ex}
 \begin{equation*}
   A = \underbrace{
   \begin{bmatrix}
@@ -3149,6 +3146,7 @@ i.e. \(A \B{v} = \lambda \B{v}\) (\(\B{v} \neq \B{0}\)). Let
 - Repeat \(n\) times $to$ triangular: \(A=Q_1 \cdots Q_n UQ_n^T \cdots Q_1^T \).
 #+LATEX: \end{hidden}
 
+\demolink{eigenvalue}{Finding Schur Form}
 *** Schur Form: Comments, Eigenvalues, Eigenvectors
 
 \(A = QUQ^T . \) For complex \(\lambda\):
