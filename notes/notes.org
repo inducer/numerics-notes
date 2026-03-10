@@ -3631,6 +3631,7 @@ In general, /no uniquness/ results available.
 #+LATEX: \end{hidden}
 
 *** Sensitivity and Multiplicity
+#+LATEX: \contentid{solve_sensitivity}{Nonlinear equations: Sensitivity}{5.3}
 
 What is the sensitivity/conditioning of root
 finding?
