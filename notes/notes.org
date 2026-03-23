@@ -4184,7 +4184,7 @@ Assume \(f\) is smooth, i.e. has all needed derivatives.
   - Necessary: \(\nabla f (\B{x}^\ast ) = 0\) (i.e.
     \(\B{x}^\ast\) is an extremal point)
 
-  - Sufficient: \(\nabla f (\B{x}^\ast ) = 0\) and \(H_f         (\B{x}^\ast )\) positive semidefinite
+  - Sufficient: \(\nabla f (\B{x}^\ast ) = 0\) and \(H_f         (\B{x}^\ast )\) positive definite
 
     (implies \(x^\ast\) is a local minimum)
 
