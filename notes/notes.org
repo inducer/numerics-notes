@@ -4457,6 +4457,9 @@ Can we optimize in /the space spanned/ by the last two step directions?
 #+LATEX: \begin{showlater}
 \[(\alpha _k,\beta _k)=\operatorname{argmin}_{\alpha _k,\beta _k}\bigg [f\Big (\B{x}_k - \alpha _k \nabla f(\B{x}_k) + \beta _k(\B{x}_k - \B{x}_{k-1})\Big )\bigg ]\]
 
+
+\dots while pretending that $f(\B x)=\B x^T A \B x -\B x^T \B b$.
+
 - Will see in more detail later (for solving linear systems)
 - Provably optimal first-order method for the quadratic model problem
 - Turns out to be closely related to Lanczos (\(A\)-orthogonal search directions)
