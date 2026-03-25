@@ -4406,14 +4406,15 @@ where \(A\) is SPD. (A good model of \(f\) near a minimum.)
 
 #+LATEX: \begin{showlater}
 Define error \(\B{e}_k = \B{x}_k - \B{x}^*\). Then can show:
-\[\|\B{e}_{k+1}\|_{A} = \sqrt{\B{e}_{k+1}^T A \B{e}_{k+1}} = \frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}\|\B{e}_k\|_{A}\]
-
-where $\|\B x\|_A = \sqrt{\B x^T A \B x}$. \(\to\) confirms linear convergence.
-
-\medskip
-Convergence constant related to conditioning:
-\[\frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)}=\frac{\kappa (A)-1}{\kappa (A)+1}.\]
+\[\|\B{e}_{k+1}\|_{A}
+= \frac{\sigma _\text {max}(A) -\sigma _\text {min}(A)}{\sigma _\text {max}(A) +\sigma _\text {min}(A)} \norm{\B{e}_k}_{A}
+=\frac{\kappa (A)-1}{\kappa (A)+1} \norm{\B{e}_k}_{A}.
+\]
+where $\|\B x\|_A = \sqrt{\B x^T A \B x}$. \(\to\) confirms linear convergence, relation to conditioning.
 #+LATEX: \end{showlater}
+
+\demolink{optimization}{Convergence of Steepest Descent}
+
 *** Hacking Steepest Descent for Better Convergence
 
 *Extrapolation methods:* 
