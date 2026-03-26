@@ -4399,6 +4399,22 @@ Unclear--do a line search. For example using Golden Section Search.
 
 \demolink{optimization}{Steepest Descent} (Part 1)
 
+*** When to stop line search (Wolfe conditions)
+Consider line search
+\[\phi_k(\alpha)=f(\B x_k+\alpha \B p_k),\]
+with $\B p_k$ a descent direction. Observe $\phi'(\alpha)=\nabla f(\B x_k+\alpha \B p_k)^T \B p_k$.
+
+The (weak) Wolfe conditions are:
+#+LATEX: \begin{hidden}
+- *Sufficient Decrease:* \(\phi(\alpha) \leq \phi(0) + c_1\alpha\phi'(0),\) for  $0 < c_1 < 1$.
+
+- *``Curvature'':* \(\phi'(\alpha) \geq c_2\phi'(0),\) for $c_1 < c_2 < 1$.
+
+  This helps refuse `too small' steps by requiring the function to 'start curving up' again. (Realize $\phi'(0)<0$.)
+
+Accept a step if both are satisfied. This replaces finding an actual minimizer in line search: fewer iterations, lower cost.
+#+LATEX: \end{hidden}
+
 *** Steepest Descent: Convergence
 Consider quadratic model problem:
 \[f(\B{x})= \frac{1}{2}\B{x}^T A \B{x} + \B{c}^T \B{x}\]
@@ -4532,10 +4548,12 @@ Come up with a way to update to update the approximate Hessian.
 - Ansatz for Hessian update: $B_{k+1} = B_k + a \B u \B u^T + b \B v\B v^T$
 #+LATEX: \end{hidden}
 
-*BFGS*: Secant-type method, similar to Broyden:
+*BFGS*: Secant-type method, similar to Broyden, retains pos.def. $B_{k+1}$:
 
 \[B_{k+1} = B_k + \frac{\B{y}_k\B{y}_k^T}{\B{y}_k^T\B{s}_k} -
-\frac{B_k\B{s}_k \B{s}_k^TB_k}{\B{s}_k^TB_k \B{s}_k}\]
+\frac{B_k\B{s}_k \B{s}_k^TB_k}{\B{s}_k^TB_k \B{s}_k}
+\qquad (\B y_k^T \B s_k >0\text{ if Wolfe curvature satisfied})
+\]
 
 *** In-Class Activity: Optimization Methods  :noexport:
   :PROPERTIES:
