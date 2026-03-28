@@ -4975,13 +4975,13 @@ Denominator: Ensures \(\varphi _i (x_i) = 1\).
 
 *** Lagrange Polynomials: General Form
 
-\[\varphi _j (x) = \frac{\prod _{k = 1, k \neq j}^m (x - x_k)}{\prod _{k = 1, k
-   \neq j}^m (x_j - x_k)} \]
+\[\varphi _j (x) = \frac{\prod _{k = 1, k \neq j}^N (x - x_k)}{\prod _{k = 1, k
+   \neq j}^N (x_j - x_k)}  \qquad (j\in\{1,\dots,N\})\]
 
 \bigskip
-Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^m$ and values $(y_i)_{i=1}^m$.
+Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^N$ and values $(y_i)_{i=1}^N$.
 #+LATEX: \begin{hidden}
-\[p_{m-1}(x)=\sum_{j=1}^m y_j \varphi_j(x) \]
+\[p_{N-1}(x)=\sum_{j=1}^N y_j \varphi_j(x) \]
 #+LATEX: \end{hidden}
 
 *** Newton Interpolation
@@ -4990,7 +4990,7 @@ Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^m$ and values $(y_i)_
 Find a basis so that \(V\) is triangular.
 #+LATEX: \begin{hidden}
 Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
-\[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \]
+\[\varphi _j (x) = \prod _{k = 1}^{j - 1} (x - x_k) . \qquad (j\in\{1,\dots,N\})\]
 (At least) two possibilities for coefficient finding:
 
 - Set up \(V\), run forward substitution.
