@@ -4990,7 +4990,7 @@ Write down the Lagrange interpolant for nodes $(x_i)_{i=1}^m$ and values $(y_i)_
 Find a basis so that \(V\) is triangular.
 #+LATEX: \begin{hidden}
 Easier to build than Lagrange, but: coefficient finding costs \(O (n^2)\).
-\[\varphi _j (x) = \prod _{k = 0}^{j - 1} (x - x_k) . \]
+\[\varphi _j (x) = \prod _{k = 1}^{j} (x - x_k) . \]
 (At least) two possibilities for coefficient finding:
 
 - Set up \(V\), run forward substitution.
