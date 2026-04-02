@@ -4903,7 +4903,7 @@ Sensitivity?
 
   $p_{n-1}(x)$ can be evaluated anywhere. (\(p_{n-1}\) is the interpolant.)
 
-- Want: \(\max_{x \in[a,b]}|f(x)| \le \Lambda \|\B y\|_\infty \)
+- Want: \(\max_{x \in[a,b]}|p_{n-1}(x)| \le \Lambda \|\B y\|_\infty \)
 - \(\Lambda\): *Lebesgue constant*, depends on \(n\) and \(\{x_i\}_i\) 
   - Technically also depends on \(\{\phi_i\}_i\) (same for all polys)
 #+LATEX: \end{hidden}
