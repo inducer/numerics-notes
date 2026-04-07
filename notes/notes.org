@@ -4573,10 +4573,9 @@ What if the \(f\) to be minimized is actually a 2-norm?
    \B{r} (\B{x}) = \B{y} - \B{a} (\B{x})
 \]
 #+LATEX: \begin{hidden}
-Define `helper function'
-\[\varphi (\B{x}) = \frac{1}{2} \B{r} (\B{x})^T
+\[\varphi (\B{x}) := \frac{1}{2} \B{r} (\B{x})^T
    \B{r} (\B{x}) = \frac{1}{2} f^2 (\B{x}) \]
-and minimize that instead.
+can be minimized equivalently.
 \[\frac{\partial }{\partial x_i} \varphi = \frac{1}{2} \sum _{j = 1}^n
    \frac{\partial }{\partial x_i} [r_j (\B{x})^2] = \sum _j \left (
    \frac{\partial }{\partial x_i} r_j \right ) r_j, \]
@@ -4584,6 +4583,7 @@ or, in matrix form:
 \[\nabla \varphi = J_{\B{r}} (\B{x})^T \B{r}
    (\B{x}) . \]
 #+LATEX: \end{hidden}
+\demolink{optimization}{Derivatives in NLSQ}
 
 *** Gauss-Newton
 For brevity: \(J \assign J_{\B{r}} (\B{x})\).
