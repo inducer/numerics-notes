@@ -7,7 +7,7 @@ unset PYTHONWARNINGS
 
 TARGET_EXT=tex
 
-if test "$1" = "-n"; then
+if test "${1:-}" = "-n"; then
   ALLVERSIONS=0
 else
   ALLVERSIONS=1
