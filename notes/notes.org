@@ -4702,7 +4702,7 @@ $$\mathcal L(\B x,\B \lambda) = f(\B x) - \B \lambda^T \B g(\B x)$$
 #+LATEX: \end{hidden}
 What does it do?
 #+LATEX: \begin{hidden}
-- Critical point of $\mathcal L$: both necessary conditions satisifed
+- Critical point of $\mathcal L$: both necessary conditions satisfied
 - Main function: *Turn constrained into unconstrained problem*
 #+LATEX: \end{hidden}
 \demolink{optimization}{Sequential Quadratic Programming}
