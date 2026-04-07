@@ -4649,6 +4649,26 @@ Easy to rewrite to least-squares problem:
 \end{equation*}
 #+LATEX: \end{hidden}
 
+*** Levenberg-Marquardt: Why though?
+\((J_{\B{r}} (\B{x}_k)^T J_{\B{r}} (\B{x}_k)
+\tmcolor{red}{+ \mu _k I}) \B{s}_k = - J_{\B{r}}
+(\B{x}_k)^T \B{r} (\B{x}_k) \)
+Why is this useful?
+#+LATEX: \begin{hidden}
+With $\mu\to0$: normal Gauss-Newton. With $\mu \to \infty$:
+\[\B s_k =-(1/\mu_k)J_r(\B x_k)^T \B r(\B x_k) = -(1/\mu_k)\nabla \phi.\]
+#+LATEX: \end{hidden}
+How to pick $\mu_k$?
+
+#+LATEX: \begin{hidden}
+Start with some value, consider criterion:
+\[\rho_k = \frac{\varphi(\mathbf{x}_k) - \varphi(\mathbf{x}_k + \mathbf{s}_k)}{\text{predicted decrease from derivatives}}\]
+\vspace{-3ex}
+- If $\rho_k \approx 1$: the model fits well $\Rightarrow$ accept step, decrease $\mu_k$
+- If $\rho_k \ll 1$: model disagrees $\Rightarrow$ reject step, increase $\mu_k$
+- `Trust region' flavor
+#+LATEX: \end{hidden}
+
 ** Constrained Optimization
 
 *** Constrained Optimization: Problem Setup
