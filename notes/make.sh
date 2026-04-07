@@ -18,9 +18,10 @@ update_cropped_images()
 (cd images; update_cropped_images)
 
 if [[ "$1" = "watch" ]]; then
-    git ls-files | entr ./run-org-conversion.sh
+    shift
+    git ls-files | entr ./run-org-conversion.sh "$@"
 else
-    ./run-org-conversion.sh
+    ./run-org-conversion.sh "$@"
 fi
 
 echo "NOTES BUILD SUCCESSFULLY COMPLETED"

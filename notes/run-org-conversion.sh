@@ -1,13 +1,19 @@
 #! /bin/bash
 
 #set -x
-set -e
+set -euo pipefail
 
 unset PYTHONWARNINGS
 
 TARGET_EXT=tex
 
-if test "$NOTES_DEV" = ""; then
+if test "$1" = "-n"; then
+  ALLVERSIONS=0
+else
+  ALLVERSIONS=1
+fi
+
+if test "${NOTES_DEV:-}" = ""; then
   BASENAME="notes-prod"
   sed 's/tasks:t/tasks:nil/' notes.org > notes-prod.org
 else
@@ -27,7 +33,7 @@ eval $ORGMK -l $(pwd)/orgmk-extra-conf.el \
 
 # orgmk-update-src-check-diff "$FILE_SRC_ORIG" "$FILE_SRC_UPDT"
 
-if test "$NOTES_DEV" = ""; then
+if test "${NOTES_DEV:-}" = ""; then
   rm notes-prod.org
   mv "$BASENAME.tex" notes.tex
 fi
@@ -51,8 +57,10 @@ fi
 
 build_latex notes.tex
 
-grep -v '\\showhiddentrue' notes.tex > notes-lecture.tex
-build_latex notes-lecture.tex
+if test "$ALLVERSIONS" = 1; then
+  grep -v '\\showhiddentrue' notes.tex > notes-lecture.tex
+  build_latex notes-lecture.tex
 
-grep -v '\\showhiddentrue' notes.tex | grep -v '\\showlatertrue' > notes-empty.tex
-build_latex notes-empty.tex
+  grep -v '\\showhiddentrue' notes.tex | grep -v '\\showlatertrue' > notes-empty.tex
+  build_latex notes-empty.tex
+fi
