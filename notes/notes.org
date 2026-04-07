@@ -4921,14 +4921,33 @@ Sensitivity?
 - Shallow answer: Simply consider the condition number of $V$
 - \(\|\text{coefficients} \|\) does not suffice as measure of stability.
 
-  $p_{n-1}(x)$ can be evaluated anywhere. (\(p_{n-1}\) is the interpolant.)
+  $p_{n-1}(x)$ can be evaluated anywhere.
 
 - Want: \(\max_{x \in[a,b]}|p_{n-1}(x)| \le \Lambda \|\B y\|_\infty \)
 - \(\Lambda\): *Lebesgue constant*, depends on \(n\) and \(\{x_i\}_i\) 
   - Technically also depends on \(\{\phi_i\}_i\) (same for all polys)
+- To measure sensitivity, apply to perturbation
 #+LATEX: \end{hidden}
 
 \demolink{interpolation}{Lebesgue Constant}
+
+*** Interpolation vs Best-Approximation
+Can the Lebesgue constant bound
+\[\norm{p_{n-1}}_\infty \le \Lambda \|\B y\|_\infty \]
+be used to compare interpolation to best-approximation?
+#+LATEX: \begin{hidden}
+Let $P$ be an interpolation /operator/ of degree $n-1$,
+$q$ be any polynomial of degree $n-1$. Observe $q=Pq$.
+\begin{align*}
+\norm{f-Pf}_\infty&=\norm{f-q+q-Pf}_\infty\\
+&\le\norm{f-q}_\infty+\norm{q-Pf}_\infty\\
+&=\norm{f-q}_\infty+\norm{P(q-f)}_\infty\\
+&\le(1+\Lambda)\norm{f-q}_\infty.
+\end{align*}
+
+Since this bound holds for any polynomial $q$, it must also hold for the
+(hypothetical?) best-approximating one.
+#+LATEX: \end{hidden}
 
 ** Methods
 *** Modes and Nodes (aka Functions and Points)
