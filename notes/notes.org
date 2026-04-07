@@ -4072,9 +4072,9 @@ s\right\| =O(h) \quad (h\to 0).\]
 /Want:/ *Minimizer* \(\B{x}^\ast  \in \mathbb{R}^n\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
-   \text{and} \quad \B{h} (\B{x}) \le \B{0} . \]
+   \text{and} \quad \B{h} (\B{x}) \ge \B{0} . \]
 
-- \(\B{g} (\B{x}) = \B{0}\) and \(\B{h}     (\B{x}) \le \B{0}\)
+- \(\B{g} (\B{x}) = \B{0}\) and \(\B{h}     (\B{x}) \ge \B{0}\)
   are called *constraints*.
 
   They define the set of *feasible points* \(\B{x} \in S     \subseteq \mathbb{R}^n\).
@@ -4671,166 +4671,231 @@ Start with some value, consider criterion:
 
 ** Constrained Optimization
 
+
 *** Constrained Optimization: Problem Setup
 #+LATEX: \contentid{opt_constrained}{Constrained optimization}{6.7}
 
-Want \(\B{x}^\ast\) so that
-\[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
-   \text{subject to} \quad \B{g} (\B{x}) = \B{0} \]
-No inequality constraints just yet. This is /equality-constrained
-optimization/. Develop a (local) necessary condition for a minimum.
-#+LATEX: \begin{hidden}
-Necessary cond.: "no feasible descent possible". Assume $\B g(\B x)=\B 0$. 
-
-\medskip
-Recall unconstrained necessary condition, "no descent possible":
-\[\nabla f (\B{x}) = \B{0} \]
-
-Look for *feasible descent directions* from $\B x$. (Necessary cond.: $\not\exists$)
-
-\medskip
-\(\B{s}\) is a *feasible direction* at $\B x$ if
-\[\B{x} + \alpha \B{s} \quad \text{feasible for } \alpha
-   \nocomma \in [0, r] \quad\text{(for some \(r\))} \]
-#+LATEX: \end{hidden}
-
-*** Constrained Optimization: Necessary Condition
-
-#+LATEX: \begin{hidden}
-Need: \(\nabla f (\B{x}) \cdot \B{s} \geqslant 0\) (``uphill
-  that way'') for any feasible direction \(\B{s}\).
-- *Not at boundary:* \(\B s\) and \(- \B s\) are feasible directions
-
-  \(\Rightarrow\) \(\nabla f (\B{x}) = 0\)
-
-  \(\Rightarrow\) Only the boundary of the feasible set is different from the
-  unconstrained case (i.e. interesting)
-
-- *At boundary:* (the common case) \(\B g (x) = 0\). Need:
-  \[- \nabla f (\B{x}) \in \tmop{rowspan} (J_{\B{g}}) \]
-  a.k.a. ``all descent directions would cause a change
-  (\(\rightarrow\)violation) of the constraints.''
-
-  *Q:* Why `rowspan'? Think about shape of \(J_{\B{g}}\).
-  \[\Leftrightarrow - \nabla f (\B{x}) = J_{\B{g}}^T
-     \B{\lambda } \quad \text{for some \(\B{\lambda }\).} \]
-#+LATEX: \end{hidden}
-
-*** Lagrange Multipliers
-
-#+BEGIN_CENTER
-#+ATTR_LATEX: :height 3cm
-[[./images/lagrange-multiplier-crop.pdf]]
-#+END_CENTER
-
-Seen: Need
-\(- \nabla f (\B{x}) = J_{\B{g}}^T \B{\lambda } \)
-at the (constrained) optimum.\medskip
-
-/Idea:/ Turn constrained optimization problem for \(\B{x}\) into
-an \emph{unconstrained} optimization problem for \((\B{x}, \B{\lambda })\). How?
-#+LATEX: \begin{hidden}
-Need a new function \(\mathcal{L} (\B{x}, \B{\lambda })\) to minimize:
-\[\mathcal{L} (\B{x}, \B{\lambda }) \assign f (\B{x}) +
-   \B{\lambda }^T \B{g} (\B{x}) . \]
-#+LATEX: \end{hidden}
-
-*** Lagrange Multipliers: Development
-
-\[\mathcal{L} (\B{x}, \B{\lambda }) \assign f (\B{x}) +
-   \B{\lambda }^T \B{g} (\B{x}) . \]
-#+LATEX: \begin{hidden}
-Then: \(\nabla \mathcal{L}= \B{0}\) at unconstrained minimum, i.e.
-\[\B{0} = \nabla \mathcal{L}=
-\begin{bmatrix}
-  \nabla _{\B{x}} \mathcal{L}\\\nabla _{\B{\lambda }} \mathcal{L}
-\end{bmatrix} =
-\begin{bmatrix}
-  \nabla f + J_{\B{g}} (\B{x})^T \B{\lambda }\\\B{g} (\B{x})
-\end{bmatrix} . \]
-Convenient: This matches our necessary condition!\medskip
-
-So we could use any unconstrained method to minimized \(\mathcal{L}\).
-
-*For example:* Using Newton to minimize \(\mathcal{L}\) is called
-/Sequential Quadratic Programming/. (`SQP')
-#+LATEX: \end{hidden}
-
-\demolink{optimization}{Sequential Quadratic Programming}
-
-*** Inequality-Constrained Optimization
-
-Want \(\B{x}^\ast\) so that
+/Want:/ *Minimizer* \(\B{x}^\ast  \in \mathbb{R}^n\) so that
 \[f (\B{x}^\ast ) = \min _{\B{x}} f (\B{x}) \quad
    \text{subject to} \quad \B{g} (\B{x}) = \B{0} \quad
-   \text{and} \quad \B{h} (\B{x}) \le \B{0}. \]
-Develop a necessary condition for a minimum.
+   \text{and} \quad \B{h} (\B{x}) \ge \B{0} . \]
+
+Next: Sequence of examples, patterned after [[https://link.springer.com/book/10.1007/978-0-387-40065-5][Nocedal & Wright]], ch. 12.
+*** Equality-Constrained Optimization
+
+$$f(x_1, x_2) =x_1+x_2, \qquad \min f(x_1, x_2) \quad\text{such that}\quad 2-x_1^2-x^2=0.$$
+#+LATEX: \begin{hidden}
+  - Draw
+  - Identify $g_1$
+  - Solution "obviously" $\B x^*= [-1,-1]^T$.
+  - Any other point: can move on circle ('stay feasible') while decreasing
+  - ``Constraint normal" $\nabla g_1$ (orthogonal to 'constraint level set')
+    - Parallel to $\nabla f$ at $\B x^*$
+    - I.e. there's a scalar such that $\nabla f(\B x^*)= \lambda_1^* \nabla g_1(\B x^*)$
+    - I.e. "the descent direction has no component along the constraint level set"
+    - Generalizes to $\nabla f=J_{\B g}^T \B \lambda$
+#+LATEX: \end{hidden}
+*** Lagrange Multipliers
+Introduce the Lagrangian.
+#+LATEX: \begin{hidden}
+$$\mathcal L(\B x,\B \lambda) = f(\B x) - \B \lambda^T \B g(\B x)$$
+#+LATEX: \end{hidden}
+What does it do?
+#+LATEX: \begin{hidden}
+- Critical point of $\mathcal L$: both necessary conditions satisifed
+- Main function: *Turn constrained into unconstrained problem*
+#+LATEX: \end{hidden}
+\demolink{optimization}{Sequential Quadratic Programming}
+
+*** Inequality Constraints, Example I
+  $$f(x_1, x_2) =x_1+x_2, \qquad \min f(x_1, x_2) \quad\text{such that}\quad 2-x_1^2-x^2\ge 0.$$
 
 #+LATEX: \begin{hidden}
-Again: Assume we're at a feasible point, on the boundary of the
-feasible region. Must ensure descent directions are /infeasible/.
+- Draw (circle and interior)
+- Constraint gradient points inside
+- Interior optimal points $\B h\ge \B 0$: no different from unconstrained, $\nabla f=\B 0$
+- Boundary optimal points $\B h= \B 0$:
 
-\medskip
-*Motivation:* $\B g = 0$ \Leftrightarrow two inequality constraints: $\B g\le \B 0 \land \B g \ge \B 0$.
-
-\medskip
-Consider the condition
-\(-\nabla f (\B x) = J_{\B h}^T \B\lambda_2\).
-
-- Descent direction must start violating constraint.
-
-  But only one direction is dangerous here!
-- $-\nabla f$: *descent* direction of $f$, $\nabla h_i$: *ascent* direction of $h_i$
-- If we assume $\B \lambda_2> 0$, going towards $-\nabla f$ would increase $\B h$
-
-  (and start violating $\B h \le 0$)
+  To first order, a descent direction $\B s$ needs:
+  - $\nabla f(\B x)^T \B s <0$
+  - $\nabla h_1(\B x)^T \B s \ge 0$
+  Draw cone of intersection: feasible descent directions
+  - Need this to be empty
+  - Happens if $\nabla f(x)=\lambda_1 \nabla h_1(x)$ for some $\lambda_1\ge 0$
+  - Suddenly: *sign of multiplier matters*
 #+LATEX: \end{hidden}
 
-*** Lagrangian, Active/Inactive
-
-Put together the overall Lagrangian.
+*** Lagrangian/Necessary Conditions
+What does the Lagrangian look like for this example?
 #+LATEX: \begin{hidden}
-\[\mathcal{L} (\B{x}, \B{\lambda }_1, \B{\lambda }_2)
-   \assign f (\B{x}) + \B{\lambda }_1^T \B{g}
-   (\B{x}) + \B{\lambda }_2^T \B{h} (\B{x}) \]
+$$\mathcal L(\B x,\B \lambda_{\B g}, \B \lambda_{\B h}) = f(\B x) - \B \lambda_{\B g}^T \B g(\B x) - \B \lambda_{\B h}^T \B h(\B x)$$
+- But: $\lambda_{\B h, 1}^*\ge 0$ added.
+- And: $\lambda_{\B h, 1}^* h_1(\B x^*)=0$: *complementarity condition*
+
+  Multiplier allowed to be nonzero only if $h_1=0$
+- Just motivated KKT
+  - $\nabla \mathcal L=0$, constraints, $\lambda \ge 0$, complementarity
 #+LATEX: \end{hidden}
-What are *active* and *inactive* constraints?
-
-#+LATEX: \begin{hidden}
-- *Active:*
-  \(\text{active } \Leftrightarrow h_i (\B{x}^\ast ) = 0     \Leftrightarrow\) at `boundary' of ineq. constraint
-
-  (Equality constrains are always `active')
-
-- *Inactive:* If \(h_i\) inactive (\(h_i (\B{x}^\ast ) < 0\)), must force
-  \(\lambda _{2, i} = 0\).
-
-  Otherwise: Behavior of \(h\) could change location of minimum of
-  \(\mathcal{L}\). Use *complementarity condition*
-  \(h_i (\B{x}^\ast ) \lambda _{2, i} = 0\).
-
-  \Leftrightarrow /at least one/ of \(h_i (\B{x}^\ast )\) and \( \lambda _{2, i}\) is zero.
-#+LATEX: \end{hidden}
-
 *** Karush-Kuhn-Tucker (KKT) Conditions
 
-Develop a set of necessary conditions for a minimum.
+Develop a set of necessary conditions for inequality-constrained optimization.
 
 #+LATEX: \begin{hidden}
 Assuming \(J_{\B{g}}\) and \(J_{\B{h}, \tmop{active}}\) have full
 rank, this set of conditions is /necessary/:
 \begin{eqnarray*}
-  (\ast ) \quad \nabla _{\B{x}} \mathcal{L} (\B{x}^\ast ,
-    \B{\lambda }^\ast _1, \B{\lambda }^\ast _2) & = &
-    \B{0}\\(\ast ) \quad \B{g} (\B{x}^\ast ) & = & \B{0}\\\B{h} (\B{x}^\ast ) & \le & \B{0}\\\B{\lambda }_2 & \geqslant & \B{0}\\(\ast ) \quad \B{h} (\B{x}^\ast ) \cdot \B{\lambda }_2 &
-    = & 0
+  (\ast ) \quad \nabla _{\B{x}} \mathcal{L} (\B{x}^\ast , \B{\lambda }^\ast _{\B g}, \B{\lambda }^\ast _{\B h}) & = & \B{0}\\
+  (\ast ) \quad \B{g} (\B{x}^\ast ) & = & \B{0}\\
+  \B{h} (\B{x}^\ast ) & \ge & \B{0}\\
+  \B{\lambda }_{\B h}^* & \ge & \B{0}\\
+  (\ast ) \quad \B{h} (\B{x}^\ast ) \cdot \B{\lambda }_{\B h}^* & = & 0
 \end{eqnarray*}
-These are called the *Karush-Kuhn-Tucker (`KKT') conditions*.\medskip
-
 *Computational approach:* Solve \((\ast )\) equations by Newton.
 #+LATEX: \end{hidden}
+*** Inequality Constraints, Example II
 
-*** TODO Add a worked example here
+$$f(x_1, x_2) =x_1+x_2, \qquad \min f(x_1, x_2) \quad\text{such that}\quad 2-x_1^2-x^2\ge 0, \;x_2\ge 0.$$
+#+LATEX: \begin{hidden}
+- Draw
+- Walk through points, drawing gradients and constraint gradients
+  - Left bottom: actual minimum
+  - Right bottom: violates sign of $\lambda$
+  - Top: only $h_1$ active
+#+LATEX: \end{hidden}
+
+*** Cones
+Define a cone.
+
+#+LATEX: \begin{hidden}
+A cone is a set $K\subseteq \mathbb R^n$ such that
+\[K=\{B \B y +C \B w: \B y\ge \B 0\},\]
+where $B\in\mathbb R^{n \times m}$ and $C\in\mathbb R^{n\times \ell}$.
+#+LATEX: \end{hidden}
+
+Give an example from optimization:
+#+LATEX: \begin{hidden}
+Consider the cone
+$$\left\{ \sum_i \lambda_i \nabla h_i(\B x^*): \lambda_i\ge 0\right\}.$$
+#+LATEX: \end{hidden}
+
+*** Farkas' Lemma
+Key ingredient in proof of KKT. State it.
+
+#+LATEX: \begin{hidden}
+Farkas' Lemma: Given any vector $\B g$:
+- Either $\B g\in K$, or
+- there exists a $\B d\in\mathbb R^n$ satisfying $\B g^T \B d <0$, $B^T\B d\ge 0$, $C^T\B d=0$.
+#+LATEX: \end{hidden}
+Draw it.
+#+LATEX: \begin{showlater}
+#+BEGIN_EXPORT latex
+\begin{center}
+\begin{tikzpicture}[
+  vec/.style={->,thick},
+  axis/.style={->, thick},
+  font=\small,scale=0.5
+]
+  % Origin
+  \coordinate (O) at (0,0);
+
+  % Column vectors (tips)
+  \coordinate (B1) at (0.9, 2.4);
+  \coordinate (B2) at (1.1, 1.5);
+  \coordinate (B3) at (3.2, 1.2);
+  \coordinate (G)  at (2.6, 1.7);
+
+  % Shaded polygon for range(A) — a rough star/arrow shape
+  \fill[gray!25] (0,0)
+    -- (B1)
+    -- ++(1.4, 0.7)   % upper-right notch out
+    -- ++(0.4,-0.9)   % notch back in
+    -- (B3) ++ (0.6, 0.0)
+    -- ++(-0.3,-0.7)
+    -- (B2) ++ (0.0,0.0)
+    -- cycle;
+
+  % A better hand-tuned polygon matching the figure's arrow shape
+  \fill[gray!25]
+    (0,0)
+    -- (0.9, 2.4)     % toward b1
+    -- (2.3, 3.1)     % upper right of b1
+    -- (3.0, 2.3)     % notch right
+    -- (2.5, 1.9)     % indent
+    -- (4.0, 1.5)     % toward b3 extension
+    -- (3.6, 0.6)     % lower right
+    -- (2.2, 0.8)     % back
+    -- cycle;
+
+  % Vectors
+  \draw[vec] (O) -- (B1) node[above left]  {$\boldsymbol{b}_1$};
+  \draw[vec] (O) -- (B2) node[below left]  {$\boldsymbol{b}_2$};
+  \draw[vec] (O) -- (B3) node[below right] {$\boldsymbol{b}_3$};
+  \draw[vec] (O) -- (G)  node[above]       {$\boldsymbol{g}$};
+\end{tikzpicture}
+%% -------------------------------------------------------
+%% RIGHT PANEL
+%% -------------------------------------------------------
+\begin{tikzpicture}[
+  vec/.style={->,thick},
+  axis/.style={->, thick},
+  font=\small,scale=0.5
+]
+  \coordinate (O) at (0,0);
+
+  \coordinate (B1) at (0.9, 2.4);
+  \coordinate (B2) at (1.1, 1.5);
+  \coordinate (B3) at (3.2, 1.2);
+
+  % d is the projection of g onto range(A), lying in the plane
+  \coordinate (D)  at (2.6, 0.0);  % horizontal axis
+  % g_perp lives above: g = d + g_perp, g_perp along vertical axis
+  \coordinate (Gperp) at (0.0, 1.7);
+
+  % Same shaded polygon
+  \fill[gray!25]
+    (0,0)
+    -- (0.9, 2.4)
+    -- (2.3, 3.1)
+    -- (3.0, 2.3)
+    -- (2.5, 1.9)
+    -- (4.0, 1.5)
+    -- (3.6, 0.6)
+    -- (2.2, 0.8)
+    -- cycle;
+
+  % Axes
+  \draw[axis] (O) -- (-0.8, 3.3) node[left]  {$\boldsymbol{g}$};
+  \draw[axis] (O) -- (4.3, 0) node[right] {$\boldsymbol{d}$};
+
+  % Column vectors
+  \draw[vec] (O) -- (B1) node[above left]  {$\boldsymbol{b}_1$};
+  \draw[vec] (O) -- (B2) node[below left]  {$\boldsymbol{b}_2$};
+  \draw[vec] (O) -- (B3) node[below right] {$\boldsymbol{b}_3$};
+
+  % Dashed vertical separator (carried over from left panel boundary)
+  % (rendered as the dotted line between panels — drawn outside scopes below)
+\end{tikzpicture}
+
+[Figures following Nocedal \& Wright, ch. 12]
+\end{center}
+#+END_EXPORT
+#+LATEX: \end{showlater}
+
+*** Farkas' Lemma and Optimization
+Consider the cone
+$$\left\{ \sum_i \lambda_i \nabla c_i(\B x^*): \lambda_i\ge 0\right\},$$
+and let $\B g=\nabla f(\B x^*)$.
+
+What does Farkas' Lemma say?
+
+#+LATEX: \begin{hidden}
+- Either the descent direction can be built out of constraint gradients with
+  nonnegative coefficients
+  (i.e., any descent from $\B x^*$ would start violating constraints), or
+- there exists a direction $\B d$ so that $\B d^T \nabla f(\B x^*)<0$ and $\B d$
+  is a feasible direction (in some sense).
+#+LATEX: \end{hidden}
+
 * Interpolation
   :PROPERTIES:
   :RELATE_TREE_SECTION_NAME: interpolation
