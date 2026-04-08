@@ -52,6 +52,7 @@
 #+BEAMER_HEADER: \newcommand{\demolink}[2]{{\color{purple}%
 #+BEAMER_HEADER: \plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/demos/#1/#2.ipynb}{\uline{\textbf{Demo: }#2}}
 #+BEAMER_HEADER: [\plainhref{https://scicomp-jupyterlab.cs.illinois.edu/lab/?path=cs450-kloeckner/cleared/#1/#2.ipynb}{\uline{cleared}}]%
+#+BEAMER_HEADER: [\plainhref{https://github.com/inducer/numerics-notes/blob/main/demos/#1/#2.ipynb}{\uline{GitHub}}]%
 #+BEAMER_HEADER: }\stepcounter{demos}}
 #+BEAMER_HEADER: \newcommand{\inclasslink}[2]{\plainhref{\classurl/flow/inclass-#1/start}{\color{purple}\uline{\textbf{In-class activity: }#2}}}
 
