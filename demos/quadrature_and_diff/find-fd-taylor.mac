@@ -1,0 +1,16 @@
+kill(all);
+maketaylor(offset, order):=sum(concat(f, i) * offset**i/factorial(i), i, 0, order);
+
+rule: (
+	a*maketaylor(-h, 5)
+	+ b*f0
+	+ c*maketaylor(h, 5)
+	+ d*maketaylor(2*h, 5)
+);
+eqns:[
+	diff(rule, f0),
+	diff(rule, f1),
+	diff(rule, f2) - 1,
+	diff(rule, f3)
+];
+print(solve(eqns, [a,b,c,d]));
