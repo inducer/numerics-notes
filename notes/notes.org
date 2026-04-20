@@ -6067,9 +6067,7 @@ i.e.
 
 What does this mean for uniqueness?
 #+LATEX: \begin{hidden}
-It
-\emph{implies} uniqueness. If there were two separate solutions with
-identical initial values, they are not allowed to be different.
+It /implies/ uniqueness. Identical initial values \Rightarrow LHS \le 0
 #+LATEX: \end{hidden}
 
 *** Conditioning
@@ -6081,8 +6079,6 @@ To adapt to conventional terminology, we will use `Stability' for
 - the conditioning of the IVP, /and/
 
 - the stability of the methods we cook up.
-
-Some terminology:\medskip
 
 An IVP is *stable* if and only if...
 #+LATEX: \begin{hidden}
@@ -6102,6 +6098,7 @@ An IVP is *asymptotically stable* if and only if
    \rightarrow \infty ) . \]
 #+LATEX: \end{hidden}
 
+\demolink{ivp_odes}{Sensitivity and the Lorenz Attractor}
 *** Example I: Scalar, Constant-Coefficient
 
 \[\left \{
@@ -6346,7 +6343,6 @@ Find out when backward Euler is stable when applied to \(y' (t) = \lambda y (t) 
 \vspace*{-3ex}
 \begin{eqnarray*}
   y_k & = & y_{k - 1} + h \lambda y_k\\
-  y_k (1 - h \lambda ) & = & y_{k - 1}\\
   y_k & = & \frac{1}{1 - h \lambda } y_{k - 1}
    =  \left ( \frac{1}{1 - h \lambda } \right )^k y_0 .
 \end{eqnarray*}
@@ -6362,6 +6358,8 @@ BE can be stable even when ODE is /unstable/. (\(\tmop{Re} \lambda > 0\)). Accur
 #+LATEX: \end{hidden}
 
 \demolink{ivp_odes}{Backward Euler stability}
+
+\demolink{ivp_odes}{Stability and Stability Functions}
 
 ** Stiffness
 
