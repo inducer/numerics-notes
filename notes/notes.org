@@ -6053,7 +6053,7 @@ Consider the perturbed problem
 \begin{array}{l}
   \widehat{\B{y}}' (t) = \B{f} (\widehat{\B{y}})\\\widehat{\B{y}} (t_0) = \widehat{\B{y}}_0
 \end{array}\right . \]
-Then if \(\B{f}\) is /Lipschitz continuous/ (has `bounded slope'),
+Then if \(\B{f}\) is /Lipschitz continuous/ near the initial conditions,
 i.e.
 \[\norm{\B{f} (\B{y}) - \B{f} (\widehat{\B{y}})}
    \le L \norm{\B{y} - \widehat{\B{y}}}, \]
