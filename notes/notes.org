@@ -6359,7 +6359,7 @@ BE can be stable even when ODE is /unstable/. (\(\tmop{Re} \lambda > 0\)). Accur
 
 \demolink{ivp_odes}{Backward Euler stability}
 
-\demolink{ivp_odes}{Stability and Stability Functions}
+\demolink{ivp_odes}{Stability and Stability Functions} (Part 1)
 
 ** Stiffness
 
@@ -6593,7 +6593,7 @@ a matrix that diagonalizes the ODE also diagonalizes the time integrator.
 \(\Rightarrow\) Can consider stability one eigenvalue at a time.
 #+LATEX: \end{hidden}
     
-\demolink{ivp_odes}{Stability regions}
+\demolink{ivp_odes}{Stability and Stability Functions} (Part 2)
 
 *** More Advanced Methods
 **** Discussion Points
