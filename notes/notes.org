@@ -6743,7 +6743,7 @@ Define *Green's function*
     \end{cases}
 \end{equation*}
 Then
-\[\B y_V (x) = \int _a^b G (x, y) \B{b} (z) d z \]
+\[\B y_V (x) = \int _a^b G (x, z) \B{b} (z) d z \]
 solves (V).
 #+LATEX: \end{hidden}
 
@@ -6935,7 +6935,7 @@ Why is this problematic?\medskip
 
 *Idea:* Don't factorize, iterate.
 
-\demolink{pdes}{Sparse Matrix Factorizations and ``Fill-In''}\medskip
+\demolink{pdes}{Sparse Matrix Factorizations and Fill-In}\medskip
 
 *** `Stationary' Iterative Methods
 #+LATEX: \contentid{sparse_stationary}{Stationary iterative methods}{11.5.1}
@@ -6946,7 +6946,10 @@ where \(M\) is the part that we are actually inverting. Convergence?
 #+LATEX: \begin{tcolorbox}
 \vspace{-3ex}
 \begin{eqnarray*}
-  A \B{x} & = & \B{b}\\M \B{x} & = & N \B{x} + \B{b}\\M \B{x}_{k + 1} & = & N \B{x}_k + \B{b}\\\B{x}_{k + 1} & = & M^{- 1} (N \B{x}_k + \B{b})
+  A \B{x} & = & \B{b}\\
+  M \B{x} & = & N \B{x} + \B{b}\\
+  M \B{x}_{k + 1} & = & N \B{x}_k + \B{b}\\
+  \B{x}_{k + 1} & = & M^{- 1} (N \B{x}_k + \B{b})
 \end{eqnarray*}
 
 - These methods are called /stationary/ because they do the same
@@ -6974,7 +6977,7 @@ What could we choose for \(M\) (so that it's easy to invert)?
 where \(L\) is the below-diagonal part of \(A\), and \(U\) the above-diagonal.
 #+LATEX: \end{tcolorbox}
 
-\demolink{pdes}{Stationary Methods}
+\demolink{pdes}{Stationary Iterative Methods}
 
 *** Conjugate Gradient Method
 #+LATEX: \contentid{sparse_cg}{Conjugate gradient for sparse linear systems}{11.5.5}
