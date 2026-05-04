@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# Inteded for 'rootless podman'. 'root' in the container
+# Intended for 'rootless podman'. 'root' in the container
 # is just the surrounding user. This is needed in order
 # to write to the outer file system.
 
