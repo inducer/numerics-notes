@@ -6725,8 +6725,6 @@ Solve \(Q \B{\alpha } = \B{c} \) to find coefficients: \(Y (x) \B{\alpha }\) sol
 
 Define \(\Phi (x) \assign Y (x) Q^{- 1}\). \(\Phi (x) \B{c}\) /also/ solves (B).
 #+LATEX: \end{hidden}
-*** TODO The volume BVP construction should be justified better
-- Liken to matvec
 *** Solving the ``Volume'' BVP
 \[(V) \begin{cases}
   \B y_V' (x) = A (x) \B y_V (x) + \B{b} (x) \\
@@ -6746,6 +6744,8 @@ Then
 \[\B y_V (x) = \int _a^b G (x, z) \B{b} (z) d z \]
 solves (V).
 #+LATEX: \end{hidden}
+
+\demolink{bvp_odes}{GVP Greens Functions}
 
 *** ODE Systems: Conditioning
 
