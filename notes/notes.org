@@ -7065,8 +7065,7 @@ How do we generate the \(\B{s}_k\)?
   *Insight:* Use three-term Lanczos it. to generate. \(\rightarrow\) cheap!
 #+LATEX: \end{hidden}
 
-# FIXME! Add a demo
-# \demolink{pdes}{Conjugate Gradient Method}
+\demolink{pdes}{Conjugate Gradient Mechanics}
 
 ** PDEs
 
