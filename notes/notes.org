@@ -7044,7 +7044,7 @@ View error as linear combination of search directions, with some (thus far unkno
 - Is the error going to be zero then? If \(\delta _k = - \alpha _k\), then yes.
 #+LATEX: \end{hidden}
 
-*** CG: Further Development
+*** CG: Step Size vs Expansion
 
 #+LATEX: \begin{hidden}
 \[\B{s}_k^T A \B{e}_0 = \sum _i \delta _i \B{s}_k^T A
@@ -7060,13 +7060,48 @@ How do we generate the \(\B{s}_k\)?
 - Pick a random one to start with. Perhaps \(\B{r}_0\)?
 
 - Generate next one by orthogonalizing from Krylov space procedure
-  \(\B{z}, A \B{z}, A^2 \B{z} \)
+  \(\B s_0, A \B{s}_0, A^2 \B{s}_0 \), choosing $\B s_0= \B r_0$. (why? see next!)
 
-  *Insight:* Use three-term Lanczos it. to generate. \(\rightarrow\) cheap!
+  *Insight:* Use three-term Lanczos it. to generate \(\rightarrow\) cheap!
 #+LATEX: \end{hidden}
 
-\demolink{pdes}{Conjugate Gradient Mechanics}
+\demolink{pdes}{Conjugate Gradient Mechanics} (part 1)
 
+*** CG: Residuals and Krylov spaces
+
+Induction hypothesis $H(k)$: $\B r_k\perp\mathcal{K}_k(A,\B r_0)=\operatorname{span}\{\B r_0,\dots,A^{k-1} \B r_0\}$.
+#+LATEX: \begin{hidden}
+$H(1)$: $\B r_1\perp\mathcal{K}_1(A,\B r_0)=\operatorname{span}\{\B r_0\}$.
+
+That's true because $\B r_1\perp\B s_0$ (by $\alpha_0$) and $\B s_0=\B r_0$ (because we chose it that way).
+
+\medskip
+$H(k)\Rightarrow H(k+1)$: $\mathcal{K}_{k+1} = \text{span}\{\B{s}_0, \dots, \B{s}_{k-1},\B s_{k}\}$.
+\begin{align*}
+\B{r}_{k+1}^T \B{s}_k
+&= (\B{r}_k - \alpha_k A \B{s}_k)^T \B{s}_k
+= \B{r}_k^T \B{s}_k - \alpha_k \B{s}_k^T A \B{s}_k\\
+&= \B{r}_k^T \B{s}_k - \frac{\B{r}_k^T \B{s}_k}{\B{s}_k^T A \B{s}_k} \B{s}_k^T A \B{s}_k=0.\\
+\text{For $i<k$:}\quad\B{r}_{k+1}^T \B{s}_i &= (\B{r}_k - \alpha_k A \B{s}_k)^T \B{s}_i \\
+&= \underbrace{\B{r}_k^T \B{s}_i}_{=0 \Leftarrow H(k)} - \alpha_k \underbrace{\B{s}_k^T A \B{s}_i}_{=0\Leftarrow\text{$A$-conjugacy}}.
+\end{align*}
+#+LATEX: \end{hidden}
+
+*** CG: Orthogonality of Residuals
+
+How do $\operatorname{span}\{\B r_0,\dots,\B r_k\}$
+and $\operatorname{span}\{\B s_0,\dots,\B s_k\}$ relate to one another?
+#+LATEX: \begin{hidden}
+They're the same, and equal to $\mathcal K_{k+1}(A, \B r_0)$. $\B r_0=\B s_0$ by choice and the update formula
+\[\B{r}_k = \B{r}_{k-1} - \alpha_k A \B{s}_{k-1}\]
+shows that $\B r_k\in\mathcal K_{k+1}(A, \B r_0)$.
+#+LATEX: \end{hidden}
+How do the residuals relate to one another?
+#+LATEX: \begin{hidden}
+\[\mathcal K_{k+1}(A, \B r_0)\ni\B r_k\perp\mathcal K_k(A, \B r_0),\]so $\B r_k$ must be orthogonal to all preceding residuals.
+#+LATEX: \end{hidden}
+
+\demolink{pdes}{Conjugate Gradient Mechanics} (part 2)
 ** PDEs
 
 *** Introduction
